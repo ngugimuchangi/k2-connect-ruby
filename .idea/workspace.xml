@@ -26,7 +26,7 @@
         <entry file="file://$PROJECT_DIR$/k2_connect_ruby_api_gem.gemspec">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="230">
-              <caret line="19" column="57" selection-start-line="19" selection-start-column="57" selection-end-line="19" selection-end-column="57" />
+              <caret line="19" column="64" selection-start-line="19" selection-start-column="64" selection-end-line="19" selection-end-column="64" />
             </state>
           </provider>
         </entry>
@@ -48,9 +48,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/k2_connect_ruby_api_gem.gemspec" />
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem.rb" />
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/client.rb" />
+        <option value="$PROJECT_DIR$/k2_connect_ruby_api_gem.gemspec" />
       </list>
     </option>
   </component>
@@ -86,7 +86,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../api_trial_one" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../foodie_david" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -145,16 +145,15 @@
       <workItem from="1547790257601" duration="7811000" />
       <workItem from="1547806221415" duration="599000" />
       <workItem from="1547822122028" duration="599000" />
-      <workItem from="1547914770523" duration="7098000" />
+      <workItem from="1547914770523" duration="7341000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30292000" />
+    <option name="totallyTimeSpent" value="30535000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27045456" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -206,7 +205,7 @@
     <entry file="file://$PROJECT_DIR$/k2_connect_ruby_api_gem.gemspec">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
-          <caret line="19" column="57" selection-start-line="19" selection-start-column="57" selection-end-line="19" selection-end-column="57" />
+          <caret line="19" column="64" selection-start-line="19" selection-start-column="64" selection-end-line="19" selection-end-column="64" />
         </state>
       </provider>
     </entry>
