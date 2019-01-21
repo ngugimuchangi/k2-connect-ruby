@@ -12,11 +12,11 @@ module K2ConnectRubyApiGem
       parser = Yajl::Parser.new
       hash = parser.parse(json)
 
-      # The X-KopoKopo-Signature
-      comparison_signature="c839d24ff8a2ec26550d435cf69891347b63aae8"
+      # The X-KopoKopo-Signature for test
+      # comparison_signature="c839d24ff8a2ec26550d435cf69891347b63aae8"
 
       hash.extend Hashie::Extensions::DeepFind
-      authorize_it(hash.deep_select("key").to_s, comparison_signature)
+      authorize_it(hash.deep_select("body").to_s, hash.deep_select("X-KopoKopo-Signature").to_s)
       # puts ("\n\nThis is the Hash Body: \t #{hash}")
       # L8r change this to be X-KopoKopo-Signature
       # puts ("\n\nThis is the Hash Header: \t #{hash.deep_select("header")}")
