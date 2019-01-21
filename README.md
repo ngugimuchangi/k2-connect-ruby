@@ -14,7 +14,7 @@ gem 'k2_connect_ruby_api_gem'
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
 Or install it yourself as:
 
