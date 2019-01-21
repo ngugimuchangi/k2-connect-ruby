@@ -5,10 +5,10 @@ module K2ConnectRubyApiGem
     end
 
     # This is the method for get parsing the json response
-    def parse_it()
+    def parse_it(json)
 
       # With YAJL
-      json = File.open('/home/k2-engineering-03/RubymineProjects/k2_exported_JSON.json', 'r')
+      # json = File.open('/home/k2-engineering-03/RubymineProjects/k2_exported_JSON.json', 'r')
       parser = Yajl::Parser.new
       hash = parser.parse(json)
 
