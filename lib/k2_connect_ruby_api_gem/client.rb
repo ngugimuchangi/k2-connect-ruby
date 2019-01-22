@@ -9,9 +9,8 @@ module K2ConnectRubyApiGem
 
       # With YAJL
       # json = File.open('/home/k2-engineering-03/RubymineProjects/k2_exported_JSON.json', 'r')
-      parser = Yajl::Parser.new
-      hash_b = parser.parse(req_body)
-      hash_h = parser.parse(req_headers)
+      hash_b = Yajl::Parser.parse(req_body)
+      hash_h = Yajl::Parser.parse(req_body)
       # The X-KopoKopo-Signature for test
       # comparison_signature="c839d24ff8a2ec26550d435cf69891347b63aae8"
 
