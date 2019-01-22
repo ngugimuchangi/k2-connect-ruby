@@ -10,11 +10,11 @@ module K2ConnectRubyApiGem
       # With YAJL
       # json = File.open('/home/k2-engineering-03/RubymineProjects/k2_exported_JSON.json', 'r')
       hash_b = Yajl::Parser.parse(req_body)
-      hash_h = Yajl::Parser.parse(req_body)
+      hash_h = Yajl::Parser.parse(req_headers)
       # The X-KopoKopo-Signature for test
       # comparison_signature="c839d24ff8a2ec26550d435cf69891347b63aae8"
 
-      hash_b.extend Hashie::Extensions::DeepFind
+      # hash_b.extend Hashie::Extensions::DeepFind
       hash_h.extend Hashie::Extensions::DeepFind
       authorize_it(hash_b, hash_h.deep_select("HTTP_X_KOPOKOPO_SIGNATURE"))
       # puts ("\n\nThis is the Hash Body: \t #{hash}")
@@ -27,7 +27,7 @@ module K2ConnectRubyApiGem
       digest = OpenSSL::Digest.new('sha1')
       hmac = OpenSSL::HMAC.hexdigest(digest, secret_key, message_body)
       # puts("\n\n This is the trial HMAC hexdigest #{hmac}")
-      puts("\n\nMessage Message Body: #{message_body}\n\nX-K2-Signature: #{comparison_signature}")
+      puts("\n\nMessage Body: #{message_body}\n\nX-K2-Signature: #{comparison_signature}")
       puts(hmac.eql?(comparison_signature))
     end
   end
