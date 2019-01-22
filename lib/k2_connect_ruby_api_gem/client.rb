@@ -16,7 +16,7 @@ module K2ConnectRubyApiGem
 
       # hash_b.extend Hashie::Extensions::DeepFind
       hash_h.extend Hashie::Extensions::DeepFind
-      authorize_it(hash_b, hash_h.deep_select("HTTP_X_KOPOKOPO_SIGNATURE"))
+      authorize_it(hash_b.to_s, hash_h.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
       # puts ("\n\nThis is the Hash Body: \t #{hash}")
       # puts ("\n\nThis is the Hash Body: \t #{hash.deep_select("body")}")
     end
