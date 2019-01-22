@@ -24,7 +24,7 @@ module K2ConnectRubyApiGem
     # Method for comparing the HMAC and with HTTP_X_KOPOKOPO_SIGNATURE
     def authorize_it(message_body, comparison_signature)
       secret_key = "b647be91024bc03fb9e83f92238b973a4c070269"
-      digest = OpenSSL::Digest.new('sha1')
+      digest = OpenSSL::Digest.new('sha256')
       hmac = OpenSSL::HMAC.hexdigest(digest, secret_key, message_body)
       # puts("\n\n This is the trial HMAC hexdigest #{hmac}")
       puts("\n\nMessage Body: #{message_body}\n\nX-K2-Signature: #{comparison_signature}\n\n The HMAC hash: #{hmac}")
