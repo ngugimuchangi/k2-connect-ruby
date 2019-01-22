@@ -16,7 +16,7 @@ module K2ConnectRubyApiGem
 
       # hash_b.extend Hashie::Extensions::DeepFind
       hash_h.extend Hashie::Extensions::DeepFind
-      authorize_it(hash_b.to_s, hash_h.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
+      authorize_it(hash_b.to_s, hash_h.deep_fetch("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
       # puts ("\n\nThis is the Hash Body: \t #{hash}")
       # puts ("\n\nThis is the Hash Body: \t #{hash.deep_select("body")}")
     end
@@ -27,8 +27,8 @@ module K2ConnectRubyApiGem
       digest = OpenSSL::Digest.new('sha256')
       hmac = OpenSSL::HMAC.hexdigest(digest, secret_key, message_body)
       # puts("\n\n This is the trial HMAC hexdigest #{hmac}")
-      puts("\n\nMessage Body: #{message_body}\n\nX-K2-Signature: #{comparison_signature}\n\n The HMAC hash: #{hmac}")
-      puts(hmac.eql?(comparison_signature))
+      puts("\n\nMessage Body: #{message_body}\n\nX-K2-Signature: #{JSON.parse(comparison_signature).join(', ')}\n\n The HMAC hash: #{hmac}")
+      puts(hmac.to_s.eql?(JSON.parse(comparison_signature).join(', ')))
     end
   end
 end
