@@ -27,7 +27,7 @@ module K2ConnectRubyApiGem
       digest = OpenSSL::Digest.new('sha1')
       hmac = OpenSSL::HMAC.hexdigest(digest, secret_key, message_body)
       # puts("\n\n This is the trial HMAC hexdigest #{hmac}")
-      puts("\n\nMessage Body: #{message_body}\n\nX-K2-Signature: #{comparison_signature}")
+      puts("\n\nMessage Body: #{message_body}\n\nX-K2-Signature: #{comparison_signature}\n\n The HMAC hash: #{hmac}")
       puts(hmac.eql?(comparison_signature))
     end
   end
