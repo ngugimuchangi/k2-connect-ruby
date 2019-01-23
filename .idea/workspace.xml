@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="547a0860-960a-450b-9136-428e96411441" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/client.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/client.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/version.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/version.rb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,8 +18,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/client.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="397">
-              <caret line="29" column="3" lean-forward="true" selection-start-line="29" selection-start-column="3" selection-end-line="29" selection-end-column="3" />
+            <state relative-caret-position="-123">
+              <caret line="12" column="71" selection-start-line="12" selection-start-column="71" selection-end-line="12" selection-end-column="71" />
             </state>
           </provider>
         </entry>
@@ -54,8 +53,8 @@
         <option value="$PROJECT_DIR$/k2_connect_ruby_api_gem.gemspec" />
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem.rb" />
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/k2_connect_client.rb" />
-        <option value="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/client.rb" />
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/version.rb" />
+        <option value="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/client.rb" />
       </list>
     </option>
   </component>
@@ -89,6 +88,10 @@
               <item name="lib" type="462c0819:PsiDirectoryNode" />
               <item name="k2_connect_ruby_api_gem" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="k2_connect_ruby_api_gem" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -97,7 +100,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../api_trial_one" />
+    <property name="last_opened_file_path" value="$USER_HOME$/kopo-kopo" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -162,12 +165,12 @@
       <workItem from="1548060464209" duration="8270000" />
       <workItem from="1548138583722" duration="514000" />
       <workItem from="1548140297872" duration="8362000" />
-      <workItem from="1548226858235" duration="9008000" />
+      <workItem from="1548226858235" duration="14806000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="63756000" />
+    <option name="totallyTimeSpent" value="69554000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
@@ -228,13 +231,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby_api_gem.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="40" selection-start-line="1" selection-start-column="40" selection-end-line="1" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/version.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
@@ -242,10 +238,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby_api_gem.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="40" selection-start-line="1" selection-start-column="40" selection-end-line="1" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/client.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="29" column="3" lean-forward="true" selection-start-line="29" selection-start-column="3" selection-end-line="29" selection-end-column="3" />
+        <state relative-caret-position="-123">
+          <caret line="12" column="71" selection-start-line="12" selection-start-column="71" selection-end-line="12" selection-end-column="71" />
         </state>
       </provider>
     </entry>

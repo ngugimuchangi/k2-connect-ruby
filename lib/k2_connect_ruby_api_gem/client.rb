@@ -9,7 +9,7 @@ module K2ConnectRubyApiGem
     def authorize_it(message_body, comparison_signature)
       digest = OpenSSL::Digest.new('sha256')
       hmac = OpenSSL::HMAC.hexdigest(digest, @secret_key, message_body)
-      puts("\n\nMessage Body: #{message_body}\n\nX-K2-Signature: #{JSON.parse(comparison_signature).join(', ')}\n\n The HMAC hash: #{hmac}")
+      # puts("\n\nMessage Body: #{message_body}\n\nX-K2-Signature: #{JSON.parse(comparison_signature).join(', ')}\n\n The HMAC hash: #{hmac}")
       puts(hmac.to_s.eql?(JSON.parse(comparison_signature).join(', ')))
     end
 
@@ -24,7 +24,12 @@ module K2ConnectRubyApiGem
       # puts ("\n\n The Response Method: #{hash_method}")
       if hash_method.eql?("POST")
         authorize_it(hash_body.to_s, hash_header.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
+      else
       end
+    end
+
+    def assign_res_elements(the_res_body)
+
     end
   end
 end
