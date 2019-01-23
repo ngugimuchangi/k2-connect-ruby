@@ -20,8 +20,8 @@ module K2ConnectRubyApiGem
     def authorize_it(message_body, comparison_signature)
       digest = OpenSSL::Digest.new('sha256')
       hmac = OpenSSL::HMAC.hexdigest(digest, @secret_key, message_body)
-      puts("\n\nMessage Body: #{message_body}\n\nX-K2-Signature: #{comparison_signature}\n\n The HMAC hash: #{hmac}")
-      puts(hmac.to_s.eql?(comparison_signature))
+      puts("\n\nMessage Body: #{message_body}\n\nX-K2-Signature: #{JSON.parse(comparison_signature).join(', ')}\n\n The HMAC hash: #{hmac}")
+      puts(hmac.to_s.eql?(JSON.parse(comparison_signature).join(', ')))
     end
   end
 end
