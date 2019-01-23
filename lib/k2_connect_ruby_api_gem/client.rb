@@ -32,10 +32,10 @@ module K2ConnectRubyApiGem
       puts(hmac.to_s.eql?(JSON.parse(comparison_signature).join(', ')))
     end
 
-    def get_response(the_response)
-      hash_response = Yajl::Parser.parse(the_response)
-      hash_response.extend Hashie::Extensions::DeepFind
-      authorize_it(hash_response.deep_select("body").to_s, hash_response.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
+    def get_res(the_response)
+      hash_res = Yajl::Parser.parse(the_response)
+      hash_res.extend Hashie::Extensions::DeepFind
+      authorize_it(hash_res.deep_select("body").to_s, hash_res.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
     end
   end
 end
