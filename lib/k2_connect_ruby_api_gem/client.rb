@@ -5,25 +5,6 @@ module K2ConnectRubyApiGem
       @secret_key = secret_key
     end
 
-    # This is the method for get parsing the json response
-    def parse_it(req_body, req_headers, req_status)
-
-      # With YAJL
-      hash_b = Yajl::Parser.parse(req_body)
-      hash_h = Yajl::Parser.parse(req_headers)
-
-      hash_h.extend Hashie::Extensions::DeepFind
-      # if hash_b.deep_select("Method").eql?("POST")
-      #   authorize_it(hash_b.to_s, hash_h.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
-      #   # return req_status
-      # else
-      #   req_status = 500
-      #   return req_status
-      #   abort("Does not Work.")
-      # end
-      # authorize_it(hash_b.to_s, hash_h.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
-    end
-
     # Method for comparing the HMAC and with HTTP_X_KOPOKOPO_SIGNATURE
     def authorize_it(message_body, comparison_signature)
       digest = OpenSSL::Digest.new('sha256')
@@ -39,9 +20,11 @@ module K2ConnectRubyApiGem
       hash_header = Yajl::Parser.parse(the_res.request.headers.env.select{|k, _| k =~ /^HTTP_/}.to_json)
       # The Response Method
       hash_method = Yajl::Parser.parse(the_res.request.method.to_json)
-      # hash_header.extend Hashie::Extensions::DeepFind
-      puts ("\n\n The Response Method: #{hash_method}")
-      # authorize_it(hash_body.to_s, hash_header.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
+      hash_header.extend Hashie::Extensions::DeepFind
+      # puts ("\n\n The Response Method: #{hash_method}")
+      if hash_method.eql?("POST")
+        authorize_it(hash_body.to_s, hash_header.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
+      end
     end
   end
 end
