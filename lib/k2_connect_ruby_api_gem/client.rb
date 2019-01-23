@@ -33,7 +33,7 @@ module K2ConnectRubyApiGem
     end
 
     def parse_it_whole(the_res)
-      hash_r = Yajl::Parser.parse(the_res.to_json)
+      hash_r = Yajl::Parser.parse(the_res.request.body.string.to_json)
       # hash_r.extend Hashie::Extensions::DeepFind
       puts ("The Response without JSON: #{the_res}\n\n The Response with an attempted Hash #{hash_r}")
       # authorize_it(hash_r.deep_select("body").to_s, "2132313")
