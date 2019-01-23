@@ -13,14 +13,14 @@ module K2ConnectRubyApiGem
       hash_h = Yajl::Parser.parse(req_headers)
 
       hash_h.extend Hashie::Extensions::DeepFind
-      if hash_b.deep_select("Method").eql?("POST")
-        authorize_it(hash_b.to_s, hash_h.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
-        return req_status
-      else
-        req_status = 500
-        return req_status
-        abort("Does not Work.")
-      end
+      # if hash_b.deep_select("Method").eql?("POST")
+      #   authorize_it(hash_b.to_s, hash_h.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
+      #   # return req_status
+      # else
+      #   req_status = 500
+      #   return req_status
+      #   abort("Does not Work.")
+      # end
       # authorize_it(hash_b.to_s, hash_h.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
     end
 
@@ -32,10 +32,10 @@ module K2ConnectRubyApiGem
       puts(hmac.to_s.eql?(JSON.parse(comparison_signature).join(', ')))
     end
 
-    def get_res(the_response)
-      hash_res = Yajl::Parser.parse(the_response)
-      hash_res.extend Hashie::Extensions::DeepFind
-      authorize_it(hash_res.deep_select("body").to_s, hash_res.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
+    def parse_it_whole(the_res)
+      hash_r = Yajl::Parser.parse(the_res)
+      hash_r.extend Hashie::Extensions::DeepFind
+      authorize_it(hash_r.deep_select("body").to_s, "2132313")
     end
   end
 end
