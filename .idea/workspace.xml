@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="547a0860-960a-450b-9136-428e96411441" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/client.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/client.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/version.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/version.rb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/client.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="383">
-              <caret line="41" column="92" lean-forward="true" selection-start-line="41" selection-start-column="92" selection-end-line="41" selection-end-column="92" />
+            <state relative-caret-position="337">
+              <caret line="42" column="38" selection-start-line="42" selection-start-column="38" selection-end-line="42" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -53,8 +54,8 @@
         <option value="$PROJECT_DIR$/k2_connect_ruby_api_gem.gemspec" />
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem.rb" />
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/k2_connect_client.rb" />
-        <option value="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/version.rb" />
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/client.rb" />
+        <option value="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/version.rb" />
       </list>
     </option>
   </component>
@@ -161,12 +162,12 @@
       <workItem from="1548060464209" duration="8270000" />
       <workItem from="1548138583722" duration="514000" />
       <workItem from="1548140297872" duration="8362000" />
-      <workItem from="1548226858235" duration="7352000" />
+      <workItem from="1548226858235" duration="8194000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62100000" />
+    <option name="totallyTimeSpent" value="62942000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
@@ -243,8 +244,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/client.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="41" column="92" lean-forward="true" selection-start-line="41" selection-start-column="92" selection-end-line="41" selection-end-column="92" />
+        <state relative-caret-position="337">
+          <caret line="42" column="38" selection-start-line="42" selection-start-column="38" selection-end-line="42" selection-end-column="38" />
         </state>
       </provider>
     </entry>
