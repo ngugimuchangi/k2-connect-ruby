@@ -13,7 +13,7 @@ module K2ConnectRubyApiGem
       hash_h = Yajl::Parser.parse(req_headers)
 
       hash_h.extend Hashie::Extensions::DeepFind
-      authorize_it(hash_b.to_s, hash_h.deep_select(:HTTP_X_KOPOKOPO_SIGNATURE).to_s)
+      authorize_it(hash_b.to_s, hash_h.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
     end
 
     # Method for comparing the HMAC and with HTTP_X_KOPOKOPO_SIGNATURE
