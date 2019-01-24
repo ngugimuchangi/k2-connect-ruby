@@ -13,22 +13,27 @@ module K2ConnectRubyApiGem
       puts(hmac.to_s.eql?(JSON.parse(comparison_signature).join(', ')))
     end
 
-    def parse_it_whole(the_res)
+    def parse_it_whole(the_req)
       # The Response Body
-      hash_body = Yajl::Parser.parse(the_res.request.body.string.to_json)
+      hash_body = Yajl::Parser.parse(the_req.body.string.to_json)
       # The Response Header
-      hash_header = Yajl::Parser.parse(the_res.request.headers.env.select{|k, _| k =~ /^HTTP_/}.to_json)
+      hash_header = Yajl::Parser.parse(the_req.headers.env.select{|k, _| k =~ /^HTTP_/}.to_json)
       # The Response Method
-      hash_method = Yajl::Parser.parse(the_res.request.method.to_json)
+      hash_method = Yajl::Parser.parse(the_req.method.to_json)
       hash_header.extend Hashie::Extensions::DeepFind
       # puts ("\n\n The Response Method: #{hash_method}")
       if hash_method.eql?("POST")
-        authorize_it(hash_body.to_s, hash_header.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
+        if authorize_it(hash_body.to_s, hash_header.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
+          return 200
+        else
+          return 401
+        end
       else
+        return 400
       end
     end
 
-    def assign_res_elements(the_res_body)
+    def assign_req_elements(the_req_body)
 
     end
   end
