@@ -10,7 +10,7 @@ module K2ConnectRubyApiGem
       digest = OpenSSL::Digest.new('sha256')
       hmac = OpenSSL::HMAC.hexdigest(digest, @secret_key, message_body)
       # puts("\n\nMessage Body: #{message_body}\n\nX-K2-Signature: #{JSON.parse(comparison_signature).join(', ')}\n\n The HMAC hash: #{hmac}")
-      puts(hmac.to_s.eql?(JSON.parse(comparison_signature).join(', ')))
+      return hmac.to_s.eql?(JSON.parse(comparison_signature).join(', '))
     end
 
     def parse_it_whole(the_req)
@@ -21,9 +21,9 @@ module K2ConnectRubyApiGem
       # The Response Method
       hash_method = Yajl::Parser.parse(the_req.method.to_json)
       hash_header.extend Hashie::Extensions::DeepFind
-      # puts ("\n\n The Response Method: #{hash_method}")authorize_it(hash_body.to_s, hash_header.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
+      # puts ("\n\n The Response Method: #{hash_method}")
       if hash_method.eql?("POST")
-        if true
+        if authorize_it(hash_body.to_s, hash_header.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
           return 200
         else
           return 401
