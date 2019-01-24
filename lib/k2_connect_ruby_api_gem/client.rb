@@ -34,21 +34,28 @@ module K2ConnectRubyApiGem
       end
     end
 
+    def cleanit(string)
+      string.titleize
+    end
+
     def assign_req_elements(the_req_body)
-      the_req_body.extend Hashie::Extensions::DeepFind
-      # hash_header.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s
-      puts(the_req_body[:topic])
-      k2_topic = the_req_body.deep_select("topic").to_s
-      k2_reference= the_req_body.deep_select("reference").to_s
-      k2_msisdn= the_req_body.deep_select("msisdn").to_s
-      k2_amount= the_req_body.deep_select("amount").to_s
-      k2_currency= the_req_body.deep_select("currency").to_s
-      k2_till_number= the_req_body.deep_select("till_number").to_s
-      k2_system= the_req_body.deep_select("system").to_s
-      k2_sender_first_name= the_req_body.deep_select("sender_first_name").to_s
-      k2_sender_middle_name= the_req_body.deep_select("sender_middle_name").to_s
-      k2_sender_last_name= the_req_body.deep_select("sender_last_name").to_s
-      puts("\n\nTopic:\t#{k2_topic}\nReference:\t#{k2_reference}\nMSISDN:\t#{k2_msisdn}\nAmount:\t#{k2_amount}\nCurrency:\t#{k2_currency}\nTill Number:\t#{k2_till_number}\nSystem:\t#{k2_system}\nSender First Name:\t#{k2_sender_first_name}\nSender Middle Name:\t#{k2_sender_middle_name}\nSender Last Name:\t#{k2_sender_last_name}\n")
+      output = Hash.new
+      the_req_body.each do |key, value|
+        output[key] = cleanup(value)
+      end
+      puts(output)
+      # the_req_body.extend Hashie::Extensions::DeepFind
+      # k2_topic = the_req_body.deep_select("topic").to_s
+      # k2_reference= the_req_body.deep_select("reference").to_s
+      # k2_msisdn= the_req_body.deep_select("msisdn").to_s
+      # k2_amount= the_req_body.deep_select("amount").to_s
+      # k2_currency= the_req_body.deep_select("currency").to_s
+      # k2_till_number= the_req_body.deep_select("till_number").to_s
+      # k2_system= the_req_body.deep_select("system").to_s
+      # k2_sender_first_name= the_req_body.deep_select("sender_first_name").to_s
+      # k2_sender_middle_name= the_req_body.deep_select("sender_middle_name").to_s
+      # k2_sender_last_name= the_req_body.deep_select("sender_last_name").to_s
+      # puts("\n\nTopic:\t#{k2_topic}\nReference:\t#{k2_reference}\nMSISDN:\t#{k2_msisdn}\nAmount:\t#{k2_amount}\nCurrency:\t#{k2_currency}\nTill Number:\t#{k2_till_number}\nSystem:\t#{k2_system}\nSender First Name:\t#{k2_sender_first_name}\nSender Middle Name:\t#{k2_sender_middle_name}\nSender Last Name:\t#{k2_sender_last_name}\n")
     end
   end
 end
