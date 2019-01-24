@@ -24,7 +24,7 @@ module K2ConnectRubyApiGem
       # puts ("\n\n The Response Method: #{hash_method}")
       if hash_method.eql?("POST")
         if authorize_it(hash_body.to_s, hash_header.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
-          assign_req_elements(the_req) and return
+          assign_req_elements(hash_body) and return
           return 200
         else
           return 401
@@ -36,6 +36,8 @@ module K2ConnectRubyApiGem
 
     def assign_req_elements(the_req_body)
       the_req_body.extend Hashie::Extensions::DeepFind
+      # hash_header.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s
+      puts(the_req_body)
       k2_topic = the_req_body.deep_select("topic").to_s
       k2_reference= the_req_body.deep_select("reference").to_s
       k2_msisdn= the_req_body.deep_select("msisdn").to_s
