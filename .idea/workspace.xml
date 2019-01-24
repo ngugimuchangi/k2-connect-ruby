@@ -18,8 +18,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/client.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="23" column="6" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
+            <state relative-caret-position="351">
+              <caret line="50" column="66" selection-start-line="50" selection-start-column="66" selection-end-line="50" selection-end-column="66" />
             </state>
           </provider>
         </entry>
@@ -166,12 +166,12 @@
       <workItem from="1548138583722" duration="514000" />
       <workItem from="1548140297872" duration="8362000" />
       <workItem from="1548226858235" duration="15163000" />
-      <workItem from="1548310735591" duration="758000" />
+      <workItem from="1548310735591" duration="3441000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="70669000" />
+    <option name="totallyTimeSpent" value="73352000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
@@ -242,8 +242,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/client.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="23" column="6" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
+        <state relative-caret-position="351">
+          <caret line="50" column="66" selection-start-line="50" selection-start-column="66" selection-end-line="50" selection-end-column="66" />
         </state>
       </provider>
     </entry>
