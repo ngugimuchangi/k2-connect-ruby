@@ -16,13 +16,14 @@ module K2ConnectRubyApiGem
     def parse_it_whole(the_req)
       # The Response Body
       hash_body = Yajl::Parser.parse(the_req.body.string.to_json)
+      h_b = JSON.parse(the_req.body.to_json).join(', ')
       # The Response Header
       hash_header = Yajl::Parser.parse(the_req.headers.env.select{|k, _| k =~ /^HTTP_/}.to_json)
       # The Response Method
       hash_method = Yajl::Parser.parse(the_req.method.to_json)
       hash_header.extend Hashie::Extensions::DeepFind
-      hash_body.extend Hashie::Extensions::DeepFind
-      puts(hash_body.deep_select("TOPIC").to_s)
+      h_b.extend Hashie::Extensions::DeepFind
+      puts(h_b.deep_select("topic").to_s)
       puts ("Hello")
       if hash_method.eql?("POST")
         if authorize_it(hash_body.to_s, hash_header.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
