@@ -23,7 +23,7 @@ module K2ConnectRubyApiGem
       hash_header.extend Hashie::Extensions::DeepFind
       if hash_method.eql?("POST")
         if authorize_it(hash_body.to_s, hash_header.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
-          assign_req_elements(hash_body.to_json) and return
+          assign_req_elements(the_req.body.string.to_json) and return
           return 200
         else
           return 401
