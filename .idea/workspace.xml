@@ -19,8 +19,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/client.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
-              <caret line="23" column="46" lean-forward="true" selection-start-line="23" selection-start-column="46" selection-end-line="23" selection-end-column="46" />
+            <state relative-caret-position="245">
+              <caret line="25" column="6" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -54,8 +54,8 @@
         <option value="$PROJECT_DIR$/k2_connect_ruby_api_gem.gemspec" />
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem.rb" />
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/k2_connect_client.rb" />
-        <option value="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/version.rb" />
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/client.rb" />
+        <option value="$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/version.rb" />
       </list>
     </option>
   </component>
@@ -167,12 +167,12 @@
       <workItem from="1548138583722" duration="514000" />
       <workItem from="1548140297872" duration="8362000" />
       <workItem from="1548226858235" duration="15163000" />
-      <workItem from="1548310735591" duration="11233000" />
+      <workItem from="1548310735591" duration="11559000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="81144000" />
+    <option name="totallyTimeSpent" value="81470000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
@@ -236,8 +236,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby_api_gem/client.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="23" column="46" lean-forward="true" selection-start-line="23" selection-start-column="46" selection-end-line="23" selection-end-column="46" />
+        <state relative-caret-position="245">
+          <caret line="25" column="6" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="46" />
         </state>
       </provider>
     </entry>
