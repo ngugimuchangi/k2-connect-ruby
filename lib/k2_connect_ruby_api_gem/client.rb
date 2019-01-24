@@ -22,7 +22,7 @@ module K2ConnectRubyApiGem
       hash_method = Yajl::Parser.parse(the_req.method.to_json)
       hash_header.extend Hashie::Extensions::DeepFind
       hash_body.extend Hashie::Extensions::DeepFind
-      puts(hash_body.deep_select("topic").to_s)
+      puts(hash_body.deep_select("TOPIC").to_s)
       puts ("Hello")
       if hash_method.eql?("POST")
         if authorize_it(hash_body.to_s, hash_header.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
