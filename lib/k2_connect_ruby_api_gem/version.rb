@@ -1,3 +1,3 @@
 module K2ConnectRubyApiGem
-  VERSION = "0.7.20"
+  VERSION = "0.7.21"
 end
