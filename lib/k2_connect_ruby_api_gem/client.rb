@@ -37,7 +37,7 @@ module K2ConnectRubyApiGem
 
     def assign_req_elements(the_req_body)
       the_req_body.extend Hashie::Extensions::DeepFind
-      puts("\n\nTopic:\t#{the_req_body["topic"]}\nReference:\t#{the_req_body.deep_select("reference").to_s}\nMSISDN:\t#{the_req_body["msisdn"]}\nAmount:\t#{the_req_body["amount"]}\nCurrency:\t#{the_req_body["currency"]}\nTill Number:\t#{the_req_body["till_number"]}\nSystem:\t#{the_req_body["system"]}\nSender First Name:\t#{the_req_body["sender_first_name"]}\nSender Middle Name:\t#{the_req_body["sender_middle_name"]}\nSender Last Name:\t#{the_req_body["sender_last_name"]}\n")
+      puts("\n\nTopic:\t#{the_req_body["topic"]}\nReference:\t#{JSON.parse(the_req_body.deep_select("reference").to_s).join(', ')}\nMSISDN:\t#{the_req_body["msisdn"]}\nAmount:\t#{the_req_body["amount"]}\nCurrency:\t#{the_req_body["currency"]}\nTill Number:\t#{the_req_body["till_number"]}\nSystem:\t#{the_req_body["system"]}\nSender First Name:\t#{the_req_body["sender_first_name"]}\nSender Middle Name:\t#{the_req_body["sender_middle_name"]}\nSender Last Name:\t#{the_req_body["sender_last_name"]}\n")
     end
   end
 end
