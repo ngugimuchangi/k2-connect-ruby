@@ -37,7 +37,7 @@ module K2ConnectRubyApiGem
     def assign_req_elements(the_req_body)
       the_req_body.extend Hashie::Extensions::DeepFind
       # hash_header.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s
-      puts(the_req_body["topic"])
+      puts(the_req_body[:topic])
       k2_topic = the_req_body.deep_select("topic").to_s
       k2_reference= the_req_body.deep_select("reference").to_s
       k2_msisdn= the_req_body.deep_select("msisdn").to_s
