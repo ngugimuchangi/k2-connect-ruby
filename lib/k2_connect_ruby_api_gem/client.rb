@@ -16,14 +16,8 @@ module K2ConnectRubyApiGem
     def parse_it_whole(the_req)
       # The Response Body
       hash_body = Yajl::Parser.parse(the_req.body.string.to_json)
-      # h_b = JSON.parse(the_req.body.string.as_json)
-      # h_b2 = JSON.parse(the_req.body.string.as_json).to_s
       test = JSON.parse(the_req.body.string).as_json
-      # test2 = JSON.parse(the_req.body.string).as_json.to_s
       puts ("Test Topic:\t#{test["topic"]}")
-      # puts ("Test2 Topic:\t#{test2["topic"]}")
-      # puts ("H_B Topic:\t#{h_b["topic"]}")
-      # puts ("H_B2 Topic:\t#{h_b2["topic"]}")
       # The Response Header
       hash_header = Yajl::Parser.parse(the_req.headers.env.select{|k, _| k =~ /^HTTP_/}.to_json)
       # The Response Method
@@ -31,7 +25,7 @@ module K2ConnectRubyApiGem
       hash_header.extend Hashie::Extensions::DeepFind
       if hash_method.eql?("POST")
         if authorize_it(hash_body.to_s, hash_header.deep_select("HTTP_X_KOPOKOPO_SIGNATURE").to_s)
-          # assign_req_elements(Yajl::Parser.parse(the_req.body.string.as_json)) and return
+          assign_req_elements(JSON.parse(the_req.body.string).as_json) and return
           return 200
         else
           return 401
@@ -42,18 +36,7 @@ module K2ConnectRubyApiGem
     end
 
     def assign_req_elements(the_req_body)
-      the_req_body.extend Hashie::Extensions::DeepFind
-      k2_topic = the_req_body.deep_select("topic").to_s
-      k2_reference= the_req_body.deep_select("reference").to_s
-      k2_msisdn= the_req_body.deep_select("msisdn").to_s
-      k2_amount= the_req_body.deep_select("amount").to_s
-      k2_currency= the_req_body.deep_select("currency").to_s
-      k2_till_number= the_req_body.deep_select("till_number").to_s
-      k2_system= the_req_body.deep_select("system").to_s
-      k2_sender_first_name= the_req_body.deep_select("sender_first_name").to_s
-      k2_sender_middle_name= the_req_body.deep_select("sender_middle_name").to_s
-      k2_sender_last_name= the_req_body.deep_select("sender_last_name").to_s
-      puts("\n\nTopic:\t#{k2_topic}\nReference:\t#{k2_reference}\nMSISDN:\t#{k2_msisdn}\nAmount:\t#{k2_amount}\nCurrency:\t#{k2_currency}\nTill Number:\t#{k2_till_number}\nSystem:\t#{k2_system}\nSender First Name:\t#{k2_sender_first_name}\nSender Middle Name:\t#{k2_sender_middle_name}\nSender Last Name:\t#{k2_sender_last_name}\n")
+      puts("\n\nTopic:\t#{the_req_body["topic"]}\nReference:\t#{the_req_body["reference"]}\nMSISDN:\t#{the_req_body["msisdn"]}\nAmount:\t#{the_req_body["amount"]}\nCurrency:\t#{the_req_body["currency"]}\nTill Number:\t#{the_req_body["till_number"]}\nSystem:\t#{the_req_body["system"]}\nSender First Name:\t#{the_req_body["sender_first_name"]}\nSender Middle Name:\t#{the_req_body["sender_middle_name"]}\nSender Last Name:\t#{the_req_body["sender_last_name"]}\n")
     end
   end
 end
