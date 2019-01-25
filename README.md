@@ -1,4 +1,4 @@
-# K2ConnectRubyApiGem
+# K2ConnectRuby
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/k2_connect_ruby_api_gem`. To experiment with that code, run `bin/console` for an interactive prompt.
 
@@ -9,7 +9,7 @@ Welcome to your new gem! In this directory, you'll find the files you need to be
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'k2_connect_ruby_api_gem'
+gem 'k2_connect_ruby'
 ```
 
 And then execute:
@@ -18,7 +18,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install k2_connect_ruby_api_gem
+    $ gem install k2_connect_ruby
 
 ## Usage
 
