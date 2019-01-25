@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="547a0860-960a-450b-9136-428e96411441" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../k2_connect_ruby/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../k2_connect_ruby/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../k2_connect_ruby/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../k2_connect_ruby/Gemfile.lock" afterDir="false" />
-    </list>
+    <list default="true" id="547a0860-960a-450b-9136-428e96411441" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,15 +186,16 @@
       <workItem from="1548226858235" duration="15163000" />
       <workItem from="1548310735591" duration="19642000" />
       <workItem from="1548398039056" duration="3098000" />
-      <workItem from="1548402368636" duration="5613000" />
+      <workItem from="1548402368636" duration="5906000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98264000" />
+    <option name="totallyTimeSpent" value="98557000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1280" height="695" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30226904" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
