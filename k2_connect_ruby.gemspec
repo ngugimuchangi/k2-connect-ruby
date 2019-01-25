@@ -5,7 +5,7 @@ require "k2_connect_ruby/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "k2_connect_ruby"
-  spec.version       = K2ConnectRubyApiGem::VERSION
+  spec.version       = K2ConnectRuby::VERSION
   spec.authors       = ["DavidKar1uk1"]
   spec.email         = ["David.mwangi@kopokop.com"]
 

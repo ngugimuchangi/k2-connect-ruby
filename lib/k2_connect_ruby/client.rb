@@ -1,4 +1,4 @@
-module K2ConnectRubyApiGem
+module K2ConnectRuby
   class Client
     @secret_key
     def initialize(secret_key)

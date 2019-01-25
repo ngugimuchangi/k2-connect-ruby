@@ -1,6 +1,6 @@
-RSpec.describe K2ConnectRubyApiGem do
+RSpec.describe K2ConnectRuby do
   it "has a version number" do
-    expect(K2ConnectRubyApiGem::VERSION).not_to be nil
+    expect(K2ConnectRuby::VERSION).not_to be nil
   end
 
   it "does something useful" do
