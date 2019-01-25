@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    k2_connect_ruby_api_gem (0.8.0)
+    k2_connect_ruby (0.8.0)
 
 GEM
   remote: https://rubygems.org/
@@ -30,7 +30,7 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 2.0)
   hashie
-  k2_connect_ruby_api_gem!
+  k2_connect_ruby!
   rake (~> 10.0)
   rspec (~> 3.0)
   yajl-ruby
