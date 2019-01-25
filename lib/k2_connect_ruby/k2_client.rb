@@ -5,7 +5,7 @@ module K2ConnectRuby
     def initialize(api_secret_key)
       @api_secret_key = api_secret_key
     end
-    # Method for parsing the Entire Request. Come back to it later to trim.
+    # Method for parsing the Entire Request. Come back to it later to trim. L8r call it set_client_variables
     def authorize_client(the_request)
       # The Response Body
       @hash_body = Yajl::Parser.parse(the_request.body.string.to_json)
