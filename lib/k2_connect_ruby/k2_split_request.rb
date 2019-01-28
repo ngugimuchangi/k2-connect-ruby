@@ -1,9 +1,37 @@
 module K2ConnectRuby
   class K2SplitRequest
-    attr_accessor :topic, :reference_number, :msisdn, :amount, :currency, :till_number, :system, :first_name, :middle_name, :last_name
-                  # Splits the Body into the different elements of the request body.
-    def request_body_components(the_body)
+    attr_accessor :topic,
+                  :reference_number,
+                  :msisdn,
+                  :amount,
+                  :currency,
+                  :till_number,
+                  :system,
+                  :first_name,
+                  :middle_name,
+                  :last_name,
+                  :truth_value
+
+    # Initialize with a truth Value
+    def initialize(truth_value)
+      @truth_value = truth_value
+    end
+
+    # Confirm Truth value and carry out splitting
+    def judge_truth(the_body)
       nil_request the_body
+      if @truth_value
+        request_body_components(the_body)
+          puts("\nCheck")
+      else
+          puts("\nNot Check")
+      end
+    rescue Exception => e
+      puts(e.message)
+    end
+
+    # Splits the Body into the different elements of the request body.
+    def request_body_components(the_body)
       @topic = the_body.dig("topic")
       @reference_number = the_body.dig("event", "resource", "reference")
       @msisdn = the_body.dig("event", "resource", "sender_msisdn")
@@ -22,6 +50,8 @@ module K2ConnectRuby
     def nil_request x
       raise ArgumentError.new "Nil Request Body Argument!" if x.nil?
     end
+
+    private :request_body_components
 
   end
 end

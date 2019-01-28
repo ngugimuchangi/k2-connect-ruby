@@ -13,7 +13,7 @@ module K2ConnectRuby
     def initialize(api_secret_key)
       @api_secret_key = api_secret_key
     rescue Exception => e
-      puts("Null Secret Key:\t No Input Given for The Secret Key.\n #{e.message}")
+      puts("#{e.message}")
     end
 
     # Method for parsing the Entire Request. Come back to it later to trim. L8r call it set_client_variables
