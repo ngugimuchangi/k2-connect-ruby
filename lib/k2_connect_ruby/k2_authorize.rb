@@ -6,9 +6,9 @@ module K2ConnectRuby
       hmac = OpenSSL::HMAC.hexdigest(digest, api_secret_key, body)
       # @truth = secure_compare(hmac, signature)
       # @truth = hmac.to_s.eql?(signature)
-      return secure_compare(hmac, signature)
+      # return secure_compare(hmac, signature)
       # puts("\n\nThe HMAC:\t#{hmac}\nThe Signature:\t#{signature}")
-      # puts("\n\nThe body:\t#{body}\nThe Secret Key:\t#{api_secret_key}\nThe Signature:\t#{signature}")
+      puts("\n\nThe Secure Compare:\t#{secure_compare(hmac, signature)}\nThe To Eql:\t#{hmac.to_s.eql?(signature)}")
     end
   end
 end
