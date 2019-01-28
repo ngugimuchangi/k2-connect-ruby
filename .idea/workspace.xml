@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="547a0860-960a-450b-9136-428e96411441" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2_connect_ruby.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2_connect_ruby.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/k2_connect_ruby/k2_client.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2_connect_ruby/k2_client.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/k2_connect_ruby/version.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2_connect_ruby/version.rb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,8 +19,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/k2_client.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="19" column="37" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
+            <state relative-caret-position="328">
+              <caret line="22" column="86" selection-start-line="22" selection-start-column="86" selection-end-line="22" selection-end-column="86" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/version.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="23">
+              <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -99,9 +107,9 @@
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby/k2_split_request.rb" />
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby/k2_authorize.rb" />
         <option value="$PROJECT_DIR$/k2_connect_ruby.gemspec" />
-        <option value="$PROJECT_DIR$/lib/k2_connect_ruby/version.rb" />
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby.rb" />
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby/k2_client.rb" />
+        <option value="$PROJECT_DIR$/lib/k2_connect_ruby/version.rb" />
       </list>
     </option>
   </component>
@@ -135,6 +143,11 @@
               <item name="lib" type="462c0819:PsiDirectoryNode" />
               <item name="k2_connect_ruby" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="k2_connect_ruby" type="b2602c69:ProjectViewProjectNode" />
+              <item name="k2_connect_ruby" type="462c0819:PsiDirectoryNode" />
+              <item name="pkg" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -144,7 +157,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../api_trial_one" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -220,12 +233,12 @@
       <workItem from="1548398039056" duration="3098000" />
       <workItem from="1548402368636" duration="15194000" />
       <workItem from="1548422172138" duration="2353000" />
-      <workItem from="1548654757933" duration="1087000" />
+      <workItem from="1548654757933" duration="2226000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="111285000" />
+    <option name="totallyTimeSpent" value="112424000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
@@ -373,13 +386,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/version.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/k2_split_request.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="207">
@@ -408,10 +414,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/version.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/k2_client.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="19" column="37" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
+        <state relative-caret-position="328">
+          <caret line="22" column="86" selection-start-line="22" selection-start-column="86" selection-end-line="22" selection-end-column="86" />
         </state>
       </provider>
     </entry>
