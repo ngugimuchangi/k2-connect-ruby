@@ -7,6 +7,7 @@ require "k2_connect_ruby/version"
 require "k2_connect_ruby/client"
 require 'net/http'
 require "openssl"
+require 'oauth2'
 require "yajl"
 require "json"
 

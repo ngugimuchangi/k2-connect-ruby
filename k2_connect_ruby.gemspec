@@ -41,6 +41,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "activesupport"
   spec.add_development_dependency "yajl-ruby"
-  spec.add_development_dependency "hashie"
+  spec.add_development_dependency "oauth2"
 
 end

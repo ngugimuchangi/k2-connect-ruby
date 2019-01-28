@@ -11,6 +11,7 @@ module K2ConnectRuby
                   :middle_name,
                   :last_name,
                   :truth_value
+    before_action :judge_truth, except: [:initialize]
 
     # Initialize with a truth Value
     def initialize(truth_value)
