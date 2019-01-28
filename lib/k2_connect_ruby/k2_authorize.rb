@@ -8,7 +8,7 @@ module K2ConnectRuby
       # @truth = hmac.to_s.eql?(signature)
       # return secure_compare(hmac, signature)
       # puts("\n\nThe HMAC:\t#{hmac}\nThe Signature:\t#{signature}")
-      puts("\n\nThe Secure Compare:\t#{secure_compare(hmac, signature)}\nThe To Eql:\t#{hmac.to_s.eql?(signature)}")
+      puts("\n\nThe Secure Compare:\t#{ActiveSupport::SecurityUtils.new.secure_compare(hmac, signature)}\nThe To Eql:\t#{hmac.to_s.eql?(signature)}")
     end
   end
 end
