@@ -16,6 +16,7 @@ module K2ConnectRuby
     def parse_request(the_request)
       # The Response Body
       @hash_body = Yajl::Parser.parse(the_request.body.string.to_json)
+      @hash_body_as = Yajl::Parser.parse(the_request.body.string.as_json)
       # The Response Header
       @hash_header = Yajl::Parser.parse(the_request.headers.env.select{|k, _| k =~ /^HTTP_/}.to_json)
       # The K2 Signature
