@@ -3,9 +3,9 @@ module K2ConnectRuby
     attr_accessor :api_secret_key,
                   :hash_body,
                   :hash_header,
-                  # :client_id,
-                  # :client_credentials,
-                  # :token_object,
+                  :client_id,
+                  :client_credentials,
+                  :token_object,
                   :k2_signature
     # Intialize method
     def initialize(api_secret_key)
@@ -20,7 +20,7 @@ module K2ConnectRuby
       @hash_header = Yajl::Parser.parse(the_request.headers.env.select{|k, _| k =~ /^HTTP_/}.to_json)
       # The K2 Signature
       @k2_signature = @hash_header["HTTP_X_KOPOKOPO_SIGNATURE"]
-      puts("\n\n#{the_request}\nHash Body:\t#{@hash_body}\nSignature:\t#{@k2_signature}")
+      # puts("\n\n#{the_request}\nHash Body:\t#{@hash_body}\nSignature:\t#{@k2_signature}")
     end
   end
 end
