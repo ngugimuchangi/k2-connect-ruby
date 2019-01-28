@@ -22,9 +22,9 @@ module K2ConnectRuby
       nil_request the_body
       if @truth_value
         request_body_components(the_body)
-          puts("\nCheck")
+
       else
-          puts("\nNot Check")
+
       end
     rescue Exception => e
       puts(e.message)
