@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="547a0860-960a-450b-9136-428e96411441" name="Default Changelist" comment="" />
+    <list default="true" id="547a0860-960a-450b-9136-428e96411441" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/lib/k2_connect_ruby/k2_authorize.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2_connect_ruby/k2_authorize.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/k2_connect_ruby/version.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2_connect_ruby/version.rb" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,17 +19,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/k2_authorize.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="10" column="64" lean-forward="true" selection-start-line="10" selection-start-column="64" selection-end-line="10" selection-end-column="64" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.5.3/gems/activesupport-5.2.1.1/lib/active_support/security_utils.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+            <state relative-caret-position="138">
+              <caret line="6" column="73" selection-start-line="6" selection-start-column="73" selection-end-line="6" selection-end-column="73" />
             </state>
           </provider>
         </entry>
@@ -49,7 +43,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/version.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="23">
@@ -240,12 +234,12 @@
       <workItem from="1548402368636" duration="15194000" />
       <workItem from="1548422172138" duration="2353000" />
       <workItem from="1548654757933" duration="2334000" />
-      <workItem from="1548657125276" duration="3996000" />
+      <workItem from="1548657125276" duration="4265000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="116528000" />
+    <option name="totallyTimeSpent" value="116797000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
@@ -403,10 +397,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby.rb">
+    <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.5.3/gems/activesupport-5.2.1.1/lib/active_support/security_utils.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="37" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
+        <state relative-caret-position="115">
+          <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/k2_authorize.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" column="73" selection-start-line="6" selection-start-column="73" selection-end-line="6" selection-end-column="73" />
         </state>
       </provider>
     </entry>
@@ -417,24 +418,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" column="37" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/version.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
           <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/k2_authorize.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="10" column="64" lean-forward="true" selection-start-line="10" selection-start-column="64" selection-end-line="10" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.5.3/gems/activesupport-5.2.1.1/lib/active_support/security_utils.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
         </state>
       </provider>
     </entry>
