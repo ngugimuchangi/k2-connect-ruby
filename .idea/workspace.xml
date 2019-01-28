@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="547a0860-960a-450b-9136-428e96411441" name="Default Changelist" comment="" />
+    <list default="true" id="547a0860-960a-450b-9136-428e96411441" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/lib/k2_connect_ruby/k2_authorize.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2_connect_ruby/k2_authorize.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/k2_connect_ruby/k2_split_request.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2_connect_ruby/k2_split_request.rb" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,28 +17,28 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/k2_client.rb">
+        <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/k2_authorize.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
+            <state relative-caret-position="253">
+              <caret line="11" column="7" lean-forward="true" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/k2_authorize.rb">
+        <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/k2_split_request.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="9" column="59" selection-start-line="9" selection-start-column="59" selection-end-line="9" selection-end-column="59" />
+            <state relative-caret-position="368">
+              <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/k2_split_request.rb">
+        <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="20" selection-start-column="20" selection-end-column="20" />
+            <state relative-caret-position="46">
+              <caret line="2" column="37" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -101,12 +104,12 @@
         <option value="$PROJECT_DIR$/spec/spec_helper.rb" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby/k2_request_parse.rb" />
-        <option value="$PROJECT_DIR$/lib/k2_connect_ruby/k2_split_request.rb" />
         <option value="$PROJECT_DIR$/k2_connect_ruby.gemspec" />
-        <option value="$PROJECT_DIR$/lib/k2_connect_ruby.rb" />
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby/k2_client.rb" />
-        <option value="$PROJECT_DIR$/lib/k2_connect_ruby/k2_authorize.rb" />
+        <option value="$PROJECT_DIR$/lib/k2_connect_ruby.rb" />
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby/version.rb" />
+        <option value="$PROJECT_DIR$/lib/k2_connect_ruby/k2_authorize.rb" />
+        <option value="$PROJECT_DIR$/lib/k2_connect_ruby/k2_split_request.rb" />
       </list>
     </option>
   </component>
@@ -231,12 +234,12 @@
       <workItem from="1548402368636" duration="15194000" />
       <workItem from="1548422172138" duration="2353000" />
       <workItem from="1548654757933" duration="2334000" />
-      <workItem from="1548657125276" duration="1701000" />
+      <workItem from="1548657125276" duration="2932000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="114233000" />
+    <option name="totallyTimeSpent" value="115464000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
@@ -377,13 +380,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/k2_connect_ruby.gemspec">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
@@ -408,13 +404,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/k2_split_request.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="20" selection-start-column="20" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/version.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
@@ -422,10 +411,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" column="37" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/k2_authorize.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="9" column="59" selection-start-line="9" selection-start-column="59" selection-end-line="9" selection-end-column="59" />
+        <state relative-caret-position="253">
+          <caret line="11" column="7" lean-forward="true" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/k2_connect_ruby/k2_split_request.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
         </state>
       </provider>
     </entry>

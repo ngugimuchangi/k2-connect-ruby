@@ -14,6 +14,7 @@ module K2ConnectRuby
       @first_name = the_body["event"]["resource"]["sender_first_name"]
       @middle_name = the_body["event"]["resource"]["sender_middle_name"]
       @last_name = the_body["event"]["resource"]["sender_last_name"]
+      puts("\n\nThe Topic:\t#{topic}")
     end
   end
 end
