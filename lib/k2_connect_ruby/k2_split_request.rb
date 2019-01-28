@@ -3,6 +3,7 @@ module K2ConnectRuby
     attr_accessor :topic, :reference_number, :msisdn, :amount, :currency, :till_number, :system, :first_name, :middle_name, :last_name
                   # Splits the Body into the different elements of the request body.
     def request_body_components(the_body)
+      nil_request the_body
       @topic = the_body.dig("topic")
       @reference_number = the_body.dig("event", "resource", "reference")
       @msisdn = the_body.dig("event", "resource", "sender_msisdn")
@@ -13,6 +14,14 @@ module K2ConnectRuby
       @first_name = the_body.dig("event", "resource", "sender_first_name")
       @middle_name = the_body.dig("event", "resource", "sender_middle_name")
       @last_name = the_body.dig("event", "resource", "sender_last_name")
+    rescue Exception => e
+      puts(e.message)
     end
+
+    # Raises an error should the body argument be empty
+    def nil_request x
+      raise ArgumentError.new "Nil Request Body Argument!" if x.nil?
+    end
+
   end
 end
