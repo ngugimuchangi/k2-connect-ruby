@@ -2,6 +2,7 @@ module K2ConnectRuby
   class K2Client
     attr_accessor :api_secret_key,
                   :hash_body,
+                  :hash_body_as,
                   :hash_header,
                   :client_id,
                   :client_credentials,
