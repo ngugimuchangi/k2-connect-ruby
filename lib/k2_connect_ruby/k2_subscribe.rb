@@ -7,25 +7,32 @@ module K2ConnectRuby
                   :subscriber,
                   :subscriber_auth_url,
                   :authorization_code,
-                  :subscriber_token
-    # Method for subscribing
-    def lets_subscribe
+                  :subscriber_access_token
+
+    # Intialize with the reference_no(client_id) and api_key(client_secret)
+    def initialize(reference_no, api_key)
+      @client_id = reference_no
+      @client_secret = api_key
+    end
+
+    # Method for webhook subscribing
+    def subscribe
 
     end
 
-    # Method for sending the request to K2 sandbox
+    # Method for sending the request to K2 sandbox or Mock Server (Receives the access_token)
     def token_request
       # JSON data
       begin
-        @client_id = 'fad40925aefec01b96d3eb3dcd29c2dc43da84544bd69e3e27d507caf2e27b30'
-        @client_secret = 'c0810b42dd39c229ab1da87d97813f0d917886ecc4fb532b221998151109c7b1'
+        # @client_id = 'fad40925aefec01b96d3eb3dcd29c2dc43da84544bd69e3e27d507caf2e27b30'
+        # @client_secret = 'c0810b42dd39c229ab1da87d97813f0d917886ecc4fb532b221998151109c7b1'
         @redirect_uri = 'urn:ietf:wg:oauth:2.0:oob'
         @localhost_site = "http://localhost:3002"
         @subscriber = OAuth2::Client.new(client_id, client_secret, :site => site)
         @subscriber_auth_url = @subscriber.auth_code.authorize_url(:redirect_url => redirect_uri)
         @authorization_code = ""
-        @subscriber_token = @subscriber.auth_code.get_token(authorization_code, :redirect_uri =>redirect_uri)
-        response = @subscriber_token.get('/api/v1/profiles.json')
+        subscriber_access_token = @subscriber.auth_code.get_token(authorization_code, :redirect_uri =>redirect_uri)
+        response = subscriber_access_token.get('/api/v1/profiles.json')
         JSON.parse(response.body)
       rescue => e
         puts "Failed #{e}"

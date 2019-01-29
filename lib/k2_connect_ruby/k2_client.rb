@@ -7,7 +7,8 @@ module K2ConnectRuby
                   :client_id,
                   :client_credentials,
                   :token_object,
-                  :k2_signature
+                  :k2_signature,
+                  :access_token
 
     # Intialize method
     def initialize(api_secret_key)
