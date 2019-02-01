@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    k2_connect_ruby (0.9.5)
+    k2_connect_ruby (0.9.6)
 
 GEM
   remote: https://rubygems.org/
