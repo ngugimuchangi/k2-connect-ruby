@@ -11,7 +11,7 @@ module K2ConnectRuby
                   :middle_name,
                   :last_name,
                   :truth_value
-    before_action :judge_truth, except: [:initialize]
+    # before_action :judge_truth, only: [:initialize]
 
     # Initialize with a truth Value
     def initialize(truth_value)
@@ -20,10 +20,9 @@ module K2ConnectRuby
 
     # Confirm Truth value and carry out splitting
     def judge_truth(the_body)
-      nil_request the_body
+      raise K2Errors::K2NilRequestBody if the_body.nil?
       if @truth_value
         request_body_components(the_body)
-
       else
 
       end
@@ -45,11 +44,6 @@ module K2ConnectRuby
       @last_name = the_body.dig("event", "resource", "sender_last_name")
     rescue Exception => e
       puts(e.message)
-    end
-
-    # Raises an error should the body argument be empty
-    def nil_request x
-      raise ArgumentError.new "Nil Request Body Argument!" if x.nil?
     end
 
     private :request_body_components

@@ -10,6 +10,7 @@ require "openssl"
 require 'oauth2'
 require "yajl"
 require "json"
+require 'uri'
 
 
 module K2ConnectRuby
