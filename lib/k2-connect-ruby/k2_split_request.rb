@@ -30,6 +30,8 @@ module K2ConnectRuby
       puts(e.message)
     end
 
+    # private :request_body_components
+
     # Splits the Body into the different elements of the request body.
     def request_body_components(the_body)
       @topic = the_body.dig("topic")
@@ -45,8 +47,6 @@ module K2ConnectRuby
     rescue Exception => e
       puts(e.message)
     end
-
-    private :request_body_components
 
   end
 end

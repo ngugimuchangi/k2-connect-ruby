@@ -111,11 +111,23 @@ module K2ConnectRuby
 
         # Customer Created
         when @event_type.to_s.include?("customer")
-          puts("Customer Created")
+          @k2_uri = URI.parse("https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io/customer-created")
+          @k2_request_body = {
+              "event_type": "customer_created",
+              "url": "https://myapplication.com/webhooks",
+              "secret": "webhook_secret"
+          }.to_json
+          the_webhook_subscribe(@subscriber_access_token, @k2_uri, @k2_request_body)
 
         # Settlement Transfer Completed
         when @event_type.to_s.include?("settlement")
-          puts("Settlement Transfer Completed")
+          @k2_uri = URI.parse("https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io/settlement")
+          @k2_request_body = {
+              "event_type": "settlement",
+              "url": "https://myapplication.com/webhooks",
+              "secret": "webhook_secret"
+          }.to_json
+          the_webhook_subscribe(@subscriber_access_token, @k2_uri, @k2_request_body)
       else
         puts ("Neither.")
       end

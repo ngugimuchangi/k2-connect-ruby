@@ -1,9 +1,5 @@
 require 'spec_helper'
-
-RSpec.describe K2ConnectRuby do
-  it "has a version number" do
-    expect(K2ConnectRuby::VERSION).not_to be nil
-  end
-
-
-end
+require 'k2_tests/k2-version-spec'
+require 'k2_tests/k2-client-spec'
+require 'k2_tests/k2-authorize-spec'
+require 'k2_tests/k2-split-request-spec'
