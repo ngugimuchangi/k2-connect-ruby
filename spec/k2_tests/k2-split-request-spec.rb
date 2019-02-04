@@ -7,9 +7,18 @@ RSpec.describe "K2SplitRequest" do
   it { should respond_to :request_body_components }
 
   describe "#judge_truth" do
+    context 'Nil Request Body' do
+      it 'should raise an error' do
+        
+      end
+    end
 
-    describe "#request_body_components" do
+    context 'Proper Request Body' do
+      describe "#request_body_components" do
+        it 'should divide request body into key components' do
 
+        end
+      end
     end
   end
 end

@@ -1,9 +1,8 @@
 RSpec.describe "K2Client" do
-  let(:k2_client) { K2ConnectRuby::K2Client.new('#api_secret_key')}
+  let(:k2_client) { K2ConnectRuby::K2Client.new('#api_secret_key') }
 
   # Implicit receiver
   subject { k2_client }
-
   it { should respond_to :parse_request }
 
   # Client Class created
