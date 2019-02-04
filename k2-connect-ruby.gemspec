@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["David.mwangi@kopokopo.com"]
 
   spec.summary       = %q{Ruby SDK for connection to the Kopo Kopo API.}
-  spec.description   = %q{Ruby SDK for connection to the Kopo Kopo API.}
+  spec.description   = %q{Ruby SDK for connection to the Kopo Kopo API, with webhook handling and JSON request parsing with the Ruby on Rails framework.}
   spec.homepage      = "https://github.com/kopokopo/k2-connect-ruby.git"
   spec.license       = "MIT"
 
