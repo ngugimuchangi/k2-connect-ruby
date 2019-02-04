@@ -1,17 +1,17 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "k2_connect_ruby/version"
+require "k2-connect-ruby/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "k2_connect_ruby"
+  spec.name          = "k2-connect-ruby"
   spec.version       = K2ConnectRuby::VERSION
   spec.authors       = ["DavidKar1uk1"]
-  spec.email         = ["David.mwangi@kopokop.com"]
+  spec.email         = ["David.mwangi@kopokopo.com"]
 
-  spec.summary       = %q{The Gem to recieve requests.}
-  spec.description   = %q{Will parse and receive JSON requests from the K2 API.}
-  spec.homepage      = "https://github.com/DavidKar1uk1/k2_connect_ruby.git"
+  spec.summary       = %q{The Gem to receive requests.}
+  spec.description   = %q{Kopokopo library to be used for Webhook Subscriptions.}
+  spec.homepage      = "https://github.com/kopokopo/k2-connect-ruby.git"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -20,8 +20,8 @@ Gem::Specification.new do |spec|
     spec.metadata["allowed_push_host"] = "https://rubygems.org"
 
     spec.metadata["homepage_uri"] = spec.homepage
-    spec.metadata["source_code_uri"] = "https://github.com/DavidKar1uk1/k2_connect_ruby.git"
-    spec.metadata["changelog_uri"] = "https://github.com/DavidKar1uk1/k2_connect_ruby.git/CHANGELOG.MD"
+    spec.metadata["source_code_uri"] = "https://github.com/kopokopo/k2-connect-ruby.git"
+    spec.metadata["changelog_uri"] = "https://github.com/kopokopo/k2-connect-ruby.git/CHANGELOG.MD"
   else
     raise "RubyGems 2.0 or newer is required to protect against " \
       "public gem pushes."

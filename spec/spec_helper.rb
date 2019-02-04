@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "k2_connect_ruby"
+require "k2-connect-ruby"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

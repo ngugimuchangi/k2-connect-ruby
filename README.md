@@ -1,6 +1,6 @@
 # K2ConnectRuby
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/k2_connect_ruby`. To experiment with that code, run `bin/console` for an interactive prompt.
+Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/k2-connect-ruby`. To experiment with that code, run `bin/console` for an interactive prompt.
 
 # Trial Implementation. Will be deleted upon completion. Avoid Getting Involved unless stated otherwise here. Do not Install the GEM!
 
@@ -9,7 +9,7 @@ Welcome to your new gem! In this directory, you'll find the files you need to be
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'k2_connect_ruby'
+gem 'k2-connect-ruby'
 ```
 
 And then execute:
@@ -18,7 +18,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install k2_connect_ruby
+    $ gem install k2-connect-ruby
 
 ## Usage
 
@@ -32,7 +32,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/k2_connect_ruby. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/k2-connect-ruby. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
@@ -40,4 +40,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the K2ConnectRuby project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/k2_connect_ruby/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the K2ConnectRuby project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/k2-connect-ruby/blob/master/CODE_OF_CONDUCT.md).

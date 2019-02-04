@@ -11,7 +11,7 @@ module K2ConnectRuby
                   :token_lifecycle,
                   :event_type
 
-    # Intialize with the reference_no(client_id) and api_key(client_secret)
+    # Intialize with the event_type
     def initialize (event_type)
       @event_type = event_type
     rescue Exception => e
@@ -23,6 +23,7 @@ module K2ConnectRuby
       raise K2Errors::K2AccessTokenError unless access_token.eql?(@subscriber_access_token)
     end
 
+    # Checks if access_token is nil/empty
     def nil_access_token(access_token)
       raise K2Errors::K2NilAccessToken if access_token.nil?
     end
