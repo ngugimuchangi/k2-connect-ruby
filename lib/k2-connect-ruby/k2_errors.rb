@@ -48,6 +48,22 @@ module K2ConnectRuby
         exit(false )
       end
     end
+
+    # Raises error when no subscription service is selected
+    class K2NilSubscription < K2Errors
+      def message
+        STDERR.puts("No Subscription Service Selected!")
+        exit(false )
+      end
+    end
+
+    # Raises error
+    class K2FalseTruthValue < K2Errors
+      def message
+        STDERR.puts("Unauthorised Signature!")
+        exit(false )
+      end
+    end
   end
 
 end

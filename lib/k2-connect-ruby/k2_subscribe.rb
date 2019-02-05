@@ -129,7 +129,7 @@ module K2ConnectRuby
           }.to_json
           the_webhook_subscribe(@subscriber_access_token, @k2_uri, @k2_request_body)
       else
-        puts ("Neither.")
+        raise K2Errors::K2NilSubscription
       end
     end
 
@@ -139,37 +139,37 @@ module K2ConnectRuby
     end
 
     #Class for Splitting the Responses
-    class Webhook_Split
-      attr_accessor :webhook_topic,
-                    :webhook_type,
-                    :webhook_reference,
-                    :webhook_msisdn,
-                    :webhook_amount,
-                    :webhook_currency,
-                    :webhook_till_number,
-                    :webhook_system,
-                    :webhook_status,
-                    :webhook_sender_first_name,
-                    :webhook_sender_middle_name,
-                    :webhook_sender_last_name
-      # method for splitting the responses
-      def split_response(webhook_response)
-        @webhook_topic = webhook_response.dig("topic")
-        @webhook_type = webhook_response.dig("event", "type")
-        @webhook_reference = webhook_response.dig("event", "resource", "reference")
-        @webhook_msisdn = webhook_response.dig("event", "resource", "sender_msisdn")
-        @webhook_amount = webhook_response.dig("event", "resource", "amount")
-        @webhook_currency = webhook_response.dig("event", "resource", "currency")
-        @webhook_till_number = webhook_response.dig("event", "resource", "till_number")
-        @webhook_system = webhook_response.dig("event", "resource", "system")
-        @webhook_status = webhook_response.dig("event", "resource", "status")
-        @webhook_sender_first_name = webhook_response.dig("event", "resource", "sender_first_name")
-        @webhook_sender_middle_name = webhook_response.dig("event", "resource", "sender_middle_name")
-        @webhook_sender_last_name = webhook_response.dig("event", "resource", "sender_last_name")
-      rescue Exception => e
-        puts(e.message)
-      end
-    end
+    # class Webhook_Split
+    #   attr_accessor :webhook_topic,
+    #                 :webhook_type,
+    #                 :webhook_reference,
+    #                 :webhook_msisdn,
+    #                 :webhook_amount,
+    #                 :webhook_currency,
+    #                 :webhook_till_number,
+    #                 :webhook_system,
+    #                 :webhook_status,
+    #                 :webhook_sender_first_name,
+    #                 :webhook_sender_middle_name,
+    #                 :webhook_sender_last_name
+    #   # method for splitting the responses
+    #   def split_response(webhook_response)
+    #     @webhook_topic = webhook_response.dig("topic")
+    #     @webhook_type = webhook_response.dig("event", "type")
+    #     @webhook_reference = webhook_response.dig("event", "resource", "reference")
+    #     @webhook_msisdn = webhook_response.dig("event", "resource", "sender_msisdn")
+    #     @webhook_amount = webhook_response.dig("event", "resource", "amount")
+    #     @webhook_currency = webhook_response.dig("event", "resource", "currency")
+    #     @webhook_till_number = webhook_response.dig("event", "resource", "till_number")
+    #     @webhook_system = webhook_response.dig("event", "resource", "system")
+    #     @webhook_status = webhook_response.dig("event", "resource", "status")
+    #     @webhook_sender_first_name = webhook_response.dig("event", "resource", "sender_first_name")
+    #     @webhook_sender_middle_name = webhook_response.dig("event", "resource", "sender_middle_name")
+    #     @webhook_sender_last_name = webhook_response.dig("event", "resource", "sender_last_name")
+    #   rescue Exception => e
+    #     puts(e.message)
+    #   end
+    # end
 
   end
 end
