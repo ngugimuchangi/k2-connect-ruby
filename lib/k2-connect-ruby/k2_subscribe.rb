@@ -66,12 +66,14 @@ module K2ConnectRuby
       puts("\nThe Access Token:\t#{@subscriber_access_token}")
       @valid_token_time = Yajl::Parser.parse(@k2_response_token.body)["expires_in"]
       puts("\nExpires In:\t#{@valid_token_time} seconds.")
+      return true
       # else raise exception
       # @token_lifecycle_start = Time.now
       # @subscriber_refresh_token = Yajl::Parser.parse(k2_response.body)["refresh_token"]
       # puts("\nThe Refresh Token:\t#{@subscriber_refresh_token}")
     rescue Exception => e
       puts(e.message)
+      return false
     end
 
     # Method for webhook subscribing general
