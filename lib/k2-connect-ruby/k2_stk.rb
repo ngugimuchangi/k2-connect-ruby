@@ -2,9 +2,17 @@ module K2ConnectRuby
   class K2Stk
     attr_accessor :k2_response_stk_receive,
                   :k2_response_stk_query,
-                  :k2_stk_location
+                  :k2_stk_location,
+                  :postman_k2_mock_server,
+                  :postman_k2_mock
+
+    def set_k2_mocks
+      @postman_k2_mock = "https://1e45b50f-87c5-4e17-88d8-cbb7ab661328.mock.pstmn.io"
+      @postman_k2_mock_server = "https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io"
+    end
+
     # Receive payments from M-PESA users via STK Push.
-    def receive_payments
+    def receive_payments(first_name, last_name, phone, email, value)
       k2_url = URI.parse("https://1e45b50f-87c5-4e17-88d8-cbb7ab661328.mock.pstmn.io//stk/payment_requests")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
       k2_https.use_ssl =true
@@ -14,14 +22,14 @@ module K2ConnectRuby
       k2_request.add_field('Accept', 'application/vnd.kopokopo.v4.hal+json')
       k2_request.add_field('Authorization', "Bearer access_token")
       k2_request_subscriber = {
-          "first_name": "David",
-          "last_name": "Kariuki",
-          "phone": "+254716230902",
-          "email": "david.mwangi@john.com"
+          "first_name": "#{first_name}",
+          "last_name": "#{last_name}",
+          "phone": "#{phone}",
+          "email": "#{email}"
       }.to_json
       k2_request_amount = {
           "currency": "KES",
-          "value": "1000"
+          "value": "#{value}"
       }.to_json
       k2_request_metadata = {
           "customer_id": "123456789",
