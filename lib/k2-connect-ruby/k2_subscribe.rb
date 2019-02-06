@@ -9,23 +9,26 @@ module K2ConnectRuby
                   :subscriber_refresh_token,
                   :valid_token_time,
                   :token_lifecycle,
-                  :event_type
+                  :event_type,
+                  :k2_response_token,
+                  :k2_response_webhook
 
     # Intialize with the event_type
     def initialize (event_type)
       @event_type = event_type
+      raise K2NonExistentSubscription if @event_type.nil?
     rescue Exception => e
       puts e.message
     end
 
-    # Checks if access_token is valid
+    # Checks if access_token is the same
     def valid_access_token(access_token)
-      raise K2Errors::K2AccessTokenError unless access_token.eql?(@subscriber_access_token)
+
     end
 
     # Checks if access_token is nil/empty
     def nil_access_token(access_token)
-      raise K2Errors::K2NilAccessToken if access_token.nil?
+      raise K2NilAccessToken if access_token.nil?
     end
 
     # Checks if refresh_token is valid
@@ -38,12 +41,13 @@ module K2ConnectRuby
     def token_lifecycle?(token_start, token_end)
       token_start_secs = token_start.strftime("%S") + token_start.strftime("%k")*3600 + token_start.strftime("%M")*60
       token_end_secs = token_end.strftime("%S") + token_end.strftime("%k")*3600 + token_end.strftime("%M")*60
-      # raise K2Errors::K2ExpiredToken if @valid_token_time.to_i <= token_end_secs.to_i-token_start_secs.to_i
+      # raise K2ExpiredToken if @valid_token_time.to_i <= token_end_secs.to_i-token_start_secs.to_i
       return true
     end
 
     # Method for sending the request to K2 sandbox or Mock Server (Receives the access_token)
     def token_request
+      # if @subscriber_access_token.eql(nil)
       k2_url = URI.parse("https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io/ouath")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
       k2_https.use_ssl =true
@@ -55,14 +59,15 @@ module K2ConnectRuby
           "client_secret": "2",
           "grant_type": "client_credentials"
       }.to_json
-      k2_response = k2_https.request(k2_request)
-      puts("\nThe Response:\t#{k2_response.body.to_s}")
+      @k2_response_token = k2_https.request(k2_request)
+      puts("\nThe Response:\t#{@k2_response_token.body.to_s}")
       # Add a method to fetch all the components of the response
-      @subscriber_access_token = Yajl::Parser.parse(k2_response.body)["access_token"]
+      @subscriber_access_token = Yajl::Parser.parse(@k2_response_token.body)["access_token"]
       puts("\nThe Access Token:\t#{@subscriber_access_token}")
-      @valid_token_time = Yajl::Parser.parse(k2_response.body)["expires_in"]
+      @valid_token_time = Yajl::Parser.parse(@k2_response_token.body)["expires_in"]
       puts("\nExpires In:\t#{@valid_token_time} seconds.")
-      @token_lifecycle_start = Time.now
+      # else raise exception
+      # @token_lifecycle_start = Time.now
       # @subscriber_refresh_token = Yajl::Parser.parse(k2_response.body)["refresh_token"]
       # puts("\nThe Refresh Token:\t#{@subscriber_refresh_token}")
     rescue Exception => e
@@ -71,7 +76,7 @@ module K2ConnectRuby
 
     # Method for webhook subscribing general
     def the_webhook_subscribe(access_token, k2_uri, k2_request_body)
-      valid_access_token(access_token) || nil_access_token(access_token) and return
+      nil_access_token(access_token) and return
       k2_https = Net::HTTP.new(k2_uri.host, k2_uri.port)
       k2_https.use_ssl =true
       k2_https.verify_mode =OpenSSL::SSL::VERIFY_PEER
@@ -80,8 +85,8 @@ module K2ConnectRuby
       k2_request.add_field("Accept", "application/json")
       k2_request.add_field("Authorization", "Bearer #{access_token}")
       k2_request.body = k2_request_body
-      k2_response = k2_https.request(k2_request)
-      puts("\nThe Response:\t#{k2_response.body.to_s}")
+      @k2_response_webhook = k2_https.request(k2_request)
+      puts("\nThe Response:\t#{@k2_response_webhook.body.to_s}")
     rescue Exception => e
       puts(e.message)
     end
@@ -90,7 +95,7 @@ module K2ConnectRuby
     def webhook_subscribe
       case
         # Buygoods Received
-        when @event_type.to_s.include?("received")
+        when @event_type.match?("buygoods_transaction_received")
           @k2_uri = URI.parse("https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io/webhook-subscription")
           @k2_request_body = {
               "event_type": "buygooods_transaction_received",
@@ -100,7 +105,7 @@ module K2ConnectRuby
           the_webhook_subscribe(@subscriber_access_token, @k2_uri, @k2_request_body)
 
         # Buygoods Reversed
-        when @event_type.to_s.include?("reversed")
+        when @event_type.match?("buygoods_transaction_reversed")
           @k2_uri = URI.parse("https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io/buygoods-transaction-reversed")
           @k2_request_body = {
               "event_type": "buygooods_transaction_reversed",
@@ -109,8 +114,8 @@ module K2ConnectRuby
           }.to_json
           the_webhook_subscribe(@subscriber_access_token, @k2_uri, @k2_request_body)
 
-        # Customer Created
-        when @event_type.to_s.include?("customer")
+        # Customer Created.  Match the entire string
+        when @event_type.match?("customer_created")
           @k2_uri = URI.parse("https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io/customer-created")
           @k2_request_body = {
               "event_type": "customer_created",
@@ -120,7 +125,7 @@ module K2ConnectRuby
           the_webhook_subscribe(@subscriber_access_token, @k2_uri, @k2_request_body)
 
         # Settlement Transfer Completed
-        when @event_type.to_s.include?("settlement")
+        when @event_type.match?("settlement_transfer_completed")
           @k2_uri = URI.parse("https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io/settlement")
           @k2_request_body = {
               "event_type": "settlement",
@@ -129,7 +134,7 @@ module K2ConnectRuby
           }.to_json
           the_webhook_subscribe(@subscriber_access_token, @k2_uri, @k2_request_body)
       else
-        raise K2Errors::K2NilSubscription
+        raise K2NonExistentSubscription
       end
     end
 
@@ -138,38 +143,7 @@ module K2ConnectRuby
 
     end
 
-    #Class for Splitting the Responses
-    # class Webhook_Split
-    #   attr_accessor :webhook_topic,
-    #                 :webhook_type,
-    #                 :webhook_reference,
-    #                 :webhook_msisdn,
-    #                 :webhook_amount,
-    #                 :webhook_currency,
-    #                 :webhook_till_number,
-    #                 :webhook_system,
-    #                 :webhook_status,
-    #                 :webhook_sender_first_name,
-    #                 :webhook_sender_middle_name,
-    #                 :webhook_sender_last_name
-    #   # method for splitting the responses
-    #   def split_response(webhook_response)
-    #     @webhook_topic = webhook_response.dig("topic")
-    #     @webhook_type = webhook_response.dig("event", "type")
-    #     @webhook_reference = webhook_response.dig("event", "resource", "reference")
-    #     @webhook_msisdn = webhook_response.dig("event", "resource", "sender_msisdn")
-    #     @webhook_amount = webhook_response.dig("event", "resource", "amount")
-    #     @webhook_currency = webhook_response.dig("event", "resource", "currency")
-    #     @webhook_till_number = webhook_response.dig("event", "resource", "till_number")
-    #     @webhook_system = webhook_response.dig("event", "resource", "system")
-    #     @webhook_status = webhook_response.dig("event", "resource", "status")
-    #     @webhook_sender_first_name = webhook_response.dig("event", "resource", "sender_first_name")
-    #     @webhook_sender_middle_name = webhook_response.dig("event", "resource", "sender_middle_name")
-    #     @webhook_sender_last_name = webhook_response.dig("event", "resource", "sender_last_name")
-    #   rescue Exception => e
-    #     puts(e.message)
-    #   end
-    # end
+
 
   end
 end

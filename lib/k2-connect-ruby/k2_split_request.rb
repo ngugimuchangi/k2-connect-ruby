@@ -29,11 +29,11 @@ module K2ConnectRuby
 
     # Confirm Truth value and carry out splitting
     def judge_truth(the_body)
-      raise K2Errors::K2NilRequestBody if the_body.nil?
+      raise K2NilRequestBody if the_body.nil?
       if @truth_value
         request_body_components(the_body)
       else
-        raise K2Errors::K2FalseTruthValue
+        raise K2FalseTruthValue
       end
     rescue Exception => e
       puts(e.message)
@@ -43,15 +43,13 @@ module K2ConnectRuby
     # Check the Event Type
     def check_type(the_body)
       case
-      when the_body.dig("event", "type").to_s.include?("Buygoods")
-        if the_body.dig("event", "type").to_s.include?("Reversed")
-          puts "Buygoods Transaction Reversed"
-        else
-          puts "Buygoods Transaction"
-        end
-      when the_body.dig("event", "type").to_s.include?("Settlement")
+      when the_body.dig("topic").match?("buygoods_transaction_received")
+        puts "Buygoods Transaction Received"
+      when the_body.dig("topic").match?("buygoods_transaction_reversed")
+        puts "Buygoods Transaction Reversed"
+      when the_body.dig("topic").match?("settlement_transfer_completed")
         puts "Settlement"
-      when the_body.dig("event", "type").to_s.include?("Customer")
+      when the_body.dig("topic").match?("customer_created")
         puts "Customer Created"
       else
         puts "Nothing"
