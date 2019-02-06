@@ -51,8 +51,10 @@ module K2ConnectRuby
       puts("\nThe Response:\t#{@k2_response_stk_receive.body.to_s}")
       @k2_stk_location = Yajl::Parser.parse(@k2_response_stk_receive.body)["location"]
       puts("\nThe Location Url:\t#{@k2_stk_location}")
+      return true
     rescue Exception => e
       puts(e.message)
+      return false
     end
 
     # Process Payment Request Result
