@@ -55,6 +55,14 @@ module K2ConnectRuby
     end
   end
 
+  # Raises error when registering for repeat token for subscription service
+  class K2RepeatTokenRequest < StandardError
+    def message
+      STDERR.puts("Token already generated for this subscription service!")
+      exit(false )
+    end
+  end
+
   # Raises error
   class K2FalseTruthValue < StandardError
     def message

@@ -46,8 +46,10 @@ module K2ConnectRuby
     end
 
     # Method for sending the request to K2 sandbox or Mock Server (Receives the access_token)
-    def token_request
-      # if @subscriber_access_token.eql(nil)
+    def token_request(client_id, client_secret)
+      unless @subscriber_access_token.eql?(nil)
+        raise K2RepeatTokenRequest
+      end
       k2_url = URI.parse("https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io/ouath")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
       k2_https.use_ssl =true
@@ -55,8 +57,8 @@ module K2ConnectRuby
       k2_request =Net::HTTP::Post.new(k2_url)
       k2_request.add_field('Content-Type', 'application/json')
       k2_request.body = {
-          "client_id": "1",
-          "client_secret": "2",
+          "client_id": "#{client_id}",
+          "client_secret": "#{client_secret}",
           "grant_type": "client_credentials"
       }.to_json
       @k2_response_token = k2_https.request(k2_request)
