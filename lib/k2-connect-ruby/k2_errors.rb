@@ -63,7 +63,7 @@ module K2ConnectRuby
     end
   end
 
-  # Raises error
+  # Raises error before splitting request should the K2Client not be authenticated
   class K2FalseTruthValue < StandardError
     def message
       STDERR.puts("Unauthorised Signature!")

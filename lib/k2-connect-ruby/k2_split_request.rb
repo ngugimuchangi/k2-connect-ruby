@@ -20,7 +20,6 @@ module K2ConnectRuby
                   :destination_type,
                   :destination_msisdn,
                   :destination_mm_system
-    # before_action :judge_truth, only: [:initialize]
 
     # Initialize with a truth Value
     def initialize(truth_value)
@@ -39,7 +38,6 @@ module K2ConnectRuby
       puts(e.message)
     end
 
-    # private :request_body_components
     # Check the Event Type
     def check_type(the_body)
       case

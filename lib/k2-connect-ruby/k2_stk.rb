@@ -6,14 +6,15 @@ module K2ConnectRuby
                   :postman_k2_mock_server,
                   :postman_k2_mock
 
+    # Sets the Url for the mock server / API server
     def set_k2_mocks
-      @postman_k2_mock = "https://1e45b50f-87c5-4e17-88d8-cbb7ab661328.mock.pstmn.io"
       @postman_k2_mock_server = "https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io"
     end
 
-    # Receive payments from M-PESA users via STK Push.
-    def receive_payments(first_name, last_name, phone, email, value)
-      k2_url = URI.parse("https://1e45b50f-87c5-4e17-88d8-cbb7ab661328.mock.pstmn.io//stk/payment_requests")
+    # Receive payments from M-PESA users.
+    def mpesa_receive_payments(first_name, last_name, phone, email, value)
+      set_k2_mocks
+      k2_url = URI.parse("#{@postman_k2_mock_server}/payment_requests")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
       k2_https.use_ssl =true
       k2_https.verify_mode =OpenSSL::SSL::VERIFY_PEER
@@ -57,8 +58,8 @@ module K2ConnectRuby
       return false
     end
 
-    # Process Payment Request Result
-    def process_payments(the_request)
+    # Process Payment Request Result for M-PESA payments
+    def mpesa_process_payments(the_request)
       raise K2NilRequest if the_request.nil?
       # The Response Body.
       @hash_body = Yajl::Parser.parse(the_request.body.string.as_json)
@@ -67,8 +68,9 @@ module K2ConnectRuby
     end
 
     # Query Payment Request Status
-    def query_payments
-      k2_url = URI.parse("https://1e45b50f-87c5-4e17-88d8-cbb7ab661328.mock.pstmn.io//stk/payment_requests")
+    def mpesa_query_payments
+      set_k2_mocks
+      k2_url = URI.parse("#{@postman_k2_mock_server}/payment_requests")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
       k2_https.use_ssl =true
       k2_https.verify_mode =OpenSSL::SSL::VERIFY_PEER

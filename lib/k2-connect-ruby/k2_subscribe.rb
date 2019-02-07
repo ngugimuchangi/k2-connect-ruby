@@ -21,7 +21,7 @@ module K2ConnectRuby
       puts e.message
     end
 
-    # Checks if access_token is the same
+    # Checks if access_token is the same. Later Work on.
     def valid_access_token(access_token)
 
     end
