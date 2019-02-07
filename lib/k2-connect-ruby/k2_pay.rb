@@ -27,21 +27,21 @@ module K2ConnectRuby
       case
       when pay_type.match?("mobile_wallet")
         k2_request_pay_recipient = {
-            "firstName": "#first_name}",
-            "lastName": "#last_name}",
-            "phone": "#phone}",
-            "email": "#email}",
-            "network": "#network-saf}"
+            "firstName": "#{first_name}",
+            "lastName": "#{last_name}",
+            "phone": "#{phone}",
+            "email": "#{email}",
+            "network": "#{network}"
         }.to_json
       when pay_type.match?("bank_account")
         k2_request_pay_recipient = {
-            "name": "#name}",
-            "account_name": "#account_name}",
-            "bank_id": "#bank_id}",
-            "bank_branch_id": "#bank_branch_id}",
-            "account_number": "#account_number-saf}",
-            "email": "#email-saf}",
-            "phone": "#phone-saf}"
+            "name": "#{first_name} #{last_name}",
+            "account_name": "#{account_name}",
+            "bank_id": "#{bank_id}",
+            "bank_branch_id": "#{bank_branch_id}",
+            "account_number": "#{account_number}",
+            "email": "#{email}",
+            "phone": "#{phone}"
         }.to_json
       else
         k2_request_pay_recipient = nil
