@@ -68,7 +68,7 @@ module K2ConnectRuby
     end
 
     # Query Payment Request Status
-    def mpesa_query_payments
+    def mpesa_query_payments(id)
       set_k2_mocks
       k2_url = URI.parse("#{@postman_k2_mock_server}/payment_requests")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
@@ -78,7 +78,7 @@ module K2ConnectRuby
       k2_request.add_field('Accept', 'application/vnd.kopokopo.v4.hal+json')
       k2_request.add_field('Authorization', "Bearer access_token")
       k2_request.body = {
-          "ID": "123456"
+          "ID": "#{id}"
       }.to_json
       @k2_response_stk_query = k2_https.request(k2_request)
       puts("\nThe Response:\t#{@k2_response_stk_query.body.to_s}")
