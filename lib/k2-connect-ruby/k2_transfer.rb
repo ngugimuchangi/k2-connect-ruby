@@ -13,7 +13,7 @@ module K2ConnectRuby
     end
 
     # Create a Verified Settlement Account via API
-    def settlement_account
+    def settlement_account(account_name, bank_ref, bank_branch_ref, account_number)
       set_k2_mocks
       k2_url = URI.parse("#{@postman_k2_mock_server}/merchant_bank_accounts")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
@@ -30,9 +30,9 @@ module K2ConnectRuby
           "bank_branch_ref": "#{bank_branch_ref}",
           "account_number": "#{account_number}"
       }.to_json
-      @k2_response_pay = k2_https.request(k2_request)
-      puts("\nThe Response:\t#{@k2_response_pay.body.to_s}")
-      @k2_stk_location = Yajl::Parser.parse(@k2_response_pay.body)["location"]
+      k2_response_transfer = k2_https.request(k2_request)
+      puts("\nThe Response:\t#{k2_response_transfer.body.to_s}")
+      @k2_stk_location = Yajl::Parser.parse(k2_response_transfer.body)["location"]
       puts("\nThe Location Url:\t#{@k2_stk_location}")
       return true
     rescue Exception => e
@@ -41,7 +41,8 @@ module K2ConnectRuby
     end
 
     # Create a either a 'blind' transfer, for when destination is specified, and a 'targeted' transfer which has a specified destination.
-    def transfer_funds(destination)
+    def transfer_funds(destination, currency, value)
+      set_k2_mocks
       k2_url = URI.parse("#{@postman_k2_mock_server}/transfers")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
       k2_https.use_ssl =true
@@ -54,18 +55,18 @@ module K2ConnectRuby
         # Blind Transfer
         k2_request.body = {
             "amount": {
-                "currency": "KES",
-                "value": "2250.00"
+                "currency": "#{currency}",
+                "value": "#{value}"
             }
         }.to_json
       else
         # Targeted Transfer
         k2_request.body = {
             "amount": {
-                "currency": "KES",
-                "value": "2250.00"
+                "currency": "#{currency}",
+                "value": "#{value}"
             },
-            "destination": "d76265cd-0000-e511-80da-0aa34a9b0000"
+            "destination": "#{destination}"
         }.to_json
       end
       @k2_response_transfer = k2_https.request(k2_request)
@@ -75,7 +76,8 @@ module K2ConnectRuby
     end
 
     # Check the status of a prior initiated Transfer.
-    def query_transfer
+    def query_transfer(id)
+      set_k2_mocks
       k2_url = URI.parse("#{@postman_k2_mock_server}/transfers")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
       k2_https.use_ssl =true
@@ -84,7 +86,7 @@ module K2ConnectRuby
       k2_request.add_field('Accept', 'application/vnd.kopokopo.v4.hal+json')
       k2_request.add_field('Authorization', "Bearer access_token")
       k2_request.body = {
-          "ID": "123456"
+          "ID": "#{id}"
       }.to_json
       @k2_response_transfer = k2_https.request(k2_request)
       puts("\nThe Response:\t#{@k2_response_transfer.body.to_s}")

@@ -1,7 +1,8 @@
 module K2ConnectRuby
   class K2Pay
     attr_accessor :k2_response_pay,
-                  :postman_mock_server
+                  :postman_mock_server,
+                  :params_body
 
     # https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io mock server
     # def initialize(postman_mock_server)
@@ -13,8 +14,9 @@ module K2ConnectRuby
       @postman_k2_mock_server = "https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io"
     end
 
-    # Adding PAY Recipients for either mobile_wallets or bank_accounts as destination of your payments.
-    def adding_pay_reciepients(pay_type)
+    # Adding PAY Recipients with either mobile_wallets or bank_accounts as destination of your payments.
+    # The Params from the form are passed through.
+    def pay_recipients(pay_recipient_params)
       set_k2_mocks
       k2_url = URI.parse("#{@postman_mock_server}/pay_recipients")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
@@ -25,29 +27,31 @@ module K2ConnectRuby
       k2_request.add_field('Accept', 'application/vnd.kopokopo.v4.hal+json')
       k2_request.add_field('Authorization', "Bearer access_token")
       case
-      when pay_type.match?("mobile_wallet")
+        # In the case of mobile pay
+      when pay_recipient_params["pay_type"].match?("mobile_wallet")
         k2_request_pay_recipient = {
-            "firstName": "#{first_name}",
-            "lastName": "#{last_name}",
-            "phone": "#{phone}",
-            "email": "#{email}",
-            "network": "#{network}"
+            "firstName": "#{pay_recipient_params["first_name"]}",
+            "lastName": "#{pay_recipient_params["last_name"]}",
+            "phone": "#{pay_recipient_params["phone"]}",
+            "email": "#{pay_recipient_params["email"]}",
+            "network": "#{pay_recipient_params["network"]}"
         }.to_json
-      when pay_type.match?("bank_account")
+        # In the case of bank pay
+      when pay_params["pay_type"].match?("bank_account")
         k2_request_pay_recipient = {
-            "name": "#{first_name} #{last_name}",
-            "account_name": "#{account_name}",
-            "bank_id": "#{bank_id}",
-            "bank_branch_id": "#{bank_branch_id}",
-            "account_number": "#{account_number}",
-            "email": "#{email}",
-            "phone": "#{phone}"
+            "name": "#{pay_recipient_params["first_name"]} #{pay_recipient_params["last_name"]}",
+            "account_name": "#{pay_recipient_params["acc_name"]}",
+            "bank_id": "#{pay_recipient_params["bank_id"]}",
+            "bank_branch_id": "#{pay_recipient_params["bank_branch_id"]}",
+            "account_number": "#{pay_recipient_params["acc_no"]}",
+            "email": "#{pay_recipient_params["pay_type"]}",
+            "phone": "#{pay_recipient_params["email"]}"
         }.to_json
       else
         k2_request_pay_recipient = nil
       end
       k2_request.body = {
-          "type": "#{pay_type}",
+          "type": "#{pay_recipient_params["pay_type"]}",
           "pay_recipient": k2_request_pay_recipient
       }.to_json
       @k2_response_pay = k2_https.request(k2_request)
@@ -61,7 +65,7 @@ module K2ConnectRuby
     end
 
     # Create an outgoing Payment to a third party.
-    def pay_create
+    def pay_create(pay_create_params)
       set_k2_mocks
       k2_url = URI.parse("#{@postman_mock_server}/payments")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
@@ -72,8 +76,8 @@ module K2ConnectRuby
       k2_request.add_field('Accept', 'application/vnd.kopokopo.v4.hal+json')
       k2_request.add_field('Authorization', "Bearer access_token")
       k2_request_pay_amount = {
-          "currency": "KES",
-          "value": 20000
+          "currency": "#{pay_create_params["currency"]}",
+          "value": "#{pay_create_params["value"]}"
       }.to_json
       k2_request_pay_metadata = {
           "customerId": "8675309",
@@ -108,7 +112,7 @@ module K2ConnectRuby
     end
 
     # Query the status of a previously initiated Payment request
-    def query_pay
+    def query_pay(id)
       set_k2_mocks
       k2_url = URI.parse("#{@postman_mock_server}/payments")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
@@ -118,7 +122,7 @@ module K2ConnectRuby
       k2_request.add_field('Accept', 'application/vnd.kopokopo.v4.hal+json')
       k2_request.add_field('Authorization', "Bearer access_token")
       k2_request.body = {
-          "ID": "123456"
+          "ID": "#{id}"
       }.to_json
       @k2_response_pay = k2_https.request(k2_request)
       puts("\nThe Response:\t#{@k2_response_pay.body.to_s}")
