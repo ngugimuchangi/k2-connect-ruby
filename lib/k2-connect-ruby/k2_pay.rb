@@ -18,7 +18,7 @@ module K2ConnectRuby
     # The Params from the form are passed through.
     def pay_recipients(pay_recipient_params)
       set_k2_mocks
-      k2_url = URI.parse("#{@postman_mock_server}/pay_recipients")
+      k2_url = URI.parse("#{@postman_k2_mock_server}/pay_recipients")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
       k2_https.use_ssl =true
       k2_https.verify_mode =OpenSSL::SSL::VERIFY_PEER
@@ -37,7 +37,7 @@ module K2ConnectRuby
             "network": "#{pay_recipient_params["network"]}"
         }.to_json
         # In the case of bank pay
-      when pay_params["pay_type"].match?("bank_account")
+      when pay_recipient_params["pay_type"].match?("bank_account")
         k2_request_pay_recipient = {
             "name": "#{pay_recipient_params["first_name"]} #{pay_recipient_params["last_name"]}",
             "account_name": "#{pay_recipient_params["acc_name"]}",
@@ -67,7 +67,7 @@ module K2ConnectRuby
     # Create an outgoing Payment to a third party.
     def pay_create(pay_create_params)
       set_k2_mocks
-      k2_url = URI.parse("#{@postman_mock_server}/payments")
+      k2_url = URI.parse("#{@postman_k2_mock_server}/payments")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
       k2_https.use_ssl =true
       k2_https.verify_mode =OpenSSL::SSL::VERIFY_PEER
@@ -114,7 +114,7 @@ module K2ConnectRuby
     # Query the status of a previously initiated Payment request
     def query_pay(id)
       set_k2_mocks
-      k2_url = URI.parse("#{@postman_mock_server}/payments")
+      k2_url = URI.parse("#{@postman_k2_mock_server}/payments")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
       k2_https.use_ssl =true
       k2_https.verify_mode =OpenSSL::SSL::VERIFY_PEER
