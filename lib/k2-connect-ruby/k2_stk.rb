@@ -12,7 +12,7 @@ module K2ConnectRuby
     end
 
     # Receive payments from M-PESA users.
-    def mpesa_receive_payments(first_name, last_name, phone, email, value)
+    def mpesa_receive_payments(first_name, last_name, phone, email, currency, value)
       set_k2_mocks
       k2_url = URI.parse("#{@postman_k2_mock_server}/payment_requests")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
@@ -29,7 +29,7 @@ module K2ConnectRuby
           "email": "#{email}"
       }.to_json
       k2_request_amount = {
-          "currency": "KES",
+          "currency": "#{currency}",
           "value": "#{value}"
       }.to_json
       k2_request_metadata = {
