@@ -66,7 +66,7 @@ module K2ConnectRuby
 
     def message
       STDERR.puts("Nil Request Body Argument!")
-      exit(false )
+      exit(@error )
     end
   end
 

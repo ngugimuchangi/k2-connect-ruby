@@ -30,7 +30,8 @@ module K2ConnectRuby
     def judge_truth(the_body)
       raise K2NilRequestBody if the_body.nil?
       raise K2FalseTruthValue unless @truth_value
-      request_body_components(the_body) if @truth_value
+      check_type(the_body)
+      # request_body_components(the_body) if @truth_value
     rescue K2FalseTruthValue => k3
       puts(k3.message)
     rescue K2NilRequestBody => k2
