@@ -4,7 +4,7 @@ module K2ConnectRuby
     attr_reader :status, :error
     def initialize(_error=nil, _status=nil)
       @error = _error || 401
-      @status = _status || :unprocessable_entity
+      @status = _status || :unauthorized
     end
 
     def message
@@ -15,16 +15,23 @@ module K2ConnectRuby
 
   # For cases where the secret key is nil/null/empty.
   class K2NilSecretKey < StandardError
-    attr_reader :status, :error
-    def initialize(_error=nil, _status=nil)
+    attr_reader :status, :error, :message
+    def initialize(_error=nil, _status=nil, _message=nil)
       @error = _error || 403
-      @status = _status || :unprocessable_entity
+      @status = _status || :forbidden
+      @message = _message || "No Secret Key Given!"
+      render_it
     end
 
-    def message
-      STDERR.puts("No Secret Key Given!")
-      exit(false )
+    def render_it
+      puts("render(json: { success: false, error: #{@message}, code: #{@error} })")
+      # render(status: @error, json: { success: false, error: @message, code: @error }
+      exit(false)
     end
+
+    # def message
+    #   render status: @error, json: { success: false, error: message, code: @error }
+    # end
   end
 
   # For cases where the access token is nil/null/empty.
@@ -32,7 +39,7 @@ module K2ConnectRuby
     attr_reader :status, :error
     def initialize(_error=nil, _status=nil)
       @error = _error || 400
-      @status = _status || :unprocessable_entity
+      @status = _status || :bad_request
     end
 
     def message
@@ -47,7 +54,7 @@ module K2ConnectRuby
     attr_reader :status, :error
     def initialize(_error=nil, _status=nil)
       @error = _error || 401
-      @status = _status || :unprocessable_entity
+      @status = _status || :unauthorized
     end
 
     def message?
@@ -61,12 +68,12 @@ module K2ConnectRuby
     attr_reader :status, :error
     def initialize(_error=nil, _status=nil)
       @error = _error || 400
-      @status = _status || :unprocessable_entity
+      @status = _status || :bad_request
     end
 
     def message
       STDERR.puts("Nil Request Body Argument!")
-      exit(@error )
+      exit(false )
     end
   end
 
@@ -75,7 +82,7 @@ module K2ConnectRuby
     attr_reader :status, :error
     def initialize(_error=nil, _status=nil)
       @error = _error || 401
-      @status = _status || :unprocessable_entity
+      @status = _status || :unauthorized
     end
 
     def message
@@ -89,7 +96,7 @@ module K2ConnectRuby
     attr_reader :status, :error
     def initialize(_error=nil, _status=nil)
       @error = _error || 400
-      @status = _status || :unprocessable_entity
+      @status = _status || :bad_request
     end
 
     def message
@@ -103,7 +110,7 @@ module K2ConnectRuby
     attr_reader :status, :error
     def initialize(_error=nil, _status=nil)
       @error = _error || 404
-      @status = _status || :unprocessable_entity
+      @status = _status || :not_found
     end
 
     def message
@@ -117,7 +124,7 @@ module K2ConnectRuby
     attr_reader :status, :error
     def initialize(_error=nil, _status=nil)
       @error = _error || 400
-      @status = _status || :unprocessable_entity
+      @status = _status || :bad_request
     end
 
     def message
@@ -131,7 +138,7 @@ module K2ConnectRuby
     attr_reader :status, :error
     def initialize(_error=nil, _status=nil)
       @error = _error || 400
-      @status = _status || :unprocessable_entity
+      @status = _status || :bad_request
     end
 
     def message
@@ -145,11 +152,25 @@ module K2ConnectRuby
     attr_reader :status, :error
     def initialize(_error=nil, _status=nil)
       @error = _error || 401
-      @status = _status || :unprocessable_entity
+      @status = _status || :unauthorized
     end
 
     def message
       STDERR.puts("Unauthorised Signature!")
+      exit(false )
+    end
+  end
+
+  # Raises error before splitting request should the K2Client not be authenticated
+  class K2UnspecifiedEvent < StandardError
+    attr_reader :status, :error
+    def initialize(_error=nil, _status=nil)
+      @error = _error || 404
+      @status = _status || :not_found
+    end
+
+    def message
+      STDERR.puts("No Other Specified Event!")
       exit(false )
     end
   end

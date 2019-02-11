@@ -15,7 +15,7 @@ module K2ConnectRuby
 
     # Intialize with the event_type
     def initialize (event_type)
-      raise K2NilEvent if event_type.nil?
+      raise K2NilEvent.new if event_type.nil?
       @event_type = event_type
     rescue K2NilEvent => k2
       puts k2.message
@@ -26,7 +26,7 @@ module K2ConnectRuby
     # Method for sending the request to K2 sandbox or Mock Server (Receives the access_token)
     def token_request(client_id, client_secret)
       # Raised in the scenario that when requests for an access_token even though they already have one
-      raise K2RepeatTokenRequest unless @subscriber_access_token.eql?nil
+      raise K2RepeatTokenRequest.new unless @subscriber_access_token.eql?nil
 
       k2_url = URI.parse("https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io/ouath")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
@@ -55,7 +55,7 @@ module K2ConnectRuby
     # Method for webhook subscribing general
     def the_webhook_subscribe(access_token, k2_uri, k2_request_body)
       # Checks if access_token argument is nil/empty
-      raise K2NilAccessToken if access_token.nil?
+      raise K2NilAccessToken.new if access_token.nil?
 
       k2_https = Net::HTTP.new(k2_uri.host, k2_uri.port)
       k2_https.use_ssl =true
@@ -114,7 +114,7 @@ module K2ConnectRuby
           }.to_json
           the_webhook_subscribe(@subscriber_access_token, @k2_uri, @k2_request_body)
       else
-        raise K2NonExistentSubscription
+        raise K2NonExistentSubscription.new
       end
     rescue K2NonExistentSubscription => k2
       puts(k2.message)

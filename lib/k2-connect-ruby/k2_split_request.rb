@@ -28,14 +28,15 @@ module K2ConnectRuby
 
     # Confirm Truth value and carry out splitting
     def judge_truth(the_body)
-      raise K2NilRequestBody if the_body.nil?
-      raise K2FalseTruthValue unless @truth_value
+      raise K2NilRequestBody.new if the_body.nil?
+      raise K2FalseTruthValue.new unless @truth_value
       check_type(the_body)
       # request_body_components(the_body) if @truth_value
     rescue K2FalseTruthValue => k3
       puts(k3.message)
     rescue K2NilRequestBody => k2
       puts(k2.message)
+      return k2.error
     rescue StandardError => e
       puts(e.message)
     end
@@ -44,21 +45,22 @@ module K2ConnectRuby
     def check_type(the_body)
       case
       when the_body.dig("topic").match?("buygoods_transaction_received")
-        request_body_components(the_body)
+        received_components(the_body)
       when the_body.dig("topic").match?("buygoods_transaction_reversed")
-        puts "Buygoods Transaction Reversed"
+        reversed_components(the_body)
       when the_body.dig("topic").match?("settlement_transfer_completed")
-        puts "Settlement"
+        settlement_components(the_body)
       when the_body.dig("topic").match?("customer_created")
-        puts "Customer Created"
+        customer_components(the_body)
       else
-        # Put an error
-        puts "Nothing"
+        raise K2UnspecifiedEvent.new
       end
+    rescue K2UnspecifiedEvent => k2
+      puts(k2.message)
     end
 
     # Splits the Body into the different elements of the request body. For Transaction Received.
-    def request_body_components(the_body)
+    def received_components(the_body)
       @topic = the_body.dig("topic")
       @type = the_body.dig("event", "type")
       @reference_number = the_body.dig("event", "resource", "reference")
@@ -75,7 +77,7 @@ module K2ConnectRuby
     end
 
     # Splits the Body into the different elements of the request body. For Transaction Reversed.
-    def transaction_reversed_components(the_body)
+    def reversed_components(the_body)
       @topic = the_body.dig("topic")
       @type = the_body.dig("event", "type")
       @reference_number = the_body.dig("event", "resource", "reference")
@@ -113,7 +115,7 @@ module K2ConnectRuby
     end
 
     # Splits the Body into the different elements of the request body. For Customer Created.
-    def customer_created_components(the_body)
+    def customer_components(the_body)
       @topic = the_body.dig("topic")
       @type = the_body.dig("event", "type")
       @msisdn = the_body.dig("event", "resource", "sender_msisdn")

@@ -100,7 +100,7 @@ module K2ConnectRuby
 
     # Process Pay Result Asynchronously after Payment is initiated
     def process_pay(the_request)
-      raise K2NilRequest if the_request.nil?
+      raise K2NilRequest.new if the_request.nil?
       # The Response Body.
       @hash_body = Yajl::Parser.parse(the_request.body.string.as_json)
       # The Response Header

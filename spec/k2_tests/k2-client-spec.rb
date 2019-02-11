@@ -23,7 +23,7 @@ RSpec.describe "K2Client" do
     context 'Nil Request Body' do
       it 'should raise error for nil request' do
         the_request = nil
-        expect{ raise K2ConnectRuby::K2NilRequest if the_request.nil? }.to raise_error(K2ConnectRuby::K2NilRequest)
+        expect{ raise K2ConnectRuby::K2NilRequest.new if the_request.nil? }.to raise_error(K2ConnectRuby::K2NilRequest)
       end
     end
 

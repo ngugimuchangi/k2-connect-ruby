@@ -60,7 +60,7 @@ module K2ConnectRuby
 
     # Process Payment Request Result for M-PESA payments
     def mpesa_process_payments(the_request)
-      raise K2NilRequest if the_request.nil?
+      raise K2NilRequest.new if the_request.nil?
       # The Response Body.
       @hash_body = Yajl::Parser.parse(the_request.body.string.as_json)
       # The Response Header

@@ -16,7 +16,7 @@ RSpec.describe "K2Authenticator" do
       api_secret_key = nil
       signature = nil
       it 'should raise error' do
-        expect{ raise K2ConnectRuby::K2NilAuthArgument if body.nil? || api_secret_key.nil? || signature.nil? }.to raise_error(K2ConnectRuby::K2NilAuthArgument)
+        expect{ raise K2ConnectRuby::K2NilAuthArgument.new if body.nil? || api_secret_key.nil? || signature.nil? }.to raise_error(K2ConnectRuby::K2NilAuthArgument)
       end
     end
 
