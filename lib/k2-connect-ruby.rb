@@ -8,7 +8,7 @@ require "k2-connect-ruby/version"
 require "k2-connect-ruby/client"
 require "k2-connect-ruby/k2_stk"
 require "k2-connect-ruby/k2_pay"
-require 'active_record'
+# require 'active_record'
 require 'net/http'
 require "openssl"
 require "yajl"
@@ -17,6 +17,5 @@ require 'uri'
 
 
 module K2ConnectRuby
-  class Error < StandardError; end
   # Your code goes here...
 end
