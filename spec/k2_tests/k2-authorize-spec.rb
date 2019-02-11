@@ -1,5 +1,5 @@
-RSpec.describe "K2Authorize" do
-  let(:k2_auth) { K2ConnectRuby::K2Authorize.new }
+RSpec.describe "K2Authenticator" do
+  let(:k2_auth) { K2ConnectRuby::K2Authenticator.new }
 
   # Implicit receiver
   subject { k2_auth }

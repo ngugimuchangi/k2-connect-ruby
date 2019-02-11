@@ -15,7 +15,7 @@ module K2ConnectRuby
       @api_secret_key = api_secret_key
     rescue K2NilSecretKey => k2
       puts(k2.message)
-    rescue Exception => e
+    rescue StandardError => e
       puts(e.message)
     end
 
@@ -30,7 +30,7 @@ module K2ConnectRuby
       @k2_signature = @hash_header["HTTP_X_KOPOKOPO_SIGNATURE"]
     rescue K2NilRequest => k2
       puts(k2.message)
-    rescue Exception => e
+    rescue StandardError => e
       puts(e.message)
     end
   end

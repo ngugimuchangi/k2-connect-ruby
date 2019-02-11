@@ -53,7 +53,7 @@ module K2ConnectRuby
       @k2_stk_location = Yajl::Parser.parse(@k2_response_stk_receive.body)["location"]
       puts("\nThe Location Url:\t#{@k2_stk_location}")
       return true
-    rescue Exception => e
+    rescue StandardError => e
       puts(e.message)
       return false
     end
@@ -65,11 +65,14 @@ module K2ConnectRuby
       @hash_body = Yajl::Parser.parse(the_request.body.string.as_json)
       # The Response Header
       @hash_header = Yajl::Parser.parse(the_request.headers.env.select{|k, _| k =~ /^HTTP_/}.to_json)
+    rescue K2NilRequest => k2
+      puts(k2.message)
     end
 
     # Query Payment Request Status
     def mpesa_query_payments(id)
       set_k2_mocks
+
       k2_url = URI.parse("#{@postman_k2_mock_server}/payment_requests")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
       k2_https.use_ssl =true

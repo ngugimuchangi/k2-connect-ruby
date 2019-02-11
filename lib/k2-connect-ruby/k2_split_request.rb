@@ -29,12 +29,13 @@ module K2ConnectRuby
     # Confirm Truth value and carry out splitting
     def judge_truth(the_body)
       raise K2NilRequestBody if the_body.nil?
-      if @truth_value
-        request_body_components(the_body)
-      else
-        raise K2FalseTruthValue
-      end
-    rescue Exception => e
+      raise K2FalseTruthValue unless @truth_value
+      request_body_components(the_body) if @truth_value
+    rescue K2FalseTruthValue => k3
+      puts(k3.message)
+    rescue K2NilRequestBody => k2
+      puts(k2.message)
+    rescue StandardError => e
       puts(e.message)
     end
 
@@ -50,6 +51,7 @@ module K2ConnectRuby
       when the_body.dig("topic").match?("customer_created")
         puts "Customer Created"
       else
+        # Put an error
         puts "Nothing"
       end
     end
@@ -67,7 +69,7 @@ module K2ConnectRuby
       @first_name = the_body.dig("event", "resource", "sender_first_name")
       @middle_name = the_body.dig("event", "resource", "sender_middle_name")
       @last_name = the_body.dig("event", "resource", "sender_last_name")
-    rescue Exception => e
+    rescue StandardError => e
       puts(e.message)
     end
 
@@ -86,7 +88,7 @@ module K2ConnectRuby
       @first_name = the_body.dig("event", "resource", "sender_first_name")
       @middle_name = the_body.dig("event", "resource", "sender_middle_name")
       @last_name = the_body.dig("event", "resource", "sender_last_name")
-    rescue Exception => e
+    rescue StandardError => e
       puts(e.message)
     end
 
@@ -105,7 +107,7 @@ module K2ConnectRuby
       @destination_type = the_body.dig("event", "resource", "destination", "type")
       @destination_msisdn = the_body.dig("event", "resource", "destination", "msisdn")
       @destination_mm_system = the_body.dig("event", "resource", "destination", "mm_system")
-    rescue Exception => e
+    rescue StandardError => e
       puts(e.message)
     end
 
@@ -117,7 +119,7 @@ module K2ConnectRuby
       @first_name = the_body.dig("event", "resource", "sender_first_name")
       @middle_name = the_body.dig("event", "resource", "sender_middle_name")
       @last_name = the_body.dig("event", "resource", "sender_last_name")
-    rescue Exception => e
+    rescue StandardError => e
       puts(e.message)
     end
   end

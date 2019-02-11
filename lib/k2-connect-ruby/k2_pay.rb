@@ -4,11 +4,6 @@ module K2ConnectRuby
                   :postman_mock_server,
                   :params_body
 
-    # https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io mock server
-    # def initialize(postman_mock_server)
-    #   @postman_mock_server = postman_mock_server
-    # end
-
     # Sets the Url for the mock server / API server
     def set_k2_mocks
       @postman_k2_mock_server = "https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io"
@@ -48,6 +43,7 @@ module K2ConnectRuby
             "phone": "#{pay_recipient_params["email"]}"
         }.to_json
       else
+        # Add Custom error
         k2_request_pay_recipient = nil
       end
       k2_request.body = {
@@ -59,7 +55,7 @@ module K2ConnectRuby
       @k2_stk_location = Yajl::Parser.parse(@k2_response_pay.body)["location"]
       puts("\nThe Location Url:\t#{@k2_stk_location}")
       return true
-    rescue Exception => e
+    rescue StandardError => e
       puts(e.message)
       return false
     end
@@ -97,7 +93,7 @@ module K2ConnectRuby
       @k2_stk_location = Yajl::Parser.parse(@k2_response_pay.body)["location"]
       puts("\nThe Location Url:\t#{@k2_stk_location}")
       return true
-    rescue Exception => e
+    rescue StandardError => e
       puts(e.message)
       return false
     end
@@ -109,6 +105,8 @@ module K2ConnectRuby
       @hash_body = Yajl::Parser.parse(the_request.body.string.as_json)
       # The Response Header
       @hash_header = Yajl::Parser.parse(the_request.headers.env.select{|k, _| k =~ /^HTTP_/}.to_json)
+    rescue K2NilRequest => k2
+      puts(k2.message)
     end
 
     # Query the status of a previously initiated Payment request
