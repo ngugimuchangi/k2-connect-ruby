@@ -14,7 +14,7 @@ module K2ConnectRuby
       raise K2NilSecretKey.new if api_secret_key.nil?
       @api_secret_key = api_secret_key
     rescue K2NilSecretKey => k2
-      k2.render_it
+      return k2.render_it
     rescue StandardError => e
       puts(e.message)
     end
