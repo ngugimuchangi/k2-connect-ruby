@@ -23,9 +23,9 @@ module K2ConnectRuby
     end
 
     def message
-      render status: @error, json: { success: false, error: message, code: @error }
+      puts("raise ActionController::BadRequest.new")
       STDERR.puts("No Secret Key Given!")
-      exit(false )
+      raise ActiveRecord::RecordNotFound.new(@message)
     end
   end
 
