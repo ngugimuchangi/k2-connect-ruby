@@ -25,7 +25,7 @@ module K2ConnectRuby
     end
 
     def render_it
-      render plain: {error: @message}.to_json, status: @error, content_type: 'application/json'
+      puts("render plain: {error: @message}.to_json, status: @error, content_type: 'application/json'")
       exit(false)
     end
 
