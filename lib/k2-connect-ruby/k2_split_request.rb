@@ -44,7 +44,7 @@ module K2ConnectRuby
     def check_type(the_body)
       case
       when the_body.dig("topic").match?("buygoods_transaction_received")
-        puts "Buygoods Transaction Received"
+        request_body_components(the_body)
       when the_body.dig("topic").match?("buygoods_transaction_reversed")
         puts "Buygoods Transaction Reversed"
       when the_body.dig("topic").match?("settlement_transfer_completed")
