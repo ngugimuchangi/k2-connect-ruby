@@ -7,6 +7,14 @@ module K2ConnectRuby
     end
   end
 
+  # For cases where the secret key is nil/null/empty.
+  class K2NilSecretKey < StandardError
+    def message
+      STDERR.puts("No Secret Key Given!")
+      exit(false )
+    end
+  end
+
   # For cases where the access token is nil/null/empty.
   class K2NilAccessToken < StandardError
     def message
@@ -19,7 +27,7 @@ module K2ConnectRuby
   class K2ExpiredToken < StandardError
     def message?
       STDERR.puts("Expired Access Token.")
-      return false
+      exit(false )
     end
   end
 

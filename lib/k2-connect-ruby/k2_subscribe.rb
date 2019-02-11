@@ -47,6 +47,7 @@ module K2ConnectRuby
 
     # Method for sending the request to K2 sandbox or Mock Server (Receives the access_token)
     def token_request(client_id, client_secret)
+
       unless @subscriber_access_token.eql?(nil)
         raise K2RepeatTokenRequest
       end
@@ -80,7 +81,11 @@ module K2ConnectRuby
 
     # Method for webhook subscribing general
     def the_webhook_subscribe(access_token, k2_uri, k2_request_body)
-      nil_access_token(access_token) and return
+      # Checks if access_token is nil/empty
+      if access_token.nil?
+        raise K2NilAccessToken
+      end
+
       k2_https = Net::HTTP.new(k2_uri.host, k2_uri.port)
       k2_https.use_ssl =true
       k2_https.verify_mode =OpenSSL::SSL::VERIFY_PEER
