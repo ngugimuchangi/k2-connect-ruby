@@ -11,10 +11,10 @@ module K2ConnectRuby
 
     # Initialize method
     def initialize(api_secret_key)
-      raise K2NilSecretKey.new if api_secret_key.nil?
+      raise K2NilSecretKey.new.render_it if api_secret_key.nil?
       @api_secret_key = api_secret_key
     rescue K2NilSecretKey => k2
-      return k2.render_it
+      k2.render_it
     rescue StandardError => e
       puts(e.message)
     end
