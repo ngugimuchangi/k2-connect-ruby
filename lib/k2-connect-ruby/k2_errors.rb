@@ -1,5 +1,4 @@
 module K2ConnectRuby
-  # render plain: {error: 'This is my error message.'}, status: 401, content_type: 'application/json'
   # For cases where the access token is not equal to the one provided at K2ConnectRuby::K2Subscribe.token_request()
   class K2AccessTokenError < StandardError
     attr_reader :status, :error
@@ -18,20 +17,16 @@ module K2ConnectRuby
   class K2NilSecretKey < StandardError
     attr_reader :status, :error, :message
     def initialize(_error=nil, _status=nil, _message=nil)
-      @error = _error || 403
-      @status = _status || :forbidden
-      @message = _message || "No Secret Key Given!"
-      render_it
+      @error = 403
+      @status = :forbidden
+      @message = "No Secret Key Given!"
     end
 
-    def render_it
-      puts("render plain: {error: @message}.to_json, status: @error, content_type: 'application/json'")
-      exit(false)
+    def message
+      render status: @error, json: { success: false, error: message, code: @error }
+      STDERR.puts("No Secret Key Given!")
+      exit(false )
     end
-
-    # def message
-    #   render status: @error, json: { success: false, error: message, code: @error }
-    # end
   end
 
   # For cases where the access token is nil/null/empty.
@@ -176,3 +171,8 @@ module K2ConnectRuby
   end
 
 end
+
+
+# These are how to render the errors
+# render plain: {error: 'This is my error message.'}, status: 401, content_type: 'application/json'
+# raise ActionController::BadRequest.new Works too
