@@ -24,8 +24,7 @@ module K2ConnectRuby
     end
 
     def render_it
-      puts("render(json: { success: false, error: #{@message}, code: #{@error} })")
-      # render(status: @error, json: { success: false, error: @message, code: @error }
+      render(status: @error, json: { success: false, error: @message, code: @error })
       exit(false)
     end
 

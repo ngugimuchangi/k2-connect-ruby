@@ -26,8 +26,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_client.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
+            <state relative-caret-position="115">
+              <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -145,7 +145,6 @@
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby.rb" />
         <option value="$PROJECT_DIR$/k2-connect-ruby.gemspec" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_transfer.rb" />
-        <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_client.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_pay.rb" />
         <option value="$PROJECT_DIR$/spec/k2_tests/k2-client-spec.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_authorize.rb" />
@@ -154,6 +153,7 @@
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_split_request.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_subscribe.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_errors.rb" />
+        <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_client.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/version.rb" />
       </list>
     </option>
@@ -307,15 +307,16 @@
       <workItem from="1549519215554" duration="1649000" />
       <workItem from="1549521261671" duration="11347000" />
       <workItem from="1549604916882" duration="11171000" />
-      <workItem from="1549864670820" duration="8272000" />
+      <workItem from="1549864670820" duration="8513000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="252532000" />
+    <option name="totallyTimeSpent" value="252773000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3530303" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -654,17 +655,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_client.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/version.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
           <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_client.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
         </state>
       </provider>
     </entry>
