@@ -9,7 +9,7 @@ module K2ConnectRuby
       return ActiveSupport::SecurityUtils.secure_compare(hmac, signature)
     rescue K2NilAuthArgument => k2
       puts(k2.message)
-    rescue K2InvalidSecretKey => k3
+    rescue K2InvalidHMAC => k3
       puts(k3.message)
     rescue StandardError => e
       puts(e.message)
