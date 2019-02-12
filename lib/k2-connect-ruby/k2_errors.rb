@@ -90,7 +90,8 @@ module K2ConnectRuby
     end
 
     def message
-      raise ActiveRecord::RecordInvalid.new("#{@message}")
+      STDERR.puts(@message)
+      exit(false )
     end
   end
 
