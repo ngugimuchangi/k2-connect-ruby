@@ -175,6 +175,38 @@ module K2ConnectRuby
     end
   end
 
+  # Raises error before splitting request should the truth value be nil
+  class K2NilTruthValue < StandardError
+    attr_reader :status, :error, :message
+    def initialize
+      @error = 401
+      @status = :unauthorized
+      @message = "Nil Truth Value Given!"
+    end
+
+    def message
+      STDERR.puts(@message)
+      exit(false )
+      # raise ActiveRecord::RecordInvalid.new("#{@message}")
+    end
+  end
+
+  # Raises error before splitting request should the truth value be invalid
+  class K2InvalidTruthValue < StandardError
+    attr_reader :status, :error, :message
+    def initialize
+      @error = 401
+      @status = :unauthorized
+      @message = "Invalid Truth Value Given!\nNo Boolean Value Given."
+    end
+
+    def message
+      STDERR.puts(@message)
+      exit(false )
+      # raise ActiveRecord::RecordInvalid.new("#{@message}")
+    end
+  end
+
   # Raises error before splitting request should the K2Client not be authenticated
   class K2FalseTruthValue < StandardError
     attr_reader :status, :error, :message

@@ -23,6 +23,8 @@ module K2ConnectRuby
 
     # Initialize with a truth Value
     def initialize(truth_value)
+      raise K2NilTruthValue if truth_value.nil?
+      raise K2InvalidTruthValue unless !!truth_value == truth_value
       @truth_value = truth_value
     end
 
