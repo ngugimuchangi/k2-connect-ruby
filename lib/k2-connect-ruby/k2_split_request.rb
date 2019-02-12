@@ -49,6 +49,7 @@ module K2ConnectRuby
 
     # Check the Event Type
     def check_type(the_body)
+      raise K2InvalidBody unless the_body.is_a?(Hash)
       case
       when the_body.dig("topic").match?("buygoods_transaction_received")
         received_components(the_body)
@@ -61,8 +62,10 @@ module K2ConnectRuby
       else
         raise K2UnspecifiedEvent.new
       end
-    rescue K2UnspecifiedEvent => k2
+    rescue K2InvalidBody => k2
       puts(k2.message)
+    rescue K2UnspecifiedEvent => k3
+      puts(k3.message)
     end
 
     # Splits the Body into the different elements of the request body. For Transaction Received.

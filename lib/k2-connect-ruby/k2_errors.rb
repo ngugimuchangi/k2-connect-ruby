@@ -20,7 +20,7 @@ module K2ConnectRuby
     attr_reader :status, :error, :message
     def initialize
       @error = 400
-      @status = :forbidden
+      @status = :bad_request
       @message = "Invalid Details Given!\n Ensure that your the Arguments Given to the authenticate? method are correct, namely:\n\t- Secret Key\n\t- Signature\n\t- The Response Body"
     end
 
@@ -181,7 +181,7 @@ module K2ConnectRuby
     def initialize
       @error = 401
       @status = :unauthorized
-      @message = "Nil Truth Value Given!"
+      @message = "Nil Value Given!"
     end
 
     def message
@@ -223,6 +223,23 @@ module K2ConnectRuby
     end
   end
 
+  # Raises error for an Invalid Form in which input is given,
+  # like the response body which should already be hashed in byK2Client before being used elsewhere.
+  class K2InvalidBody < StandardError
+    attr_reader :status, :error, :message
+    def initialize
+      @error = 400
+      @status = :bad_request
+      @message = "Invalid Response Body Form!\n The Response has not been Parsed by the K2Client."
+    end
+
+    def message
+      STDERR.puts(@message)
+      exit(false )
+      # raise ActiveRecord::RecordInvalid.new("#{@message}")
+    end
+  end
+
   # Raises error before splitting request should the K2Client not be authenticated
   class K2UnspecifiedEvent < StandardError
     attr_reader :status, :error, :message
@@ -230,7 +247,6 @@ module K2ConnectRuby
       @error = 404
       @status = :not_found
       @message = "No Other Specified Event!"
-
     end
 
     def message
