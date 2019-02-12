@@ -16,6 +16,22 @@ module K2ConnectRuby
   end
 
   # For cases where the secret key is nil/null/empty.
+  class K2InvalidHMAC < StandardError
+    attr_reader :status, :error, :message
+    def initialize
+      @error = 400
+      @status = :forbidden
+      @message = "Invalid Details Given!\n Ensure that your the Arguments Given to the authenticate? method are correct, namely:\n\t- Secret Key\n\t- Signature\n\t- The Response Body"
+    end
+
+    def message
+      STDERR.puts(@message)
+      exit(false )
+      # raise ActiveRecord::RecordInvalid.new("#{@message}")
+    end
+  end
+
+  # For cases where the secret key is nil/null/empty.
   class K2NilSecretKey < StandardError
     attr_reader :status, :error, :message
     def initialize
