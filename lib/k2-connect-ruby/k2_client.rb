@@ -20,7 +20,6 @@ module K2ConnectRuby
       puts(e.message)
     end
 
-  end
   # Method for parsing the Entire Request. Come back to it later to trim. L8r call it set_client_variables
   def parse_request(the_request)
     raise K2NilRequest.new if the_request.nil?
@@ -34,5 +33,6 @@ module K2ConnectRuby
     puts(k2.message)
   rescue StandardError => e
     puts(e.message)
+    end
   end
 end
