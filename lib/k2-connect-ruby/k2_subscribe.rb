@@ -17,8 +17,6 @@ module K2ConnectRuby
     # Intialize with the event_type
     def initialize (event_type)
       raise K2NilEvent.new if event_type.nil?
-      event_types = %w(buygoods_transaction_received, buygooods_transaction_reversed, customer_created, settlement_transfer_completed)
-      raise K2InvalidEventType(event_types) unless event_types.include?(event_type)
       @event_type = event_type
       @http_exceptions = [ Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse,
                                Errno::EHOSTUNREACH, Net::ProtocolError, Net::OpenTimeout, Net::HTTPFatalError,
@@ -26,8 +24,6 @@ module K2ConnectRuby
                                Net::HTTP::Persistent::Error, Net::HTTPRetriableError ]
     rescue K2NilEvent => k2
       puts k2.message
-    rescue K2InvalidEventType => k3
-      puts k3.message
     rescue StandardError => e
       puts e.message
     end
@@ -85,8 +81,6 @@ module K2ConnectRuby
         @k2_response_webhook = k2_https.request(k2_request)
       rescue @http_exceptions => e
         puts(e.message)
-      rescue StandardError => se
-        puts(se.message)
       end
       # @k2_response_webhook = k2_https.request(k2_request)
       puts("\nThe Response:\t#{@k2_response_webhook.body.to_s}")
