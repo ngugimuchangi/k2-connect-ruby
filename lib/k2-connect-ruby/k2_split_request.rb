@@ -26,6 +26,10 @@ module K2ConnectRuby
       raise K2NilTruthValue if truth_value.nil?
       raise K2InvalidTruthValue unless !!truth_value == truth_value
       @truth_value = truth_value
+    rescue K2InvalidTruthValue => k3
+      puts(k3.message)
+    rescue K2NilTruthValue => k2
+      puts(k2.message)
     end
 
     # Confirm Truth value and carry out splitting
