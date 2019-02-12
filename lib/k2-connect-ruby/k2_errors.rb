@@ -159,6 +159,28 @@ module K2ConnectRuby
     end
   end
 
+  # Raises error when no event_type specified
+  class K2InvalidEventType < StandardError
+    attr_reader :status, :error, :message
+    def initialize(event_types)
+      @error = 400
+      @status = :bad_request
+      @message = "Invalid Event Type Stated!\n Event Types as as follows:\n\t#{ze_event_types(event_types)}"
+    end
+
+    def ze_event_types(event_types)
+      event_types.each do |event_type|
+        puts(event_type.to_s)
+      end
+    end
+
+    def message
+      STDERR.puts(@message)
+      exit(false )
+      # raise ActiveRecord::RecordInvalid.new("#{@message}")
+    end
+  end
+
   # Raises error when registering for repeat token for subscription service
   class K2RepeatTokenRequest < StandardError
     attr_reader :status, :error, :message
