@@ -48,7 +48,13 @@ module K2ConnectRuby
           "metadata": k2_request_metadata,
           "_links": k2_request_links
       }.to_json
-      @k2_response_stk_receive = k2_https.request(k2_request)
+      begin
+        @k2_response_stk_receive = k2_https.request(k2_request)
+      rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse,
+          Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
+        puts(e.message)
+      end
+      # @k2_response_stk_receive = k2_https.request(k2_request)
       puts("\nThe Response:\t#{@k2_response_stk_receive.body.to_s}")
       @k2_stk_location = Yajl::Parser.parse(@k2_response_stk_receive.body)["location"]
       puts("\nThe Location Url:\t#{@k2_stk_location}")
@@ -83,6 +89,14 @@ module K2ConnectRuby
       k2_request.body = {
           "ID": "#{id}"
       }.to_json
+      begin
+        @k2_response_stk_query = k2_https.request(k2_request)
+      rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse,
+          Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
+        puts(e.message)
+      rescue StandardError => se
+        puts(se.message)
+      end
       @k2_response_stk_query = k2_https.request(k2_request)
       puts("\nThe Response:\t#{@k2_response_stk_query.body.to_s}")
     end

@@ -25,7 +25,13 @@ module K2ConnectRuby
           "bank_branch_ref": "#{bank_branch_ref}",
           "account_number": "#{account_number}"
       }.to_json
-      k2_response_transfer = k2_https.request(k2_request)
+      begin
+        @k2_response_transfer = k2_https.request(k2_request)
+      rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse,
+          Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
+        puts(e.message)
+      end
+      # @k2_response_transfer = k2_https.request(k2_request)
       puts("\nThe Response:\t#{k2_response_transfer.body.to_s}")
       @k2_stk_location = Yajl::Parser.parse(k2_response_transfer.body)["location"]
       puts("\nThe Location Url:\t#{@k2_stk_location}")
@@ -64,7 +70,13 @@ module K2ConnectRuby
             "destination": "#{destination}"
         }.to_json
       end
-      @k2_response_transfer = k2_https.request(k2_request)
+      begin
+        @k2_response_transfer = k2_https.request(k2_request)
+      rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse,
+          Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
+        puts(e.message)
+      end
+      # @k2_response_transfer = k2_https.request(k2_request)
       puts("\nThe Response:\t#{@k2_response_transfer.body.to_s}")
       @k2_stk_location = Yajl::Parser.parse(@k2_response_transfer.body)["location"]
       puts("\nThe Location Url:\t#{@k2_stk_location}")
@@ -83,7 +95,13 @@ module K2ConnectRuby
       k2_request.body = {
           "ID": "#{id}"
       }.to_json
-      @k2_response_transfer = k2_https.request(k2_request)
+      begin
+        @k2_response_transfer = k2_https.request(k2_request)
+      rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse,
+          Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
+        puts(e.message)
+      end
+      # @k2_response_transfer = k2_https.request(k2_request)
       puts("\nThe Response:\t#{@k2_response_transfer.body.to_s}")
     end
   end

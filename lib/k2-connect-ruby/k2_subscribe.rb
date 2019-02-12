@@ -11,12 +11,17 @@ module K2ConnectRuby
                   :token_lifecycle,
                   :event_type,
                   :k2_response_token,
-                  :k2_response_webhook
+                  :k2_response_webhook,
+                  :http_exceptions
 
     # Intialize with the event_type
     def initialize (event_type)
       raise K2NilEvent.new if event_type.nil?
       @event_type = event_type
+      @http_exceptions = [ Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse,
+                               Errno::EHOSTUNREACH, Net::ProtocolError, Net::OpenTimeout, Net::HTTPFatalError,
+                               Net::HTTPHeaderSyntaxError, Net::HTTPServerException, OpenSSL::SSL::SSLError,
+                               Net::HTTP::Persistent::Error, Net::HTTPRetriableError ]
     rescue K2NilEvent => k2
       puts k2.message
     rescue StandardError => e
@@ -39,7 +44,14 @@ module K2ConnectRuby
           "client_secret": "#{client_secret}",
           "grant_type": "client_credentials"
       }.to_json
-      @k2_response_token = k2_https.request(k2_request)
+      begin
+        @k2_response_token = k2_https.request(k2_request)
+      rescue @http_exceptions => e
+        puts(e.message)
+      rescue StandardError => se
+        puts(se.message)
+      end
+      # @k2_response_token = k2_https.request(k2_request)
       puts("\nThe Response:\t#{@k2_response_token.body.to_s}")
       # Add a method to fetch all the components of the response
       @subscriber_access_token = Yajl::Parser.parse(@k2_response_token.body)["access_token"]
@@ -65,7 +77,14 @@ module K2ConnectRuby
       k2_request.add_field("Accept", "application/json")
       k2_request.add_field("Authorization", "Bearer #{access_token}")
       k2_request.body = k2_request_body
-      @k2_response_webhook = k2_https.request(k2_request)
+      begin
+        @k2_response_webhook = k2_https.request(k2_request)
+      rescue @http_exceptions => e
+        puts(e.message)
+      rescue StandardError => se
+        puts(se.message)
+      end
+      # @k2_response_webhook = k2_https.request(k2_request)
       puts("\nThe Response:\t#{@k2_response_webhook.body.to_s}")
     rescue StandardError => e
       puts(e.message)
@@ -118,6 +137,8 @@ module K2ConnectRuby
       end
     rescue K2NonExistentSubscription => k2
       puts(k2.message)
+    rescue StandardError => e
+      puts(e.message)
     end
   end
 end
