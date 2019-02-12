@@ -1,0 +1,5 @@
+require 'spec_helper'
+require 'k2_tests/k2-version-spec'
+require 'k2_tests/k2-client-spec'
+require 'k2_tests/k2-authorize-spec'
+require 'k2_tests/k2-split-request-spec'

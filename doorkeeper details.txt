@@ -1,0 +1,8 @@
+Application: 
+name: Doorkeeper Sinatra Client
+redirect_uri: https://doorkeeper-sinatra.herokuapp.com/callback
+uid: fad40925aefec01b96d3eb3dcd29c2dc43da84544bd69e3e27d507caf2e27b30
+secret: c0810b42dd39c229ab1da87d97813f0d917886ecc4fb532b221998151109c7b1
+
+
+
