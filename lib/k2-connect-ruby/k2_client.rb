@@ -23,6 +23,7 @@ module K2ConnectRuby
   # Method for parsing the Entire Request. Come back to it later to trim. L8r call it set_client_variables
   def parse_request(the_request)
     raise K2NilRequest.new if the_request.nil?
+    raise K2InsecureRequest.new unless the_request.scheme.eql?("https")
     # The Response Body.
     @hash_body = Yajl::Parser.parse(the_request.body.string.as_json)
     # The Response Header
@@ -31,6 +32,8 @@ module K2ConnectRuby
     @k2_signature = @hash_header["HTTP_X_KOPOKOPO_SIGNATURE"]
   rescue K2NilRequest => k2
     puts(k2.message)
+  rescue K2InsecureRequest => k3
+    puts(k3.message)
   rescue StandardError => e
     puts(e.message)
     end

@@ -127,6 +127,22 @@ module K2ConnectRuby
     end
   end
 
+  # Raises error should the uri.scheme not be 'https', thus an insecure connection or request
+  class K2InsecureRequest < StandardError
+    attr_reader :status, :error, :message
+    def initialize
+      @error = 400
+      @status = :bad_request
+      @message = "Insecure Internet Protocol!\n Your Request URL is not secured. Redirecting...."
+    end
+
+    def message
+      STDERR.puts(@message)
+      exit(false )
+      # raise ActiveRecord::RecordInvalid.new("#{@message}")
+    end
+  end
+
   # Raises error when no subscription service is selected
   class K2NonExistentSubscription < StandardError
     attr_reader :status, :error, :message
