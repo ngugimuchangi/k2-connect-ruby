@@ -59,6 +59,10 @@ module K2ConnectRuby
         settlement_components(the_body)
       when the_body.dig("topic").match?("customer_created")
         customer_components(the_body)
+      when the_body.dig("topic").match?("payment_request")
+        "STK Payments"
+      when the_body.dig("status").match?("Sent")
+        "PAY Payments"
       else
         raise K2UnspecifiedEvent.new
       end
