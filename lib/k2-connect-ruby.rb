@@ -5,7 +5,6 @@ require "k2-connect-ruby/k2_transfer"
 require "k2-connect-ruby/k2_client"
 require "k2-connect-ruby/k2_errors"
 require "k2-connect-ruby/version"
-require "k2-connect-ruby/client"
 require "k2-connect-ruby/k2_stk"
 require "k2-connect-ruby/k2_pay"
 # require 'active_record'

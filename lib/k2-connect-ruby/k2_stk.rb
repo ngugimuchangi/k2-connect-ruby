@@ -12,7 +12,7 @@ module K2ConnectRuby
     end
 
     # Receive payments from M-PESA users.
-    def mpesa_receive_payments(first_name, last_name, phone, email, currency, value)
+    def mpesa_receive_payments(stk_receive_params)
       set_k2_mocks
       k2_url = URI.parse("#{@postman_k2_mock_server}/payment_requests")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
@@ -23,14 +23,14 @@ module K2ConnectRuby
       k2_request.add_field('Accept', 'application/vnd.kopokopo.v4.hal+json')
       k2_request.add_field('Authorization', "Bearer access_token")
       k2_request_subscriber = {
-          "first_name": "#{first_name}",
-          "last_name": "#{last_name}",
-          "phone": "#{phone}",
-          "email": "#{email}"
+          "first_name": "#{stk_receive_params["first_name"]}",
+          "last_name": "#{stk_receive_params["last_name"]}",
+          "phone": "#{stk_receive_params["phone"]}",
+          "email": "#{stk_receive_params["email"]}"
       }.to_json
       k2_request_amount = {
-          "currency": "#{currency}",
-          "value": "#{value}"
+          "currency": "#{stk_receive_params["currency"]}",
+          "value": "#{stk_receive_params["value"]}"
       }.to_json
       k2_request_metadata = {
           "customer_id": "123456789",

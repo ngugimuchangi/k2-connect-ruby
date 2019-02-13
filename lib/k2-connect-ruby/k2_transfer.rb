@@ -8,7 +8,7 @@ module K2ConnectRuby
     end
 
     # Create a Verified Settlement Account via API
-    def settlement_account(account_name, bank_ref, bank_branch_ref, account_number)
+    def settlement_account(transfer_params)
       set_k2_mocks
       k2_url = URI.parse("#{@postman_k2_mock_server}/merchant_bank_accounts")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
@@ -20,10 +20,10 @@ module K2ConnectRuby
       k2_request.add_field('Authorization', "Bearer access_token")
 
       k2_request.body = {
-          "account_name": "#{account_name}",
-          "bank_ref": "#{bank_ref}",
-          "bank_branch_ref": "#{bank_branch_ref}",
-          "account_number": "#{account_number}"
+          "account_name": "#{transfer_params["account_name"]}",
+          "bank_ref": "#{transfer_params["bank_ref"]}",
+          "bank_branch_ref": "#{transfer_params["bank_branch_ref"]}",
+          "account_number": "#{transfer_params["account_number"]}"
       }.to_json
       begin
         @k2_response_transfer = k2_https.request(k2_request)
@@ -42,7 +42,7 @@ module K2ConnectRuby
     end
 
     # Create a either a 'blind' transfer, for when destination is specified, and a 'targeted' transfer which has a specified destination.
-    def transfer_funds(destination, currency, value)
+    def transfer_funds(destination, transfer_params)
       set_k2_mocks
       k2_url = URI.parse("#{@postman_k2_mock_server}/transfers")
       k2_https = Net::HTTP.new(k2_url.host, k2_url.port)
@@ -56,16 +56,16 @@ module K2ConnectRuby
         # Blind Transfer
         k2_request.body = {
             "amount": {
-                "currency": "#{currency}",
-                "value": "#{value}"
+                "currency": "#{transfer_params["currency"]}",
+                "value": "#{transfer_params["value"]}"
             }
         }.to_json
       else
         # Targeted Transfer
         k2_request.body = {
             "amount": {
-                "currency": "#{currency}",
-                "value": "#{value}"
+                "currency": "#{transfer_params["currency"]}",
+                "value": "#{transfer_params["value"]}"
             },
             "destination": "#{destination}"
         }.to_json
