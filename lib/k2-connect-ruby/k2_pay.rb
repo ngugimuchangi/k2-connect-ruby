@@ -30,8 +30,8 @@ class K2Pay
           "bank_id": "#{pay_recipient_params["bank_id"]}",
           "bank_branch_id": "#{pay_recipient_params["bank_branch_id"]}",
           "account_number": "#{pay_recipient_params["acc_no"]}",
-          "email": "#{pay_recipient_params["pay_type"]}",
-          "phone": "#{pay_recipient_params["email"]}"
+          "email": "#{pay_recipient_params["email"]}",
+          "phone": "#{pay_recipient_params["phone"]}"
       }.to_json
     else
       # Add Custom error
