@@ -8,7 +8,6 @@ require "k2-connect-ruby/version"
 require "k2-connect-ruby/k2_stk"
 require "k2-connect-ruby/k2_pay"
 require 'net/http/persistent'
-require 'net/http'
 require 'openssl'
 require "yajl"
 require "json"
@@ -16,13 +15,15 @@ require 'uri'
 
 
 module K2ConnectRuby
+  attr_accessor :access_token,
+                :location
   # Method for sending the request to K2 sandbox or Mock Server (Receives the access_token)
   def K2ConnectRuby.to_connect(params, path_url, access_token, is_subscribe, is_get_request)
     # The Server
     @postman_k2_mock_server = "https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io"
 
     # The HTTP Exceptions
-    @http_exceptions = [ Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse,
+    http_exceptions = [ Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse,
                          Errno::EHOSTUNREACH, Net::ProtocolError, Net::OpenTimeout, Net::HTTPFatalError,
                          Net::HTTPHeaderSyntaxError, Net::HTTPServerException, OpenSSL::SSL::SSLError,
                          Net::HTTP::Persistent::Error, Net::HTTPRetriableError ]
@@ -33,10 +34,11 @@ module K2ConnectRuby
     else
       raise K2NilAccessToken.new if access_token.nil?
     end
-    k2_url = URI.parse("#{@postman_k2_mock_server}#{path_url}")
+    k2_url = URI.parse(@postman_k2_mock_server+"/"+path_url)
     k2_https = Net::HTTP::Persistent.new
     if is_get_request
-      k2_request = Net::HTTP::Get.new(k2_url.request_uri)
+      k2_get_request = Net::HTTP::Get.new(k2_url.request_uri)
+      k2_request = k2_https.request(k2_get_request)
     else
       k2_request = Net::HTTP::Post.new(k2_url.path)
     end
@@ -58,6 +60,8 @@ module K2ConnectRuby
       # @k2_response = k2_https.request(k2_request)
     rescue Net::HTTP::Persistent::Error => e
       puts(e.message)
+    rescue http_exceptions => he
+      puts(he.message)
     rescue K2RepeatTokenRequest => k2
       puts(k2.message)
     rescue K2NilAccessToken => k3
@@ -68,15 +72,15 @@ module K2ConnectRuby
     end
 
     puts("\nThe Response:\t#{@k2_response.body.to_s}")
-    # Add a method to fetch all the components of the response
+    # Add a method to fetch the components of the response
     if path_url.match?("ouath")
-      access_token = Yajl::Parser.parse(@k2_response.body)["access_token"]
-      puts("\nThe Access Token:\t#{access_token}")
+      @access_token = Yajl::Parser.parse(@k2_response.body)["access_token"]
+      puts("\nThe Access Token:\t#{@access_token}")
       return access_token
     else
       unless is_subscribe
-        @k2_stk_location = Yajl::Parser.parse(@k2_response.body)["location"]
-        puts("\nThe Location Url:\t#{@k2_stk_location}")
+        @location = Yajl::Parser.parse(@k2_response.body)["location"]
+        puts("\nThe Location Url:\t#{@location}")
       end
     end
     k2_https.shutdown
