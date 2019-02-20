@@ -36,8 +36,15 @@ class K2Stk
         amount: k2_request_amount,
         metadata: k2_request_metadata,
         call_back_url: "https://call_back_to_your_app.your_application.com"
-    }.to_json
-    K2ConnectRuby.to_connect(receive_body, "payment_requests", @k2_access_token, false, false)
+    }
+    receive_hash = {
+        :path_url => "payment_requests",
+        :access_token =>  @k2_access_token,
+        :is_get_request => false,
+        :is_subscription => false,
+        :params => receive_body
+    }
+    K2Connect.to_connect(receive_hash)
   end
 
   # Process Payment Request Result for M-PESA payments
@@ -55,7 +62,14 @@ class K2Stk
   def query_mpesa_payments(id)
     query_body = {
         ID: id
-    }.to_json
-    K2ConnectRuby.to_connect(query_body, "payment_requests", @k2_access_token, false, true)
+    }
+    query_stk_hash = {
+        :path_url => "payment_requests",
+        :access_token =>  @k2_access_token,
+        :is_get_request => true,
+        :is_subscription => false,
+        :params => query_body
+    }
+    K2Connect.to_connect(query_stk_hash)
   end
 end

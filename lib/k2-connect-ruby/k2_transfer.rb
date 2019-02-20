@@ -14,8 +14,15 @@ class K2Transfer
         bank_ref: transfer_params["bank_ref"],
         bank_branch_ref: transfer_params["bank_branch_ref"],
         account_number: transfer_params["account_number"]
-    }.to_json
-    K2ConnectRuby.to_connect(settlement_body, "merchant_bank_accounts", @k2_access_token, false, false)
+    }
+    settlement_hash = {
+        :path_url => "merchant_bank_accounts",
+        :access_token =>  @k2_access_token,
+        :is_get_request => false,
+        :is_subscription => false,
+        :params => settlement_body
+    }
+    K2Connect.to_connect(settlement_hash)
   rescue StandardError => e
     puts(e.message)
     return false
@@ -31,7 +38,7 @@ class K2Transfer
               currency: transfer_params["currency"],
               value: transfer_params["value"]
           }
-      }.to_json
+      }
     else
       # Targeted Transfer
       transfer_body = {
@@ -40,16 +47,30 @@ class K2Transfer
               value: transfer_params["value"]
           },
           destination: destination
-      }.to_json
+      }
     end
-    K2ConnectRuby.to_connect(transfer_body, "transfers", @k2_access_token, false, false)
+    transfer_hash = {
+        :path_url => "transfers",
+        :access_token =>  @k2_access_token,
+        :is_get_request => false,
+        :is_subscription => false,
+        :params => transfer_body
+    }
+    K2Connect.to_connect(transfer_hash)
   end
 
-  # Check the status of a prior initiated Transfer.
+  # Check the status of a prior initiated Transfer. Make sure to add the id to the url
   def query_transfer(id)
     query_body = {
         ID: id
-    }.to_json
-    K2ConnectRuby.to_connect(query_body, "transfers", @k2_access_token, false, true)
+    }
+    query_transfer_hash = {
+        :path_url => "transfers",
+        :access_token =>  @k2_access_token,
+        :is_get_request => true,
+        :is_subscription => false,
+        :params => query_body
+    }
+    K2Connect.to_connect(query_transfer_hash)
   end
 end

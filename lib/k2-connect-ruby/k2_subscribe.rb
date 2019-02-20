@@ -30,8 +30,16 @@ class K2Subscribe
         client_id: client_id,
         client_secret: client_secret,
         grant_type: "client_credentials"
-    }.to_json
-    @subscriber_access_token = K2ConnectRuby.to_connect(token_params, "ouath", @subscriber_access_token, true, false)
+    }
+    token_hash = {
+        :path_url => "ouath",
+        :access_token =>  @subscriber_access_token,
+        :is_get_request => false,
+        :is_subscription => true,
+        :params => token_params
+    }
+    @subscriber_access_token = K2Connect.to_connect(token_hash)
+    # @subscriber_access_token = K2ConnectRuby.to_connect(token_params, "ouath", @subscriber_access_token, true, false)
   end
 
   # Implemented a Case condition that minimises repetition
@@ -43,8 +51,15 @@ class K2Subscribe
           event_type: "buygooods_transaction_received",
           url: "https://myapplication.com/webhooks",
           secret: "webhook_secret"
-      }.to_json
-      K2ConnectRuby.to_connect(@k2_request_body, "webhook-subscription", @subscriber_access_token, true, false)
+      }
+      subscribe_hash = {
+          :path_url => "webhook-subscription",
+          :access_token =>  @subscriber_access_token,
+          :is_get_request => false,
+          :is_subscription => true,
+          :params => @k2_request_body
+      }
+      K2Connect.to_connect(subscribe_hash)
 
       # Buygoods Reversed
     when @event_type.match?("buygoods_transaction_reversed")
@@ -52,8 +67,15 @@ class K2Subscribe
           event_type: "buygooods_transaction_reversed",
           url: "https://myapplication.com/webhooks",
           secret: "webhook_secret"
-      }.to_json
-      K2ConnectRuby.to_connect(@k2_request_body, "buygoods-transaction-reversed", @subscriber_access_token, true, false)
+      }
+      subscribe_hash = {
+          :path_url => "buygoods-transaction-reversed",
+          :access_token =>  @subscriber_access_token,
+          :is_get_request => false,
+          :is_subscription => true,
+          :params => @k2_request_body
+      }
+      K2Connect.to_connect(subscribe_hash)
 
       # Customer Created.
     when @event_type.match?("customer_created")
@@ -61,8 +83,15 @@ class K2Subscribe
           event_type: "customer_created",
           url: "https://myapplication.com/webhooks",
           secret: "webhook_secret"
-      }.to_json
-      K2ConnectRuby.to_connect(@k2_request_body, "customer-created", @subscriber_access_token, true, false)
+      }
+      subscribe_hash = {
+          :path_url => "customer-created",
+          :access_token =>  @subscriber_access_token,
+          :is_get_request => false,
+          :is_subscription => true,
+          :params => @k2_request_body
+      }
+      K2Connect.to_connect(subscribe_hash)
 
       # Settlement Transfer Completed
     when @event_type.match?("settlement_transfer_completed")
@@ -70,8 +99,15 @@ class K2Subscribe
           event_type: "settlement",
           url: "https://myapplication.com/webhooks",
           secret: "webhook_secret"
-      }.to_json
-      K2ConnectRuby.to_connect(@k2_request_body, "settlement", @subscriber_access_token, true, false)
+      }
+      subscribe_hash = {
+          :path_url => "settlement",
+          :access_token =>  @subscriber_access_token,
+          :is_get_request => false,
+          :is_subscription => true,
+          :params => @k2_request_body
+      }
+      K2Connect.to_connect(subscribe_hash)
     else
       raise K2NonExistentSubscription.new
     end
