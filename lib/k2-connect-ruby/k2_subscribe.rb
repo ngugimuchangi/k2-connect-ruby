@@ -1,23 +1,15 @@
 class K2Subscribe
   include(K2ConnectRuby)
-  attr_accessor :client_id,
-                :client_secret,
-                :k2_uri,
-                :k2_request_body,
+  attr_accessor :k2_request_body,
                 :webhook_secret,
                 :subscriber_access_token,
-                :subscriber_refresh_token,
-                :valid_token_time,
-                :token_lifecycle,
-                :event_type,
-                :k2_response_token,
-                :k2_response_webhook,
-                :postman_k2_mock_server
+                :event_type
 
   # Intialize with the event_type
-  def initialize (event_type)
+  def initialize (event_type, webhook_secret)
     raise K2NilEvent.new if event_type.nil?
     @event_type = event_type
+    @webhook_secret = webhook_secret
   rescue K2NilEvent => k2
     puts k2.message
   rescue StandardError => e
@@ -50,7 +42,7 @@ class K2Subscribe
       @k2_request_body = {
           event_type: "buygooods_transaction_received",
           url: "https://myapplication.com/webhooks",
-          secret: "webhook_secret"
+          secret: @webhook_secret
       }
       subscribe_hash = {
           :path_url => "webhook-subscription",
@@ -82,7 +74,7 @@ class K2Subscribe
       @k2_request_body = {
           event_type: "customer_created",
           url: "https://myapplication.com/webhooks",
-          secret: "webhook_secret"
+          secret: @webhook_secret
       }
       subscribe_hash = {
           :path_url => "customer-created",
@@ -98,7 +90,7 @@ class K2Subscribe
       @k2_request_body = {
           event_type: "settlement",
           url: "https://myapplication.com/webhooks",
-          secret: "webhook_secret"
+          secret: @webhook_secret
       }
       subscribe_hash = {
           :path_url => "settlement",
@@ -115,5 +107,14 @@ class K2Subscribe
     puts(k2.message)
   rescue StandardError => e
     puts(e.message)
+  end
+
+  # Method for Validating the input itself
+  def validate_input(the_input)
+    if the_input.is_a?(Hash)
+
+    else
+
+    end
   end
 end

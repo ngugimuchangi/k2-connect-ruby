@@ -1,11 +1,6 @@
 class K2Stk
   include K2ConnectRuby
-  attr_accessor :k2_response_stk_receive,
-                :k2_response_stk_query,
-                :k2_stk_location,
-                :postman_k2_mock_server,
-                :postman_k2_mock,
-                :k2_access_token
+  attr_accessor :k2_access_token
 
   def initialize(access_token)
     @k2_access_token = access_token
@@ -71,5 +66,14 @@ class K2Stk
         :params => query_body
     }
     K2Connect.to_connect(query_stk_hash)
+  end
+
+  # Method for Validating the input itself
+  def validate_input(the_input)
+    if the_input.is_a?(Hash)
+
+    else
+
+    end
   end
 end

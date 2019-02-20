@@ -24,8 +24,11 @@ module K2ConnectRuby
     # Initialize with a truth Value
     def initialize(truth_value)
       raise K2NilTruthValue if truth_value.nil?
-      raise K2InvalidTruthValue unless !!truth_value == truth_value
-      @truth_value = truth_value
+      if !!truth_value == truth_value
+        @truth_value = truth_value
+      else
+        raise K2InvalidTruthValue
+      end
     rescue K2InvalidTruthValue => k3
       puts(k3.message)
     rescue K2NilTruthValue => k2
@@ -35,8 +38,11 @@ module K2ConnectRuby
     # Confirm Truth value and carry out splitting
     def judge_truth(the_body)
       raise K2NilRequestBody.new if the_body.nil?
-      raise K2FalseTruthValue.new unless @truth_value
-      check_type(the_body)
+      if @truth_value
+        check_type(the_body)
+      else
+        raise K2FalseTruthValue.new
+      end
       # request_body_components(the_body) if @truth_value
     rescue K2FalseTruthValue => k3
       puts(k3.message)
@@ -61,8 +67,10 @@ module K2ConnectRuby
         customer_components(the_body)
       when the_body.dig("topic").match?("payment_request")
         "STK Payments"
+        stk_components(the_body)
       when the_body.dig("status").match?("Sent")
         "PAY Payments"
+        pay_components(the_body)
       else
         raise K2UnspecifiedEvent.new
       end
@@ -137,6 +145,16 @@ module K2ConnectRuby
       @last_name = the_body.dig("event", "resource", "sender_last_name")
     rescue StandardError => e
       puts(e.message)
+    end
+
+    # PAY Process Components
+    def pay_components(the_body)
+
+    end
+
+    # STK Push Process Components
+    def stk_components(the_body)
+
     end
   end
 end

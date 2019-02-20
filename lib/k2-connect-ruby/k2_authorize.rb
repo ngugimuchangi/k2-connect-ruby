@@ -5,8 +5,11 @@ module K2ConnectRuby
       raise K2NilAuthArgument if body.nil? || api_secret_key.nil? || signature.nil?
       digest = OpenSSL::Digest.new('sha256')
       hmac = OpenSSL::HMAC.hexdigest(digest, api_secret_key, body.to_json)
-      raise K2InvalidHMAC unless ActiveSupport::SecurityUtils.secure_compare(hmac, signature)
-      return ActiveSupport::SecurityUtils.secure_compare(hmac, signature)
+      if ActiveSupport::SecurityUtils.secure_compare(hmac, signature)
+        return true
+      else
+        raise K2InvalidHMAC
+      end
     rescue K2NilAuthArgument => k2
       puts(k2.message)
     rescue K2InvalidHMAC => k3

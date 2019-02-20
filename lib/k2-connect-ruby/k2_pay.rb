@@ -1,8 +1,5 @@
 class K2Pay
-  attr_accessor :k2_response_pay,
-                :postman_mock_server,
-                :k2_access_token,
-                :params_body
+  attr_accessor :k2_access_token
 
   def initialize(access_token)
     @k2_access_token = access_token
@@ -100,4 +97,12 @@ class K2Pay
     K2Connect.to_connect(query_pay_hash)
   end
 
+  # Method for Validating the input itself
+  def validate_input(the_input)
+    if the_input.is_a?(Hash)
+
+    else
+
+    end
+  end
 end

@@ -1,6 +1,5 @@
 class K2Transfer
-  attr_accessor :k2_response_transfer,
-                :k2_access_token
+  attr_accessor :k2_access_token
 
   def initialize(access_token)
     @k2_access_token = access_token
@@ -8,6 +7,9 @@ class K2Transfer
 
   # Create a Verified Settlement Account via API
   def settlement_account(transfer_params)
+    # Validation
+    validate_input(transfer_params) and return
+
     # The Request Body Parameters
     settlement_body = {
         account_name: transfer_params["account_name"],
@@ -30,6 +32,8 @@ class K2Transfer
 
   # Create a either a 'blind' transfer, for when destination is specified, and a 'targeted' transfer which has a specified destination.
   def transfer_funds(destination, transfer_params)
+    # Validation
+    validate_input(transfer_params) and return
     # The Request Body Parameters
     if destination.nil?
       # Blind Transfer
@@ -61,6 +65,9 @@ class K2Transfer
 
   # Check the status of a prior initiated Transfer. Make sure to add the id to the url
   def query_transfer(id)
+    # Validation
+    validate_input(id) and return
+
     query_body = {
         ID: id
     }
@@ -72,5 +79,14 @@ class K2Transfer
         :params => query_body
     }
     K2Connect.to_connect(query_transfer_hash)
+  end
+
+  # Method for Validating the input itself
+  def validate_input(the_input)
+    if the_input.is_a?(Hash)
+
+    else
+
+    end
   end
 end
