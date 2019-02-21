@@ -1,24 +1,18 @@
-module K2ConnectRuby
-  class K2Client
-    attr_accessor :api_secret_key,
-                  :hash_body,
-                  :hash_body_as,
-                  :hash_header,
-                  :client_id,
-                  :token_object,
-                  :k2_signature,
-                  :access_token,
-                  :ze_status_code
+class K2Client
+  attr_accessor :api_secret_key,
+                :hash_body,
+                :hash_header,
+                :k2_signature
 
-    # Initialize method
-    def initialize(api_secret_key)
-      raise K2NilSecretKey.new if api_secret_key.nil?
-      @api_secret_key = api_secret_key
-    rescue K2NilSecretKey => k2
-      puts(k2.message)
-    rescue StandardError => e
-      puts(e.message)
-    end
+  # Initialize method
+  def initialize(api_secret_key)
+    raise K2NilSecretKey.new if api_secret_key.nil?
+    @api_secret_key = api_secret_key
+  rescue K2NilSecretKey => k2
+    puts(k2.message)
+  rescue StandardError => e
+    puts(e.message)
+  end
 
   # Method for parsing the Entire Request. Come back to it later to trim. L8r call it set_client_variables
   def parse_request(the_request)
@@ -39,6 +33,5 @@ module K2ConnectRuby
     puts(k3.message)
   rescue StandardError => e
     puts(e.message)
-    end
   end
 end

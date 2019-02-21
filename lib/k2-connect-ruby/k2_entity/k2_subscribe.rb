@@ -1,5 +1,4 @@
 class K2Subscribe
-  include(K2ConnectRuby)
   attr_accessor :k2_request_body,
                 :webhook_secret,
                 :subscriber_access_token,
@@ -31,7 +30,6 @@ class K2Subscribe
         :params => token_params
     }
     @subscriber_access_token = K2Connect.to_connect(token_hash)
-    # @subscriber_access_token = K2ConnectRuby.to_connect(token_params, "ouath", @subscriber_access_token, true, false)
   end
 
   # Implemented a Case condition that minimises repetition

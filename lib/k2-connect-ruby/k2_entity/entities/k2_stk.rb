@@ -1,13 +1,10 @@
-class K2Stk
-  include K2ConnectRuby
-  attr_accessor :k2_access_token
-
-  def initialize(access_token)
-    @k2_access_token = access_token
-  end
+class K2Stk < K2Entity
 
   # Receive payments from M-PESA users.
   def receive_mpesa_payments(stk_receive_params)
+    # Validation
+    validate_input(stk_receive_params) and return
+
     # The Request Body Parameters
     k2_request_subscriber = {
         first_name: stk_receive_params["first_name"],
@@ -42,19 +39,11 @@ class K2Stk
     K2Connect.to_connect(receive_hash)
   end
 
-  # Process Payment Request Result for M-PESA payments
-  def process_mpesa_payments(the_request)
-    raise K2NilRequest.new if the_request.nil?
-    # The Response Body.
-    @hash_body = Yajl::Parser.parse(the_request.body.string.as_json)
-    # The Response Header
-    @hash_header = Yajl::Parser.parse(the_request.headers.env.select{|k, _| k =~ /^HTTP_/}.to_json)
-  rescue K2NilRequest => k2
-    puts(k2.message)
-  end
-
   # Query Payment Request Status
   def query_mpesa_payments(id)
+    # Validation
+    validate_input(id) and return
+
     query_body = {
         ID: id
     }
@@ -66,14 +55,5 @@ class K2Stk
         :params => query_body
     }
     K2Connect.to_connect(query_stk_hash)
-  end
-
-  # Method for Validating the input itself
-  def validate_input(the_input)
-    if the_input.is_a?(Hash)
-
-    else
-
-    end
   end
 end

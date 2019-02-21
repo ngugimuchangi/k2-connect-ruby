@@ -1,10 +1,4 @@
-class K2Transfer
-  attr_accessor :k2_access_token
-
-  def initialize(access_token)
-    @k2_access_token = access_token
-  end
-
+class K2Transfer < K2Entity
   # Create a Verified Settlement Account via API
   def settlement_account(transfer_params)
     # Validation
@@ -79,14 +73,5 @@ class K2Transfer
         :params => query_body
     }
     K2Connect.to_connect(query_transfer_hash)
-  end
-
-  # Method for Validating the input itself
-  def validate_input(the_input)
-    if the_input.is_a?(Hash)
-
-    else
-
-    end
   end
 end

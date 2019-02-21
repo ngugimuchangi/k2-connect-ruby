@@ -1,13 +1,9 @@
-class K2Pay
-  attr_accessor :k2_access_token
-
-  def initialize(access_token)
-    @k2_access_token = access_token
-  end
-
+class K2Pay < K2Entity
   # Adding PAY Recipients with either mobile_wallets or bank_accounts as destination of your payments.
-  # The Params from the form are passed through.
   def pay_recipients(pay_recipient_params)
+    # Validation
+    validate_input(pay_recipient_params) and return
+
     # The Request Body Parameters
     # In the case of mobile pay
     if  pay_recipient_params["pay_type"].match?("mobile_wallet")
@@ -46,6 +42,8 @@ class K2Pay
 
   # Create an outgoing Payment to a third party.
   def pay_create(pay_create_params)
+    # Validation
+    validate_input(pay_create_params) and return
     # The Request Body Parameters
     k2_request_pay_amount = {
         currency: pay_create_params["currency"],
@@ -71,19 +69,11 @@ class K2Pay
     K2Connect.to_connect(pay_create_hash)
   end
 
-  # Process Pay Result Asynchronously after Payment is initiated
-  def process_pay(the_request)
-    raise K2NilRequest.new if the_request.nil?
-    # The Response Body.
-    @hash_body = Yajl::Parser.parse(the_request.body.string.as_json)
-    # The Response Header
-    @hash_header = Yajl::Parser.parse(the_request.headers.env.select{|k, _| k =~ /^HTTP_/}.to_json)
-  rescue K2NilRequest => k2
-    puts(k2.message)
-  end
-
   # Query the status of a previously initiated Payment request
   def query_pay(id)
+    # Validation
+    validate_input(id) and return
+
     query_body = {
         ID: id
     }
@@ -95,14 +85,5 @@ class K2Pay
         :params => query_body
     }
     K2Connect.to_connect(query_pay_hash)
-  end
-
-  # Method for Validating the input itself
-  def validate_input(the_input)
-    if the_input.is_a?(Hash)
-
-    else
-
-    end
   end
 end
