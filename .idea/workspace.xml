@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="547a0860-960a-450b-9136-428e96411441" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/service/k2_authorize.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/service/k2_split_request.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_authorize.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_client.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/service/k2_client.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_errors.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_errors.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_pay.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_pay.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_split_request.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_stk.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_stk.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_subscribe.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/k2_subscribe.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_transfer.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_transfer.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/version.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/version.rb" afterDir="false" />
-    </list>
+    <list default="true" id="547a0860-960a-450b-9136-428e96411441" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -327,16 +313,17 @@
       <workItem from="1550670891164" duration="10000" />
       <workItem from="1550730712194" duration="24004000" />
       <workItem from="1550758746672" duration="16000" />
+      <workItem from="1550815030176" duration="469000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="373626000" />
+    <option name="totallyTimeSpent" value="374095000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1366" height="743" extended-state="6" />
+    <frame x="0" y="25" width="1366" height="743" extended-state="7" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49833333" visible="true" weight="0.34772727" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49833333" visible="true" weight="0.3530303" />
       <window_info id="Structure" order="1" sideWeight="0.50166667" side_tool="true" weight="0.3007576" />
       <window_info id="Favorites" order="2" sideWeight="0.50166667" side_tool="true" weight="0.3007576" />
       <window_info anchor="bottom" id="Message" order="0" />
