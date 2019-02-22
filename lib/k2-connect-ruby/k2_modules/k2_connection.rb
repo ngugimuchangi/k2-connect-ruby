@@ -1,8 +1,4 @@
 require "k2-connect-ruby/k2_entity/k2_entity"
-require "k2-connect-ruby/k2_entity/k2_subscribe"
-require "k2-connect-ruby/k2_entity/entities/k2_transfer"
-require "k2-connect-ruby/k2_entity/entities/k2_stk"
-require "k2-connect-ruby/k2_entity/entities/k2_pay"
 
 module K2Connect
   # Method for sending the request to K2 sandbox or Mock Server (Receives the access_token)

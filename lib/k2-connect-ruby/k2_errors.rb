@@ -271,16 +271,17 @@ class K2UnspecifiedEvent < StandardError
 end
 
 # Error for Empty Hash Objects (K2Entity validate => input)
-class K2EmptyHash < StandardError
+class K2EmptyInput < StandardError
   attr_reader :status, :error, :message
   def initialize
     @error = 400
     @status = :bad_request
-    @message = "Empty Hash Object!\n The Hash Object Passed has No Content within it"
+    @message = "Empty or Nil Input!\n No Input Content has been given."
   end
 
   def message
     STDERR.puts(@message)
+    return false
   end
 end
 
@@ -295,14 +296,34 @@ class K2InvalidHash < StandardError
   end
 
   def loop_keys
-    @the_keys.each do |empty_key, empty_value|
-      puts(empty_value)
-    end
+    @the_keys.each_value(&method(:puts))
   end
 
   def message
     STDERR.puts(@message)
     loop_keys
+    # exit(false)
+  end
+end
+
+# Error for Empty Hash Objects (K2Entity validate => input)
+class IncorrectParams < StandardError
+  attr_reader :status, :error, :message, :the_keys
+  def initialize (the_keys)
+    @error = 400
+    @the_keys  = the_keys
+    @status = :bad_request
+    @message = "Incorrect Hash Parameters!\n The Following Params are Incorrect: "
+  end
+
+  def loop_keys
+    @the_keys.each_value(&method(:puts))
+  end
+
+  def message
+    STDERR.puts(@message)
+    loop_keys
+    # exit(false)
   end
 end
 

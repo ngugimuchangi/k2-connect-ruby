@@ -2,9 +2,6 @@ class K2Stk < K2Entity
 
   # Receive payments from M-PESA users.
   def receive_mpesa_payments(stk_receive_params)
-    # Validation
-    validate_input(stk_receive_params) and return
-
     # The Request Body Parameters
     k2_request_subscriber = {
         first_name: stk_receive_params["first_name"],
@@ -36,14 +33,14 @@ class K2Stk < K2Entity
         :is_subscription => false,
         :params => receive_body
     }
-    K2Connect.to_connect(receive_hash)
+    # Validation
+    if validate_input(stk_receive_params, %w{ first_name last_name phone email currency value })
+      K2Connect.to_connect(receive_hash)
+    end
   end
 
   # Query Payment Request Status
   def query_mpesa_payments(id)
-    # Validation
-    validate_input(id) and return
-
     query_body = {
         ID: id
     }
@@ -54,6 +51,9 @@ class K2Stk < K2Entity
         :is_subscription => false,
         :params => query_body
     }
-    K2Connect.to_connect(query_stk_hash)
+    # Validation
+    if validate_input(id, %w{ id })
+      K2Connect.to_connect(query_stk_hash)
+    end
   end
 end
