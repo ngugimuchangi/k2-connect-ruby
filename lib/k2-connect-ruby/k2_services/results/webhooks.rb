@@ -15,7 +15,11 @@ class CommonWebhook < WebhookTransaction
   # For The General Webhook
   def components(the_body)
     super components(the_body)
-    K2CommonWebhook.components(the_body, @amount, @currency, @reference, @origination_time, @status)
+    @amount = the_body.dig("event", "resource", "amount")
+    @currency = the_body.dig("event", "resource", "currency")
+    @reference = the_body.dig("event", "resource", "reference")
+    @origination_time = the_body.dig("event", "resource", "origination_time")
+    @status = the_body.dig("event", "resource", "status")
   end
 
 end
@@ -38,7 +42,12 @@ class BuyGoods < CommonWebhook
   # For The BuyGoods Received Webhook
   def components(the_body)
     super components(the_body)
-    K2BuyGoods.components(the_body, @msisdn, @till_number, @system, @first_name, @middle_name, @last_name)
+    @msisdn = the_body.dig("event", "resource", "sender_msisdn")
+    @till_number = the_body.dig("event", "resource", "till_number")
+    @system = the_body.dig("event", "resource", "system")
+    @first_name = the_body.dig("event", "resource", "sender_first_name")
+    @middle_name = the_body.dig("event", "resource", "sender_middle_name")
+    @last_name = the_body.dig("event", "resource", "sender_last_name")
   end
 
 end

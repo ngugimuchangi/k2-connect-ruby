@@ -20,11 +20,15 @@ class K2Payment < K2Result
 
 end
 
-class K2ProcessStk < K2Payment
+class K2ProcessStk < BuyGoods
   attr_accessor :payment_request,
                 :metadata_reference,
                 :link_resource,
                 :resource_status,
+                :metadata,
+                :customer_id,
+                :notes,
+                :self,
                 :errors,
                 :msisdn,
                 :till_number,
@@ -37,8 +41,10 @@ class K2ProcessStk < K2Payment
     @metadata_reference = the_body.dig("metadata", "reference")
     @link_resource = the_body.dig("_links", "resource")
     @errors = the_body.dig("event", "errors")
-    K2CommonWebhook.components(the_body, @amount, @currency, @reference, @origination_time, resource_status)
-    K2BuyGoods.components(the_body, @msisdn, @till_number, @system, @first_name, @middle_name, @last_name)
+    @metadata = the_body.dig("metadata")
+    @customer_id = the_body.dig("metadata", "customer_id")
+    @notes = the_body.dig("metadata", "notes")
+    @self = the_body.dig("_links", "self")
   end
 
 end
