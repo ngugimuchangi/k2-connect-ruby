@@ -1,3 +1,5 @@
+require "yajl"
+
 class K2Client
   attr_accessor :api_secret_key,
                 :hash_body,

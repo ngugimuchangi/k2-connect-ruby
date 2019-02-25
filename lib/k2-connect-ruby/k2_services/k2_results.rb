@@ -8,7 +8,8 @@ class K2Result
                 :resource,
                 :_links,
                 :amount,
-                :currency
+                :currency,
+                :truth_value
 
   # Initialize with a truth Value
   def initialize(truth_value)

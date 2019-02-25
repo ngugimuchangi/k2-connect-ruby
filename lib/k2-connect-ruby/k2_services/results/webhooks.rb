@@ -13,11 +13,7 @@ class WebhookTransaction < K2Result
     # For The General Webhook
     def components(the_body)
       super components(the_body)
-      @amount = the_body.dig("event", "resource", "amount")
-      @currency = the_body.dig("event", "resource", "currency")
-      @reference = the_body.dig("event", "resource", "reference")
-      @origination_time = the_body.dig("event", "resource", "origination_time")
-      @status = the_body.dig("event", "resource", "status")
+      K2CommonWebhook.components(the_body, @amount, @currency, @reference, @origination_time, @status)
     end
 
   end
@@ -34,21 +30,13 @@ class WebhookTransaction < K2Result
   end
 
   class BuyGoods < CommonWebhook
-    attr_accessor :reference,
-                  :origination_time,
-                  :till_number,
-                  :system,
-                  :status
+    attr_accessor :till_number,
+                  :system
 
     # For The BuyGoods Received Webhook
     def components(the_body)
       super components(the_body)
-      @msisdn = the_body.dig("event", "resource", "msisdn")
-      @till_number = the_body.dig("event", "resource", "till_number")
-      @system = the_body.dig("event", "resource", "system")
-      @first_name = the_body.dig("event", "resource", "sender_first_name")
-      @middle_name = the_body.dig("event", "resource", "sender_middle_name")
-      @last_name = the_body.dig("event", "resource", "sender_last_name")
+      K2BuyGoods.components(the_body, @msisdn, @till_number, @system, @first_name, @middle_name, @last_name)
     end
 
     class Reversal < BuyGoods

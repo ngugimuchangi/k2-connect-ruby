@@ -1,4 +1,6 @@
-class K2Authenticator
+require 'openssl'
+
+module K2Authenticator
   # Compares HMAC signature with the key. Later call it K2Authenticator
   def authenticate?(body, api_secret_key, signature)
     raise K2NilAuthArgument if body.nil? || api_secret_key.nil? || signature.nil?
