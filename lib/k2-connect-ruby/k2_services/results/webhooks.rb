@@ -14,7 +14,7 @@ class CommonWebhook < WebhookTransaction
 
   # For The General Webhook
   def components(the_body)
-    super components(the_body)
+    super
     @amount = the_body.dig("event", "resource", "amount")
     @currency = the_body.dig("event", "resource", "currency")
     @reference = the_body.dig("event", "resource", "reference")
@@ -27,7 +27,7 @@ end
 class CustomerCreated < WebhookTransaction
   # For The Customer Created Webhook
   def components(the_body)
-    super components(the_body)
+    super
     @msisdn = the_body.dig("event", "resource", "msisdn")
     @first_name = the_body.dig("event", "resource", "first_name")
     @middle_name = the_body.dig("event", "resource", "middle_name")
@@ -41,7 +41,7 @@ class BuyGoods < CommonWebhook
 
   # For The BuyGoods Received Webhook
   def components(the_body)
-    super components(the_body)
+    super
     @msisdn = the_body.dig("event", "resource", "sender_msisdn")
     @till_number = the_body.dig("event", "resource", "till_number")
     @system = the_body.dig("event", "resource", "system")
@@ -56,7 +56,7 @@ class Reversal < BuyGoods
   attr_accessor :reversal_time
   # For The BuyGoods Reversed Webhook
   def components(the_body)
-    super components(the_body)
+    super
     @reversal_time = the_body.dig("event", "resource", "reversal_time")
   end
 
@@ -70,7 +70,7 @@ class Settlement < CommonWebhook
                 :destination_mm_system
   # For The Settlement Transfer Webhook
   def components(the_body)
-    super components(the_body)
+    super
     @transfer_time = the_body.dig("event", "resource", "transfer_time")
     @transfer_type = the_body.dig("event", "resource", "transfer_type")
     @destination = the_body.dig("event", "resource", "destination")

@@ -35,7 +35,7 @@ class K2ProcessStk < BuyGoods
                 :system
 
   def components(the_body)
-    super components the_body
+    super
     @status = the_body.dig("status")
     @payment_request = the_body.dig("_links", "payment_request")
     @metadata_reference = the_body.dig("metadata", "reference")
@@ -54,6 +54,7 @@ class K2ProcessPay < K2Payment
                 :value
 
   def components(the_body)
+    super
     @status = the_body.dig("status")
     @reference = the_body.dig("reference")
     @origination_time = the_body.dig("origination_time")
