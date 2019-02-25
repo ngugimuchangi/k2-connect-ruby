@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="547a0860-960a-450b-9136-428e96411441" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_pay.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_pay.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_stk.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_stk.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_transfer.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_transfer.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/k2_entity.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/k2_entity.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_split.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_split.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/k2_results.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/k2_results.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/results/k2_transaction.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/results/k2_transaction.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/results/webhooks.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/results/webhooks.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/modules.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/modules.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/doorkeeper details.txt" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,14 +20,10 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_split.rb">
+        <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/version.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
-              <caret line="52" column="62" selection-start-line="52" selection-start-column="62" selection-end-line="52" selection-end-column="62" />
-              <folding>
-                <element signature="e#476#1592#0" />
-                <element signature="e#1596#1933#0" />
-              </folding>
+            <state relative-caret-position="69">
+              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
             </state>
           </provider>
         </entry>
@@ -130,7 +117,6 @@
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/results/results.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entity.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby.rb" />
-        <option value="$PROJECT_DIR$/lib/k2-connect-ruby/version.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/results/k2_split_request.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/results/k2_transaction.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/results/webhooks.rb" />
@@ -142,6 +128,7 @@
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_transfer.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/modules.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_validation.rb" />
+        <option value="$PROJECT_DIR$/lib/k2-connect-ruby/version.rb" />
       </list>
     </option>
   </component>
@@ -180,28 +167,6 @@
               <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
               <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="K2-Connect-Ruby" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="k2_modules" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="K2-Connect-Ruby" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="k2_services" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="K2-Connect-Ruby" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="k2_services" type="462c0819:PsiDirectoryNode" />
-              <item name="results" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -355,12 +320,12 @@
       <workItem from="1550758746672" duration="16000" />
       <workItem from="1550815030176" duration="25863000" />
       <workItem from="1551075238631" duration="8749000" />
-      <workItem from="1551084217465" duration="9140000" />
+      <workItem from="1551084217465" duration="9387000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="417378000" />
+    <option name="totallyTimeSpent" value="417625000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
@@ -617,13 +582,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/version.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="368">
@@ -750,6 +708,13 @@
             <element signature="e#476#1592#0" />
             <element signature="e#1596#1933#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/version.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
