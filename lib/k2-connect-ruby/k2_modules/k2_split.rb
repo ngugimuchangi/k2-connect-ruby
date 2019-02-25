@@ -3,7 +3,7 @@ module K2Split
   def self.judge_truth(the_body, truth_value)
     raise K2NilRequestBody.new if the_body.nil?
     if truth_value
-      check_type(the_body, truth_value)
+      K2Split.check_type(the_body, truth_value)
     else
       raise K2FalseTruthValue.new
     end
@@ -17,27 +17,27 @@ module K2Split
   end
 
   # Check the Event Type
-  def check_type(the_body, truth_value)
+  def self.check_type(the_body, truth_value)
     if the_body.is_a?(Hash)
       case the_body.dig("topic")
       when "buygoods_transaction_received"
         puts "Buy Goods Transaction Received."
-        return_hash(the_body, BuyGoods.new(truth_value))
+        K2Split.return_hash(the_body, BuyGoods.new(truth_value))
       when "buygoods_transaction_reversed"
         puts "Buy Goods Transaction Reversed."
-        return_hash(the_body, Reversal.new(truth_value))
+        K2Split.return_hash(the_body, Reversal.new(truth_value))
       when "settlement_transfer_completed"
         puts "Settlement Transaction."
-        return_hash(the_body, Settlement.new(truth_value))
+        K2Split.return_hash(the_body, Settlement.new(truth_value))
       when "customer_created"
         puts "Customer Created."
-        return_hash(the_body, CustomerCreated.new(truth_value))
+        K2Split.return_hash(the_body, CustomerCreated.new(truth_value))
       when "payment_request"
         puts "STK Push Payment Request Result."
-        return_hash(the_body, K2ProcessStk.new(truth_value))
+        K2Split.return_hash(the_body, K2ProcessStk.new(truth_value))
       else
         unless the_body.empty?
-          return_hash(the_body, K2ProcessPay.new(truth_value))
+          K2Split.return_hash(the_body, K2ProcessPay.new(truth_value))
         end
         raise K2UnspecifiedEvent.new
       end
@@ -50,7 +50,7 @@ module K2Split
     puts(k3.message)
   end
 
-  def return_hash(the_body, number = 0, instance_hash={}, obj)
+  def self.return_hash(the_body, number = 0, instance_hash={}, obj)
     components(the_body)
     while number < obj.instance_variables.length
       obj.instance_variables.each do |value|

@@ -28,14 +28,27 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/client/k2_client.rb">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="328">
+              <caret line="32" column="26" lean-forward="true" selection-start-line="32" selection-start-column="26" selection-end-line="32" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_errors.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="53">
+              <caret line="129" column="14" selection-start-line="129" selection-start-column="14" selection-end-line="129" selection-end-column="14" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/version.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
+            <state relative-caret-position="69">
+              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
             </state>
           </provider>
         </entry>
@@ -44,7 +57,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>@http_exceptions</find>
       <find>http_exceptions</find>
       <find>k2_connect</find>
       <find>K2ConnectRuby</find>
@@ -74,6 +86,7 @@
       <find>k2_result</find>
       <find>@the_array</find>
       <find>the_array</find>
+      <find>Insecure Internet Protocol!</find>
     </findStrings>
     <replaceStrings>
       <replace>k2_connect_ruby</replace>
@@ -107,7 +120,6 @@
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entities/k2_stk.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entities/k2_entity.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/k2_connection.rb" />
-        <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_errors.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/service/results/k2_results.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/service/k2_split_request.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/k2_service.rb" />
@@ -123,7 +135,6 @@
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_common.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_connection.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/client/k2_authorize.rb" />
-        <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/client/k2_client.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/results/results.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entity.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby.rb" />
@@ -140,6 +151,8 @@
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_validation.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_authorize.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/results.rb" />
+        <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_errors.rb" />
+        <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/client/k2_client.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/version.rb" />
       </list>
     </option>
@@ -354,16 +367,15 @@
       <workItem from="1550758746672" duration="16000" />
       <workItem from="1550815030176" duration="25863000" />
       <workItem from="1551075238631" duration="8749000" />
-      <workItem from="1551084217465" duration="10507000" />
+      <workItem from="1551084217465" duration="10851000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="418745000" />
+    <option name="totallyTimeSpent" value="419089000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49833333" visible="true" weight="0.35757574" />
       <window_info id="Structure" order="1" sideWeight="0.50166667" side_tool="true" weight="0.3007576" />
@@ -399,7 +411,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="ruby-line">
           <url>file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_errors.rb</url>
-          <line>231</line>
+          <line>230</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="ruby-line">
@@ -606,13 +618,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_errors.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-445">
-          <caret line="241" column="6" selection-start-line="241" selection-start-column="6" selection-end-line="241" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entity.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="69">
@@ -738,13 +743,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_errors.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="53">
+          <caret line="129" column="14" selection-start-line="129" selection-start-column="14" selection-end-line="129" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/client/k2_client.rb">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="328">
+          <caret line="32" column="26" lean-forward="true" selection-start-line="32" selection-start-column="26" selection-end-line="32" selection-end-column="26" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/version.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
+        <state relative-caret-position="69">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
