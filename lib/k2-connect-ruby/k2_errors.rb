@@ -137,7 +137,6 @@ class K2InsecureRequest < StandardError
 
   def message
     STDERR.puts(@message)
-    exit(false )
     # raise ActiveRecord::RecordInvalid.new("#{@message}")
   end
 end
