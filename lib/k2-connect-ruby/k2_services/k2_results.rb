@@ -25,7 +25,7 @@ class K2Result
     puts(k2.message)
   end
 
-  def components(the_body)
+  def self.components(the_body)
     @id = the_body.dig("id")
     @resource_id = the_body.dig("resourceId")
     @topic = the_body.dig("topic")
