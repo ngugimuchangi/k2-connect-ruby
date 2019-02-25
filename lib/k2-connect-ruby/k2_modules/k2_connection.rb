@@ -1,4 +1,4 @@
-require "k2-connect-ruby/k2_entity/k2_entity"
+require 'net/http/persistent'
 
 module K2Connect
   # Method for sending the request to K2 sandbox or Mock Server (Receives the access_token)

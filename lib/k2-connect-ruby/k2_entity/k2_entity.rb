@@ -1,8 +1,3 @@
-require "k2-connect-ruby/k2_entity/k2_subscribe"
-require "k2-connect-ruby/k2_entity/entities/k2_stk"
-require "k2-connect-ruby/k2_entity/entities/k2_pay"
-require "k2-connect-ruby/k2_entity/entities/k2_transfer"
-
 class K2Entity
   attr_accessor :k2_access_token,
                 :the_array
@@ -73,16 +68,5 @@ class K2Entity
 
   # Validate the ID
   def validate_id(the_input) end
-
-  # Process Payment Result
-  def process_payment(the_request)
-    raise K2NilRequest.new if the_request.nil?
-    # The Response Body.
-    hash_body = Yajl::Parser.parse(the_request.body.string.as_json)
-    # The Response Header
-    hash_header = Yajl::Parser.parse(the_request.headers.env.select{|k, _| k =~ /^HTTP_/}.to_json)
-  rescue K2NilRequest => k2
-    puts(k2.message)
-  end
 
 end
