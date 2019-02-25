@@ -56,10 +56,11 @@ module K2Split
     while number < obj.instance_variables.length
       obj.instance_variables.each do |value|
         instance_hash[:"#{value.to_s.tr('@', '')}"] = obj.instance_variable_get(value)
+        puts instance_hash[:"#{value.to_s.tr('@', '')}"]
         number+=1
-        return instance_hash
       end
     end
+    return instance_hash
   end
 
 end
