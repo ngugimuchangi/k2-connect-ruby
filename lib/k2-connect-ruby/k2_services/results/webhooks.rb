@@ -13,7 +13,7 @@ class CommonWebhook < WebhookTransaction
                 :status
 
   # For The General Webhook
-  def self.components(the_body)
+  def components(the_body)
     super components(the_body)
     K2CommonWebhook.components(the_body, @amount, @currency, @reference, @origination_time, @status)
   end
@@ -22,7 +22,7 @@ end
 
 class CustomerCreated < WebhookTransaction
   # For The Customer Created Webhook
-  def self.components(the_body)
+  def components(the_body)
     super components(the_body)
     @msisdn = the_body.dig("event", "resource", "msisdn")
     @first_name = the_body.dig("event", "resource", "first_name")
@@ -36,7 +36,7 @@ class BuyGoods < CommonWebhook
                 :system
 
   # For The BuyGoods Received Webhook
-  def self.components(the_body)
+  def components(the_body)
     super components(the_body)
     K2BuyGoods.components(the_body, @msisdn, @till_number, @system, @first_name, @middle_name, @last_name)
   end
@@ -46,7 +46,7 @@ end
 class Reversal < BuyGoods
   attr_accessor :reversal_time
   # For The BuyGoods Reversed Webhook
-  def self.components(the_body)
+  def components(the_body)
     super components(the_body)
     @reversal_time = the_body.dig("event", "resource", "reversal_time")
   end
@@ -60,7 +60,7 @@ class Settlement < CommonWebhook
                 :transfer_type,
                 :destination_mm_system
   # For The Settlement Transfer Webhook
-  def self.components(the_body)
+  def components(the_body)
     super components(the_body)
     @transfer_time = the_body.dig("event", "resource", "transfer_time")
     @transfer_type = the_body.dig("event", "resource", "transfer_type")

@@ -51,6 +51,7 @@ module K2Split
   end
 
   def self.return_hash(the_body, number = 0, instance_hash={}, obj)
+    obj.components(the_body)
     while number < obj.instance_variables.length
       obj.instance_variables.each do |value|
         instance_hash[:"#{value.to_s.tr('@', '')}"] = obj.instance_variable_get(value)
