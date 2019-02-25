@@ -22,7 +22,9 @@ module K2Split
       case the_body.dig("topic")
       when "buygoods_transaction_received"
         puts "Buy Goods Transaction Received."
-        K2Split.return_hash(BuyGoods.new(truth_value).components(the_body))
+        test_bg = BuyGoods.new(truth_value)
+        test_bg.components the_body
+        K2Split.return_hash(test_bg)
       when "buygoods_transaction_reversed"
         puts "Buy Goods Transaction Reversed."
         K2Split.return_hash(Reversal.new(truth_value).components(the_body))
