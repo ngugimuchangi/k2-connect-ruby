@@ -33,7 +33,7 @@ class K2Pay < K2Entity
       }
       pay_recipient_hash = {
           :path_url => "pay_recipients",
-          :access_token =>  @k2_access_token,
+          :access_token =>  @access_token,
           :is_get_request => false,
           :is_subscription => false,
           :params => recipients_body
@@ -63,7 +63,7 @@ class K2Pay < K2Entity
       }
       pay_create_hash = {
           :path_url => "payments",
-          :access_token =>  @k2_access_token,
+          :access_token =>  @access_token,
           :is_get_request => false,
           :is_subscription => false,
           :params => pay_create_body
@@ -81,7 +81,7 @@ class K2Pay < K2Entity
       }
       query_pay_hash = {
           :path_url => "payments",
-          :access_token =>  @k2_access_token,
+          :access_token =>  @access_token,
           :is_get_request => true,
           :is_subscription => false,
           :params => query_body

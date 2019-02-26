@@ -1,16 +1,11 @@
 require 'net/http/persistent'
+require 'json'
 
 module K2Connect
   # Method for sending the request to K2 sandbox or Mock Server (Receives the access_token)
-  def K2Connect.to_connect(connection_hash)
+  def self.to_connect(connection_hash)
     # The Server
     @postman_k2_mock_server = "https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io"
-
-    # The HTTP Exceptions
-    http_exceptions = [ Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse,
-                        Errno::EHOSTUNREACH, Net::ProtocolError, Net::OpenTimeout, Net::HTTPFatalError,
-                        Net::HTTPHeaderSyntaxError, Net::HTTPServerException, OpenSSL::SSL::SSLError,
-                        Net::HTTPRetriableError ]
 
     # Raised in the scenario that when requests for an access_token even though they already have one
     if connection_hash[:path_url].match?("ouath")
@@ -42,7 +37,10 @@ module K2Connect
       end
     rescue Net::HTTP::Persistent::Error => e
       puts(e.message)
-    rescue http_exceptions => he
+    rescue Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse,
+        Errno::EHOSTUNREACH, Net::ProtocolError, Net::OpenTimeout, Net::HTTPFatalError,
+        Net::HTTPHeaderSyntaxError, Net::HTTPServerException, OpenSSL::SSL::SSLError,
+        Net::HTTPRetriableError => he
       puts(he.message)
     rescue K2RepeatTokenRequest => k2
       puts(k2.message)

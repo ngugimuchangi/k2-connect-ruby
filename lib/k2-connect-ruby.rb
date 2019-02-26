@@ -13,5 +13,3 @@ require "k2-connect-ruby/k2_services/results"
 require "k2-connect-ruby/k2_entity/k2_entity"
 require "k2-connect-ruby/k2_entity/entity"
 
-module K2Connect
-end

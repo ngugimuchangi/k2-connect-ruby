@@ -1,7 +1,7 @@
 class K2Subscribe
   attr_accessor :k2_request_body,
                 :webhook_secret,
-                :subscriber_access_token,
+                :access_token,
                 :event_type
 
   # Intialize with the event_type
@@ -24,12 +24,11 @@ class K2Subscribe
     }
     token_hash = {
         :path_url => "ouath",
-        :access_token =>  @subscriber_access_token,
         :is_get_request => false,
         :is_subscription => true,
         :params => token_params
     }
-    @subscriber_access_token = K2Connect.to_connect(token_hash)
+    @access_token = K2Connect.to_connect(token_hash)
   end
 
   # Implemented a Case condition that minimises repetition
@@ -44,7 +43,7 @@ class K2Subscribe
       }
       subscribe_hash = {
           :path_url => "webhook-subscription",
-          :access_token =>  @subscriber_access_token,
+          :access_token =>  @access_token,
           :is_get_request => false,
           :is_subscription => true,
           :params => @k2_request_body
@@ -60,7 +59,7 @@ class K2Subscribe
       }
       subscribe_hash = {
           :path_url => "buygoods-transaction-reversed",
-          :access_token =>  @subscriber_access_token,
+          :access_token =>  @access_token,
           :is_get_request => false,
           :is_subscription => true,
           :params => @k2_request_body
@@ -76,7 +75,7 @@ class K2Subscribe
       }
       subscribe_hash = {
           :path_url => "customer-created",
-          :access_token =>  @subscriber_access_token,
+          :access_token =>  @access_token,
           :is_get_request => false,
           :is_subscription => true,
           :params => @k2_request_body
@@ -92,7 +91,7 @@ class K2Subscribe
       }
       subscribe_hash = {
           :path_url => "settlement",
-          :access_token =>  @subscriber_access_token,
+          :access_token =>  @access_token,
           :is_get_request => false,
           :is_subscription => true,
           :params => @k2_request_body

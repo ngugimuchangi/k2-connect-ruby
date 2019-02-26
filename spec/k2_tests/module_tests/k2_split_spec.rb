@@ -1,5 +1,5 @@
 RSpec.describe "K2SplitRequest" do
-  let(:k2_split) { K2ConnectRuby::K2SplitRequest.new("#truth_value")}
+  let(:k2_split) { K2SplitRequest.new("#truth_value")}
 
   subject { k2_split }
 

@@ -31,7 +31,7 @@ class K2Stk < K2Entity
       }
       receive_hash = {
           :path_url => "payment_requests",
-          :access_token =>  @k2_access_token,
+          :access_token =>  @access_token,
           :is_get_request => false,
           :is_subscription => false,
           :params => receive_body
@@ -49,7 +49,7 @@ class K2Stk < K2Entity
       }
       query_stk_hash = {
           :path_url => "payment_requests",
-          :access_token =>  @k2_access_token,
+          :access_token =>  @access_token,
           :is_get_request => true,
           :is_subscription => false,
           :params => query_body

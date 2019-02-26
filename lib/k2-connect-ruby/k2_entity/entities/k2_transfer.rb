@@ -14,7 +14,7 @@ class K2Transfer < K2Entity
       }
       settlement_hash = {
           :path_url => "merchant_bank_accounts",
-          :access_token =>  @k2_access_token,
+          :access_token =>  @access_token,
           :is_get_request => false,
           :is_subscription => false,
           :params => settlement_body
@@ -51,7 +51,7 @@ class K2Transfer < K2Entity
       end
       transfer_hash = {
           :path_url => "transfers",
-          :access_token =>  @k2_access_token,
+          :access_token =>  @access_token,
           :is_get_request => false,
           :is_subscription => false,
           :params => transfer_body
@@ -69,7 +69,7 @@ class K2Transfer < K2Entity
       }
       query_transfer_hash = {
           :path_url => "transfers",
-          :access_token =>  @k2_access_token,
+          :access_token =>  @access_token,
           :is_get_request => true,
           :is_subscription => false,
           :params => query_body
