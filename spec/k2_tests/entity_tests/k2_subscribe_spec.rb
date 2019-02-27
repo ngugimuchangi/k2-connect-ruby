@@ -1,6 +1,6 @@
 RSpec.describe K2Subscribe do
-  let!(:subscriber) { double() }
-  let!(:connection) { double() }
+  let!(:subscriber) { double("Subscription") }
+  let!(:connection) { double("Connection Module") }
 
   # before(:each) do  end
   # subject { K2Subscribe.new("buygoods_transaction_received", "webhook_secret") }
@@ -19,7 +19,10 @@ RSpec.describe K2Subscribe do
       allow(connection).to receive(:to_connect).and_return(access_token: "access_token")
 
       if subscriber.token_request("client_id", "client_secret")
+        expect(subscriber).to have_received(:token_request)
         connection.to_connect
+        expect(connection).to have_received(:to_connect)
+        expect(connection.to_connect).to eq(access_token: "access_token")
       end
     end
   end
@@ -36,7 +39,10 @@ RSpec.describe K2Subscribe do
       allow(connection).to receive(:to_connect).and_return(Location_url: "location_url")
 
       if subscriber.webhook_subscribe
+        expect(subscriber).to have_received(:webhook_subscribe)
         connection.to_connect
+        expect(connection).to have_received(:to_connect)
+        expect(connection.to_connect).to eq(Location_url: "location_url")
       end
     end
   end

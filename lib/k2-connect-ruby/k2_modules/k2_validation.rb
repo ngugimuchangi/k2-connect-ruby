@@ -58,6 +58,13 @@ module K2Validation
   end
 
   # Validate the ID
-  def validate_id(the_input, the_array) end
+  def validate_id(the_input, the_array)
+    unless the_input.empty? || the_input.nil?
+      "ID is Present."
+      unless !!the_input==the_input
+        "ID is not a Boolean"
+      end
+    end
+  end
 
 end
