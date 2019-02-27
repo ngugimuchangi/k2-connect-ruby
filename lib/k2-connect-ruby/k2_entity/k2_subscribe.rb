@@ -17,6 +17,9 @@ class K2Subscribe
 
   # Method for sending the request to K2 sandbox or Mock Server (Receives the access_token)
   def token_request(client_id, client_secret)
+    # Validation
+    validate_input(client_id, client_secret) and return
+
     token_params = {
         client_id: client_id,
         client_secret: client_secret,
@@ -107,11 +110,9 @@ class K2Subscribe
   end
 
   # Method for Validating the input itself
-  def validate_input(the_input)
-    if the_input.is_a?(Hash)
-
-    else
-
+  def validate_input(id, secret)
+    if id.nil? || id == "" && secret.nil? || secret == ""
+      "Empty Client Credentials"
     end
   end
 end

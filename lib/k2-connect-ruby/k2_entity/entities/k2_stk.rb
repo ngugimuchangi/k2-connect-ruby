@@ -5,6 +5,9 @@ class K2Stk < K2Entity
   def receive_mpesa_payments(stk_receive_params)
     # Validation
     if validate_input(stk_receive_params, %w{ first_name last_name phone email currency value })
+      puts("Token:\t#{stk_receive_params[:authenticity_token]}")
+      puts("First Name:\t#{stk_receive_params[:first_name]}")
+      puts("Phone:\t#{stk_receive_params[:phone]}")
       # The Request Body Parameters
       k2_request_subscriber = {
           first_name: stk_receive_params["first_name"],
