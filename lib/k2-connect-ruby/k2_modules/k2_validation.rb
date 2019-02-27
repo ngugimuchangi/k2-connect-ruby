@@ -1,13 +1,19 @@
 module K2Validation
   # Method for Validating the input itself
-  def validate_input(the_input, the_array)
+  def validate_input(the_input, the_array, is_query)
     if the_input.empty?
       raise K2EmptyInput.new
     else
-      if the_input.is_a?(Hash)
-        validate_hash(the_input,   the_array)
+      if is_query
+        validate_id(the_input.permit!.to_hash, the_array)
       else
-        validate_id(the_input, the_array)
+        if the_input.is_a?(Hash)
+          validate_hash(the_input, the_array)
+        elsif the_input.has_key?(:authenticity_token)
+        validate_hash(the_input.permit!.to_hash, the_array)
+        else
+          "Undefined Input Form"
+        end
       end
     end
     return true
