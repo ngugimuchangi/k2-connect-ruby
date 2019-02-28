@@ -35,10 +35,18 @@ RSpec.describe K2Subscribe do
     end
   end
 
+<<<<<<< HEAD
   context "#validate_input" do
     it 'should validate input' do
       allow(@k2subscriber).to receive(:validate_input).with(nil, nil) { "Empty Client Credentials" }
       @k2subscriber.validate_input(nil, nil)
+=======
+      if subscriber.webhook_subscribe
+        expect(subscriber).to have_received(:webhook_subscribe)
+        connection.to_connect
+
+      end
+>>>>>>> 3a8372d2aefb28a8904c8c22af7460ad72d08ee9
     end
   end
 end

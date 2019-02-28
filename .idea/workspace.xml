@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="547a0860-960a-450b-9136-428e96411441" name="Default Changelist" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/k2_subscribe.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/k2_subscribe.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_errors.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_errors.rb" afterDir="false" />
@@ -20,6 +21,15 @@
       <change beforePath="$PROJECT_DIR$/spec/k2_tests/service_tests/k2_results_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/k2_tests/service_tests/k2_results_spec.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spec/k2_tests/service_tests/results_spec/k2_transaction_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/k2_tests/service_tests/results_spec/k2_transaction_spec.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spec/k2_tests/service_tests/results_spec/webhook_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/k2_tests/service_tests/results_spec/webhook_spec.rb" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_pay.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_pay.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_stk.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_stk.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_transfer.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_transfer.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_validation.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_validation.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/version.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/version.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec/k2_tests/entity_tests/k2_subscribe_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/k2_tests/entity_tests/k2_subscribe_spec.rb" afterDir="false" />
+>>>>>>> 3a8372d2aefb28a8904c8c22af7460ad72d08ee9
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,20 +46,63 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+<<<<<<< HEAD
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spec/k2_tests/entity_tests/k2_subscribe_spec.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="276">
               <caret line="24" column="6" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="109" />
+=======
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_validation.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="259">
+              <caret line="15" column="11" lean-forward="true" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="11" />
+>>>>>>> 3a8372d2aefb28a8904c8c22af7460ad72d08ee9
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/spec/k2_tests/module_tests/k2_authorize_spec.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="69">
               <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
+=======
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_stk.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1035">
+              <caret line="45" column="40" selection-start-line="45" selection-start-column="36" selection-end-line="45" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_transfer.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="138">
+              <caret line="6" column="119" selection-start-line="6" selection-start-column="119" selection-end-line="6" selection-end-column="119" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_pay.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="138">
+              <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/version.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="23">
+              <caret line="1" column="20" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
+>>>>>>> 3a8372d2aefb28a8904c8c22af7460ad72d08ee9
             </state>
           </provider>
         </entry>
@@ -166,6 +219,7 @@
         <option value="$PROJECT_DIR$/spec/k2_tests/entity_tests/k2-entity-spec.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby.rb" />
         <option value="$PROJECT_DIR$/spec/k2_tests/entity_tests/k2-subscribe-spec.rb" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/version.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_stk.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_pay.rb" />
@@ -174,6 +228,8 @@
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/k2_results.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_connection.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_transfer.rb" />
+=======
+>>>>>>> 3a8372d2aefb28a8904c8c22af7460ad72d08ee9
         <option value="$PROJECT_DIR$/spec/k2_tests/entity_tests/entities_spec/k2_pay_spec.rb" />
         <option value="$PROJECT_DIR$/spec/k2_tests/entity_tests/entities_spec/k2_stk_spec.rb" />
         <option value="$PROJECT_DIR$/spec/k2_tests/entity_tests/entities_spec/k2_transfer_spec.rb" />
@@ -184,9 +240,17 @@
         <option value="$PROJECT_DIR$/spec/k2_tests/service_tests/client_spec/k2_client_spec.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/k2_subscribe.rb" />
         <option value="$PROJECT_DIR$/spec/k2_tests/entity_tests/k2_subscribe_spec.rb" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_errors.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_authorize.rb" />
         <option value="$PROJECT_DIR$/spec/k2_tests/module_tests/k2_authorize_spec.rb" />
+=======
+        <option value="$PROJECT_DIR$/lib/k2-connect-ruby/version.rb" />
+        <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_stk.rb" />
+        <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_pay.rb" />
+        <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_transfer.rb" />
+        <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_validation.rb" />
+>>>>>>> 3a8372d2aefb28a8904c8c22af7460ad72d08ee9
       </list>
     </option>
   </component>
@@ -414,19 +478,31 @@
       <workItem from="1551160385996" duration="21119000" />
       <workItem from="1551187727198" duration="3000" />
       <workItem from="1551247274570" duration="14781000" />
+<<<<<<< HEAD
       <workItem from="1551266174431" duration="5026000" />
       <workItem from="1551333305081" duration="19558000" />
+=======
+      <workItem from="1551266174431" duration="4632000" />
+>>>>>>> 3a8372d2aefb28a8904c8c22af7460ad72d08ee9
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="485314000" />
+=======
+    <option name="totallyTimeSpent" value="465362000" />
+>>>>>>> 3a8372d2aefb28a8904c8c22af7460ad72d08ee9
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
     <editor active="true" />
     <layout>
+<<<<<<< HEAD
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49833333" weight="0.38560605" />
+=======
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49833333" visible="true" weight="0.37954545" />
+>>>>>>> 3a8372d2aefb28a8904c8c22af7460ad72d08ee9
       <window_info id="Structure" order="1" sideWeight="0.50166667" side_tool="true" weight="0.3007576" />
       <window_info id="Favorites" order="2" sideWeight="0.50166667" side_tool="true" weight="0.3007576" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -594,6 +670,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/spec/k2_tests/module_tests/k2_validation_spec.rb">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -605,6 +682,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/spec/k2-connect-ruby-spec.rb">
+=======
+    <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/client/k2_client.rb">
+>>>>>>> 3a8372d2aefb28a8904c8c22af7460ad72d08ee9
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="282">
           <caret line="13" column="53" lean-forward="true" selection-start-line="13" selection-start-column="53" selection-end-line="13" selection-end-column="53" />
@@ -707,6 +787,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/spec/k2_tests/service_tests/results_spec/k2_transaction_spec.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="767">
@@ -715,6 +796,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/client/k2_client.rb">
+=======
+    <entry file="file://$PROJECT_DIR$/spec/k2-connect-ruby-spec.rb">
+>>>>>>> 3a8372d2aefb28a8904c8c22af7460ad72d08ee9
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
           <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="69" />
@@ -756,6 +840,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_pay.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="236">
@@ -779,10 +864,36 @@
           <caret line="4" column="41" selection-start-line="4" selection-start-column="41" selection-end-line="4" selection-end-column="41" />
           <folding>
             <element signature="e#103#938#0" />
+=======
+    <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_connection.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="55" column="5" selection-start-line="55" selection-start-column="5" selection-end-line="55" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.rspec_status">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/k2_tests/entity_tests/entities_spec/k2_stk_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="60" column="72" lean-forward="true" selection-start-line="60" selection-start-column="72" selection-end-line="60" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/k2_tests/entity_tests/entities_spec/k2_transfer_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="31">
+          <caret line="63" column="51" lean-forward="true" selection-start-line="63" selection-start-column="51" selection-end-line="63" selection-end-column="51" />
+          <folding>
+            <element signature="e#1661#2064#0" />
+>>>>>>> 3a8372d2aefb28a8904c8c22af7460ad72d08ee9
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/spec/k2_tests/entity_tests/entities_spec/k2_stk_spec.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="414">
@@ -836,13 +947,80 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
           <caret line="11" column="25" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="25" />
+=======
+    <entry file="file://$PROJECT_DIR$/spec/k2_tests/entity_tests/entities_spec/k2_pay_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="30" column="6" selection-start-line="30" selection-start-column="6" selection-end-line="35" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_errors.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-123">
+          <caret line="308" column="6" selection-start-line="308" selection-start-column="6" selection-end-line="308" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/k2_tests/entity_tests/k2_entity_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" column="53" lean-forward="true" selection-start-line="5" selection-start-column="53" selection-end-line="5" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/k2_tests/entity_tests/k2_subscribe_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="26" column="7" lean-forward="true" selection-start-line="26" selection-start-column="7" selection-end-line="26" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/version.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="20" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/k2_subscribe.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_pay.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_transfer.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" column="119" selection-start-line="6" selection-start-column="119" selection-end-line="6" selection-end-column="119" />
+>>>>>>> 3a8372d2aefb28a8904c8c22af7460ad72d08ee9
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/spec/k2_tests/module_tests/k2_authorize_spec.rb">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="69">
           <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
+=======
+        <state relative-caret-position="1035">
+          <caret line="45" column="40" selection-start-line="45" selection-start-column="36" selection-end-line="45" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_validation.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="15" column="11" lean-forward="true" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="11" />
+>>>>>>> 3a8372d2aefb28a8904c8c22af7460ad72d08ee9
         </state>
       </provider>
     </entry>
