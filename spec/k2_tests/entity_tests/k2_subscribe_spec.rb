@@ -41,8 +41,7 @@ RSpec.describe K2Subscribe do
       if subscriber.webhook_subscribe
         expect(subscriber).to have_received(:webhook_subscribe)
         connection.to_connect
-        expect(connection).to have_received(:to_connect)
-        expect(connection.to_connect).to eq(Location_url: "location_url")
+
       end
     end
   end
