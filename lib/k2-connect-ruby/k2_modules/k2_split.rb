@@ -8,10 +8,9 @@ module K2Split
       raise K2FalseTruthValue.new
     end
   rescue K2FalseTruthValue => k3
-    puts(k3.message)
+    return false
   rescue K2NilRequestBody => k2
-    puts(k2.message)
-    return k2.error
+    return false
   rescue StandardError => e
     puts(e.message)
   end
@@ -47,9 +46,9 @@ module K2Split
       raise K2InvalidBody
     end
   rescue K2InvalidBody => k2
-    puts(k2.message)
+    return false
   rescue K2UnspecifiedEvent => k3
-    puts(k3.message)
+    return false
   end
 
   def self.return_hash(number = 0, instance_hash={}, obj)

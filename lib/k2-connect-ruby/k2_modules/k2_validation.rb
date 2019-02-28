@@ -18,16 +18,13 @@ module K2Validation
     end
     return true
   rescue K2EmptyInput => k2
-    puts(k2.message)
     return false
   rescue TypeError => te
     puts(te.message)
     return false
   rescue K2InvalidHash => k3
-    puts(k3.message)
     return false
   rescue IncorrectParams => k4
-    puts(k4.message)
     return false
   end
 

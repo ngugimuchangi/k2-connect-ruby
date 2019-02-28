@@ -1,68 +1,43 @@
 RSpec.describe K2Stk do
-  include K2Validation
-  let!(:stk) { double("STK") }
-  let!(:valid) { double("Validation Module") }
-  let!(:connection) { double("Connection Module") }
+  before(:all) do
+    @k2stk = K2Stk.new("access_token")
+    @k2stk.extend(K2Validation)
+  end
 
-  it 'should include K2Validation Module' do
+  it 'should include K2Validation Module and inherit from K2Entity' do
+    expect(K2Stk).to be < K2Entity
     expect(K2Stk).to include(K2Validation)
   end
 
-  context "Receive payments from M-PESA users" do
+  context "Validation" do
     let(:params) { {first_name: "first_name" ,last_name: "last_name", phone: "phone", email: "email", currency:"currency", value:"value"} }
-    let(:hash) { {path_url: "path_url" ,access_token: "access_token", is_get_request: false, is_subscription: false, params: params} }
+    let(:array) { %w(first_name last_name phone email currency value) }
     it 'should validate user input' do
-      allow(valid).to receive(:validate_input).with(params) { true }
-      allow(stk).to receive(:receive_mpesa_payments).with(params)
       expect(params).to be_a_kind_of(Hash)
-      expect(hash[:is_get_request]).to eq(false)
-      expect(hash[:is_subscription]).to eq(false)
-      if valid.validate_input(params)
-        expect(valid).to have_received(:validate_input).with(params)
-        expect(valid.validate_input(params)).to eq(true)
-        stk.receive_mpesa_payments(params)
-        expect(stk).to have_received(:receive_mpesa_payments).with(params)
-      end
-    end
-
-    it 'should add pay recipient request' do
-      allow(stk).to receive(:receive_mpesa_payments).with(params)
-      allow(connection).to receive(:to_connect).with(hash).and_return(Location_url: "location_url")
-      if stk.receive_mpesa_payments(params)
-        expect(stk).to have_received(:receive_mpesa_payments).with(params)
-        connection.to_connect(hash)
-        expect(connection).to have_received(:to_connect).with(hash)
-        expect(connection.to_connect(hash)).to eq(Location_url: "location_url")
-      end
+      allow(@k2stk).to receive(:validate_input).with(Hash, Array, false) { true }
+      @k2stk.validate_input(params, array, false)
+      expect(@k2stk).to have_received(:validate_input).with(Hash, Array, false)
+      expect(@k2stk.validate_input(params, array, false)).to eq(true)
     end
   end
 
-  context "Query PAYment Request Status" do
-    let(:params) { {id: "id" } }
-    let(:hash) { {path_url: "path_url" ,access_token: "access_token", is_get_request: true, is_subscription: false, params: params} }
-    it 'should validate user input' do
-      allow(valid).to receive(:validate_input).with(params) { true }
-      allow(stk).to receive(:query_mpesa_payments).with(params)
-      expect(params).to be_a_kind_of(Hash)
-      expect(hash[:is_get_request]).to eq(true)
-      expect(hash[:is_subscription]).to eq(false)
-      if valid.validate_input(params)
-        expect(valid).to have_received(:validate_input).with(params)
-        expect(valid.validate_input(params)).to eq(true)
-        stk.query_mpesa_payments(params)
-        expect(stk).to have_received(:query_mpesa_payments).with(params)
-      end
+  context "#receive_mpesa_payments" do
+    let(:params) { {first_name: "first_name" ,last_name: "last_name", phone: "phone", email: "email", currency:"currency", value:"value"} }
+    it 'should add pay recipient request' do
+      allow(@k2stk).to receive(:receive_mpesa_payments).with(Hash) { {Location_url: "location_url"} }
+      @k2stk.receive_mpesa_payments(params)
+      expect(@k2stk).to have_received(:receive_mpesa_payments).with(Hash)
+      expect(@k2stk.receive_mpesa_payments(params)).to eq({Location_url: "location_url"})
     end
+  end
 
+  context "#query_mpesa_payments" do
+    let(:params) { {id: "id" } }
     it 'should query payment request status' do
-      allow(stk).to receive(:query_mpesa_payments).with(params)
-      allow(connection).to receive(:to_connect).with(hash).and_return(payment_request_result: "payment_request_result")
-      if stk.query_mpesa_payments(params)
-        expect(stk).to have_received(:query_mpesa_payments).with(params)
-        connection.to_connect(hash)
-        expect(connection).to have_received(:to_connect).with(hash)
-        expect(connection.to_connect(hash)).to eq(Location_url: "location_url")
-      end
+      allow(@k2stk).to receive(:query_mpesa_payments).with(Hash) { {payment_request_result: "payment_request_result"} }
+      @k2stk.query_mpesa_payments(params)
+      expect(@k2stk).to have_received(:query_mpesa_payments).with(Hash)
+      expect(@k2stk.query_mpesa_payments(params)).to eq({payment_request_result: "payment_request_result"})
     end
   end
 end

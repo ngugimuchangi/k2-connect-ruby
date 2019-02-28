@@ -6,11 +6,11 @@ class K2Subscribe
 
   # Intialize with the event_type
   def initialize (event_type, webhook_secret)
-    raise K2NilEvent.new if event_type.nil?
+    raise K2EmptyEvent.new if event_type.nil? || event_type == ""
     @event_type = event_type
     @webhook_secret = webhook_secret
-  rescue K2NilEvent => k2
-    puts k2.message
+  rescue K2EmptyEvent => k2
+    return false
   rescue StandardError => e
     puts e.message
   end
@@ -104,7 +104,7 @@ class K2Subscribe
       raise K2NonExistentSubscription.new
     end
   rescue K2NonExistentSubscription => k2
-    puts(k2.message)
+    return false
   rescue StandardError => e
     puts(e.message)
   end

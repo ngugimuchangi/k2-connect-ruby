@@ -8,17 +8,17 @@ class K2Client
 
   # Initialize method
   def initialize(api_secret_key)
-    raise K2NilSecretKey.new if api_secret_key.nil?
+    raise K2EmptySecretKey.new if api_secret_key.nil? || api_secret_key == ""
     @api_secret_key = api_secret_key
-  rescue K2NilSecretKey => k2
-    puts(k2.message)
+  rescue K2EmptySecretKey => k2
+    return false
   rescue StandardError => e
     puts(e.message)
   end
 
   # Method for parsing the Entire Request. Come back to it later to trim. L8r call it set_client_variables
   def parse_request(the_request)
-    raise K2NilRequest.new if the_request.nil?
+    raise K2EmptyRequest.new if the_request.nil? || the_request == ""
     # The Response Body.
     @hash_body = Yajl::Parser.parse(the_request.body.string.as_json)
     # The Response Header
@@ -36,9 +36,9 @@ class K2Client
     #   raise K2InsecureRequest.new
     # end
   rescue K2NilRequest => k2
-    puts(k2.message)
+    return false
   rescue K2InsecureRequest => k3
-    puts(k3.message)
+    return false
   rescue StandardError => e
     puts(e.message)
   end

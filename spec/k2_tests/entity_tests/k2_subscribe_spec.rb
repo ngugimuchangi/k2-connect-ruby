@@ -1,48 +1,44 @@
 RSpec.describe K2Subscribe do
-  let!(:subscriber) { double("Subscription") }
-  let!(:connection) { double("Connection Module") }
+  before(:all) do
+    @event_type = "event_type"
+    @webhook_secret = "webhook_secret"
+    @k2subscriber = K2Subscribe.new(@event_type, @webhook_secret)
+  end
 
-  # before(:each) do  end
-  # subject { K2Subscribe.new("buygoods_transaction_received", "webhook_secret") }
-
-  context "Requesting Access Token" do
-    let(:token_params) { {client_id: "Client ID", client_secret: "Client Secret"} }
-    let(:token_hash) { {path_url: "Path URL", params: token_params} }
-
-    it 'should send a request with hash parameter' do
-      expect(token_hash).to be_a_kind_of(Hash)
-      expect(token_hash).to have_key(:path_url).and have_key(:params)
+  context "#initialize" do
+    it 'should initialize with event_type and webhook_secret' do
+      expect(@k2subscriber.event_type).to eq(@event_type)
+      expect(@k2subscriber.webhook_secret).to eq(@webhook_secret)
     end
 
-    it 'should return an access token' do
-      allow(subscriber).to receive(:token_request).with("client_id", "client_secret") { true }
-      allow(connection).to receive(:to_connect).and_return(access_token: "access_token")
-
-      if subscriber.token_request("client_id", "client_secret")
-        expect(subscriber).to have_received(:token_request)
-        connection.to_connect
-        expect(connection).to have_received(:to_connect)
-        expect(connection.to_connect).to eq(access_token: "access_token")
-      end
+    it 'should raise an error when there is an empty event_type' do
+      raise K2EmptyEvent.new if @k2subscriber.event_type.nil? || @k2subscriber.event_type == ""
+      expect { raise K2EmptyEvent.new }.to raise_error K2EmptyEvent
     end
   end
 
-  context "Webhook Subscribing" do
-    let(:request_body) { {event_type: "Event Type", secret: "Webhook Secret"} }
-    it 'should have a correct Request Body' do
-      expect(request_body).not_to be_nil
-      expect(request_body).to have_key(:event_type).and have_key(:secret)
-
+  context "#token_request" do
+    it 'should return an access token' do
+      allow(@k2subscriber).to receive(:token_request).with("client_id", "client_secret") { {access_token: "access_token"} }
+      @k2subscriber.token_request("client_id", "client_secret")
+      expect(@k2subscriber).to have_received(:token_request)
+      expect(@k2subscriber.token_request("client_id", "client_secret")).to eq({access_token: "access_token"})
     end
+  end
+
+  context "#webhook_subscribe" do
     it 'should send webhook subscription' do
-      allow(subscriber).to receive(:webhook_subscribe) { true }
-      allow(connection).to receive(:to_connect).and_return(Location_url: "location_url")
+      allow(@k2subscriber).to receive(:webhook_subscribe) { {Location_url: "location_url"} }
+      @k2subscriber.webhook_subscribe
+      expect(@k2subscriber).to have_received(:webhook_subscribe)
+      expect(@k2subscriber.webhook_subscribe).to eq({Location_url: "location_url"})
+    end
+  end
 
-      if subscriber.webhook_subscribe
-        expect(subscriber).to have_received(:webhook_subscribe)
-        connection.to_connect
-
-      end
+  context "#validate_input" do
+    it 'should validate input' do
+      allow(@k2subscriber).to receive(:validate_input).with(nil, nil) { "Empty Client Credentials" }
+      @k2subscriber.validate_input(nil, nil)
     end
   end
 end

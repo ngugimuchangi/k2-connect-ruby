@@ -9,8 +9,6 @@ class K2AccessTokenError < StandardError
 
   def message
     STDERR.puts(@message)
-    exit(false )
-    # raise ActiveRecord::RecordInvalid.new("#{@message}")
   end
 end
 
@@ -25,13 +23,11 @@ class K2InvalidHMAC < StandardError
 
   def message
     STDERR.puts(@message)
-    exit(false )
-    # raise ActiveRecord::RecordInvalid.new("#{@message}")
   end
 end
 
 # For cases where the secret key is nil/null/empty.
-class K2NilSecretKey < StandardError
+class K2EmptySecretKey < StandardError
   attr_reader :status, :error, :message
   def initialize
     @error = 403
@@ -41,8 +37,6 @@ class K2NilSecretKey < StandardError
 
   def message
     STDERR.puts(@message)
-    exit(false )
-    # raise ActiveRecord::RecordInvalid.new("#{@message}")
   end
 end
 
@@ -57,8 +51,6 @@ class K2NilAccessToken < StandardError
 
   def message
     STDERR.puts(@message)
-    exit(false )
-    # raise ActiveRecord::RecordInvalid.new("#{@message}")
   end
 end
 
@@ -74,8 +66,6 @@ class K2ExpiredToken < StandardError
 
   def message?
     STDERR.puts(@message)
-    exit(false )
-    # raise ActiveRecord::RecordInvalid.new("#{@message}")
   end
 end
 
@@ -90,13 +80,11 @@ class K2NilRequestBody < StandardError
 
   def message
     STDERR.puts(@message)
-    exit(false )
-    # raise ActiveRecord::RecordInvalid.new("#{@message}")
   end
 end
 
 # Raises an error should the empty arguments for authentication
-class K2NilAuthArgument < StandardError
+class K2EmptyAuthArgument < StandardError
   attr_reader :status, :error, :message
   def initialize(_error=nil, _status=nil)
     @error = 401
@@ -106,12 +94,11 @@ class K2NilAuthArgument < StandardError
 
   def message
     STDERR.puts(@message)
-    exit(false )
   end
 end
 
 # Raises error concerning a nil request Input in the parse_request or for method
-class K2NilRequest < StandardError
+class K2EmptyRequest < StandardError
   attr_reader :status, :error, :message
   def initialize
     @error = 400
@@ -121,8 +108,6 @@ class K2NilRequest < StandardError
 
   def message
     STDERR.puts(@message)
-    exit(false )
-    # raise ActiveRecord::RecordInvalid.new("#{@message}")
   end
 end
 
@@ -137,7 +122,6 @@ class K2InsecureRequest < StandardError
 
   def message
     STDERR.puts(@message)
-    # raise ActiveRecord::RecordInvalid.new("#{@message}")
   end
 end
 
@@ -152,24 +136,20 @@ class K2NonExistentSubscription < StandardError
 
   def message
     STDERR.puts(@message)
-    exit(false )
-    # raise ActiveRecord::RecordNotFound.new("#{@message}")
   end
 end
 
 # Raises error when no event_type specified
-class K2NilEvent < StandardError
+class K2EmptyEvent < StandardError
   attr_reader :status, :error, :message
   def initialize
     @error = 400
     @status = :bad_request
-    @message = "Nil Event Type Specified!"
+    @message = "Nil or Empty Event Type Specified!"
   end
 
   def message
     STDERR.puts(@message)
-    exit(false )
-    # raise ActiveRecord::RecordInvalid.new("#{@message}")
   end
 end
 
@@ -184,7 +164,6 @@ class K2RepeatTokenRequest < StandardError
 
   def message
     STDERR.puts(@message)
-    # raise ActiveRecord::RecordInvalid.new("#{@message}")
   end
 end
 
@@ -199,8 +178,6 @@ class K2NilTruthValue < StandardError
 
   def message
     STDERR.puts(@message)
-    exit(false )
-    # raise ActiveRecord::RecordInvalid.new("#{@message}")
   end
 end
 
@@ -215,8 +192,6 @@ class K2InvalidTruthValue < StandardError
 
   def message
     STDERR.puts(@message)
-    exit(false )
-    # raise ActiveRecord::RecordInvalid.new("#{@message}")
   end
 end
 
@@ -231,8 +206,6 @@ class K2FalseTruthValue < StandardError
 
   def message
     STDERR.puts(@message)
-    exit(false )
-    # raise ActiveRecord::RecordInvalid.new("#{@message}")
   end
 end
 
@@ -248,8 +221,6 @@ class K2InvalidBody < StandardError
 
   def message
     STDERR.puts(@message)
-    exit(false )
-    # raise ActiveRecord::RecordInvalid.new("#{@message}")
   end
 end
 
@@ -264,8 +235,6 @@ class K2UnspecifiedEvent < StandardError
 
   def message
     STDERR.puts(@message)
-    exit(false )
-    # raise ActiveRecord::RecordNotFound.new("#{@message}")
   end
 end
 
@@ -280,7 +249,6 @@ class K2EmptyInput < StandardError
 
   def message
     STDERR.puts(@message)
-    return false
   end
 end
 
@@ -322,7 +290,6 @@ class IncorrectParams < StandardError
   def message
     STDERR.puts(@message)
     loop_keys
-    # exit(false)
   end
 end
 

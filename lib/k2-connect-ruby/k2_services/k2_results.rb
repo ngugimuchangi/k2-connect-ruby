@@ -20,9 +20,9 @@ class K2Result
       raise K2InvalidTruthValue
     end
   rescue K2InvalidTruthValue => k3
-    puts(k3.message)
+    return false
   rescue K2NilTruthValue => k2
-    puts(k2.message)
+    return false
   end
 
   def components(the_body)

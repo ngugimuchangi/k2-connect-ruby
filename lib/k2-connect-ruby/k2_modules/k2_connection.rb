@@ -43,9 +43,9 @@ module K2Connect
         Net::HTTPRetriableError => he
       puts(he.message)
     rescue K2RepeatTokenRequest => k2
-      puts(k2.message)
+      return false
     rescue K2NilAccessToken => k3
-      puts(k3.message)
+      return false
     rescue StandardError => se
       puts(se.message)
       return false
