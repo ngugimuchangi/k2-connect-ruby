@@ -1,6 +1,12 @@
-# For cases where the access token is not equal to the one provided at K2ConnectRuby::K2Subscribe.token_request()
-class K2AccessTokenError < StandardError
+# TODO take a look at the last two errors. See if you can simplify the way the message can print without the loop in effect
+# Standard K2Error
+class K2Errors < StandardError
   attr_reader :status, :error, :message
+
+end
+
+# For cases where the access token is not equal to the one provided at K2ConnectRuby::K2Subscribe.token_request()
+class K2AccessTokenError < K2Errors
   def initialize
     @error = 401
     @status = :unauthorized
@@ -13,8 +19,7 @@ class K2AccessTokenError < StandardError
 end
 
 # For cases where the secret key is nil/null/empty.
-class K2InvalidHMAC < StandardError
-  attr_reader :status, :error, :message
+class K2InvalidHMAC < K2Errors
   def initialize
     @error = 400
     @status = :bad_request
@@ -27,8 +32,7 @@ class K2InvalidHMAC < StandardError
 end
 
 # For cases where the secret key is nil/null/empty.
-class K2EmptySecretKey < StandardError
-  attr_reader :status, :error, :message
+class K2EmptySecretKey < K2Errors
   def initialize
     @error = 403
     @status = :forbidden
@@ -41,8 +45,7 @@ class K2EmptySecretKey < StandardError
 end
 
 # For cases where the access token is nil/null/empty.
-class K2NilAccessToken < StandardError
-  attr_reader :status, :error, :message
+class K2EmptyAccessToken < K2Errors
   def initialize
     @error = 400
     @status = :bad_request
@@ -56,8 +59,7 @@ end
 
 # For cases where the access token has expired.
 # Not yet Implemented
-class K2ExpiredToken < StandardError
-  attr_reader :status, :error, :message
+class K2ExpiredToken < K2Errors
   def initialize
     @error = 401
     @status = :unauthorized
@@ -70,8 +72,7 @@ class K2ExpiredToken < StandardError
 end
 
 # Raises an error should the body argument be empty
-class K2NilRequestBody < StandardError
-  attr_reader :status, :error, :message
+class K2EmptyRequestBody < K2Errors
   def initialize
     @error = 400
     @status = :bad_request
@@ -84,8 +85,7 @@ class K2NilRequestBody < StandardError
 end
 
 # Raises an error should the empty arguments for authentication
-class K2EmptyAuthArgument < StandardError
-  attr_reader :status, :error, :message
+class K2EmptyAuthArgument < K2Errors
   def initialize(_error=nil, _status=nil)
     @error = 401
     @status = :unauthorized
@@ -98,8 +98,7 @@ class K2EmptyAuthArgument < StandardError
 end
 
 # Raises error concerning a nil request Input in the parse_request or for method
-class K2EmptyRequest < StandardError
-  attr_reader :status, :error, :message
+class K2EmptyRequest < K2Errors
   def initialize
     @error = 400
     @status = :bad_request
@@ -112,8 +111,7 @@ class K2EmptyRequest < StandardError
 end
 
 # Raises error should the uri.scheme not be 'https', thus an insecure connection or request
-class K2InsecureRequest < StandardError
-  attr_reader :status, :error, :message
+class K2InsecureRequest < K2Errors
   def initialize
     @error = 400
     @status = :bad_request
@@ -126,8 +124,7 @@ class K2InsecureRequest < StandardError
 end
 
 # Raises error when no subscription service is selected
-class K2NonExistentSubscription < StandardError
-  attr_reader :status, :error, :message
+class K2NonExistentSubscription < K2Errors
   def initialize
     @error =  404
     @status = :not_found
@@ -140,8 +137,7 @@ class K2NonExistentSubscription < StandardError
 end
 
 # Raises error when no event_type specified
-class K2EmptyEvent < StandardError
-  attr_reader :status, :error, :message
+class K2EmptyEvent < K2Errors
   def initialize
     @error = 400
     @status = :bad_request
@@ -154,8 +150,7 @@ class K2EmptyEvent < StandardError
 end
 
 # Raises error when registering for repeat token for subscription service
-class K2RepeatTokenRequest < StandardError
-  attr_reader :status, :error, :message
+class K2RepeatTokenRequest < K2Errors
   def initialize
     @error = 400
     @status = :bad_request
@@ -168,8 +163,7 @@ class K2RepeatTokenRequest < StandardError
 end
 
 # Raises error before splitting request should the truth value be nil
-class K2NilTruthValue < StandardError
-  attr_reader :status, :error, :message
+class K2NilTruthValue < K2Errors
   def initialize
     @error = 401
     @status = :unauthorized
@@ -182,8 +176,7 @@ class K2NilTruthValue < StandardError
 end
 
 # Raises error before splitting request should the truth value be invalid
-class K2InvalidTruthValue < StandardError
-  attr_reader :status, :error, :message
+class K2InvalidTruthValue < K2Errors
   def initialize
     @error = 401
     @status = :unauthorized
@@ -196,8 +189,7 @@ class K2InvalidTruthValue < StandardError
 end
 
 # Raises error before splitting request should the K2Client not be authenticated
-class K2FalseTruthValue < StandardError
-  attr_reader :status, :error, :message
+class K2FalseTruthValue < K2Errors
   def initialize
     @error = 401
     @status = :unauthorized
@@ -211,8 +203,7 @@ end
 
 # Raises error for an Invalid Form in which input is given,
 # like the response body which should already be hashed in byK2Client before being used elsewhere.
-class K2InvalidBody < StandardError
-  attr_reader :status, :error, :message
+class K2InvalidBody < K2Errors
   def initialize
     @error = 400
     @status = :bad_request
@@ -225,8 +216,7 @@ class K2InvalidBody < StandardError
 end
 
 # Raises error before splitting request should the K2Client not be authenticated
-class K2UnspecifiedEvent < StandardError
-  attr_reader :status, :error, :message
+class K2UnspecifiedEvent < K2Errors
   def initialize
     @error = 404
     @status = :not_found
@@ -239,8 +229,7 @@ class K2UnspecifiedEvent < StandardError
 end
 
 # Error for Empty Hash Objects (K2Entity validate => input)
-class K2EmptyInput < StandardError
-  attr_reader :status, :error, :message
+class K2EmptyInput < K2Errors
   def initialize
     @error = 400
     @status = :bad_request
@@ -252,44 +241,37 @@ class K2EmptyInput < StandardError
   end
 end
 
+# Standard error for Validation Params
+class K2ErrorParams < K2Errors
+  attr_reader :error, :the_keys
+
+  def loop_keys
+    @the_keys.each_value(&method(:puts))
+  end
+
+  def message
+    STDERR.puts(@message)
+    loop_keys
+  end
+end
+
 # Hash / Params has Empty Values within it
-class K2InvalidHash < StandardError
-  attr_reader :status, :error, :message, :the_keys
+class K2InvalidHash < K2ErrorParams
   def initialize (the_keys)
     @error = 400
     @the_keys  = the_keys
     @status = :bad_request
     @message = "Incorrect Hash Object!\n The Following Params are Empty: "
   end
-
-  def loop_keys
-    @the_keys.each_value(&method(:puts))
-  end
-
-  def message
-    STDERR.puts(@message)
-    loop_keys
-    # exit(false)
-  end
 end
 
 # Error for Empty Hash Objects (K2Entity validate => input)
-class IncorrectParams < StandardError
-  attr_reader :status, :error, :message, :the_keys
+class IncorrectParams < K2ErrorParams
   def initialize (the_keys)
     @error = 400
     @the_keys  = the_keys
     @status = :bad_request
     @message = "Incorrect Hash Parameters!\n The Following Params are Incorrect: "
-  end
-
-  def loop_keys
-    @the_keys.each_value(&method(:puts))
-  end
-
-  def message
-    STDERR.puts(@message)
-    loop_keys
   end
 end
 

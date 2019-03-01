@@ -1,21 +1,23 @@
+# TODO, David Nino, take a look at the check_type
+# Module for Splitting the Response to simple components
 module K2Split
   # Confirm Truth value and carry out splitting
   def self.judge_truth(the_body, truth_value)
-    raise K2NilRequestBody.new if the_body.nil?
+    raise K2EmptyRequestBody.new if the_body.nil? || the_body==""
     if truth_value
       K2Split.check_type(the_body, truth_value)
     else
       raise K2FalseTruthValue.new
     end
-  rescue K2FalseTruthValue => k3
-    return false
-  rescue K2NilRequestBody => k2
-    return false
+  # rescue K2FalseTruthValue => k3
+  #   return false
+  # rescue K2EmptyRequestBody => k2
+  #   return false
   rescue StandardError => e
     puts(e.message)
   end
 
-  # Check the Event Type
+  # Check the Event Type.
   def self.check_type(the_body, truth_value)
     if the_body.is_a?(Hash)
       case the_body.dig("topic")
@@ -51,11 +53,10 @@ module K2Split
     return false
   end
 
-  def self.return_hash(number = 0, instance_hash={}, obj)
+  def self.return_hash(number = 0, instance_hash=HashWithIndifferentAccess.new, obj)
     while number < obj.instance_variables.length
       obj.instance_variables.each do |value|
         instance_hash[:"#{value.to_s.tr('@', '')}"] = obj.instance_variable_get(value)
-        puts instance_hash[:"#{value.to_s.tr('@', '')}"]
         number+=1
       end
     end

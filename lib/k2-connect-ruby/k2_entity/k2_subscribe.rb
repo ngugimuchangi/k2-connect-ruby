@@ -1,6 +1,6 @@
+# Class for Subscription Service
 class K2Subscribe
-  attr_accessor :k2_request_body,
-                :webhook_secret,
+  attr_writer :webhook_secret,
                 :access_token,
                 :event_type
 
@@ -25,12 +25,13 @@ class K2Subscribe
         client_secret: client_secret,
         grant_type: "client_credentials"
     }
-    token_hash = {
-        :path_url => "ouath",
-        :is_get_request => false,
-        :is_subscription => true,
-        :params => token_params
-    }
+    # token_hash = {
+    #     :path_url => "ouath",
+    #     :is_get_request => false,
+    #     :is_subscription => true,
+    #     :params => token_params
+    # }
+    token_hash = K2Subscribe.put_in_hash("ouath", token_params)
     @access_token = K2Connect.to_connect(token_hash)
   end
 
@@ -39,66 +40,70 @@ class K2Subscribe
     case
       # Buygoods Received
     when @event_type.match?("buygoods_transaction_received")
-      @k2_request_body = {
+      k2_request_body = {
           event_type: "buygooods_transaction_received",
           url: "https://myapplication.com/webhooks",
           secret: @webhook_secret
       }
-      subscribe_hash = {
-          :path_url => "webhook-subscription",
-          :access_token =>  @access_token,
-          :is_get_request => false,
-          :is_subscription => true,
-          :params => @k2_request_body
-      }
+      # subscribe_hash = {
+      #     :path_url => "webhook-subscription",
+      #     :access_token =>  @access_token,
+      #     :is_get_request => false,
+      #     :is_subscription => true,
+      #     :params => k2_request_body
+      # }
+      subscribe_hash = K2Subscribe.put_in_hash("webhook-subscription", k2_request_body)
       K2Connect.to_connect(subscribe_hash)
 
       # Buygoods Reversed
     when @event_type.match?("buygoods_transaction_reversed")
-      @k2_request_body = {
+      k2_request_body = {
           event_type: "buygooods_transaction_reversed",
           url: "https://myapplication.com/webhooks",
           secret: "webhook_secret"
       }
-      subscribe_hash = {
-          :path_url => "buygoods-transaction-reversed",
-          :access_token =>  @access_token,
-          :is_get_request => false,
-          :is_subscription => true,
-          :params => @k2_request_body
-      }
+      # subscribe_hash = {
+      #     :path_url => "buygoods-transaction-reversed",
+      #     :access_token =>  @access_token,
+      #     :is_get_request => false,
+      #     :is_subscription => true,
+      #     :params => k2_request_body
+      # }
+      subscribe_hash = K2Subscribe.put_in_hash("buygoods_transaction_reversed", k2_request_body)
       K2Connect.to_connect(subscribe_hash)
 
       # Customer Created.
     when @event_type.match?("customer_created")
-      @k2_request_body = {
+      k2_request_body = {
           event_type: "customer_created",
           url: "https://myapplication.com/webhooks",
           secret: @webhook_secret
       }
-      subscribe_hash = {
-          :path_url => "customer-created",
-          :access_token =>  @access_token,
-          :is_get_request => false,
-          :is_subscription => true,
-          :params => @k2_request_body
-      }
+      # subscribe_hash = {
+      #     :path_url => "customer-created",
+      #     :access_token =>  @access_token,
+      #     :is_get_request => false,
+      #     :is_subscription => true,
+      #     :params => k2_request_body
+      # }
+      subscribe_hash = K2Subscribe.put_in_hash("customer-created", k2_request_body)
       K2Connect.to_connect(subscribe_hash)
 
       # Settlement Transfer Completed
     when @event_type.match?("settlement_transfer_completed")
-      @k2_request_body = {
+      k2_request_body = {
           event_type: "settlement",
           url: "https://myapplication.com/webhooks",
           secret: @webhook_secret
       }
-      subscribe_hash = {
-          :path_url => "settlement",
-          :access_token =>  @access_token,
-          :is_get_request => false,
-          :is_subscription => true,
-          :params => @k2_request_body
-      }
+      # subscribe_hash = {
+      #     :path_url => "settlement",
+      #     :access_token =>  @access_token,
+      #     :is_get_request => false,
+      #     :is_subscription => true,
+      #     :params => k2_request_body
+      # }
+      subscribe_hash = K2Subscribe.put_in_hash("settlement", k2_request_body)
       K2Connect.to_connect(subscribe_hash)
     else
       raise K2NonExistentSubscription.new
@@ -114,5 +119,15 @@ class K2Subscribe
     if id.nil? || id == "" && secret.nil? || secret == ""
       "Empty Client Credentials"
     end
+  end
+
+  def self.put_in_hash(path_url, body)
+    return {
+        :path_url => path_url,
+        :access_token =>  @access_token,
+        :is_get_request => false,
+        :is_subscription => true,
+        :params => body
+    }
   end
 end

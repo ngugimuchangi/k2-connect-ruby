@@ -1,35 +1,37 @@
+# Module for Validating Input to the Entities
 module K2Validation
   # Method for Validating the input itself
-  def validate_input(the_input, the_array, is_query)
-    if the_input.empty?
+  def validate_input?(the_input, the_array, is_query)
+    if the_input.empty? || the_input.nil? || the_input==""
       raise K2EmptyInput.new
     else
       if is_query
-        validate_id(the_input.permit!.to_hash, the_array)
+        validate_id(the_input, the_array)
       else
         if the_input.is_a?(Hash)
           validate_hash(the_input, the_array)
         elsif the_input.has_key?(:authenticity_token)
         validate_hash(the_input.permit!.to_hash, the_array)
         else
+          # Error
           "Undefined Input Form"
         end
       end
     end
     return true
-  rescue K2EmptyInput => k2
-    return false
+  # rescue K2EmptyInput => k2
+  #   return false
   rescue TypeError => te
     puts(te.message)
     return false
-  rescue K2InvalidHash => k3
-    return false
-  rescue IncorrectParams => k4
-    return false
+  # rescue K2InvalidHash => k3
+  #   return false
+  # rescue IncorrectParams => k4
+  #   return false
   end
 
   # Validate the Hash Input Parameters
-  def validate_hash(the_input, empty_keys = {}, invalid_keys = {}, the_array)
+  def validate_hash(the_input, empty_keys = HashWithIndifferentAccess.new, invalid_keys = HashWithIndifferentAccess.new, the_array)
     nil_params(the_input, empty_keys) and return
     if empty_keys.empty?
       puts "No Nil or Empty Values in Hash."
@@ -37,6 +39,7 @@ module K2Validation
       unless invalid_keys.empty?
         raise IncorrectParams.new(invalid_keys)
       end
+      true
     else
       raise K2InvalidHash.new(empty_keys)
     end
@@ -62,11 +65,9 @@ module K2Validation
 
   # Validate the ID
   def validate_id(the_input, the_array)
-    unless the_input.empty? || the_input.nil?
-      "ID is Present."
-      unless !!the_input==the_input
-        "ID is not a Boolean"
-      end
+    unless !!the_input==the_input
+      "ID is not a Boolean"
+      true
     end
   end
 

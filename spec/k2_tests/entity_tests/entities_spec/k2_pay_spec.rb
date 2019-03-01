@@ -10,7 +10,7 @@ RSpec.describe K2Pay do
   end
 
   context "Validation" do
-    let(:params) { {first_name: "first_name" ,last_name: "last_name", phone: "phone", email: "email", currency:"currency", value:"value"} }
+    let(:params) { HashWithIndifferentAccess.new(first_name: "first_name" ,last_name: "last_name", phone: "phone", email: "email", currency:"currency", value:"value") }
     let(:array) { %w(first_name last_name phone email currency value) }
     it 'should validate user input' do
       expect(params).to be_a_kind_of(Hash)
@@ -22,7 +22,7 @@ RSpec.describe K2Pay do
   end
 
   context "#pay_recipients" do
-    let(:params) { {first_name: "first_name" ,last_name: "last_name", phone: "phone", email: "email", currency:"currency", value:"value"} }
+    let(:params) { HashWithIndifferentAccess.new(first_name: "first_name" ,last_name: "last_name", phone: "phone", email: "email", currency:"currency", value:"value") }
     it 'should add pay recipient request' do
       allow(@k2pay).to receive(:pay_recipients).with(Hash) { {Location_url: "location_url"} }
       @k2pay.pay_recipients(params)
@@ -32,7 +32,7 @@ RSpec.describe K2Pay do
   end
 
   context "#pay_create" do
-    let(:params) { {currency: "currency" ,value: "value"} }
+    let(:params) { HashWithIndifferentAccess.new(currency: "currency" ,value: "value") }
     it 'should create outgoing payment request' do
       allow(@k2pay).to receive(:pay_create).with(Hash) { {Location_url: "location_url"} }
       @k2pay.pay_create(params)
@@ -42,7 +42,7 @@ RSpec.describe K2Pay do
   end
 
   context "#query_pay" do
-    let(:params) { {id: "id" } }
+    let(:params) { HashWithIndifferentAccess.new(id: "id") }
     it 'should query payment request status' do
       allow(@k2pay).to receive(:query_pay).with(Hash) { {status: "status"} }
       @k2pay.query_pay(params)

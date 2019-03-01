@@ -4,7 +4,7 @@ class K2Pay < K2Entity
   # Adding PAY Recipients with either mobile_wallets or bank_accounts as destination of your payments.
   def pay_recipients(pay_recipient_params)
     # Validation
-    if validate_input(pay_recipient_params, %w{ first_name last_name phone email currency value acc_name bank_id bank_branch_id acc_no pay_type }, false)
+    if validate_input?(pay_recipient_params, %w{ first_name last_name phone email currency value acc_name bank_id bank_branch_id acc_no pay_type }, false)
       # The Request Body Parameters
       # In the case of mobile pay
       if  pay_recipient_params["pay_type"].match?("mobile_wallet")
@@ -45,7 +45,7 @@ class K2Pay < K2Entity
   # Create an outgoing Payment to a third party.
   def pay_create(pay_create_params)
     # Validation
-    if validate_input(pay_create_params, %w{ currency value }, false)
+    if validate_input?(pay_create_params, %w{ currency value }, false)
       # The Request Body Parameters
       k2_request_pay_amount = {
           currency: pay_create_params["currency"],
@@ -75,7 +75,7 @@ class K2Pay < K2Entity
   # Query the status of a previously initiated Payment request
   def query_pay(id)
     # Validation
-    if validate_input(id, %w{ id }, true)
+    if validate_input?(id, %w{ id }, true)
       query_body = {
           ID: id
       }

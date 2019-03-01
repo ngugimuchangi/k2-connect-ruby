@@ -1,5 +1,5 @@
 require 'openssl'
-
+# Module for Authenticating the Kopo Kopo Signature via HMAC
 module K2Authenticator
   # Compares HMAC signature with the key.
   def self.authenticate?(body, api_secret_key, signature)
@@ -11,10 +11,10 @@ module K2Authenticator
     else
       raise K2InvalidHMAC
     end
-  rescue K2EmptyAuthArgument => k2
-    return false
-  rescue K2InvalidHMAC => k3
-    return false
+  # rescue K2EmptyAuthArgument => k2
+  #   return false
+  # rescue K2InvalidHMAC => k3
+  #   return false
   rescue StandardError => e
     puts(e.message)
   end

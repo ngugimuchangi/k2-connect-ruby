@@ -10,7 +10,7 @@ RSpec.describe K2Transfer do
   end
 
   context "Validation" do
-    let(:params) { {first_name: "first_name" ,last_name: "last_name", phone: "phone", email: "email", currency:"currency", value:"value"} }
+    let(:params) { HashWithIndifferentAccess.new(first_name: "first_name" ,last_name: "last_name", phone: "phone", email: "email", currency:"currency", value:"value") }
     let(:array) { %w(first_name last_name phone email currency value) }
     it 'should validate user input' do
       expect(params).to be_a_kind_of(Hash)
@@ -22,7 +22,7 @@ RSpec.describe K2Transfer do
   end
 
   context "#settlement_account" do
-    let(:params) { {account_name: "account_name" ,bank_ref: "bank_ref", bank_branch_ref: "bank_branch_ref", account_number: "account_number", currency:"currency", value:"value"} }
+    let(:params) { HashWithIndifferentAccess.new(account_name: "account_name" ,bank_ref: "bank_ref", bank_branch_ref: "bank_branch_ref", account_number: "account_number", currency:"currency", value:"value") }
     it 'should add pay recipient request' do
       allow(@k2transfer).to receive(:settlement_account).with(Hash) { {Location_url: "location_url"} }
       @k2transfer.settlement_account(params)
@@ -32,7 +32,7 @@ RSpec.describe K2Transfer do
   end
 
   context "#transfer_funds" do
-    let(:params) { {currency: "currency" ,value: "value"} }
+    let(:params) { HashWithIndifferentAccess.new(currency: "currency" ,value: "value") }
     let(:destination) { "" }
     it 'should create transfer request' do
       if destination.nil? || destination == ""
@@ -50,7 +50,7 @@ RSpec.describe K2Transfer do
   end
 
   context "Query the status of a prior Transfer" do
-    let(:params) { {id: "id" } }
+    let(:params) { HashWithIndifferentAccess.new(id: "id") }
     it 'should query payment request status' do
       allow(@k2transfer).to receive(:query_transfer).with(Hash) { {response: "response"} }
       @k2transfer.query_transfer(params)

@@ -4,7 +4,7 @@ class K2Stk < K2Entity
   # Receive payments from M-PESA users.
   def receive_mpesa_payments(stk_receive_params)
     # Validation
-    if validate_input(stk_receive_params, %w{ first_name last_name phone email currency value }, false )
+    if validate_input?(stk_receive_params, %w{ first_name last_name phone email currency value }, false )
       # The Request Body Parameters
       k2_request_subscriber = {
           first_name: stk_receive_params["first_name"],
@@ -43,7 +43,7 @@ class K2Stk < K2Entity
   # Query Payment Request Status
   def query_mpesa_payments(id)
     # Validation
-    if validate_input(id, %w{ id }, true)
+    if validate_input?(id, %w{ id }, true)
       query_body = {
           ID: id
       }

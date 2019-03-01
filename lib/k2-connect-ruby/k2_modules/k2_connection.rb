@@ -1,7 +1,11 @@
 require 'net/http/persistent'
 require 'json'
-
+# Module for Sending the Requests
 module K2Connect
+  attr_writer :postman_k2_mock_server,
+              :access_token,
+              :location
+
   # Method for sending the request to K2 sandbox or Mock Server (Receives the access_token)
   def self.to_connect(connection_hash)
     # The Server
@@ -11,7 +15,7 @@ module K2Connect
     if connection_hash[:path_url].match?("ouath")
       raise K2RepeatTokenRequest.new unless @access_token.nil?
     else
-      raise K2NilAccessToken.new if connection_hash[:access_token].nil?
+      raise K2EmptyAccessToken.new if connection_hash[:access_token].nil? || connection_hash[:access_token]==""
     end
     k2_url = URI.parse(@postman_k2_mock_server+"/"+connection_hash[:path_url])
     k2_https = Net::HTTP::Persistent.new
@@ -31,9 +35,9 @@ module K2Connect
 
     begin
       if connection_hash[:is_get_request]
-        @k2_response = k2_https.request(k2_request)
+        k2_response = k2_https.request(k2_request)
       else
-        @k2_response = k2_https.request(k2_url, k2_request)
+        k2_response = k2_https.request(k2_url, k2_request)
       end
     rescue Net::HTTP::Persistent::Error => e
       puts(e.message)
@@ -42,24 +46,24 @@ module K2Connect
         Net::HTTPHeaderSyntaxError, Net::HTTPServerException, OpenSSL::SSL::SSLError,
         Net::HTTPRetriableError => he
       puts(he.message)
-    rescue K2RepeatTokenRequest => k2
-      return false
-    rescue K2NilAccessToken => k3
-      return false
+    # rescue K2RepeatTokenRequest => k2
+    #   return false
+    # rescue K2EmptyAccessToken => k3
+    #   return false
     rescue StandardError => se
       puts(se.message)
       return false
     end
 
-    puts("\nThe Response:\t#{@k2_response.body.to_s}")
+    puts("\nThe Response:\t#{k2_response.body.to_s}")
     # Add a method to fetch the components of the response
     if connection_hash[:path_url].match?("ouath")
-      @access_token = Yajl::Parser.parse(@k2_response.body)["access_token"]
+      @access_token = Yajl::Parser.parse(k2_response.body)["access_token"]
       puts("\nThe Access Token:\t#{@access_token}")
       return @access_token
     else
       unless connection_hash[:is_subscribe]
-        @location = Yajl::Parser.parse(@k2_response.body)["location"]
+        @location = Yajl::Parser.parse(k2_response.body)["location"]
         puts("\nThe Location Url:\t#{@location}")
       end
     end

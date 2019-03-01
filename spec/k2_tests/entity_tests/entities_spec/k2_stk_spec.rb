@@ -10,7 +10,7 @@ RSpec.describe K2Stk do
   end
 
   context "Validation" do
-    let(:params) { {first_name: "first_name" ,last_name: "last_name", phone: "phone", email: "email", currency:"currency", value:"value"} }
+    let(:params) { HashWithIndifferentAccess.new(first_name: "first_name" ,last_name: "last_name", phone: "phone", email: "email", currency:"currency", value:"value") }
     let(:array) { %w(first_name last_name phone email currency value) }
     it 'should validate user input' do
       expect(params).to be_a_kind_of(Hash)
@@ -22,7 +22,7 @@ RSpec.describe K2Stk do
   end
 
   context "#receive_mpesa_payments" do
-    let(:params) { {first_name: "first_name" ,last_name: "last_name", phone: "phone", email: "email", currency:"currency", value:"value"} }
+    let(:params) { HashWithIndifferentAccess.new(first_name: "first_name" ,last_name: "last_name", phone: "phone", email: "email", currency:"currency", value:"value") }
     it 'should add pay recipient request' do
       allow(@k2stk).to receive(:receive_mpesa_payments).with(Hash) { {Location_url: "location_url"} }
       @k2stk.receive_mpesa_payments(params)
@@ -32,7 +32,7 @@ RSpec.describe K2Stk do
   end
 
   context "#query_mpesa_payments" do
-    let(:params) { {id: "id" } }
+    let(:params) { HashWithIndifferentAccess.new(id: "id") }
     it 'should query payment request status' do
       allow(@k2stk).to receive(:query_mpesa_payments).with(Hash) { {payment_request_result: "payment_request_result"} }
       @k2stk.query_mpesa_payments(params)
