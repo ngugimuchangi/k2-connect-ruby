@@ -11,11 +11,18 @@ module K2Validation
       else
         if the_input.is_a?(Hash)
           validate_hash(the_input, the_array)
-        elsif the_input.has_key?(:authenticity_token)
-        validate_hash(the_input.permit!.to_hash, the_array)
         else
-          # Error
-          "Undefined Input Form"
+          begin
+            if the_input.has_key?(:authenticity_token)
+              validate_hash(the_input.permit!.to_hash, the_array)
+            else
+              raise ArgumentError.new("Undefined Input Format.\n The Input is Neither a Hash nor a Parameter Object.")
+            end
+          rescue NoMethodError => nme
+            if nme.message.include?("has_key?")
+              raise ArgumentError.new("Undefined Input Format.\n The Input is Neither a Hash nor a Parameter Object.")
+            end
+          end
         end
       end
     end

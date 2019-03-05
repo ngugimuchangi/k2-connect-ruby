@@ -1,6 +1,6 @@
 class WebhookTransaction < K2Result
   # Can also implement Customer Created from Here
-  attr_accessor :msisdn,
+  attr_writer :msisdn,
                 :first_name,
                 :middle_name,
                 :last_name
@@ -8,7 +8,7 @@ class WebhookTransaction < K2Result
 end
 
 class CommonWebhook < WebhookTransaction
-  attr_accessor :reference,
+  attr_writer :reference,
                 :origination_time,
                 :status
 
@@ -36,7 +36,7 @@ class CustomerCreated < WebhookTransaction
 end
 
 class BuyGoods < CommonWebhook
-  attr_accessor :till_number,
+  attr_writer :till_number,
                 :system
 
   # For The BuyGoods Received Webhook
@@ -53,7 +53,7 @@ class BuyGoods < CommonWebhook
 end
 
 class Reversal < BuyGoods
-  attr_accessor :reversal_time
+  attr_writer :reversal_time
   # For The BuyGoods Reversed Webhook
   def components(the_body)
     super
@@ -63,7 +63,7 @@ class Reversal < BuyGoods
 end
 
 class Settlement < CommonWebhook
-  attr_accessor :destination,
+  attr_writer :destination,
                 :destination_type,
                 :transfer_time,
                 :transfer_type,

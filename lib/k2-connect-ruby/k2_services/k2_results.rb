@@ -1,5 +1,5 @@
 class K2Result
-  attr_accessor :id,
+  attr_writer :id,
                 :resourceId,
                 :topic,
                 :created_at,

@@ -6,22 +6,18 @@ RSpec.describe K2Validation do
   let(:array) { %w{the_input ze_input} }
 
   context "#validate_input" do
-    let(:is_query) { true }
+    let(:not_hash) { "not a hash" }
     it 'should raise an error if the_input parameters is empty' do
       expect { validate_input("", array, true) }.to raise_error ArgumentError
     end
 
     it 'should raise an error if the_input parameters is not of a Hash or Parameter class instance' do
-      unless the_input.is_a?(Hash)
-        unless the_input.has_key?(:authenticity_token)
-          "Undefined Input Form"
-        end
-      end
+      expect { validate_input(not_hash, array, false) }.to raise_error ArgumentError
     end
 
     it 'should validate the_input' do
       allow(K2Validation).to receive(:validate_input).with(Hash, Array, true)
-      K2Validation.validate_input(the_input, array, is_query)
+      K2Validation.validate_input(the_input, array, true)
       expect(K2Validation).to have_received(:validate_input).with(Hash, Array, true)
     end
   end
@@ -65,13 +61,13 @@ RSpec.describe K2Validation do
     end
   end
 
-  context "#validate_id" do
+  pending "#validate_id"
 
-    it 'should validate whether the hash input has the correct format' do
-      allow(K2Validation).to receive(:validate_hash).with(Hash, Array)
-      K2Validation.validate_hash(the_input, array)
-      expect(K2Validation).to have_received(:validate_hash).with(Hash, Array)
-    end
-  end
+    # it 'should validate whether the hash input has the correct format' do
+    #   allow(K2Validation).to receive(:validate_hash).with(Hash, Array)
+    #   K2Validation.validate_hash(the_input, array)
+    #   expect(K2Validation).to have_received(:validate_hash).with(Hash, Array)
+    # end
+
 
 end

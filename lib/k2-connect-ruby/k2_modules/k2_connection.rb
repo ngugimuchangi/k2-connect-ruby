@@ -2,14 +2,10 @@ require 'net/http/persistent'
 require 'json'
 # Module for Sending the Requests
 module K2Connect
-  attr_writer :host_url,
-              :access_token,
-              :location
-
   # Method for sending the request to K2 sandbox or Mock Server (Receives the access_token)
   def self.to_connect(connection_hash)
     # The Server. WONT BE HARD CODED.
-    @host_url = "https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io"
+    host_url = "https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io"
 
     # Raised in the scenario that when requests for an access_token even though they already have one. Change empty to blank for the rails app.
     unless connection_hash[:path_url].eql?("ouath")
@@ -17,7 +13,7 @@ module K2Connect
         raise ArgumentError.new("No Access Token in Argument!")
       end
     end
-    k2_url = URI.parse(@host_url+"/"+connection_hash[:path_url])
+    k2_url = URI.parse(host_url+"/"+connection_hash[:path_url])
     k2_https = Net::HTTP::Persistent.new
     if connection_hash[:request_type].eql?("GET")
       k2_request = k2_https.request(Net::HTTP::Get.new(k2_url.request_uri))
@@ -55,14 +51,12 @@ module K2Connect
     puts("\nThe Response:\t#{k2_response.body.to_s}")
     # Add a method to fetch the components of the response
     if connection_hash[:path_url].eql?("ouath")
-      @access_token = Yajl::Parser.parse(k2_response.body)["access_token"]
-      puts("\nThe Access Token:\t#{@access_token}")
-      return @access_token
+      puts("\nThe Access Token:\t#{Yajl::Parser.parse(k2_response.body)["access_token"]}")
+      return Yajl::Parser.parse(k2_response.body)["access_token"]
     else
       unless connection_hash[:class_type].eql?("Subscription")
-        @location = Yajl::Parser.parse(k2_response.body)["location"]
-        puts("\nThe Location Url:\t#{@location}")
-        return @location
+        puts("\nThe Location Url:\t#{Yajl::Parser.parse(k2_response.body)["location"]}")
+        return Yajl::Parser.parse(k2_response.body)["location"]
       end
     end
     k2_https.shutdown

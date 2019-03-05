@@ -1,7 +1,7 @@
 require "yajl"
 
 class K2Client
-  attr_accessor :api_secret_key,
+  attr_writer :api_secret_key,
                 :hash_body,
                 :hash_header,
                 :k2_signature

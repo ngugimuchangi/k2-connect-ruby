@@ -36,12 +36,12 @@ RSpec.describe K2Subscribe do
     end
   end
 
-  context "#validate_input" do
-    it 'should validate input' do
-      allow(@k2subscriber).to receive(:validate_input).with(nil, nil) { "Empty Client Credentials" }
-      @k2subscriber.validate_input(nil, nil)
-      expect(@k2subscriber).to receive(:validate_input)
-      expect(@k2subscriber.validate_input(nil, nil)).to eq("Empty Client Credentials")
-    end
-  end
+  pending "#validate_input"
+    # it 'should validate input' do
+    #   allow(@k2subscriber).to receive(:validate_input).with(nil, nil) { "Empty Client Credentials" }
+    #   @k2subscriber.validate_input(nil, nil)
+    #   expect(@k2subscriber).to receive(:validate_input)
+    #   expect(@k2subscriber.validate_input(nil, nil)).to eq("Empty Client Credentials")
+    # end
+
 end
