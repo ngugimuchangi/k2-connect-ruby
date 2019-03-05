@@ -8,17 +8,17 @@ RSpec.describe K2Subscribe do
 
   context "#initialize" do
     it 'should initialize with event_type and webhook_secret' do
-      expect(@k2subscriber.event_type).to eq(@event_type)
-      expect(@k2subscriber.webhook_secret).to eq(@webhook_secret)
+      K2Subscribe.new(@event_type, @webhook_secret)
     end
 
     it 'should raise an error when there is an empty event_type' do
-      raise K2EmptyEvent.new if @k2subscriber.event_type.nil? || @k2subscriber.event_type == ""
-      expect { raise K2EmptyEvent.new }.to raise_error K2EmptyEvent
+      expect { K2Subscribe.new("", @webhook_secret) }.to raise_error ArgumentError
     end
   end
 
   context "#token_request" do
+    let(:client_id) {"client_id"}
+    let(:client_secret) {"client_secret"}
     it 'should return an access token' do
       allow(@k2subscriber).to receive(:token_request).with("client_id", "client_secret") { {access_token: "access_token"} }
       @k2subscriber.token_request("client_id", "client_secret")

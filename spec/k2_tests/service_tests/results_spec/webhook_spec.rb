@@ -1,12 +1,6 @@
 RSpec.describe WebhookTransaction do
   before(:all) do
-    @k2webhooktransaction = WebhookTransaction.new(true)
-  end
-
-  context "#initialize" do
-    it 'should have a boolean truth value' do
-      expect(!!@k2webhooktransaction.truth_value==@k2webhooktransaction.truth_value).to eq(true)
-    end
+    @k2webhooktransaction = WebhookTransaction.new
   end
 
   context "#components" do
@@ -21,13 +15,7 @@ end
 
 RSpec.describe CommonWebhook do
   before(:all) do
-    @k2commonwebhook = CommonWebhook.new(true)
-  end
-
-  context "#initialize" do
-    it 'should have a boolean truth value' do
-      expect(!!@k2commonwebhook.truth_value==@k2commonwebhook.truth_value).to eq(true)
-    end
+    @k2commonwebhook = CommonWebhook.new
   end
 
   context "#components" do
@@ -42,13 +30,7 @@ end
 
 RSpec.describe CustomerCreated do
   before(:all) do
-    @k2customercreated = CustomerCreated.new(true)
-  end
-
-  context "#initialize" do
-    it 'should have a boolean truth value' do
-      expect(!!@k2customercreated.truth_value==@k2customercreated.truth_value).to eq(true)
-    end
+    @k2customercreated = CustomerCreated.new
   end
 
   context "#components" do
@@ -63,13 +45,7 @@ end
 
 RSpec.describe BuyGoods do
   before(:all) do
-    @k2buygoods = BuyGoods.new(true)
-  end
-
-  context "#initialize" do
-    it 'should have a boolean truth value' do
-      expect(!!@k2buygoods.truth_value==@k2buygoods.truth_value).to eq(true)
-    end
+    @k2buygoods = BuyGoods.new
   end
 
   context "#components" do
@@ -84,13 +60,7 @@ end
 
 RSpec.describe Reversal do
   before(:all) do
-    @k2reversal = Reversal.new(true)
-  end
-
-  context "#initialize" do
-    it 'should have a boolean truth value' do
-      expect(!!@k2reversal.truth_value==@k2reversal.truth_value).to eq(true)
-    end
+    @k2reversal = Reversal.new
   end
 
   context "#components" do
@@ -105,13 +75,7 @@ end
 
 RSpec.describe Settlement do
   before(:all) do
-    @k2result = Settlement.new(true)
-  end
-
-  context "#initialize" do
-    it 'should have a boolean truth value' do
-      expect(!!@k2result.truth_value==@k2result.truth_value).to eq(true)
-    end
+    @k2result = Settlement.new
   end
 
   context "#components" do

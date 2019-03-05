@@ -1,9 +1,10 @@
+# TODO David Nino take a look at validate_input.
 # Module for Validating Input to the Entities
 module K2Validation
   # Method for Validating the input itself
-  def validate_input?(the_input, the_array, is_query)
-    if the_input.empty? || the_input.nil? || the_input==""
-      raise K2EmptyInput.new
+  def validate_input(the_input, the_array, is_query)
+    if the_input.empty?
+      raise ArgumentError.new("Empty or Nil Input!\n No Input Content has been given.")
     else
       if is_query
         validate_id(the_input, the_array)
@@ -18,16 +19,7 @@ module K2Validation
         end
       end
     end
-    return true
-  # rescue K2EmptyInput => k2
-  #   return false
-  rescue TypeError => te
-    puts(te.message)
-    return false
-  # rescue K2InvalidHash => k3
-  #   return false
-  # rescue IncorrectParams => k4
-  #   return false
+    true
   end
 
   # Validate the Hash Input Parameters

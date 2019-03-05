@@ -1,12 +1,6 @@
 RSpec.describe K2Result do
   before(:all) do
-    @k2result = K2Result.new(true)
-  end
-
-  context "#initialize" do
-    it 'should have a boolean truth value' do
-      expect(!!@k2result.truth_value==@k2result.truth_value).to eq(true)
-    end
+    @k2result = K2Result.new
   end
 
   context "#components" do

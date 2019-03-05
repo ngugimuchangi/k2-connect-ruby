@@ -7,4 +7,14 @@ class K2Entity
     @access_token = access_token
   end
 
+  def self.hash_it(path_url, request, class_type, body)
+    return {
+        path_url: path_url,
+        access_token:  @access_token,
+        request_type: request,
+        class_type: class_type,
+        params: body
+    }
+  end
+
 end

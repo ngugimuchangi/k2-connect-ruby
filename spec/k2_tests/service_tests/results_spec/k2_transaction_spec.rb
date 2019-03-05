@@ -1,12 +1,6 @@
 RSpec.describe K2Payment do
   before(:all) do
-    @k2payment = K2Payment.new(true)
-  end
-
-  context "#initialize" do
-    it 'should have a boolean truth value' do
-      expect(!!@k2payment.truth_value==@k2payment.truth_value).to eq(true)
-    end
+    @k2payment = K2Payment.new
   end
 
   context "#components" do
@@ -21,13 +15,7 @@ end
 
 RSpec.describe K2ProcessStk do
   before(:all) do
-    @k2processstk = K2ProcessStk.new(true)
-  end
-
-  context "#initialize" do
-    it 'should have a boolean truth value' do
-      expect(!!@k2processstk.truth_value==@k2processstk.truth_value).to eq(true)
-    end
+    @k2processstk = K2ProcessStk.new
   end
 
   context "#components" do
@@ -42,13 +30,7 @@ end
 
 RSpec.describe K2ProcessPay do
   before(:all) do
-    @k2processpay = K2ProcessPay.new(true)
-  end
-
-  context "#initialize" do
-    it 'should have a boolean truth value' do
-      expect(!!@k2processpay.truth_value==@k2processpay.truth_value).to eq(true)
-    end
+    @k2processpay = K2ProcessPay.new
   end
 
   context "#components" do

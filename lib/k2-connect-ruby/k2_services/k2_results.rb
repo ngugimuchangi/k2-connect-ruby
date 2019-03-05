@@ -8,22 +8,7 @@ class K2Result
                 :resource,
                 :_links,
                 :amount,
-                :currency,
-                :truth_value
-
-  # Initialize with a truth Value
-  def initialize(truth_value)
-    raise K2NilTruthValue if truth_value.nil?
-    if !!truth_value == truth_value
-      @truth_value = truth_value
-    else
-      raise K2InvalidTruthValue
-    end
-  rescue K2InvalidTruthValue => k3
-    return false
-  rescue K2NilTruthValue => k2
-    return false
-  end
+                :currency
 
   def components(the_body)
     @id = the_body.dig("id")
@@ -34,8 +19,6 @@ class K2Result
     @type = the_body.dig("event", "type")
     @resource = the_body.dig("event", "resource")
     @links = the_body.dig("_links")
-  rescue StandardError => e
-    puts(e.message)
   end
 
 end

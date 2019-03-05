@@ -2,27 +2,27 @@ require 'net/http/persistent'
 require 'json'
 # Module for Sending the Requests
 module K2Connect
-  attr_writer :postman_k2_mock_server,
+  attr_writer :host_url,
               :access_token,
               :location
 
   # Method for sending the request to K2 sandbox or Mock Server (Receives the access_token)
   def self.to_connect(connection_hash)
-    # The Server
-    @postman_k2_mock_server = "https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io"
+    # The Server. WONT BE HARD CODED.
+    @host_url = "https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io"
 
-    # Raised in the scenario that when requests for an access_token even though they already have one
-    if connection_hash[:path_url].match?("ouath")
-      raise K2RepeatTokenRequest.new unless @access_token.nil?
-    else
-      raise K2EmptyAccessToken.new if connection_hash[:access_token].nil? || connection_hash[:access_token]==""
+    # Raised in the scenario that when requests for an access_token even though they already have one. Change empty to blank for the rails app.
+    unless connection_hash[:path_url].match?("ouath")
+      raise ArgumentError.new("No Access Token in Argument!") if connection_hash[:access_token].empty?
     end
-    k2_url = URI.parse(@postman_k2_mock_server+"/"+connection_hash[:path_url])
+    k2_url = URI.parse(@host_url+"/"+connection_hash[:path_url])
     k2_https = Net::HTTP::Persistent.new
-    if connection_hash[:is_get_request]
+    if connection_hash[:request_type].match?("GET")
       k2_request = k2_https.request(Net::HTTP::Get.new(k2_url.request_uri))
-    else
+    elsif connection_hash[:request_type].match?("POST")
       k2_request = Net::HTTP::Post.new(k2_url.path)
+    else
+      puts "Undefined Request"
     end
     if connection_hash[:path_url].match?("ouath")
       k2_request.add_field('Content-Type', 'application/json')
@@ -34,10 +34,12 @@ module K2Connect
     k2_request.body = connection_hash[:params].to_json
 
     begin
-      if connection_hash[:is_get_request]
+      if connection_hash[:request_type].match?("GET")
         k2_response = k2_https.request(k2_request)
-      else
+      elsif connection_hash[:request_type].match?("POST")
         k2_response = k2_https.request(k2_url, k2_request)
+      else
+        puts "Undefined Request Response"
       end
     rescue Net::HTTP::Persistent::Error => e
       puts(e.message)
@@ -46,13 +48,6 @@ module K2Connect
         Net::HTTPHeaderSyntaxError, Net::HTTPServerException, OpenSSL::SSL::SSLError,
         Net::HTTPRetriableError => he
       puts(he.message)
-    # rescue K2RepeatTokenRequest => k2
-    #   return false
-    # rescue K2EmptyAccessToken => k3
-    #   return false
-    rescue StandardError => se
-      puts(se.message)
-      return false
     end
 
     puts("\nThe Response:\t#{k2_response.body.to_s}")
@@ -62,9 +57,10 @@ module K2Connect
       puts("\nThe Access Token:\t#{@access_token}")
       return @access_token
     else
-      unless connection_hash[:is_subscribe]
+      unless connection_hash[:class_type].match?("Subscription")
         @location = Yajl::Parser.parse(k2_response.body)["location"]
         puts("\nThe Location Url:\t#{@location}")
+        return @location
       end
     end
     k2_https.shutdown

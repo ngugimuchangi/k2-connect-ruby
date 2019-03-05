@@ -13,10 +13,10 @@ RSpec.describe K2Pay do
     let(:params) { HashWithIndifferentAccess.new(first_name: "first_name" ,last_name: "last_name", phone: "phone", email: "email", currency:"currency", value:"value") }
     let(:array) { %w(first_name last_name phone email currency value) }
     it 'should validate user input' do
-      expect(params).to be_a_kind_of(Hash)
-      allow(@k2pay).to receive(:validate_input).with(Hash, Array, false) { true }
+      expect(params).to be_a_kind_of(HashWithIndifferentAccess)
+      allow(@k2pay).to receive(:validate_input).with(HashWithIndifferentAccess, Array, false) { true }
       @k2pay.validate_input(params, array, false)
-      expect(@k2pay).to have_received(:validate_input).with(Hash, Array, false)
+      expect(@k2pay).to have_received(:validate_input).with(HashWithIndifferentAccess, Array, false)
       expect(@k2pay.validate_input(params, array, false)).to eq(true)
     end
   end

@@ -6,13 +6,9 @@ class K2Subscribe
 
   # Intialize with the event_type
   def initialize (event_type, webhook_secret)
-    raise K2EmptyEvent.new if event_type.nil? || event_type == ""
+    raise ArgumentError.new("Nil or Empty Event Type Specified!") if event_type.empty?
     @event_type = event_type
     @webhook_secret = webhook_secret
-  rescue K2EmptyEvent => k2
-    return false
-  rescue StandardError => e
-    puts e.message
   end
 
   # Method for sending the request to K2 sandbox or Mock Server (Receives the access_token)
@@ -25,13 +21,7 @@ class K2Subscribe
         client_secret: client_secret,
         grant_type: "client_credentials"
     }
-    # token_hash = {
-    #     :path_url => "ouath",
-    #     :is_get_request => false,
-    #     :is_subscription => true,
-    #     :params => token_params
-    # }
-    token_hash = K2Subscribe.put_in_hash("ouath", token_params)
+    token_hash = K2Subscribe.put_in_hash("ouath", "POST", "Subscription", token_params)
     @access_token = K2Connect.to_connect(token_hash)
   end
 
@@ -45,14 +35,7 @@ class K2Subscribe
           url: "https://myapplication.com/webhooks",
           secret: @webhook_secret
       }
-      # subscribe_hash = {
-      #     :path_url => "webhook-subscription",
-      #     :access_token =>  @access_token,
-      #     :is_get_request => false,
-      #     :is_subscription => true,
-      #     :params => k2_request_body
-      # }
-      subscribe_hash = K2Subscribe.put_in_hash("webhook-subscription", k2_request_body)
+      subscribe_hash = K2Subscribe.put_in_hash("webhook-subscription", "POST", "Subscription", k2_request_body)
       K2Connect.to_connect(subscribe_hash)
 
       # Buygoods Reversed
@@ -62,14 +45,7 @@ class K2Subscribe
           url: "https://myapplication.com/webhooks",
           secret: "webhook_secret"
       }
-      # subscribe_hash = {
-      #     :path_url => "buygoods-transaction-reversed",
-      #     :access_token =>  @access_token,
-      #     :is_get_request => false,
-      #     :is_subscription => true,
-      #     :params => k2_request_body
-      # }
-      subscribe_hash = K2Subscribe.put_in_hash("buygoods_transaction_reversed", k2_request_body)
+      subscribe_hash = K2Subscribe.put_in_hash("buygoods_transaction_reversed", "POST", "Subscription", k2_request_body)
       K2Connect.to_connect(subscribe_hash)
 
       # Customer Created.
@@ -79,14 +55,7 @@ class K2Subscribe
           url: "https://myapplication.com/webhooks",
           secret: @webhook_secret
       }
-      # subscribe_hash = {
-      #     :path_url => "customer-created",
-      #     :access_token =>  @access_token,
-      #     :is_get_request => false,
-      #     :is_subscription => true,
-      #     :params => k2_request_body
-      # }
-      subscribe_hash = K2Subscribe.put_in_hash("customer-created", k2_request_body)
+      subscribe_hash = K2Subscribe.put_in_hash("customer-created", "POST", "Subscription", k2_request_body)
       K2Connect.to_connect(subscribe_hash)
 
       # Settlement Transfer Completed
@@ -96,38 +65,27 @@ class K2Subscribe
           url: "https://myapplication.com/webhooks",
           secret: @webhook_secret
       }
-      # subscribe_hash = {
-      #     :path_url => "settlement",
-      #     :access_token =>  @access_token,
-      #     :is_get_request => false,
-      #     :is_subscription => true,
-      #     :params => k2_request_body
-      # }
-      subscribe_hash = K2Subscribe.put_in_hash("settlement", k2_request_body)
+      subscribe_hash = K2Subscribe.put_in_hash("settlement", "POST", "Subscription", k2_request_body)
       K2Connect.to_connect(subscribe_hash)
     else
-      raise K2NonExistentSubscription.new
+      raise ArgumentError.new("Subscription Service does not Exist!")
     end
-  rescue K2NonExistentSubscription => k2
-    return false
-  rescue StandardError => e
-    puts(e.message)
   end
 
   # Method for Validating the input itself
   def validate_input(id, secret)
-    if id.nil? || id == "" && secret.nil? || secret == ""
+    if id.empty? && secret.empty?
       "Empty Client Credentials"
     end
   end
 
-  def self.put_in_hash(path_url, body)
+  def self.put_in_hash(path_url, request, class_type, body)
     return {
-        :path_url => path_url,
-        :access_token =>  @access_token,
-        :is_get_request => false,
-        :is_subscription => true,
-        :params => body
+        path_url: path_url,
+        access_token:  @access_token,
+        request_type: request,
+        class_type: class_type,
+        params: body
     }
   end
 end
