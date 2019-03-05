@@ -1,4 +1,4 @@
-# TODO David Nino take a look at validate_input.
+# TODO David Nino take a look at validate_id.
 # Module for Validating Input to the Entities
 module K2Validation
   # Method for Validating the input itself

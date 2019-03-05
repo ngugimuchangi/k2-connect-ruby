@@ -1,12 +1,14 @@
+include K2Validation
 RSpec.describe K2Validation do
-  let(:the_input) { {the_input: "the_input"} }
-  let(:array) { %w{array array2} }
+  let(:the_input) { {the_input: "the_input", ze_input: "ze_input"} }
+  let(:invalid_input) { {the_input: "the_input", ze_input: ""} }
+  let(:incorrect_input) { {the_input: "the_input", za_input: "ze_input"} }
+  let(:array) { %w{the_input ze_input} }
 
   context "#validate_input" do
     let(:is_query) { true }
     it 'should raise an error if the_input parameters is empty' do
-      raise K2EmptyInput.new if the_input.empty?
-      expect { raise K2EmptyInput.new }.to raise_error K2EmptyInput
+      expect { validate_input("", array, true) }.to raise_error ArgumentError
     end
 
     it 'should raise an error if the_input parameters is not of a Hash or Parameter class instance' do
@@ -27,14 +29,12 @@ RSpec.describe K2Validation do
   context "#validate_hash" do
     let(:empty_keys) { HashWithIndifferentAccess.new }
     let(:invalid_keys) { HashWithIndifferentAccess.new }
-    it 'should raise an error if the_input parameters is empty' do
-      raise IncorrectParams.new(invalid_keys) unless invalid_keys.empty?
-      expect { raise IncorrectParams.new(invalid_keys) }.to raise_error IncorrectParams
+    it 'should raise an error if the_input parameters are incorrect' do
+      expect { validate_hash(incorrect_input, array) }.to raise_error IncorrectParams
     end
 
-    it 'should raise an error if the_input parameters is not of a Hash or Parameter class instance' do
-      raise K2InvalidHash.new(empty_keys) unless empty_keys.empty?
-      expect { raise K2InvalidHash.new(empty_keys) }.to raise_error K2InvalidHash
+    it 'should raise an error if the_input has empty values' do
+      expect { validate_hash(invalid_input, array) }.to raise_error K2InvalidHash
     end
 
     it 'should validate whether the hash input has the correct format' do

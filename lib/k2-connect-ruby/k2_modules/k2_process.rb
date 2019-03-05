@@ -1,5 +1,4 @@
-# TODO, David Nino, take a look at the check_type.
-# Module for Splitting the Response to simple components. ProcessResults
+# Module for Splitting the Response to simple components.
 module K2ProcessResult
   # Confirm Truth value and carry out splitting.
   def self.process(the_body)

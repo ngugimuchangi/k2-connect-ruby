@@ -5,7 +5,7 @@ require 'k2_tests/k2_version_spec'
 # Modules
 require 'k2_tests/module_tests/k2_authorize_spec'
 require 'k2_tests/module_tests/k2_connection_spec'
-require 'k2_tests/module_tests/k2_split_spec'
+require 'k2_tests/module_tests/k2_process_spec'
 require 'k2_tests/module_tests/k2_validation_spec'
 
 # Services

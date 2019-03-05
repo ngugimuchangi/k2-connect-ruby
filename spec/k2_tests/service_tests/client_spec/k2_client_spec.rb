@@ -4,14 +4,14 @@ RSpec.describe K2Client do
   end
 
   context "#initialize" do
-    it 'should raise an error if api_secret_key is empty' do
+    it 'should raise an error if api_secret_key parameter is empty' do
       expect { K2Client.new("") }.to raise_error ArgumentError
     end
   end
 
   context "#parse_request" do
     let(:the_request) { "the_request" }
-    it 'should raise an error if the_request is empty' do
+    it 'should raise an error if the_request parameter is empty' do
       expect { @k2client.parse_request("") }.to raise_error ArgumentError
     end
 

@@ -1,4 +1,7 @@
-<<<<<<< HEAD
+# DISCLAIMER!
+
+The following library has not yet been finalised to production, and as such, not ready to be consumed as a gem. 
+
 # K2ConnectRuby
 
 Ruby SDK for connection to the Kopo Kopo API.
