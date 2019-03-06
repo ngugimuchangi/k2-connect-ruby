@@ -2,12 +2,12 @@
 module K2ProcessResult
   # Confirm Truth value and carry out splitting.
   def self.process(the_body)
-    raise ArgumentError.new("Nil Request Body Argument!") if the_body.empty?
+    raise ArgumentError.new("Nil Request Body Argument!") if the_body.blank?
     K2ProcessResult.check_type(the_body)
   end
 
   # Check the Event Type.
-  def self.check_type(the_body)
+  def self.check_topic(the_body)
     case the_body.dig("topic")
     when "buygoods_transaction_received"
       puts "Buy Goods Transaction Received."

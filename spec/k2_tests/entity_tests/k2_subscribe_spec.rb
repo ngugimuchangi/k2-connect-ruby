@@ -1,9 +1,10 @@
 # TODO, David Nino, context for validate_input
 RSpec.describe K2Subscribe do
   before(:all) do
-    @event_type = "event_type"
+    @event_type = "buygoods_transaction_received"
     @webhook_secret = "webhook_secret"
     @k2subscriber = K2Subscribe.new(@event_type, @webhook_secret)
+    @k2sub_not_exist = K2Subscribe.new("event_type", @webhook_secret)
   end
 
   context "#initialize" do
@@ -17,31 +18,24 @@ RSpec.describe K2Subscribe do
   end
 
   context "#token_request" do
-    let(:client_id) {"client_id"}
-    let(:client_secret) {"client_secret"}
+    it 'should validate input' do
+      expect{ @k2subscriber.token_request("", nil) }.to raise_error ArgumentError
+    end
+
     it 'should return an access token' do
-      allow(@k2subscriber).to receive(:token_request).with("client_id", "client_secret") { {access_token: "access_token"} }
-      @k2subscriber.token_request("client_id", "client_secret")
-      expect(@k2subscriber).to have_received(:token_request)
-      expect(@k2subscriber.token_request("client_id", "client_secret")).to eq({access_token: "access_token"})
+      expect{ @k2subscriber.token_request("client_id", "client_secret") }.not_to raise_error
+      expect(@k2subscriber.access_token).to eq("123ABC456def")
     end
   end
 
   context "#webhook_subscribe" do
+    it 'raise error if event type does not match' do
+      expect{ @k2sub_not_exist.webhook_subscribe }.to raise_error ArgumentError
+    end
+
     it 'should send webhook subscription' do
-      allow(@k2subscriber).to receive(:webhook_subscribe) { {Location_url: "location_url"} }
-      @k2subscriber.webhook_subscribe
-      expect(@k2subscriber).to have_received(:webhook_subscribe)
-      expect(@k2subscriber.webhook_subscribe).to eq({Location_url: "location_url"})
+      expect{ @k2subscriber.webhook_subscribe }.not_to raise_error
     end
   end
-
-  pending "#validate_input"
-    # it 'should validate input' do
-    #   allow(@k2subscriber).to receive(:validate_input).with(nil, nil) { "Empty Client Credentials" }
-    #   @k2subscriber.validate_input(nil, nil)
-    #   expect(@k2subscriber).to receive(:validate_input)
-    #   expect(@k2subscriber.validate_input(nil, nil)).to eq("Empty Client Credentials")
-    # end
 
 end

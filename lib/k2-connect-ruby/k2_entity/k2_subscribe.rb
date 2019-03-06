@@ -1,12 +1,11 @@
 # Class for Subscription Service
 class K2Subscribe
-  attr_writer :webhook_secret,
-                :access_token,
-                :event_type
+  attr_accessor :access_token
+  attr_writer :webhook_secret, :event_type
 
   # Intialize with the event_type
   def initialize (event_type, webhook_secret)
-    raise ArgumentError.new("Nil or Empty Event Type Specified!") if event_type.empty?
+    raise ArgumentError.new("Nil or Empty Event Type Specified!") if event_type.blank?
     @event_type = event_type
     @webhook_secret = webhook_secret
   end
@@ -31,7 +30,7 @@ class K2Subscribe
       # Buygoods Received
     when @event_type.match?("buygoods_transaction_received")
       k2_request_body = {
-          event_type: "buygooods_transaction_received",
+          event_type: "buygoods_transaction_received",
           url: "https://myapplication.com/webhooks",
           secret: @webhook_secret
       }
@@ -74,15 +73,14 @@ class K2Subscribe
 
   # Method for Validating the input itself
   def validate_input(id, secret)
-    if id.empty? && secret.empty?
-      "Empty Client Credentials"
+    if id.blank? || secret.blank?
+      raise ArgumentError.new("Empty Client Credentials")
     end
   end
 
   def self.put_in_hash(path_url, request, class_type, body)
     return {
         path_url: path_url,
-        access_token:  @access_token,
         request_type: request,
         class_type: class_type,
         params: body

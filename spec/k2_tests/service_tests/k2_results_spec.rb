@@ -6,9 +6,7 @@ RSpec.describe K2Result do
   context "#components" do
     let(:the_body) { {the_body: "the_body"} }
     it 'should split body into components' do
-      allow(@k2result).to receive(:components).with(Hash)
-      @k2result.components(the_body)
-      expect(@k2result).to have_received(:components).with(Hash)
+      expect{ @k2result.components the_body }.not_to raise_error
     end
   end
 end

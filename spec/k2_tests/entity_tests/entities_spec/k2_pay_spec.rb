@@ -9,45 +9,39 @@ RSpec.describe K2Pay do
     expect(K2Pay).to include(K2Validation)
   end
 
-  context "Validation" do
-    let(:params) { HashWithIndifferentAccess.new(first_name: "first_name" ,last_name: "last_name", phone: "phone", email: "email", currency:"currency", value:"value") }
-    let(:array) { %w(first_name last_name phone email currency value) }
-    it 'should validate user input' do
-      expect(params).to be_a_kind_of(HashWithIndifferentAccess)
-      allow(@k2pay).to receive(:validate_input).with(HashWithIndifferentAccess, Array, false) { true }
-      @k2pay.validate_input(params, array, false)
-      expect(@k2pay).to have_received(:validate_input).with(HashWithIndifferentAccess, Array, false)
-      expect(@k2pay.validate_input(params, array, false)).to eq(true)
-    end
-  end
-
   context "#pay_recipients" do
-    let(:params) { HashWithIndifferentAccess.new(first_name: "first_name" ,last_name: "last_name", phone: "phone", email: "email", currency:"currency", value:"value") }
+    let(:params) { HashWithIndifferentAccess.new(first_name: "first_name" ,last_name: "last_name", phone: "phone", email: "email", network: "network", pay_type: "mobile_wallet", currency:"currency", value:"value", acc_name: "acc_name", bank_id: "bank_id", bank_branch_id:"bank_branch_id", acc_no:"acc_no") }
+    let(:array) { %w{first_name last_name phone email network pay_type currency value acc_name bank_id bank_branch_id acc_no} }
+    it '#validate_input' do
+      expect{ @k2pay.validate_input(params, array) }.not_to raise_error
+    end
+
     it 'should add pay recipient request' do
-      allow(@k2pay).to receive(:pay_recipients).with(Hash) { {Location_url: "location_url"} }
-      @k2pay.pay_recipients(params)
-      expect(@k2pay).to have_received(:pay_recipients).with(Hash)
-      expect(@k2pay.pay_recipients(params)).to eq({Location_url: "location_url"})
+      expect{ @k2pay.pay_recipients(params) }.not_to raise_error
     end
   end
 
   context "#pay_create" do
     let(:params) { HashWithIndifferentAccess.new(currency: "currency" ,value: "value") }
+    let(:array) { %w(currency value) }
+    it '#validate_input' do
+      expect{ @k2pay.validate_input(params, array) }.not_to raise_error
+    end
+
     it 'should create outgoing payment request' do
-      allow(@k2pay).to receive(:pay_create).with(Hash) { {Location_url: "location_url"} }
-      @k2pay.pay_create(params)
-      expect(@k2pay).to have_received(:pay_create).with(Hash)
-      expect(@k2pay.pay_create(params)).to eq({Location_url: "location_url"})
+      expect{ @k2pay.pay_create(params) }.not_to raise_error
     end
   end
 
   context "#query_pay" do
     let(:params) { HashWithIndifferentAccess.new(id: "id") }
+    let(:array) { %w(id) }
+    it '#validate_input' do
+      expect{ @k2pay.validate_input(params, array) }.not_to raise_error
+    end
+
     it 'should query payment request status' do
-      allow(@k2pay).to receive(:query_pay).with(Hash) { {status: "status"} }
-      @k2pay.query_pay(params)
-      expect(@k2pay).to have_received(:query_pay).with(Hash)
-      expect(@k2pay.query_pay(params)).to eq({status: "status"})
+      expect{ @k2pay.query_pay(params) }.not_to raise_error
     end
   end
 end
