@@ -18,4 +18,3 @@ require "k2-connect-ruby/k2_entity/entity"
 
 # ActiveSupport
 require "active_support/core_ext/hash/indifferent_access"
-
