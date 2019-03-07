@@ -7,11 +7,9 @@ module K2Connect
     # The Server. WONT BE HARD CODED.
     host_url = "https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io"
 
-    # Raised in the scenario that when requests for an access_token even though they already have one. Change empty to blank for the rails app.
-    unless connection_hash[:class_type].eql?("Subscription")
-      if connection_hash[:access_token].blank?
-        raise ArgumentError.new("No Access Token in Arguments!")
-      end
+    # Raised in the scenario when there is no access token given except for token_request in the Subscription class.
+    unless connection_hash[:class_type].eql?("Subscription") || connection_hash[:access_token].present?
+      raise ArgumentError.new("No Access Token in Arguments!")
     end
     k2_url = URI.parse(host_url+"/"+connection_hash[:path_url])
     k2_https = Net::HTTP::Persistent.new
@@ -39,14 +37,11 @@ module K2Connect
       puts(he.message)
     end
 
-    # puts("\nThe Response:\t#{k2_response.body.to_s}")
     # Add a method to fetch the components of the response
     if connection_hash[:path_url].eql?("ouath")
-      # puts("\nThe Access Token:\t#{Yajl::Parser.parse(k2_response.body)["access_token"]}")
       return Yajl::Parser.parse(k2_response.body)["access_token"]
     else
       unless connection_hash[:class_type].eql?("Subscription")
-        # puts("\nThe Location Url:\t#{Yajl::Parser.parse(k2_response.body)["location"]}")
         return Yajl::Parser.parse(k2_response.body)["location"]
       end
     end

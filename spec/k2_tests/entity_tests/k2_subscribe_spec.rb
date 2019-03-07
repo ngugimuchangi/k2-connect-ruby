@@ -1,4 +1,3 @@
-# TODO, David Nino, context for validate_input
 RSpec.describe K2Subscribe do
   before(:all) do
     @event_type = "buygoods_transaction_received"
