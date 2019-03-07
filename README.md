@@ -241,7 +241,3 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## Code of Conduct
 
 Everyone interacting in the K2ConnectRuby project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/k2-connect-ruby/blob/master/CODE_OF_CONDUCT.md).
-=======
-# k2-connect-ruby
-Ruby SDK for connection to the Kopo Kopo API
->>>>>>> upstream/master
