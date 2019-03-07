@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/k2_connect_ruby_api_gem.iml" filepath="$PROJECT_DIR$/.idea/k2_connect_ruby_api_gem.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/k2-connect-ruby.iml" filepath="$PROJECT_DIR$/.idea/k2-connect-ruby.iml" />
     </modules>
   </component>
 </project>

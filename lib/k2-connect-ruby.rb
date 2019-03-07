@@ -1,21 +1,20 @@
-require "k2-connect-ruby/k2_split_request"
-require "k2-connect-ruby/k2_subscribe"
-require "k2-connect-ruby/k2_authorize"
-require "k2-connect-ruby/k2_transfer"
-require "k2-connect-ruby/k2_client"
+# Base
 require "k2-connect-ruby/k2_errors"
 require "k2-connect-ruby/version"
-require "k2-connect-ruby/client"
-require "k2-connect-ruby/k2_stk"
-require "k2-connect-ruby/k2_pay"
-# require 'active_record'
-require 'net/http'
-require "openssl"
-require "yajl"
-require "json"
-require 'uri'
+require 'active_support/json'
+require 'active_support/dependencies/autoload'
+require 'active_support/core_ext'
 
+# Modules
+require "k2-connect-ruby/modules"
 
-module K2ConnectRuby
-  # Your code goes here...
-end
+# Services
+require "k2-connect-ruby/k2_services/k2_results"
+require "k2-connect-ruby/k2_services/results"
+
+# Entity
+require "k2-connect-ruby/k2_entity/k2_entity"
+require "k2-connect-ruby/k2_entity/entity"
+
+# ActiveSupport
+require "active_support/core_ext/hash/indifferent_access"
