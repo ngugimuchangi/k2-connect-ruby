@@ -1,6 +1,6 @@
 # Base
 require 'spec_helper'
-require 'k2_tests/k2_version_spec'
+require 'k2_tests/k2-version-spec'
 
 # Modules
 require 'k2_tests/module_tests/k2_authorize_spec'
