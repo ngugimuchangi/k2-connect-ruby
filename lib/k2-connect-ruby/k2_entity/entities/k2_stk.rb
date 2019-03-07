@@ -4,7 +4,7 @@ class K2Stk < K2Entity
   # Receive payments from M-PESA users.
   def receive_mpesa_payments(stk_receive_params)
     # Validation
-    if validate_input?(stk_receive_params, %w{ first_name last_name phone email currency value }, false )
+    if validate_input(stk_receive_params, %w{ first_name last_name phone email currency value } )
       # The Request Body Parameters
       k2_request_subscriber = {
           first_name: stk_receive_params["first_name"],
@@ -29,31 +29,19 @@ class K2Stk < K2Entity
           metadata: k2_request_metadata,
           call_back_url: "https://call_back_to_your_app.your_application.com"
       }
-      receive_hash = {
-          :path_url => "payment_requests",
-          :access_token =>  @access_token,
-          :is_get_request => false,
-          :is_subscription => false,
-          :params => receive_body
-      }
+      receive_hash = K2Stk.hash_it("payment_requests", "POST", @access_token, "STK", receive_body)
       K2Connect.to_connect(receive_hash)
     end
   end
 
   # Query Payment Request Status
-  def query_mpesa_payments(id)
+  def query_mpesa_payments(query_params)
     # Validation
-    if validate_input?(id, %w{ id }, true)
+    if validate_input(query_params, %w{ id })
       query_body = {
-          ID: id
+          ID: query_params[:id]
       }
-      query_stk_hash = {
-          :path_url => "payment_requests",
-          :access_token =>  @access_token,
-          :is_get_request => true,
-          :is_subscription => false,
-          :params => query_body
-      }
+      query_stk_hash = K2Stk.hash_it("payment_requests", "GET", @access_token, "STK", query_body)
       K2Connect.to_connect(query_stk_hash)
     end
   end

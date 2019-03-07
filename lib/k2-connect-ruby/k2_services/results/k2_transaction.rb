@@ -1,5 +1,5 @@
 class K2Payment < K2Result
-  attr_accessor :metadata,
+  attr_writer :metadata,
                 :customer_id,
                 :notes,
                 :self,
@@ -21,7 +21,7 @@ class K2Payment < K2Result
 end
 
 class K2ProcessStk < BuyGoods
-  attr_accessor :payment_request,
+  attr_writer :payment_request,
                 :metadata_reference,
                 :link_resource,
                 :resource_status,
@@ -50,7 +50,7 @@ class K2ProcessStk < BuyGoods
 end
 
 class K2ProcessPay < K2Payment
-  attr_accessor :destination,
+  attr_writer :destination,
                 :value
 
   def components(the_body)

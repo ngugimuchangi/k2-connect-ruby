@@ -5,7 +5,7 @@ require 'k2_tests/k2_version_spec'
 # Modules
 require 'k2_tests/module_tests/k2_authorize_spec'
 require 'k2_tests/module_tests/k2_connection_spec'
-require 'k2_tests/module_tests/k2_split_spec'
+require 'k2_tests/module_tests/k2_process_spec'
 require 'k2_tests/module_tests/k2_validation_spec'
 
 # Services
@@ -20,3 +20,4 @@ require 'k2_tests/entity_tests/entities_spec/k2_stk_spec'
 require 'k2_tests/entity_tests/entities_spec/k2_transfer_spec'
 require 'k2_tests/entity_tests/k2_entity_spec'
 require 'k2_tests/entity_tests/k2_subscribe_spec'
+

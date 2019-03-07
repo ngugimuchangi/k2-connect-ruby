@@ -1,6 +1,9 @@
 # Base
 require "k2-connect-ruby/k2_errors"
 require "k2-connect-ruby/version"
+require 'active_support/json'
+require 'active_support/dependencies/autoload'
+require 'active_support/core_ext'
 
 # Modules
 require "k2-connect-ruby/modules"

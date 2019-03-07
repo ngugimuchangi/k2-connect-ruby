@@ -45,7 +45,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "activesupport"
   spec.add_development_dependency "net-http-persistent", ">= 3.0"
   spec.add_development_dependency "yajl-ruby"
-  spec.add_development_dependency "oauth2"
   spec.add_development_dependency "rubycritic"
 
 end
