@@ -31,6 +31,10 @@ class K2ConnectionErrors < K2Errors
       @message = "Service Unavailable.\n\tWe're temporarily offline for maintenance. Please try again later"
     end
   end
+
+  def message
+
+  end
 end
 
 # Errors pertaining to Validation  module
@@ -48,7 +52,8 @@ class K2ValidateErrors < K2Errors
   end
 
   def message
-    STDERR.puts(@message)
+    puts @message
+    # ArgumentError.new(@message)
     loop_keys
   end
 
