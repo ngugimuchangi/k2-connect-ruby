@@ -1,20 +1,21 @@
+# For STK Push/Receive MPESA Payments from merchant's customers
 class K2Stk < K2Entity
   include K2Validation
 
   # Receive payments from M-PESA users.
-  def receive_mpesa_payments(stk_receive_params)
+  def receive_mpesa_payments(params)
     # Validation
-    if validate_input(stk_receive_params, %w{ first_name last_name phone email currency value } )
+    if validate_input(params, %w{ first_name last_name phone email currency value } )
       # The Request Body Parameters
       k2_request_subscriber = {
-          first_name: stk_receive_params["first_name"],
-          last_name: stk_receive_params["last_name"],
-          phone: stk_receive_params["phone"],
-          email: stk_receive_params["email"]
+          first_name: params["first_name"],
+          last_name: params["last_name"],
+          phone: params["phone"],
+          email: params["email"]
       }
       k2_request_amount = {
-          currency: stk_receive_params["currency"],
-          value: stk_receive_params["value"]
+          currency: params["currency"],
+          value: params["value"]
       }
       k2_request_metadata = {
           customer_id: 123456789,
@@ -29,20 +30,17 @@ class K2Stk < K2Entity
           metadata: k2_request_metadata,
           call_back_url: "https://call_back_to_your_app.your_application.com"
       }
-      receive_hash = K2Stk.hash_it("payment_requests", "POST", @access_token, "STK", receive_body)
-      K2Connect.to_connect(receive_hash)
+      receive_hash = K2Stk.make_hash("payment_requests", "POST", @access_token, "STK", receive_body)
+      @threads << Thread.new do
+        sleep 0.25
+        K2Connect.to_connect(receive_hash)
+      end
+      @threads.each {|t| t.join}
     end
   end
 
-  # Query Payment Request Status
-  def query_mpesa_payments(query_params)
-    # Validation
-    if validate_input(query_params, %w{ id })
-      query_body = {
-          ID: query_params[:id]
-      }
-      query_stk_hash = K2Stk.hash_it("payment_requests", "GET", @access_token, "STK", query_body)
-      K2Connect.to_connect(query_stk_hash)
-    end
+  # Query/Check STK Payment Request Status
+  def query_status(params, path_url = "payment_requests", class_type = "STK")
+    super
   end
 end

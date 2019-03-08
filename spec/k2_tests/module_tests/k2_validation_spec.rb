@@ -38,10 +38,10 @@ RSpec.describe K2Validation do
     end
   end
 
-  context "#check_keys" do
+  context "#incorrect_keys" do
     let(:invalid_keys) { HashWithIndifferentAccess.new }
     it 'should check for any incorrect key formats' do
-      expect{ check_keys(the_input, invalid_keys, array) }.not_to raise_error
+      expect{ incorrect_keys(the_input, invalid_keys, array) }.not_to raise_error
     end
   end
 

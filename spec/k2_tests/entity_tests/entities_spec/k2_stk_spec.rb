@@ -29,7 +29,7 @@ RSpec.describe K2Stk do
     end
 
     it 'should query payment request status' do
-      expect{ @k2stk.query_mpesa_payments(params) }.not_to raise_error
+      expect{ @k2stk.query_status(params) }.not_to raise_error
     end
   end
 end

@@ -1,59 +1,61 @@
+# For Transferring funds to pre-approved and owned settlement accounts
 class K2Transfer < K2Entity
   include K2Validation
 
   # Create a Verified Settlement Account via API
-  def settlement_account(transfer_params)
+  def settlement_account(params)
     # Validation
-    if validate_input(transfer_params, %w{ account_name bank_ref bank_branch_ref account_number currency value })
+    if validate_input(params, %w{ account_name bank_ref bank_branch_ref account_number currency value })
       # The Request Body Parameters
       settlement_body = {
-          account_name: transfer_params["account_name"],
-          bank_ref: transfer_params["bank_ref"],
-          bank_branch_ref: transfer_params["bank_branch_ref"],
-          account_number: transfer_params["account_number"]
+          account_name: params["account_name"],
+          bank_ref: params["bank_ref"],
+          bank_branch_ref: params["bank_branch_ref"],
+          account_number: params["account_number"]
       }
-      settlement_hash = K2Transfer.hash_it("merchant_bank_accounts", "POST", @access_token, "Transfer", settlement_body)
-      K2Connect.to_connect(settlement_hash)
+      settlement_hash = K2Transfer.make_hash("merchant_bank_accounts", "POST", @access_token, "Transfer", settlement_body)
+      @threads << Thread.new do
+        sleep 0.25
+        K2Connect.to_connect(settlement_hash)
+      end
+      @threads.each {|t| t.join}
     end
   end
 
   # Create a either a 'blind' transfer, for when destination is specified, and a 'targeted' transfer which has a specified destination.
-  def transfer_funds(destination, transfer_params)
+  def transfer_funds(destination, params)
     # Validation
-    if validate_input(transfer_params, %w{ currency value })
+    if validate_input(params, %w{ currency value })
       # The Request Body Parameters
       if destination.blank?
         # Blind Transfer
         transfer_body = {
             amount: {
-                currency: transfer_params["currency"],
-                value: transfer_params["value"]
+                currency: params["currency"],
+                value: params["value"]
             }
         }
       else
         # Targeted Transfer
         transfer_body = {
             amount: {
-                currency: transfer_params["currency"],
-                value: transfer_params["value"]
+                currency: params["currency"],
+                value: params["value"]
             },
             destination: destination
         }
       end
-      transfer_hash = K2Transfer.hash_it("transfers", "POST", @access_token, "Transfer", transfer_body)
-      K2Connect.to_connect(transfer_hash)
+      transfer_hash = K2Transfer.make_hash("transfers", "POST", @access_token, "Transfer", transfer_body)
+      @threads << Thread.new do
+        sleep 0.25
+        K2Connect.to_connect(transfer_hash)
+      end
+      @threads.each {|t| t.join}
     end
   end
 
   # Check the status of a prior initiated Transfer. Make sure to add the id to the url
-  def query_transfer(id)
-    # Validation
-    if validate_input(id, %w{ id })
-      query_body = {
-          ID: id
-      }
-      query_transfer_hash = K2Transfer.hash_it("transfers", "GET", @access_token, "Transfer", query_body)
-      K2Connect.to_connect(query_transfer_hash)
-    end
+  def query_status(params, path_url = "transfers", class_type = "Transfer")
+    super
   end
 end

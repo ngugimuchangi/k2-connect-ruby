@@ -21,7 +21,7 @@ RSpec.describe K2Pay do
     end
   end
 
-  context "#pay_create" do
+  context "#create_payment" do
     let(:params) { HashWithIndifferentAccess.new(currency: "currency" ,value: "value") }
     let(:array) { %w(currency value) }
     it '#validate_input' do
@@ -29,7 +29,7 @@ RSpec.describe K2Pay do
     end
 
     it 'should create outgoing payment request' do
-      expect{ @k2pay.pay_create(params) }.not_to raise_error
+      expect{ @k2pay.create_payment(params) }.not_to raise_error
     end
   end
 
@@ -41,7 +41,7 @@ RSpec.describe K2Pay do
     end
 
     it 'should query payment request status' do
-      expect{ @k2pay.query_pay(params) }.not_to raise_error
+      expect{ @k2pay.query_status(params) }.not_to raise_error
     end
   end
 end

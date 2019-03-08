@@ -30,7 +30,7 @@ module K2Validation
   def validate_hash(the_input, empty_keys = Array.new, invalid_keys = HashWithIndifferentAccess.new, the_array)
     nil_params(the_input, empty_keys)
     if empty_keys.blank?
-      check_keys(the_input, invalid_keys, the_array)
+      incorrect_keys(the_input, invalid_keys, the_array)
       unless invalid_keys.blank?
         raise IncorrectParams.new(invalid_keys)
       end
@@ -40,8 +40,8 @@ module K2Validation
     end
   end
 
-  # Find  Incorrect Hash Keys or Symbols in Hash
-  def check_keys(the_input, invalid_hash, the_array)
+  # Return Incorrect Key Symbols
+  def incorrect_keys(the_input, invalid_hash, the_array)
     the_input.each_key do |key|
       unless the_array.include?(key.to_s)
         invalid_hash[:"#{key}"] = key
@@ -49,7 +49,7 @@ module K2Validation
     end
   end
 
-  # Find  Nil or Empty Values in Hash
+  # Return Key Symbols with Blank Values
   def nil_params(the_input, nil_keys_array = Array.new)
     the_input.select{|_,v| v.blank?}.each_key do |key|
       nil_keys_array << key.to_s
