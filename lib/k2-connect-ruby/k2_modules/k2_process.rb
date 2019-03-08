@@ -2,7 +2,7 @@
 module K2ProcessResult
   # Confirm Truth value and carry out splitting.
   def self.process(the_body)
-    raise ArgumentError.new("Nil Request Body Argument!") if the_body.blank?
+    raise ArgumentError.new("Empty/Nil Request Body Argument!") if the_body.blank?
     K2ProcessResult.check_topic(the_body)
   end
 
@@ -45,6 +45,8 @@ module K2ProcessResult
 
   def self.return_obj_array(instance_array=Array.new, obj)
     obj.instance_variables.each do |value|
+      puts "The instance variable:\t#{obj.instance_variable_get(value)}"
+      puts "The value:\t#{value}"
       instance_array << obj.instance_variable_get(value)
     end
     return instance_array
