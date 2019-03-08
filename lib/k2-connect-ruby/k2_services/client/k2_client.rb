@@ -1,9 +1,8 @@
 require "yajl"
 
 class K2Client
-  attr_writer :api_secret_key,
+  attr_accessor :api_secret_key,
                 :hash_body,
-                :hash_header,
                 :k2_signature
 
   # Initialize method
@@ -18,9 +17,9 @@ class K2Client
     # The Response Body.
     @hash_body = Yajl::Parser.parse(the_request.body.string.as_json)
     # The Response Header
-    @hash_header = Yajl::Parser.parse(the_request.headers.env.select{|k, _| k =~ /^HTTP_/}.to_json)
+    hash_header = Yajl::Parser.parse(the_request.headers.env.select{|k, _| k =~ /^HTTP_/}.to_json)
     # The K2 Signature
-    @k2_signature = @hash_header["HTTP_X_KOPOKOPO_SIGNATURE"]
+    @k2_signature = hash_header["HTTP_X_KOPOKOPO_SIGNATURE"]
     # if the_request.scheme.eql?("https")
     #   # The Response Body.
     #   @hash_body = Yajl::Parser.parse(the_request.body.string.as_json)

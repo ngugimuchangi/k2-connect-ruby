@@ -45,7 +45,7 @@ RSpec.describe K2Transfer do
     end
 
     it 'should query payment request status' do
-      expect{ @k2transfer.query_transfer(params) }.not_to raise_error
+      expect{ @k2transfer.query_status(params) }.not_to raise_error
     end
   end
 end

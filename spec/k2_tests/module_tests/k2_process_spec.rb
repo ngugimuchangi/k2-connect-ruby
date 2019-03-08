@@ -46,7 +46,7 @@ RSpec.describe K2ProcessResult do
   context "#return_hash" do
     let(:pay) { HashWithIndifferentAccess.new(the_body: "the_body", topic: "pay_result") }
     it 'returns a hash object' do
-      expect { K2ProcessResult.return_array(K2ProcessPay.new.components(pay)) }.not_to raise_error
+      expect { K2ProcessResult.return_obj_array(K2ProcessPay.new.components(pay)) }.not_to raise_error
     end
   end
 

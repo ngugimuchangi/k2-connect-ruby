@@ -78,6 +78,7 @@ class K2Subscribe
     end
   end
 
+  # Create a Hash containing important details accessible for K2Connect
   def self.put_in_hash(path_url, request, class_type, body)
     return {
         path_url: path_url,
