@@ -41,7 +41,7 @@ module K2Connect
         end
       end
     else
-      raise K2ConnectionErrors.new(k2_response.code)
+      raise K2ConnectionError.new(k2_response.code)
     end
 
     k2_https.shutdown

@@ -29,24 +29,15 @@ module K2Validation
   # Validate the Hash Input Parameters
   def validate_hash(the_input, empty_keys = Array.new, invalid_keys = Array.new, the_array)
     nil_params(the_input, empty_keys)
-    # if empty_keys.present?
-    #   raise K2InvalidHash.new(empty_keys)
-    # else
-    #   incorrect_keys(the_input, invalid_keys, the_array)
-    #   if invalid_keys.present?
-    #     raise IncorrectParams.new(invalid_keys)
-    #   else
-    #     return true
-    #   end
-    # end
-    if empty_keys.blank?
-      incorrect_keys(the_input, invalid_keys, the_array)
-      unless invalid_keys.blank?
-        raise IncorrectParams.new(invalid_keys)
-      end
-      true
+    if empty_keys.present?
+      raise K2EmptyParams.new(empty_keys)
     else
-      raise K2InvalidParams.new(empty_keys)
+      incorrect_keys(the_input, invalid_keys, the_array)
+      if invalid_keys.present?
+        raise K2IncorrectParams.new(invalid_keys)
+      else
+        return true
+      end
     end
   end
 

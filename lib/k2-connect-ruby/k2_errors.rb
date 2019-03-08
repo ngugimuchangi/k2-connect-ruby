@@ -6,10 +6,9 @@ class K2Errors < StandardError
   end
 end
 
-class K2ConnectionErrors < K2Errors
-  def initialize(error, msg=@message)
+class K2ConnectionError < K2Errors
+  def initialize(error)
     @error = error
-    super(msg)
   end
 
   def print_error
@@ -41,11 +40,11 @@ end
 class K2ValidateErrors < K2Errors
   attr_reader :the_keys
 
-  def initialize (the_keys, msg=@message)
+  def initialize (the_keys)
+    super
     @error = 400
     @the_keys  = the_keys
     @status = :bad_request
-    super(msg)
   end
 
   def loop_keys
@@ -60,7 +59,7 @@ class K2ValidateErrors < K2Errors
 end
 
 # Hash / Params has Empty Values within it
-class K2InvalidParams < K2ValidateErrors
+class K2EmptyParams < K2ValidateErrors
   def initialize (the_keys)
     @message = "Invalid Hash Object!\n The Following Parameter(s) are Empty: "
     super
@@ -68,7 +67,7 @@ class K2InvalidParams < K2ValidateErrors
 end
 
 # Error for Incorrect Hash Key Symbols (K2Entity validate => input)
-class IncorrectParams < K2ValidateErrors
+class K2IncorrectParams < K2ValidateErrors
   def initialize (the_keys)
     @message = "Incorrect Hash/Parameters Object!\n The Following Parameter(s) are Incorrect: "
     super
