@@ -44,7 +44,7 @@ class K2ValidateErrors < K2Errors
   end
 
   def loop_keys
-    @the_keys.each_value(&method(:puts))
+    @the_keys.each(&method(:puts))
   end
 
   def message

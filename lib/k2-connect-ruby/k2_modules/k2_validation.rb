@@ -27,7 +27,7 @@ module K2Validation
   end
 
   # Validate the Hash Input Parameters
-  def validate_hash(the_input, empty_keys = Array.new, invalid_keys = HashWithIndifferentAccess.new, the_array)
+  def validate_hash(the_input, empty_keys = Array.new, invalid_keys = Array.new, the_array)
     nil_params(the_input, empty_keys)
     if empty_keys.present?
       raise K2InvalidHash.new(empty_keys)
@@ -45,7 +45,7 @@ module K2Validation
   def incorrect_keys(the_input, invalid_hash, the_array)
     the_input.each_key do |key|
       unless the_array.include?(key.to_s)
-        invalid_hash[:"#{key}"] = key
+        invalid_hash << key
       end
     end
   end
