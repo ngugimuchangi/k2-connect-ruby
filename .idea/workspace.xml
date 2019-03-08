@@ -1,34 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="547a0860-960a-450b-9136-428e96411441" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/..rakeTasks.swp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.encodings.xml.swp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.modules.xml.swp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.vcs.xml.swp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.workspace.xml.swp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/.k2_engineering_03.xml.swp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/.Project_Default.xml.swp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/k2-connect-ruby.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/k2-connect-ruby.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/k2-connect-ruby.gemspec" beforeDir="false" afterPath="$PROJECT_DIR$/k2-connect-ruby.gemspec" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_pay.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_pay.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_stk.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_stk.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_transfer.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_transfer.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/k2_entity.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/k2_entity.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/k2_subscribe.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/k2_subscribe.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_connection.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_connection.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_process.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_process.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_validation.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_validation.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/client/k2_client.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/client/k2_client.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_services/config/k2_config.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/config/k2_config.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/k2_tests/entity_tests/entities_spec/k2_pay_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/k2_tests/entity_tests/entities_spec/k2_pay_spec.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/k2_tests/entity_tests/entities_spec/k2_stk_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/k2_tests/entity_tests/entities_spec/k2_stk_spec.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/k2_tests/entity_tests/entities_spec/k2_transfer_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/k2_tests/entity_tests/entities_spec/k2_transfer_spec.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/k2_tests/module_tests/k2_process_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/k2_tests/module_tests/k2_process_spec.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/k2_tests/module_tests/k2_validation_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/k2_tests/module_tests/k2_validation_spec.rb" afterDir="false" />
-    </list>
+    <list default="true" id="547a0860-960a-450b-9136-428e96411441" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,53 +13,7 @@
     <SUITE FILE_PATH="coverage/k2_connect_ruby_api_gem@IRB_console__k2_connect_ruby_api_gem.rcov" NAME="IRB console: k2_connect_ruby_api_gem Coverage Results" MODIFIED="1547716305806" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="k2_connect_ruby_api_gem" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/k2_entity.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="328">
-              <caret line="30" column="18" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_pay.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="397">
-              <caret line="36" column="18" selection-start-line="36" selection-start-column="18" selection-end-line="36" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_transfer.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="17" column="18" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_stk.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="34" column="18" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_modules/k2_connection.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="31" column="4" selection-start-line="31" selection-start-column="6" selection-end-line="36" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -217,61 +144,6 @@
             <path>
               <item name="K2-Connect-Ruby" type="b2602c69:ProjectViewProjectNode" />
               <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="K2-Connect-Ruby" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="K2-Connect-Ruby" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="K2-Connect-Ruby" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="k2_entity" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="K2-Connect-Ruby" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="k2_entity" type="462c0819:PsiDirectoryNode" />
-              <item name="entities" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="K2-Connect-Ruby" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="k2_modules" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="K2-Connect-Ruby" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="k2_services" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="K2-Connect-Ruby" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="k2_services" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="K2-Connect-Ruby" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
               <item name="spec" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -279,21 +151,6 @@
               <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
               <item name="spec" type="462c0819:PsiDirectoryNode" />
               <item name="k2_tests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="K2-Connect-Ruby" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="spec" type="462c0819:PsiDirectoryNode" />
-              <item name="k2_tests" type="462c0819:PsiDirectoryNode" />
-              <item name="entity_tests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="K2-Connect-Ruby" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="spec" type="462c0819:PsiDirectoryNode" />
-              <item name="k2_tests" type="462c0819:PsiDirectoryNode" />
-              <item name="entity_tests" type="462c0819:PsiDirectoryNode" />
-              <item name="entities_spec" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -423,11 +280,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="288697000" />
+    <option name="totallyTimeSpent" value="288704000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.37727273" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
