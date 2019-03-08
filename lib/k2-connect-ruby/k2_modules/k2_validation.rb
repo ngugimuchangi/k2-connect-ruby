@@ -30,12 +30,17 @@ module K2Validation
   def validate_hash(the_input, empty_keys = Array.new, invalid_keys = HashWithIndifferentAccess.new, the_array)
     nil_params(the_input, empty_keys)
     if empty_keys.blank?
+      puts "No Blank Parameter/Hash Keys"
       incorrect_keys(the_input, invalid_keys, the_array)
       unless invalid_keys.blank?
+        puts "You have Incorrect Parameter/Hash Keys"
+        puts "List\t#{invalid_keys}"
         raise IncorrectParams.new(invalid_keys)
       end
+      puts "No Incorrect Parameter/Hash Keys"
       true
     else
+      puts "You have Blank Parameter/Hash Keys"
       raise K2InvalidHash.new(empty_keys)
     end
   end

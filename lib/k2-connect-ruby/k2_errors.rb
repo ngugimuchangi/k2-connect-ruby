@@ -57,13 +57,13 @@ end
 # Hash / Params has Empty Values within it
 class K2InvalidHash < K2ValidateErrors
   def initialize (the_keys)
-    @message = "Incorrect Hash Object!\n The Following Params are Empty: "
+    @message = "Invalid Hash Object!\n The Following Parameter(s) are Empty: "
   end
 end
 
 # Error for Incorrect Hash Key Symbols (K2Entity validate => input)
 class IncorrectParams < K2ValidateErrors
   def initialize (the_keys)
-    @message = "Incorrect Hash Parameters!\n The Following Params are Incorrect: "
+    @message = "Incorrect Hash/Parameters Object!\n The Following Parameter(s) are Incorrect: "
   end
 end

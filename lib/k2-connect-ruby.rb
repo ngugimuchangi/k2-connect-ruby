@@ -21,5 +21,6 @@ require "active_support/core_ext/hash/indifferent_access"
 
 =begin
  TODO, Friday meeting:
-    K2Connection, add a case scenario when the k2_response.status == 200 'Success' code
+    K2Connection, add a case scenario when the k2_response.status == 200 'Success' code.
+    Solve the Issue for Subscription Class and Error for STK, PAY and Transfer.
 =end
