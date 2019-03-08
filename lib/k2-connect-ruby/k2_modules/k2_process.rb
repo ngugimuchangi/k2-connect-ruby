@@ -11,28 +11,40 @@ module K2ProcessResult
     case the_body.dig("topic")
     when "buygoods_transaction_received"
       puts "Buy Goods Transaction Received."
-      bg = BuyGoods.new.components(the_body)
-      K2ProcessResult.return_obj_array(bg)
+      buy_goods = BuyGoods.new
+      buy_goods.components(the_body)
+      K2ProcessResult.return_obj_array(buy_goods)
     when "buygoods_transaction_reversed"
       puts "Buy Goods Transaction Reversed."
-      K2ProcessResult.return_obj_array(Reversal.new.components(the_body))
+      reversals = Reversal.new
+      reversals.components(the_body)
+      K2ProcessResult.return_obj_array(reversals)
     when "settlement_transfer_completed"
       puts "Settlement Transaction."
-      K2ProcessResult.return_obj_array(Settlement.new.components(the_body))
+      settlement = Settlement.new
+      settlement.components(the_body)
+      K2ProcessResult.return_obj_array(settlement)
     when "customer_created"
       puts "Customer Created."
-      K2ProcessResult.return_obj_array(CustomerCreated.new.components(the_body))
+      customer = CustomerCreated.new
+      customer.components(the_body)
+      K2ProcessResult.return_obj_array(customer)
     when "payment_request"
       puts "STK Push Payment Request Result."
-      K2ProcessResult.return_obj_array(K2ProcessStk.new.components(the_body))
+      stk_result = K2ProcessStk.new
+      stk_result.components(the_body)
+      K2ProcessResult.return_obj_array(stk_result)
     when "pay_result"
       puts "PAY Payment Request Result."
-      K2ProcessResult.return_obj_array(K2ProcessPay.new.components(the_body))
+      pay_result = K2ProcessPay.new
+      pay_result.components(the_body)
+      K2ProcessResult.return_obj_array(pay_result)
     else
       raise ArgumentError.new("No Other Specified Event!")
     end
   end
 
+  # TODO, Identify which is better, Hash, or Array
   # def self.return_obj_hash(number = 0, instance_hash=HashWithIndifferentAccess.new, obj)
   #   while number < obj.instance_variables.length
   #     obj.instance_variables.each do |value|
@@ -45,8 +57,6 @@ module K2ProcessResult
 
   def self.return_obj_array(instance_array=Array.new, obj)
     obj.instance_variables.each do |value|
-      puts "The instance variable:\t#{obj.instance_variable_get(value)}"
-      puts "The value:\t#{value}"
       instance_array << obj.instance_variable_get(value)
     end
     return instance_array
