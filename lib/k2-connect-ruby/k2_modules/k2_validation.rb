@@ -46,7 +46,7 @@ module K2Validation
       end
       true
     else
-      raise K2InvalidHash.new(empty_keys)
+      raise K2InvalidParams.new(empty_keys)
     end
   end
 

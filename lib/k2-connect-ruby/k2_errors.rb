@@ -1,11 +1,15 @@
 # Standard K2Error
 class K2Errors < StandardError
   attr_reader :status, :error, :message
+  def initialize(msg=@message)
+    super(msg)
+  end
 end
 
 class K2ConnectionErrors < K2Errors
-  def initialize(error)
+  def initialize(error, msg=@message)
     @error = error
+    super(msg)
   end
 
   def print_error
@@ -31,45 +35,42 @@ class K2ConnectionErrors < K2Errors
       @message = "Service Unavailable.\n\tWe're temporarily offline for maintenance. Please try again later"
     end
   end
-
-  def message
-
-  end
 end
 
 # Errors pertaining to Validation  module
 class K2ValidateErrors < K2Errors
   attr_reader :the_keys
 
-  def initialize (the_keys)
+  def initialize (the_keys, msg=@message)
     @error = 400
     @the_keys  = the_keys
     @status = :bad_request
+    super(msg)
   end
 
   def loop_keys
+    STDERR.puts @message
     @the_keys.each(&method(:puts))
   end
 
   def message
-    ArgumentError.new(@message)
     loop_keys
   end
 
 end
 
 # Hash / Params has Empty Values within it
-class K2InvalidHash < K2ValidateErrors
+class K2InvalidParams < K2ValidateErrors
   def initialize (the_keys)
-    super
     @message = "Invalid Hash Object!\n The Following Parameter(s) are Empty: "
+    super
   end
 end
 
 # Error for Incorrect Hash Key Symbols (K2Entity validate => input)
 class IncorrectParams < K2ValidateErrors
   def initialize (the_keys)
-    super
     @message = "Incorrect Hash/Parameters Object!\n The Following Parameter(s) are Incorrect: "
+    super
   end
 end
