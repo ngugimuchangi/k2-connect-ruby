@@ -12,7 +12,7 @@ RSpec.describe K2Transfer do
   context "#settlement_account" do
     let(:params) { HashWithIndifferentAccess.new(account_name: "account_name" ,bank_ref: "bank_ref", bank_branch_ref: "bank_branch_ref", account_number: "account_number", currency:"currency", value:"value") }
     let(:array) { %w{account_name bank_ref bank_branch_ref account_number currency value} }
-    it '#validate_input' do
+    it 'validates input correctly' do
       expect{ @k2transfer.validate_input(params, array) }.not_to raise_error
     end
 
@@ -24,7 +24,7 @@ RSpec.describe K2Transfer do
   context "#transfer_funds" do
     let(:params) { HashWithIndifferentAccess.new(currency: "currency" ,value: "value") }
     let(:array) { %w{currency value} }
-    it '#validate_input' do
+    it 'validates input correctly' do
       expect{ @k2transfer.validate_input(params, array) }.not_to raise_error
     end
 
@@ -40,7 +40,7 @@ RSpec.describe K2Transfer do
   context "Query the status of a prior Transfer" do
     let(:params) { HashWithIndifferentAccess.new(id: "id") }
     let(:array) { %w{id} }
-    it '#validate_input' do
+    it 'validates input correctly' do
       expect{ @k2transfer.validate_input(params, array) }.not_to raise_error
     end
 

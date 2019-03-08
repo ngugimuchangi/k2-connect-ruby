@@ -11,7 +11,8 @@ module K2ProcessResult
     case the_body.dig("topic")
     when "buygoods_transaction_received"
       puts "Buy Goods Transaction Received."
-      K2ProcessResult.return_obj_array(BuyGoods.new.components(the_body))
+      bg = BuyGoods.new.components(the_body)
+      K2ProcessResult.return_obj_array(bg)
     when "buygoods_transaction_reversed"
       puts "Buy Goods Transaction Reversed."
       K2ProcessResult.return_obj_array(Reversal.new.components(the_body))

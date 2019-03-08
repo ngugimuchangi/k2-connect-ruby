@@ -24,7 +24,7 @@ class K2Entity
     # Validation
     if validate_input(params, %w{ id })
       query_body = {
-          ID: params[:id]
+          ID: params.permit!.to_hash.select{|k| k.to_s.include?("id")}.each {|i| i}
       }
       query_hash = K2Pay.make_hash(path_url, "GET", @access_token, class_type, query_body)
       @threads << Thread.new do

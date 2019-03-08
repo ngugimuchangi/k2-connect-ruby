@@ -12,7 +12,7 @@ RSpec.describe K2Pay do
   context "#pay_recipients" do
     let(:params) { HashWithIndifferentAccess.new(first_name: "first_name" ,last_name: "last_name", phone: "phone", email: "email", network: "network", pay_type: "mobile_wallet", currency:"currency", value:"value", acc_name: "acc_name", bank_id: "bank_id", bank_branch_id:"bank_branch_id", acc_no:"acc_no") }
     let(:array) { %w{first_name last_name phone email network pay_type currency value acc_name bank_id bank_branch_id acc_no} }
-    it '#validate_input' do
+    it 'validates input correctly' do
       expect{ @k2pay.validate_input(params, array) }.not_to raise_error
     end
 
@@ -24,7 +24,7 @@ RSpec.describe K2Pay do
   context "#create_payment" do
     let(:params) { HashWithIndifferentAccess.new(currency: "currency" ,value: "value") }
     let(:array) { %w(currency value) }
-    it '#validate_input' do
+    it 'validates input correctly' do
       expect{ @k2pay.validate_input(params, array) }.not_to raise_error
     end
 
@@ -36,7 +36,7 @@ RSpec.describe K2Pay do
   context "#query_pay" do
     let(:params) { HashWithIndifferentAccess.new(id: "id") }
     let(:array) { %w(id) }
-    it '#validate_input' do
+    it 'validates input correctly' do
       expect{ @k2pay.validate_input(params, array) }.not_to raise_error
     end
 

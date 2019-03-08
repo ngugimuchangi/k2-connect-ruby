@@ -17,7 +17,7 @@ RSpec.describe K2Subscribe do
   end
 
   context "#token_request" do
-    it 'should validate input' do
+    it 'raises an error if empty Credentials given' do
       expect{ @k2subscriber.token_request("", nil) }.to raise_error ArgumentError
     end
 

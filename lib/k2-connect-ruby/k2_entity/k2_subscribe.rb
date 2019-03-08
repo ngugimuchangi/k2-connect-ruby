@@ -20,7 +20,7 @@ class K2Subscribe
         client_secret: client_secret,
         grant_type: "client_credentials"
     }
-    token_hash = K2Subscribe.put_in_hash("ouath", "POST", "Subscription", token_params)
+    token_hash = K2Subscribe.make_hash("ouath", "POST", "Subscription", token_params)
     @access_token = K2Connect.to_connect(token_hash)
   end
 
@@ -34,7 +34,7 @@ class K2Subscribe
           url: "https://myapplication.com/webhooks",
           secret: @webhook_secret
       }
-      subscribe_hash = K2Subscribe.put_in_hash("webhook-subscription", "POST", "Subscription", k2_request_body)
+      subscribe_hash = K2Subscribe.make_hash("webhook-subscription", "POST", "Subscription", k2_request_body)
       K2Connect.to_connect(subscribe_hash)
 
       # Buygoods Reversed
@@ -44,7 +44,7 @@ class K2Subscribe
           url: "https://myapplication.com/webhooks",
           secret: "webhook_secret"
       }
-      subscribe_hash = K2Subscribe.put_in_hash("buygoods_transaction_reversed", "POST", "Subscription", k2_request_body)
+      subscribe_hash = K2Subscribe.make_hash("buygoods_transaction_reversed", "POST", "Subscription", k2_request_body)
       K2Connect.to_connect(subscribe_hash)
 
       # Customer Created.
@@ -54,7 +54,7 @@ class K2Subscribe
           url: "https://myapplication.com/webhooks",
           secret: @webhook_secret
       }
-      subscribe_hash = K2Subscribe.put_in_hash("customer-created", "POST", "Subscription", k2_request_body)
+      subscribe_hash = K2Subscribe.make_hash("customer-created", "POST", "Subscription", k2_request_body)
       K2Connect.to_connect(subscribe_hash)
 
       # Settlement Transfer Completed
@@ -64,7 +64,7 @@ class K2Subscribe
           url: "https://myapplication.com/webhooks",
           secret: @webhook_secret
       }
-      subscribe_hash = K2Subscribe.put_in_hash("settlement", "POST", "Subscription", k2_request_body)
+      subscribe_hash = K2Subscribe.make_hash("settlement", "POST", "Subscription", k2_request_body)
       K2Connect.to_connect(subscribe_hash)
     else
       raise ArgumentError.new("Subscription Service does not Exist!")
@@ -79,7 +79,7 @@ class K2Subscribe
   end
 
   # Create a Hash containing important details accessible for K2Connect
-  def self.put_in_hash(path_url, request, class_type, body)
+  def self.make_hash(path_url, request, class_type, body)
     return {
         path_url: path_url,
         request_type: request,

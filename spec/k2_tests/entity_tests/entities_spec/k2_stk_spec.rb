@@ -12,7 +12,7 @@ RSpec.describe K2Stk do
   context "#receive_mpesa_payments" do
     let(:params) { HashWithIndifferentAccess.new(first_name: "first_name" ,last_name: "last_name", phone: "phone", email: "email", currency:"currency", value:"value") }
     let(:array) { %w{first_name last_name phone email currency value} }
-    it '#validate_input' do
+    it 'validates input correctly' do
       expect{ @k2stk.validate_input(params, array) }.not_to raise_error
     end
 
@@ -24,7 +24,7 @@ RSpec.describe K2Stk do
   context "#query_mpesa_payments" do
     let(:params) { HashWithIndifferentAccess.new(id: "id") }
     let(:array) { %w{id} }
-    it '#validate_input' do
+    it 'validates input correctly' do
       expect{ @k2stk.validate_input(params, array) }.not_to raise_error
     end
 

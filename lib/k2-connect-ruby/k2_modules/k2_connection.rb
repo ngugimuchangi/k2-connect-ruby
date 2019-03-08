@@ -29,23 +29,21 @@ module K2Connect
     end
     k2_request.body = connection_hash[:params].to_json
 
-    # k2_response = ""
-    # threads = []
-    # threads << Thread.new do
-    #   sleep 0.5
-    # end
-    # threads.each {|conn| conn.join}
     k2_response = k2_https.request(k2_url, k2_request)
 
-
-    # Add a method to fetch the components of the response
-    if connection_hash[:path_url].eql?("ouath")
-      return Yajl::Parser.parse(k2_response.body)["access_token"]
-    else
-      unless connection_hash[:class_type].eql?("Subscription")
-        return Yajl::Parser.parse(k2_response.body)["location"]
+    # If successful, add a method to fetch the components of the response
+    if k2_response.code.to_s[0].eql?(2.to_s)
+      if connection_hash[:path_url].eql?("ouath")
+        return Yajl::Parser.parse(k2_response.body)["access_token"]
+      else
+        unless connection_hash[:class_type].eql?("Subscription")
+          return Yajl::Parser.parse(k2_response.body)["location"]
+        end
       end
+    else
+      raise K2ConnectionErrors.new(k2_response.code)
     end
+
     k2_https.shutdown
     return true
   end

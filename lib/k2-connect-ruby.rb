@@ -18,3 +18,8 @@ require "k2-connect-ruby/k2_entity/entity"
 
 # ActiveSupport
 require "active_support/core_ext/hash/indifferent_access"
+
+=begin
+ TODO, Friday meeting:
+    K2Connection, add a case scenario when the k2_response.status == 200 'Success' code
+=end

@@ -15,7 +15,7 @@ RSpec.describe K2Connect do
       expect { K2Connect.to_connect(nil_token_hash) }.to raise_error ArgumentError
     end
 
-    it 'should raise an error if request_type is not POST or GET' do
+    it 'should raise an error if request_type is neither a POST nor GET' do
       expect{ K2Connect.to_connect push_hash }.to raise_error ArgumentError
     end
   end
