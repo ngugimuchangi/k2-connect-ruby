@@ -13,7 +13,17 @@
     <SUITE FILE_PATH="coverage/k2_connect_ruby_api_gem@IRB_console__k2_connect_ruby_api_gem.rcov" NAME="IRB console: k2_connect_ruby_api_gem Coverage Results" MODIFIED="1547716305806" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="k2_connect_ruby_api_gem" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/version.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="69">
+              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -100,7 +110,6 @@
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_client.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_authorize.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_split_request.rb" />
-        <option value="$PROJECT_DIR$/lib/k2-connect-ruby/version.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_errors.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_subscribe.rb" />
         <option value="$PROJECT_DIR$/spec/k2-connect-ruby-spec.rb" />
@@ -118,6 +127,7 @@
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_pay.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_transfer.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_stk.rb" />
+        <option value="$PROJECT_DIR$/lib/k2-connect-ruby/version.rb" />
       </list>
     </option>
   </component>
@@ -150,21 +160,6 @@
               <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
               <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="K2-Connect-Ruby" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="k2_entity" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="K2-Connect-Ruby" type="b2602c69:ProjectViewProjectNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
-              <item name="k2_entity" type="462c0819:PsiDirectoryNode" />
-              <item name="entities" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -291,15 +286,16 @@
       <workItem from="1549960031772" duration="6741000" />
       <workItem from="1551957234299" duration="1277000" />
       <workItem from="1552024448273" duration="9136000" />
-      <workItem from="1552035490647" duration="533000" />
+      <workItem from="1552035490647" duration="941000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="289237000" />
+    <option name="totallyTimeSpent" value="289645000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.37727273" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -474,13 +470,6 @@
     <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_client.rb" />
     <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_split_request.rb" />
     <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_subscribe.rb" />
-    <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/version.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
@@ -498,7 +487,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spec/k2_tests/k2_version_spec.rb" />
     <entry file="file://$PROJECT_DIR$/spec/k2_tests/k2-version-spec.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="92">
@@ -617,6 +605,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="305">
           <caret line="33" column="32" lean-forward="true" selection-start-line="33" selection-start-column="32" selection-end-line="33" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/version.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
