@@ -48,12 +48,11 @@ class K2ValidateErrors < K2Errors
   end
 
   def loop_keys
-    STDERR.puts @message
     @the_keys.each(&method(:puts))
   end
 
   def message
-    # ArgumentError.new(@message)
+    ArgumentError.new(@message)
     loop_keys
   end
 
