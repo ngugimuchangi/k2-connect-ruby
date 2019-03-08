@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="547a0860-960a-450b-9136-428e96411441" name="Default Changelist" comment="">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
       <change beforePath="$PROJECT_DIR$/.idea/..rakeTasks.swp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.encodings.xml.swp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.modules.xml.swp" beforeDir="false" />
@@ -29,10 +32,13 @@
       <change beforePath="$PROJECT_DIR$/spec/k2_tests/entity_tests/entities_spec/k2_transfer_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/k2_tests/entity_tests/entities_spec/k2_transfer_spec.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spec/k2_tests/module_tests/k2_process_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/k2_tests/module_tests/k2_process_spec.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spec/k2_tests/module_tests/k2_validation_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/k2_tests/module_tests/k2_validation_spec.rb" afterDir="false" />
+<<<<<<< HEAD
 =======
       <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_errors.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_errors.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_subscribe.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/k2-connect-ruby/k2_subscribe.rb" afterDir="false" />
 >>>>>>> upstream/development
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,22 +54,31 @@
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
         <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/k2_entity.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="328">
               <caret line="30" column="18" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
+<<<<<<< HEAD
 =======
         <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/version.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="23">
               <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
 >>>>>>> upstream/development
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
         <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_pay.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="397">
@@ -77,18 +92,24 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="391">
               <caret line="17" column="18" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
+<<<<<<< HEAD
 =======
         <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_errors.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-8">
               <caret line="162" column="26" selection-start-line="162" selection-start-column="8" selection-end-line="162" selection-end-column="26" />
 >>>>>>> upstream/development
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
         <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_stk.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="144">
@@ -102,12 +123,15 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="92">
               <caret line="31" column="4" selection-start-line="31" selection-start-column="6" selection-end-line="36" selection-end-column="37" />
+<<<<<<< HEAD
 =======
         <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_subscribe.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="115">
               <caret line="20" column="61" selection-start-line="20" selection-start-column="61" selection-end-line="20" selection-end-column="61" />
 >>>>>>> upstream/development
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
             </state>
           </provider>
         </entry>
@@ -116,6 +140,7 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
       <find>||</find>
@@ -127,6 +152,8 @@
       <find>K2Authorize</find>
       <find>K2NilAuthArgument</find>
 >>>>>>> upstream/development
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
       <find>K2FalseTruthValue</find>
       <find>Unauthor</find>
       <find>nil_access_token</find>
@@ -150,6 +177,9 @@
       <find>403</find>
       <find>the_body</find>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
       <find>hash_it</find>
       <find>hash</find>
       <find>return_array</find>
@@ -158,8 +188,11 @@
       <find>query_</find>
       <find>path_url</find>
       <find>puts</find>
+<<<<<<< HEAD
 =======
 >>>>>>> upstream/development
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
     </findStrings>
     <replaceStrings>
       <replace>k2_connect_ruby</replace>
@@ -169,12 +202,18 @@
       <replace>K2Authenticator</replace>
       <replace />
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
       <replace>put_in_hash</replace>
       <replace>return_obj_array</replace>
       <replace>incorrect_keys</replace>
       <replace>create_payment</replace>
+<<<<<<< HEAD
 =======
 >>>>>>> upstream/development
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -183,6 +222,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
         <option value="$PROJECT_DIR$/k2_connect_ruby_api_gem.gemspec" />
@@ -199,6 +239,8 @@
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby/k2_subs.rb" />
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby/k2_split_req.rb" />
 >>>>>>> upstream/development
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby/k2_req_it_parse.rb" />
         <option value="$PROJECT_DIR$/lib/k2_connect_ruby/k2_signature.rb" />
         <option value="$PROJECT_DIR$/spec/k2_connect_ruby_spec.rb" />
@@ -222,17 +264,23 @@
         <option value="$PROJECT_DIR$/spec/k2_client/k2-client-spec.rb" />
         <option value="$PROJECT_DIR$/spec/k2_tests/k2-version-spec.rb" />
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         <option value="$PROJECT_DIR$/spec/k2-connect-ruby-spec.rb" />
 >>>>>>> upstream/development
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
         <option value="$PROJECT_DIR$/spec/k2_tests/k2-split-request-spec.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_stk_receive.rb" />
         <option value="$PROJECT_DIR$/spec/k2_tests/k2-client-spec.rb" />
         <option value="$PROJECT_DIR$/spec/k2_tests/k2-authorize-spec.rb" />
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         <option value="$PROJECT_DIR$/k2-connect-ruby.gemspec" />
 >>>>>>> upstream/development
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_transfer.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_stk.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_pay.rb" />
@@ -244,6 +292,9 @@
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_errors.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_subscribe.rb" />
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
         <option value="$PROJECT_DIR$/spec/k2-connect-ruby-spec.rb" />
         <option value="$PROJECT_DIR$/k2-connect-ruby.gemspec" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/k2_subscribe.rb" />
@@ -259,8 +310,11 @@
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_pay.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_transfer.rb" />
         <option value="$PROJECT_DIR$/lib/k2-connect-ruby/k2_entity/entities/k2_stk.rb" />
+<<<<<<< HEAD
 =======
 >>>>>>> upstream/development
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
       </list>
     </option>
   </component>
@@ -277,14 +331,21 @@
     </navigator>
     <panes>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <pane id="Scope" />
 =======
 >>>>>>> upstream/development
+=======
+      <pane id="Scope" />
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
               <item name="K2-Connect-Ruby" type="b2602c69:ProjectViewProjectNode" />
               <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
             </path>
@@ -368,6 +429,7 @@
               <item name="k2_tests" type="462c0819:PsiDirectoryNode" />
               <item name="entity_tests" type="462c0819:PsiDirectoryNode" />
               <item name="entities_spec" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
 =======
               <item name="k2-connect-ruby" type="b2602c69:ProjectViewProjectNode" />
               <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
@@ -383,25 +445,34 @@
               <item name="lib" type="462c0819:PsiDirectoryNode" />
               <item name="k2-connect-ruby" type="462c0819:PsiDirectoryNode" />
 >>>>>>> upstream/development
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       <pane id="Scope" />
 >>>>>>> upstream/development
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="RakeTaksPopup.undocumentedIncluded" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <property name="last_opened_file_path" value="$USER_HOME$/kopo-kopo" />
 =======
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
 >>>>>>> upstream/development
+=======
+    <property name="last_opened_file_path" value="$USER_HOME$/kopo-kopo" />
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -410,9 +481,13 @@
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
 <<<<<<< HEAD
+<<<<<<< HEAD
       <recent name="$PROJECT_DIR$/lib/k2-connect-ruby" />
 =======
 >>>>>>> upstream/development
+=======
+      <recent name="$PROJECT_DIR$/lib/k2-connect-ruby" />
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
       <recent name="$PROJECT_DIR$/spec" />
       <recent name="$PROJECT_DIR$/spec/spec" />
       <recent name="$PROJECT_DIR$/lib/k2_connect_ruby" />
@@ -518,29 +593,42 @@
       <workItem from="1549953502423" duration="5896000" />
       <workItem from="1549960031772" duration="6741000" />
 <<<<<<< HEAD
+<<<<<<< HEAD
       <workItem from="1551957234299" duration="1277000" />
       <workItem from="1552024448273" duration="9136000" />
 =======
 >>>>>>> upstream/development
+=======
+      <workItem from="1551957234299" duration="1277000" />
+      <workItem from="1552024448273" duration="9136000" />
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="288697000" />
 =======
     <option name="totallyTimeSpent" value="278284000" />
 >>>>>>> upstream/development
+=======
+    <option name="totallyTimeSpent" value="288697000" />
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
     <editor active="true" />
     <layout>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <window_info content_ui="combo" id="Project" order="0" weight="0.37727273" />
 =======
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.36515152" />
 >>>>>>> upstream/development
+=======
+      <window_info content_ui="combo" id="Project" order="0" weight="0.37727273" />
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -554,10 +642,14 @@
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" />
 <<<<<<< HEAD
+<<<<<<< HEAD
       <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49924242" weight="0.32833335" />
 =======
       <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49924242" visible="true" />
 >>>>>>> upstream/development
+=======
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49924242" weight="0.32833335" />
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5007576" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -566,10 +658,14 @@
     </layout>
     <layout-to-restore>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.37121212" />
 =======
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3212121" />
 >>>>>>> upstream/development
+=======
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.37121212" />
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -583,12 +679,17 @@
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" />
 <<<<<<< HEAD
+<<<<<<< HEAD
       <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49924242" weight="0.32890365" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5007576" side_tool="true" />
 =======
       <window_info anchor="bottom" id="Terminal" order="10" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
 >>>>>>> upstream/development
+=======
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49924242" weight="0.32890365" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5007576" side_tool="true" />
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -607,6 +708,7 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="ruby-line">
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
           <url>file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_subscribe.rb</url>
@@ -645,6 +747,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="ruby-line">
 >>>>>>> upstream/development
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
           <url>file://$PROJECT_DIR$/lib/k2-connect-ruby/k2_errors.rb</url>
           <line>83</line>
           <option name="timeStamp" value="20" />
@@ -668,6 +772,7 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
 <<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/client.rb" />
 =======
@@ -727,6 +832,9 @@
       </provider>
     </entry>
 >>>>>>> upstream/development
+=======
+    <entry file="file://$PROJECT_DIR$/lib/k2-connect-ruby/client.rb" />
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
     <entry file="file://$USER_HOME$/.rvm/rubies/ruby-2.5.3/lib/ruby/2.5.0/json/add/exception.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-161">
@@ -756,12 +864,16 @@
       </provider>
     </entry>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/LICENSE.txt" />
 =======
     <entry file="file://$PROJECT_DIR$/LICENSE.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
 >>>>>>> upstream/development
+=======
+    <entry file="file://$PROJECT_DIR$/LICENSE.txt" />
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
     <entry file="file://$PROJECT_DIR$/spec/spec_helper.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="322">
@@ -782,6 +894,7 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -794,6 +907,8 @@
       </provider>
     </entry>
 >>>>>>> upstream/development
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
     <entry file="file://$PROJECT_DIR$/Rakefile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
@@ -802,6 +917,9 @@
       </provider>
     </entry>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
     <entry file="file://$PROJECT_DIR$/spec/k2_tests/k2-subscribe-spec.rb" />
     <entry file="file://$PROJECT_DIR$/spec/k2_tests/k2-authorize-spec.rb" />
     <entry file="file://$PROJECT_DIR$/spec/k2_tests/k2-client-spec.rb" />
@@ -878,6 +996,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
           <caret line="10" column="10" lean-forward="true" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
+<<<<<<< HEAD
 =======
     <entry file="file://$PROJECT_DIR$/spec/k2_tests/k2-subscribe-spec.rb">
       <provider selected="true" editor-type-id="text-editor" />
@@ -936,12 +1055,17 @@
         <state relative-caret-position="6463">
           <caret line="296" column="44" selection-start-line="296" selection-start-column="44" selection-end-line="296" selection-end-column="44" />
 >>>>>>> upstream/development
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/k2-connect-ruby.gemspec">
       <provider selected="true" editor-type-id="text-editor">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
         <state relative-caret-position="337">
           <caret line="44" column="39" selection-start-line="44" selection-start-column="39" selection-end-line="44" selection-end-column="39" />
         </state>
@@ -1044,6 +1168,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
           <caret line="34" column="18" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="18" />
+<<<<<<< HEAD
 =======
         <state relative-caret-position="293">
           <caret line="42" column="2" selection-start-line="42" selection-start-column="4" selection-end-line="42" selection-end-column="50" />
@@ -1128,6 +1253,8 @@
         <state relative-caret-position="115">
           <caret line="20" column="61" selection-start-line="20" selection-start-column="61" selection-end-line="20" selection-end-column="61" />
 >>>>>>> upstream/development
+=======
+>>>>>>> d806d46bcab41c899efa9b60811c3f153f2b3434
         </state>
       </provider>
     </entry>
