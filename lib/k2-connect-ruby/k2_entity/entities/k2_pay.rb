@@ -5,28 +5,29 @@ class K2Pay < K2Entity
   # Adding PAY Recipients with either mobile_wallets or bank_accounts as destination of your payments.
   def pay_recipients(params)
     # Validation
-    if validate_input(params, %w{ first_name last_name phone email network pay_type currency value acc_name bank_id bank_branch_id acc_no })
-      # The Request Body Parameters
+    if validate_input(params, @exception_array += %w{ first_name last_name phone email network pay_type currency value account_name bank_id bank_branch_id account_number })
       # In the case of mobile pay
       if  params["pay_type"].eql?("mobile_wallet")
         k2_request_pay_recipient = {
             firstName: params["first_name"],
             lastName: params["last_name"],
-            phone: params["phone"],
-            email: params["email"],
+            phone: validate_phone(params["phone"]),
+            email: validate_email(params["email"]),
             network: params["network"]
         }
-      else
+      elsif params["pay_type"].eql?("bank_account")
         # In the case of bank pay
         k2_request_pay_recipient = {
             name: "#{params["first_name"]} #{params["last_name"]}",
-            account_name: params["acc_name"],
+            account_name: params["account_name"],
             bank_id: params["bank_id"],
             bank_branch_id: params["bank_branch_id"],
-            account_number: params["acc_no"],
-            email: params["email"],
-            phone: params["phone"]
+            account_number: params["account_number"],
+            email: validate_email(params["email"]),
+            phone: validate_phone(params["phone"])
         }
+      else
+        raise ArgumentError.new("Undefined Payment Method.")
       end
       recipients_body = {
           type: params["pay_type"],
@@ -44,7 +45,7 @@ class K2Pay < K2Entity
   # Create an outgoing Payment to a third party.
   def create_payment(params)
     # Validation
-    if validate_input(params, %w{ currency value })
+    if validate_input(params, @exception_array += %w{ currency value })
       # The Request Body Parameters
       k2_request_pay_amount = {
           currency: params["currency"],

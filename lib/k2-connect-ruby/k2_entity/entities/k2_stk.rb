@@ -5,13 +5,13 @@ class K2Stk < K2Entity
   # Receive payments from M-PESA users.
   def receive_mpesa_payments(params)
     # Validation
-    if validate_input(params, %w{ first_name last_name phone email currency value utf8 authenticity_token decision pay_type commit controller action } )
+    if validate_input(params,  @exception_array += %w{ first_name last_name phone email currency value })
       # The Request Body Parameters
       k2_request_subscriber = {
           first_name: params["first_name"],
           last_name: params["last_name"],
-          phone: params["phone"],
-          email: params["email"]
+          phone: validate_phone(params["phone"]),
+          email: validate_email(params["email"])
       }
       k2_request_amount = {
           currency: params["currency"],

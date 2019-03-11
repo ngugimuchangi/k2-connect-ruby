@@ -6,7 +6,7 @@ module K2Validation
       raise ArgumentError.new("Empty or Nil Input!\n No Input Content has been given.")
     else
       unless !!the_input==the_input
-        if the_input.is_a?(Hash)
+        if the_input.is_a?(Hash) || the_input.is_a?(HashWithIndifferentAccess)
           validate_hash(the_input, the_array)
         else
           begin
@@ -55,6 +55,27 @@ module K2Validation
     the_input.select{|_,v| v.blank?}.each_key do |key|
       nil_keys_array << key.to_s
     end
+  end
+
+  def validate_phone(phone)
+    # Kenyan Phone Numbers
+    if phone[-(number=phone.to_i.to_s.size).to_i, 3].eql?(254.to_s)
+      unless phone[-9, 9][0].eql?(7.to_s)
+        raise ArgumentError.new("Invalid Phone Number.")
+      end
+    else
+      unless number.eql?(9)
+        raise ArgumentError.new("Invalid Phone Number.")
+      end
+    end
+    phone.tr('+', '')
+  end
+
+  def validate_email(email)
+    unless email.match(URI::MailTo::EMAIL_REGEXP).present?
+      raise ArgumentError.new("Invalid Email Address.")
+    end
+    email
   end
 
 end

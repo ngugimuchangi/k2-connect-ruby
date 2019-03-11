@@ -5,7 +5,7 @@ class K2Transfer < K2Entity
   # Create a Verified Settlement Account via API
   def settlement_account(params)
     # Validation
-    if validate_input(params, %w{ account_name bank_ref bank_branch_ref account_number currency value })
+    if validate_input(params, @exception_array += %w{ account_name bank_ref bank_branch_ref account_number currency value })
       # The Request Body Parameters
       settlement_body = {
           account_name: params["account_name"],
@@ -25,7 +25,7 @@ class K2Transfer < K2Entity
   # Create a either a 'blind' transfer, for when destination is specified, and a 'targeted' transfer which has a specified destination.
   def transfer_funds(destination, params)
     # Validation
-    if validate_input(params, %w{ currency value })
+    if validate_input(params, @exception_array += %w{ currency value })
       # The Request Body Parameters
       if destination.blank?
         # Blind Transfer

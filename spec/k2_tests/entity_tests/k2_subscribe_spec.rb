@@ -1,14 +1,16 @@
 RSpec.describe K2Subscribe do
   before(:all) do
-    @event_type = "buygoods_transaction_received"
     @webhook_secret = "webhook_secret"
-    @k2subscriber = K2Subscribe.new(@event_type, @webhook_secret)
+    @k2subscriber = K2Subscribe.new("buygoods_transaction_received", @webhook_secret)
+    @bg_reversed = K2Subscribe.new("buygoods_transaction_reversed", @webhook_secret)
+    @customer = K2Subscribe.new("customer_created", @webhook_secret)
+    @settlement =  K2Subscribe.new("settlement_transfer_completed", @webhook_secret)
     @k2sub_not_exist = K2Subscribe.new("event_type", @webhook_secret)
   end
 
   context "#initialize" do
     it 'should initialize with event_type and webhook_secret' do
-      K2Subscribe.new(@event_type, @webhook_secret)
+      K2Subscribe.new("buygoods_transaction_received", @webhook_secret)
     end
 
     it 'should raise an error when there is an empty event_type' do
@@ -32,9 +34,21 @@ RSpec.describe K2Subscribe do
       expect{ @k2sub_not_exist.webhook_subscribe }.to raise_error ArgumentError
     end
 
-    it 'should send webhook subscription' do
+    it 'should send webhook subscription for buy goods received' do
       expect{ @k2subscriber.webhook_subscribe }.not_to raise_error
     end
+
+    # it 'should send webhook subscription for buy goods reversed' do
+    #   expect{ @bg_reversed.webhook_subscribe }.not_to raise_error
+    # end
+    #
+    # it 'should send webhook subscription for customer created' do
+    #   expect{ @customer.webhook_subscribe }.not_to raise_error
+    # end
+    #
+    # it 'should send webhook subscription for settlement' do
+    #   expect{ @settlement.webhook_subscribe }.not_to raise_error
+    # end
   end
 
 end

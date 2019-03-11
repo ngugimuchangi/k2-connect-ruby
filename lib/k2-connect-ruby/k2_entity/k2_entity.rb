@@ -6,6 +6,7 @@ class K2Entity
   def initialize(access_token)
     @access_token = access_token
     @threads = []
+    @exception_array = %w{ utf8 authenticity_token commit }
   end
 
   # Create a Hash containing important details accessible for K2Connect
@@ -22,10 +23,17 @@ class K2Entity
   # Query/Check the status of a previously initiated request
   def query_status(params, path_url, class_type)
     # Validation
-    if validate_input(params, %w{ id })
-      query_body = {
-          ID: params.permit!.to_hash.select{|k| k.to_s.include?("id")}.each {|i| i}
-      }
+    @exception_array += %w{ id }
+    if validate_input(params, @exception_array)
+      begin
+        query_body = {
+            ID: params.select{|k| k.to_s.include?("id")}.each {|i| i}
+        }
+      rescue NoMethodError
+        query_body = {
+            ID: params.permit!.to_hash.select{|k| k.to_s.include?("id")}.each {|i| i}
+        }
+      end
       query_hash = K2Pay.make_hash(path_url, "GET", @access_token, class_type, query_body)
       @threads << Thread.new do
         sleep 0.25

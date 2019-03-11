@@ -1,7 +1,6 @@
 # Class for Subscription Service
 class K2Subscribe
   attr_accessor :access_token
-  attr_writer :webhook_secret, :event_type
 
   # Intialize with the event_type
   def initialize (event_type, webhook_secret)
@@ -34,8 +33,7 @@ class K2Subscribe
           url: "https://myapplication.com/webhooks",
           secret: @webhook_secret
       }
-      subscribe_hash = K2Subscribe.make_hash("webhook-subscription", "POST", "Subscription", k2_request_body)
-      K2Connect.to_connect(subscribe_hash)
+      the_path_url = "webhook-subscription"
 
       # Buygoods Reversed
     when @event_type.match?("buygoods_transaction_reversed")
@@ -44,8 +42,7 @@ class K2Subscribe
           url: "https://myapplication.com/webhooks",
           secret: "webhook_secret"
       }
-      subscribe_hash = K2Subscribe.make_hash("buygoods_transaction_reversed", "POST", "Subscription", k2_request_body)
-      K2Connect.to_connect(subscribe_hash)
+      the_path_url = "buygoods_transaction_reversed"
 
       # Customer Created.
     when @event_type.match?("customer_created")
@@ -54,8 +51,7 @@ class K2Subscribe
           url: "https://myapplication.com/webhooks",
           secret: @webhook_secret
       }
-      subscribe_hash = K2Subscribe.make_hash("customer-created", "POST", "Subscription", k2_request_body)
-      K2Connect.to_connect(subscribe_hash)
+      the_path_url = "customer-created"
 
       # Settlement Transfer Completed
     when @event_type.match?("settlement_transfer_completed")
@@ -64,11 +60,12 @@ class K2Subscribe
           url: "https://myapplication.com/webhooks",
           secret: @webhook_secret
       }
-      subscribe_hash = K2Subscribe.make_hash("settlement", "POST", "Subscription", k2_request_body)
-      K2Connect.to_connect(subscribe_hash)
+      the_path_url = "settlement"
     else
       raise ArgumentError.new("Subscription Service does not Exist!")
     end
+    subscribe_hash = K2Subscribe.make_hash(the_path_url, "POST", "Subscription", k2_request_body)
+    K2Connect.to_connect(subscribe_hash)
   end
 
   # Method for Validating the input itself

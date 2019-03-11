@@ -6,37 +6,41 @@ class K2Errors < StandardError
   end
 end
 
+# For errors concerning the Status code returned from Kopo Kopo
 class K2ConnectionError < K2Errors
   def initialize(error)
     @error = error
   end
 
   def print_error
-    if @error.to_s.eql?(400.to_s)
-      @message = "Bad Request.\n\tYour request is Invalid"
-    elsif @error.to_s.eql?(401.to_s)
-      @message =  "Unauthorized.\n\tYour API key is wrong"
-    elsif @error.to_s.eql?(403.to_s)
-      @message =  "Forbidden.\n\tThe resource requested cannot be accessed"
-    elsif @error.to_s.eql?(404.to_s)
-      @message =  "Not Found.\n\tThe specified resource could not be found"
-    elsif @error.to_s.eql?(405.to_s)
-      @message =  "Method Not Allowed.\n\tYou tried to access a resource with an invalid method"
-    elsif @error.to_s.eql?(406.to_s)
-      @message =  "Not Acceptable.\n\tYou requested a format that isn't valid json"
-    elsif @error.to_s.eql?(410.to_s)
-      @message = "Gone.\n\tThe resource requested has been moved"
-    elsif @error.to_s.eql?(429.to_s)
-      @message = "Too Many Requests.\n\tRequest threshold has been exceeded"
-    elsif @error.to_s.eql?(500.to_s)
-      @message = "Internal Server Error.\n\tWe had a problem with our server. Try again later"
-    elsif @error.to_s.eql?(503.to_s)
-      @message = "Service Unavailable.\n\tWe're temporarily offline for maintenance. Please try again later"
+    case @error
+    when 400.to_s
+      raise ArgumentError.new("Bad Request.\n\tYour request is Invalid")
+    when 401.to_s
+      raise ArgumentError.new("Unauthorized.\n\tYour API key is wrong")
+    when 403.to_s
+      raise ArgumentError.new("Forbidden.\n\tThe resource requested cannot be accessed")
+    when 404.to_s
+      raise ArgumentError.new("Not Found.\n\tThe specified resource could not be found")
+    when 405.to_s
+      raise ArgumentError.new("Method Not Allowed.\n\tYou tried to access a resource with an invalid method")
+    when 406.to_s
+      raise ArgumentError.new("Not Acceptable.\n\tYou requested a format that isn't valid json")
+    when 410.to_s
+      raise ArgumentError.new("Gone.\n\tThe resource requested has been moved")
+    when 429.to_s
+      raise ArgumentError.new("Too Many Requests.\n\tRequest threshold has been exceeded")
+    when 500.to_s
+      raise ArgumentError.new("Internal Server Error.\n\tWe had a problem with our server. Try again later")
+    when 503.to_s
+      raise ArgumentError.new("Service Unavailable.\n\tWe're temporarily offline for maintenance. Please try again later")
+    else
+      raise ArgumentError.new("Undefined Kopo Kopo Server Response.")
     end
   end
 end
 
-# Errors pertaining to Validation  module
+# Errors concerning the Validation module
 class K2ValidateErrors < K2Errors
   attr_reader :the_keys
 
