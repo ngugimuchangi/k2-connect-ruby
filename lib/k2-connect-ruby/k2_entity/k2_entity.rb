@@ -18,7 +18,7 @@ class K2Entity
       request_type: request,
       class_type: class_type,
       params: body
-    }
+    }.with_indifferent_access
   end
 
   # Query/Check the status of a previously initiated request
