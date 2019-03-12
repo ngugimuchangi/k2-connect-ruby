@@ -30,16 +30,10 @@ module K2Validation
   # Validate the Hash Input Parameters
   def validate_hash(the_input, empty_keys = Array.new, invalid_keys = Array.new, the_array)
     nil_params(the_input, empty_keys)
-    if empty_keys.present?
-      raise K2EmptyParams.new(empty_keys)
-    else
-      incorrect_keys(the_input, invalid_keys, the_array)
-      if invalid_keys.present?
-        raise K2IncorrectParams.new(invalid_keys)
-      else
-        return true
-      end
-    end
+    raise K2EmptyParams.new(empty_keys) if empty_keys.present?
+    incorrect_keys(the_input, invalid_keys, the_array)
+    raise K2IncorrectParams.new(invalid_keys) if invalid_keys.present?
+    true
   end
 
   # Return Incorrect Key Symbols
@@ -61,22 +55,15 @@ module K2Validation
   def validate_phone(phone)
     # Kenyan Phone Numbers
     if phone[-(number = phone.to_i.to_s.size).to_i, 3].eql?(254.to_s)
-      unless phone[-9, 9][0].eql?(7.to_s)
-        raise ArgumentError.new("Invalid Phone Number.")
-      end
+      raise ArgumentError.new("Invalid Phone Number.") unless phone[-9, 9][0].eql?(7.to_s)
     else
-      unless number.eql?(9)
-        raise ArgumentError.new("Invalid Phone Number.")
-      end
+      raise ArgumentError.new("Invalid Phone Number.") unless number.eql?(9)
     end
     phone.tr('+', '')
   end
 
   def validate_email(email)
-    unless email.match(URI::MailTo::EMAIL_REGEXP).present?
-      raise ArgumentError.new("Invalid Email Address.")
-    end
-
+    raise ArgumentError.new("Invalid Email Address.") unless email.match(URI::MailTo::EMAIL_REGEXP).present?
     email
   end
 end
