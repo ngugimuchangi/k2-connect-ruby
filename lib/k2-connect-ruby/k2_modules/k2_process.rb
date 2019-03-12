@@ -3,6 +3,7 @@ module K2ProcessResult
   # Confirm Truth value and carry out splitting.
   def self.process(the_body)
     raise ArgumentError.new("Empty/Nil Request Body Argument!") if the_body.blank?
+
     K2ProcessResult.check_topic(the_body)
   end
 
@@ -45,7 +46,7 @@ module K2ProcessResult
   end
 
   # TODO, Identify which is better, Hash, or Array
-  def self.return_obj_hash(instance_hash=HashWithIndifferentAccess.new, obj)
+  def self.return_obj_hash(instance_hash = HashWithIndifferentAccess.new, obj)
     obj.instance_variables.each do |value|
       instance_hash[:"#{value.to_s.tr('@', '')}"] = obj.instance_variable_get(value)
     end
@@ -58,5 +59,4 @@ module K2ProcessResult
   #   end
   #   return instance_array
   # end
-
 end

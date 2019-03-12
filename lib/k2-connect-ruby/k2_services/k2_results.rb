@@ -1,14 +1,14 @@
 class K2Result
-  attr_writer :id,
-                :resourceId,
-                :topic,
-                :created_at,
-                :event,
-                :type,
-                :resource,
-                :_links,
-                :amount,
-                :currency
+  attr_reader :id,
+              :resourceId,
+              :topic,
+              :created_at,
+              :event,
+              :type,
+              :resource,
+              :_links,
+              :amount,
+              :currency
 
   def components(the_body)
     @id = the_body.dig("id")
@@ -20,5 +20,4 @@ class K2Result
     @resource = the_body.dig("event", "resource")
     @links = the_body.dig("_links")
   end
-
 end

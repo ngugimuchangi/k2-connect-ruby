@@ -1,16 +1,15 @@
 class WebhookTransaction < K2Result
   # Can also implement Customer Created from Here
-  attr_writer :msisdn,
-                :first_name,
-                :middle_name,
-                :last_name
-
+  attr_reader :msisdn,
+              :first_name,
+              :middle_name,
+              :last_name
 end
 
 class CommonWebhook < WebhookTransaction
-  attr_writer :reference,
-                :origination_time,
-                :status
+  attr_reader :reference,
+              :origination_time,
+              :status
 
   # For The General Webhook
   def components(the_body)
@@ -21,7 +20,6 @@ class CommonWebhook < WebhookTransaction
     @origination_time = the_body.dig("event", "resource", "origination_time")
     @status = the_body.dig("event", "resource", "status")
   end
-
 end
 
 class CustomerCreated < WebhookTransaction
@@ -36,8 +34,8 @@ class CustomerCreated < WebhookTransaction
 end
 
 class BuyGoods < CommonWebhook
-  attr_writer :till_number,
-                :system
+  attr_reader :till_number,
+              :system
 
   # For The BuyGoods Received Webhook
   def components(the_body)
@@ -49,25 +47,23 @@ class BuyGoods < CommonWebhook
     @middle_name = the_body.dig("event", "resource", "sender_middle_name")
     @last_name = the_body.dig("event", "resource", "sender_last_name")
   end
-
 end
 
 class Reversal < BuyGoods
-  attr_writer :reversal_time
+  attr_reader :reversal_time
   # For The BuyGoods Reversed Webhook
   def components(the_body)
     super
     @reversal_time = the_body.dig("event", "resource", "reversal_time")
   end
-
 end
 
 class Settlement < CommonWebhook
-  attr_writer :destination,
-                :destination_type,
-                :transfer_time,
-                :transfer_type,
-                :destination_mm_system
+  attr_reader :destination,
+              :destination_type,
+              :transfer_time,
+              :transfer_type,
+              :destination_mm_system
   # For The Settlement Transfer Webhook
   def components(the_body)
     super
@@ -78,5 +74,4 @@ class Settlement < CommonWebhook
     @msisdn = the_body.dig("event", "resource", "destination", "msisdn")
     @destination_mm_system = the_body.dig("event", "resource", "destination", "mm_system")
   end
-
 end

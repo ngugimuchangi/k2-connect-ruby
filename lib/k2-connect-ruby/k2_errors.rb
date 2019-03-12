@@ -1,7 +1,7 @@
 # Standard K2Error
 class K2Errors < StandardError
   attr_reader :status, :error, :message
-  def initialize(msg=@message)
+  def initialize(msg = @message)
     super(msg)
   end
 end
@@ -35,7 +35,7 @@ class K2ConnectionError < K2Errors
     when 503.to_s
       raise ArgumentError.new("Service Unavailable.\n\tWe're temporarily offline for maintenance. Please try again later")
     else
-      raise ArgumentError.new("Undefined Kopo Kopo Server Response.")
+      raise ArgumentError.new('Undefined Kopo Kopo Server Response.')
     end
   end
 end
@@ -44,10 +44,10 @@ end
 class K2ValidateErrors < K2Errors
   attr_reader :the_keys
 
-  def initialize (the_keys)
+  def initialize(the_keys)
     super
     @error = 400
-    @the_keys  = the_keys
+    @the_keys = the_keys
     @status = :bad_request
   end
 
@@ -59,12 +59,11 @@ class K2ValidateErrors < K2Errors
   def message
     loop_keys
   end
-
 end
 
 # Hash / Params has Empty Values within it
 class K2EmptyParams < K2ValidateErrors
-  def initialize (the_keys)
+  def initialize(the_keys)
     @message = "Invalid Hash Object!\n The Following Parameter(s) are Empty: "
     super
   end
@@ -72,7 +71,7 @@ end
 
 # Error for Incorrect Hash Key Symbols (K2Entity validate => input)
 class K2IncorrectParams < K2ValidateErrors
-  def initialize (the_keys)
+  def initialize(the_keys)
     @message = "Incorrect Hash/Parameters Object!\n The Following Parameter(s) are Incorrect: "
     super
   end

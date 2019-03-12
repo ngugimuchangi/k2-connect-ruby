@@ -1,3 +1,4 @@
+# Module for Setting User-defined Environment Variables.
 module K2Config
   attr_accessor :host_url
   # Set the Host Url
