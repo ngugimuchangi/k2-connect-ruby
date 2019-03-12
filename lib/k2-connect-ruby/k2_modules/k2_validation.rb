@@ -7,11 +7,11 @@ module K2Validation
     else
       unless !!the_input == the_input
         if the_input.is_a?(Hash) || the_input.is_a?(HashWithIndifferentAccess)
-          validate_hash(the_input.with_indifferent_access, the_array)
+          validate_hash(the_input.with_indifferent_access)
         else
           begin
             if the_input.has_key?(:authenticity_token)
-              validate_hash(the_input.permit(the_array).to_hash.with_indifferent_access, the_array)
+              validate_hash(the_input.permit(the_array).to_hash.with_indifferent_access)
             else
               raise ArgumentError.new("Undefined Input Format.\n The Input is Neither a Hash nor a Parameter Object.")
             end
@@ -32,7 +32,7 @@ module K2Validation
     the_input.select { |_, v| v.blank? }.each_key do |key|
       empty_keys << key.to_s
     end
-    raise K2EmptyParams.new(empty_keys) if empty_keys.present?
+    raise K2EmptyParams.new(empty_keys) unless empty_keys.blank?
     true
   end
 

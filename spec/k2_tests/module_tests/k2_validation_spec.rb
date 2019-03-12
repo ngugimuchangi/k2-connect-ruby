@@ -30,11 +30,11 @@ RSpec.describe K2Validation do
     # end
 
     it 'should raise an error if the_input has empty values' do
-      expect { validate_hash(invalid_input, array) }.to raise_error K2EmptyParams
+      expect { validate_hash(invalid_input) }.to raise_error K2EmptyParams
     end
 
     it 'should validate whether the hash input has the correct format' do
-      expect { validate_hash(the_input, array) }.not_to raise_error
+      expect { validate_hash(the_input) }.not_to raise_error
     end
   end
 
@@ -45,12 +45,12 @@ RSpec.describe K2Validation do
   #   end
   # end
 
-  context "#nil_values" do
-    let(:empty_keys) { HashWithIndifferentAccess.new }
-    it 'should check for hash symbols with nil values' do
-      expect { nil_values(the_input, empty_keys) }.not_to raise_error
-    end
-  end
+  # context "#nil_values" do
+  #   let(:empty_keys) { HashWithIndifferentAccess.new }
+  #   it 'should check for hash symbols with nil values' do
+  #     expect { nil_values(the_input, empty_keys) }.not_to raise_error
+  #   end
+  # end
 
   context "#validate_phone" do
     it 'should raise an error if length of phone number is wrong' do
