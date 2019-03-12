@@ -11,7 +11,7 @@ module K2Validation
         else
           begin
             if the_input.has_key?(:authenticity_token)
-              validate_hash(the_input.permit!.to_hash, the_array)
+              validate_hash(the_input.require(:key).permit(the_array).to_hash, the_array)
             else
               raise ArgumentError.new("Undefined Input Format.\n The Input is Neither a Hash nor a Parameter Object.")
             end

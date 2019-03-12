@@ -7,7 +7,7 @@ class K2Entity
   def initialize(access_token)
     @access_token = access_token
     @threads = []
-    @exception_array = %w[utf8 authenticity_token commit]
+    @exception_array = %w[authenticity_token]
   end
 
   # Create a Hash containing important details accessible for K2Connect
