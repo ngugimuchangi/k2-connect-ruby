@@ -6,7 +6,7 @@ module K2Connect
   # Method for sending the request to K2 sandbox or Mock Server
   def self.to_connect(connection_hash)
     # The Server. WONT BE HARD CODED.
-    host_url = 'https://a54fac07-5ac2-4ee2-8fcb-e3d5ac3ba8b1.mock.pstmn.io'
+    host_url = 'https://3b815ff3-b118-4e25-8687-1e31c38a733b.mock.pstmn.io'
     host_url ||= K2Config.get_host_url
 
     # No access token given except for token_request in the Subscription class.

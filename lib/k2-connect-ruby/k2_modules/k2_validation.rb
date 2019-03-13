@@ -7,17 +7,17 @@ module K2Validation
     else
       unless !!the_input == the_input
         if the_input.is_a?(Hash) || the_input.is_a?(HashWithIndifferentAccess)
-          validate_hash(the_input.with_indifferent_access)
+          validate_hash(the_input.with_indifferent_access, the_array)
         else
           begin
             if the_input.has_key?(:authenticity_token)
-              validate_hash(the_input.permit(the_array).to_hash.with_indifferent_access)
+              nil_values(the_input.permit(the_array).to_hash.with_indifferent_access)
             else
-              raise ArgumentError.new("Undefined Input Format.\n The Input is Neither a Hash nor a Parameter Object.")
+              raise ArgumentError.new("Undefined Input Format.\n The Input is Neither a Hash nor a ActionController::Parameter Object.")
             end
           rescue NoMethodError => nme
             if nme.message.include?("has_key?")
-              raise ArgumentError.new("Undefined Input Format.\n The Input is Neither a Hash nor a Parameter Object.")
+              raise ArgumentError.new("Undefined Input Format.\n The Input is Neither a Hash nor a ActionController::Parameter Object.")
             end
           end
         end
@@ -27,15 +27,32 @@ module K2Validation
   end
 
   # Validate the Hash Input Parameters
-  def validate_hash(the_input, empty_keys = Array.new)
-    # For Hashes With Blank Values
-    the_input.select { |_, v| v.blank? }.each_key do |key|
-      empty_keys << key.to_s
+  def validate_hash(the_input, the_array)
+    nil_values(the_input)
+    incorrect_keys(the_input, the_array)
+  end
+
+  # Return Incorrect Key Symbols for Hashes
+  def incorrect_keys(the_input, invalid_hash = Array.new, the_array)
+    the_input.each_key do |key|
+      unless the_array.include?(key.to_s)
+        invalid_hash << key
+      end
     end
-    raise K2EmptyParams.new(empty_keys) unless empty_keys.blank?
+    raise K2IncorrectParams.new(invalid_hash) if invalid_hash.present?
     true
   end
 
+  # Return Key Symbols with Blank Values
+  def nil_values(the_input, nil_keys_array = Array.new)
+      the_input.select { |_, v| v.blank? }.each_key do |key|
+        nil_keys_array << key.to_s
+      end
+      raise K2EmptyParams.new(nil_keys_array) unless nil_keys_array.blank?
+      true
+    end
+
+  # Validate Phone Number
   def validate_phone(phone)
     # Kenyan Phone Numbers
     if phone[-(number = phone.to_i.to_s.size).to_i, 3].eql?(254.to_s)
@@ -46,6 +63,7 @@ module K2Validation
     phone.tr('+', '')
   end
 
+  # Validate Email Format
   def validate_email(email)
     raise ArgumentError.new('Invalid Email Address.') unless email.match(URI::MailTo::EMAIL_REGEXP).present?
     email
@@ -63,19 +81,3 @@ end
 #   raise K2IncorrectParams.new(invalid_keys) if invalid_keys.present?
 #   true
 # end
-
-# Return Incorrect Key Symbols
-# def incorrect_keys(the_input, invalid_hash, the_array)
-#   the_input.each_key do |key|
-#     unless the_array.include?(key.to_s)
-#       invalid_hash << key
-#     end
-#   end
-# end
-#
-# Return Key Symbols with Blank Values
-#   def nil_values(the_input, nil_keys_array = Array.new)
-#     the_input.select { |_, v| v.blank? }.each_key do |key|
-#       nil_keys_array << key.to_s
-#     end
-#   end

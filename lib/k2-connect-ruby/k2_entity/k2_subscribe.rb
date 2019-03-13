@@ -1,11 +1,11 @@
 # Class for Subscription Service
 class K2Subscribe
   attr_accessor :access_token
+  attr_reader :event_type
 
   # Intialize with the event_type
   def initialize(event_type, webhook_secret)
     raise ArgumentError.new('Nil or Empty Event Type Specified!') if event_type.blank?
-
     @event_type = event_type
     @webhook_secret = webhook_secret
   end

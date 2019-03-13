@@ -6,6 +6,7 @@ class K2Transfer < K2Entity
   def settlement_account(params)
     # Validation
     if validate_input(params, @exception_array += %w[account_name bank_ref bank_branch_ref account_number currency value])
+      params = params.with_indifferent_access
       # The Request Body Parameters
       settlement_body = {
         account_name: params['account_name'],
@@ -26,6 +27,7 @@ class K2Transfer < K2Entity
   def transfer_funds(destination, params)
     # Validation
     if validate_input(params, @exception_array += %w[currency value])
+      params = params.with_indifferent_access
       # The Request Body Parameters
       if destination.blank?
         # Blind Transfer

@@ -21,7 +21,7 @@ RSpec.describe K2Stk do
     end
   end
 
-  context "#query_mpesa_payments" do
+  context "#query_status" do
     it 'validates input correctly' do
       expect { @k2stk.validate_input(@query_status, %w{id}) }.not_to raise_error
     end

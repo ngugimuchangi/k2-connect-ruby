@@ -24,33 +24,33 @@ RSpec.describe K2Validation do
 
   context "#validate_hash" do
     let(:invalid_input) { { the_input: "the_input", ze_input: "" } }
-    # let(:incorrect_input) { { the_input: "the_input", za_input: "ze_input" } }
-    # it 'should raise an error if the_input parameters are incorrect' do
-    #   expect { validate_hash(incorrect_input, array) }.to raise_error K2IncorrectParams
-    # end
+    let(:incorrect_input) { { the_input: "the_input", za_input: "ze_input" } }
+    it 'should raise an error if the_input parameters are incorrect' do
+      expect { validate_hash(incorrect_input, array) }.to raise_error K2IncorrectParams
+    end
 
     it 'should raise an error if the_input has empty values' do
-      expect { validate_hash(invalid_input) }.to raise_error K2EmptyParams
+      expect { validate_hash(invalid_input, array) }.to raise_error K2EmptyParams
     end
 
     it 'should validate whether the hash input has the correct format' do
-      expect { validate_hash(the_input) }.not_to raise_error
+      expect { validate_hash(the_input, array) }.not_to raise_error
     end
   end
 
-  # context "#incorrect_keys" do
-  #   let(:invalid_keys) { HashWithIndifferentAccess.new }
-  #   it 'should check for any incorrect key formats' do
-  #     expect { incorrect_keys(the_input, invalid_keys, array) }.not_to raise_error
-  #   end
-  # end
+  context "#incorrect_keys" do
+    let(:invalid_keys) { HashWithIndifferentAccess.new }
+    it 'should check for any incorrect key formats' do
+      expect { incorrect_keys(the_input, invalid_keys, array) }.not_to raise_error
+    end
+  end
 
-  # context "#nil_values" do
-  #   let(:empty_keys) { HashWithIndifferentAccess.new }
-  #   it 'should check for hash symbols with nil values' do
-  #     expect { nil_values(the_input, empty_keys) }.not_to raise_error
-  #   end
-  # end
+  context "#nil_values" do
+    let(:empty_keys) { HashWithIndifferentAccess.new }
+    it 'should check for hash symbols with nil values' do
+      expect { nil_values(the_input, empty_keys) }.not_to raise_error
+    end
+  end
 
   context "#validate_phone" do
     it 'should raise an error if length of phone number is wrong' do
