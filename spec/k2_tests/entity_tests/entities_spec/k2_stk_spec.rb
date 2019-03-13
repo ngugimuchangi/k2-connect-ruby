@@ -22,13 +22,13 @@ RSpec.describe K2Stk do
     end
   end
 
-  # context "#query_status" do
-  #   it 'validates input correctly' do
-  #     expect { @k2stk.validate_input(@query_status, %w{id}) }.not_to raise_error
-  #   end
-  #
-  #   it 'should query payment request status' do
-  #     expect { @k2stk.query_status(@query_status) }.not_to raise_error
-  #   end
-  # end
+  context "#query_status" do
+    it 'validates input correctly' do
+      expect { @k2stk.validate_input(@query_status, %w{id}) }.not_to raise_error
+    end
+
+    it 'should query payment request status' do
+      expect { @k2stk.query_status(@query_status) }.not_to raise_error
+    end
+  end
 end
