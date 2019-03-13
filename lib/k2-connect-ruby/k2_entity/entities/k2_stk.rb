@@ -8,11 +8,13 @@ class K2Stk < K2Entity
     validate_input(params, @exception_array += %w[first_name last_name phone email currency value])
     # The Request Body Parameters
     k2_request_subscriber = {
+        first_name_r: params[:first_name],
         first_name: params['first_name'],
         last_name: params['last_name'],
         phone: validate_phone(params['phone']),
         email: validate_email(params['email'])
     }
+    puts "Testing Conversion #{k2_request_subscriber}"
     k2_request_amount = {
         currency: params['currency'],
         value: params['value']
