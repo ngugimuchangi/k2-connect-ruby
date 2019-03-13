@@ -43,7 +43,7 @@ class K2Subscribe
         url: 'https://myapplication.com/webhooks',
         secret: @webhook_secret
       }
-      the_path_url = 'buygoods_transaction_reversed'
+      the_path_url = 'buygoods-transaction-reversed'
 
       # Customer Created.
     when 'customer_created'
