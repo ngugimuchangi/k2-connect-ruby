@@ -75,7 +75,10 @@ module K2Validation
   def convert_params(params)
     if params.is_a?(Hash)
       params.with_indifferent_access
+    else
+      params
     end
+    params
   end
 end
 
