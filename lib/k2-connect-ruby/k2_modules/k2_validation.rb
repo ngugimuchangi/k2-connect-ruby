@@ -7,11 +7,13 @@ module K2Validation
     else
       unless !!the_input == the_input
         if the_input.is_a?(Hash) || the_input.is_a?(HashWithIndifferentAccess)
+          the_input = the_input.with_indifferent_access
           validate_hash(the_input, the_array)
         else
           begin
             if the_input.has_key?(:authenticity_token)
-              nil_values((the_input.permit(the_array).to_hash))
+              the_input = the_input.permit(the_array).to_hash.with_indifferent_access
+              nil_values(the_input)
             else
               raise ArgumentError.new("Undefined Input Format.\n The Input is Neither a Hash nor a ActionController::Parameter Object.")
             end
@@ -23,12 +25,10 @@ module K2Validation
         end
       end
     end
-    true
   end
 
   # Validate the Hash Input Parameters
   def validate_hash(the_input, the_array)
-    the_input = the_input.with_indifferent_access
     nil_values(the_input)
     incorrect_keys(the_input, the_array)
   end
@@ -69,6 +69,10 @@ module K2Validation
     raise ArgumentError.new('Invalid Email Address.') unless email.match(URI::MailTo::EMAIL_REGEXP).present?
     email
   end
+  #
+  # def convert_params(params)
+  #   params.with_indifferent_access
+  # end
 end
 
 

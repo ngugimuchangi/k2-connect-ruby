@@ -6,7 +6,6 @@ class K2Stk < K2Entity
   def receive_mpesa_payments(params)
     # Validation
     validate_input(params, @exception_array += %w[first_name last_name phone email currency value])
-    params = params.with_indifferent_access
     # The Request Body Parameters
     k2_request_subscriber = {
         first_name: params['first_name'],

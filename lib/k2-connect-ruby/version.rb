@@ -1,3 +1,3 @@
 module K2ConnectRuby
-  VERSION = "0.10.53"
+  VERSION = "0.10.54"
 end
