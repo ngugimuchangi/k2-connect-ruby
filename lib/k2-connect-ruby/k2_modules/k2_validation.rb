@@ -28,6 +28,7 @@ module K2Validation
 
   # Validate the Hash Input Parameters
   def validate_hash(the_input, the_array)
+    the_input = the_input.with_indifferent_access
     nil_values(the_input)
     incorrect_keys(the_input, the_array)
   end
@@ -45,7 +46,6 @@ module K2Validation
 
   # Return Key Symbols with Blank Values
   def nil_values(the_input, nil_keys_array = Array.new)
-    the_input = the_input.with_indifferent_access
       the_input.select { |_, v| v.blank? }.each_key do |key|
         nil_keys_array << key.to_s
       end
