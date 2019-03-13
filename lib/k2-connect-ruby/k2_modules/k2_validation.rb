@@ -6,14 +6,12 @@ module K2Validation
       raise ArgumentError.new("Empty or Nil Input!\n No Input Content has been given.")
     else
       unless !!the_input == the_input
-        if the_input.is_a?(Hash) || the_input.is_a?(HashWithIndifferentAccess)
-          the_input = the_input.with_indifferent_access
-          validate_hash(the_input, the_array)
+        if the_input.is_a?(Hash)
+          validate_hash(the_input.with_indifferent_access, the_array)
         else
           begin
             if the_input.has_key?(:authenticity_token)
-              the_input = the_input.permit(the_array).to_hash.with_indifferent_access
-              nil_values(the_input)
+              nil_values(the_input.permit(the_array).to_hash.with_indifferent_access)
             else
               raise ArgumentError.new("Undefined Input Format.\n The Input is Neither a Hash nor a ActionController::Parameter Object.")
             end
@@ -25,6 +23,7 @@ module K2Validation
         end
       end
     end
+    convert_params(the_input)
   end
 
   # Validate the Hash Input Parameters
@@ -41,7 +40,6 @@ module K2Validation
       end
     end
     raise K2IncorrectParams.new(invalid_hash) if invalid_hash.present?
-    true
   end
 
   # Return Key Symbols with Blank Values
@@ -50,29 +48,35 @@ module K2Validation
         nil_keys_array << key.to_s
       end
       raise K2EmptyParams.new(nil_keys_array) unless nil_keys_array.blank?
-      true
     end
 
   # Validate Phone Number
   def validate_phone(phone)
     # Kenyan Phone Numbers
-    if phone[-(number = phone.to_i.to_s.size).to_i, 3].eql?(254.to_s)
-      raise ArgumentError.new('Invalid Phone Number.') unless phone[-9, 9][0].eql?(7.to_s)
-    else
-      raise ArgumentError.new('Invalid Phone Number.') unless number.eql?(9)
+    unless phone.blank?
+      if phone[-(number = phone.to_i.to_s.size).to_i, 3].eql?(254.to_s)
+        raise ArgumentError.new('Invalid Phone Number.') unless phone[-9, 9][0].eql?(7.to_s)
+      else
+        raise ArgumentError.new('Invalid Phone Number.') unless number.eql?(9)
+      end
+      phone.tr('+', '')
     end
-    phone.tr('+', '')
   end
 
   # Validate Email Format
   def validate_email(email)
-    raise ArgumentError.new('Invalid Email Address.') unless email.match(URI::MailTo::EMAIL_REGEXP).present?
+    unless email.blank?
+      raise ArgumentError.new('Invalid Email Address.') unless email.match(URI::MailTo::EMAIL_REGEXP).present?
+    end
     email
   end
-  #
-  # def convert_params(params)
-  #   params.with_indifferent_access
-  # end
+
+  # Converts Hash Objects to HashWithIndifferentAccess Objects
+  def convert_params(params)
+    if params.is_a?(Hash)
+      params.with_indifferent_access
+    end
+  end
 end
 
 

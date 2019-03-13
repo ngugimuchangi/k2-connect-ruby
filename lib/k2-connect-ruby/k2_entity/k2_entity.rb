@@ -24,7 +24,7 @@ class K2Entity
   # Query/Check the status of a previously initiated request
   def query_status(params, path_url, class_type)
     # Validation
-    validate_input(params, @exception_array += %w[id])
+    params = validate_input(params, @exception_array += %w[id])
     begin
       query_body = {
           ID: params.select { |k| k.to_s.include?('id') }.each { |i| i }
