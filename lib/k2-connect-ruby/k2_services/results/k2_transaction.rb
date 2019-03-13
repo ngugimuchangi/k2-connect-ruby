@@ -2,11 +2,9 @@ class K2Payment < K2Result
   attr_reader :metadata,
               :customer_id,
               :notes,
-              :self,
               :status,
               :reference,
               :origination_time,
-              :status,
               :first_name,
               :middle_name,
               :last_name
@@ -15,7 +13,7 @@ class K2Payment < K2Result
     @metadata = the_body.dig("metadata")
     @customer_id = the_body.dig("metadata", "customer_id")
     @notes = the_body.dig("metadata", "notes")
-    @self = the_body.dig("_links", "self")
+    @status = the_body.dig("status")
   end
 end
 
@@ -23,15 +21,10 @@ class K2ProcessStk < BuyGoods
   attr_reader :payment_request,
               :metadata_reference,
               :link_resource,
-              :resource_status,
               :metadata,
               :customer_id,
               :notes,
-              :self,
-              :errors,
-              :msisdn,
-              :till_number,
-              :system
+              :errors
 
   def components(the_body)
     super
@@ -43,7 +36,6 @@ class K2ProcessStk < BuyGoods
     @metadata = the_body.dig("metadata")
     @customer_id = the_body.dig("metadata", "customer_id")
     @notes = the_body.dig("metadata", "notes")
-    @self = the_body.dig("_links", "self")
   end
 end
 
@@ -53,7 +45,6 @@ class K2ProcessPay < K2Payment
 
   def components(the_body)
     super
-    @status = the_body.dig("status")
     @reference = the_body.dig("reference")
     @origination_time = the_body.dig("origination_time")
     @destination = the_body.dig("destination")

@@ -3,13 +3,20 @@ class WebhookTransaction < K2Result
   attr_reader :msisdn,
               :first_name,
               :middle_name,
-              :last_name
+              :last_name,
+              :link_resource
+
+  def components(the_body)
+    super
+    @link_resource = the_body.dig("_links", "resource")
+  end
+
 end
 
 class CommonWebhook < WebhookTransaction
   attr_reader :reference,
               :origination_time,
-              :status
+              :resource_status
 
   # For The General Webhook
   def components(the_body)
@@ -18,7 +25,7 @@ class CommonWebhook < WebhookTransaction
     @currency = the_body.dig("event", "resource", "currency")
     @reference = the_body.dig("event", "resource", "reference")
     @origination_time = the_body.dig("event", "resource", "origination_time")
-    @status = the_body.dig("event", "resource", "status")
+    @resource_status = the_body.dig("event", "resource", "status")
   end
 end
 
@@ -58,6 +65,7 @@ class Reversal < BuyGoods
   end
 end
 
+# For Settlement Transfer
 class Settlement < CommonWebhook
   attr_reader :destination,
               :destination_type,

@@ -81,6 +81,6 @@ class K2Subscribe
       request_type: request,
       class_type: class_type,
       params: body
-    }
+    }.with_indifferent_access
   end
 end

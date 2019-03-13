@@ -7,6 +7,7 @@ class K2Result
               :type,
               :resource,
               :_links,
+              :self,
               :amount,
               :currency
 
@@ -19,5 +20,6 @@ class K2Result
     @type = the_body.dig("event", "type")
     @resource = the_body.dig("event", "resource")
     @links = the_body.dig("_links")
+    @self = the_body.dig("_links", "self")
   end
 end
