@@ -7,11 +7,11 @@ module K2Validation
     else
       unless !!the_input == the_input
         if the_input.is_a?(Hash) || the_input.is_a?(HashWithIndifferentAccess)
-          validate_hash(the_input.with_indifferent_access, the_array)
+          validate_hash(the_input, the_array)
         else
           begin
             if the_input.has_key?(:authenticity_token)
-              nil_values((the_input.permit(the_array).to_hash).with_indifferent_access)
+              nil_values((the_input.permit(the_array).to_hash))
             else
               raise ArgumentError.new("Undefined Input Format.\n The Input is Neither a Hash nor a ActionController::Parameter Object.")
             end
@@ -45,6 +45,7 @@ module K2Validation
 
   # Return Key Symbols with Blank Values
   def nil_values(the_input, nil_keys_array = Array.new)
+    the_input = the_input.with_indifferent_access
       the_input.select { |_, v| v.blank? }.each_key do |key|
         nil_keys_array << key.to_s
       end

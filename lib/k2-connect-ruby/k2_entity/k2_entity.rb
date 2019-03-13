@@ -24,23 +24,21 @@ class K2Entity
   # Query/Check the status of a previously initiated request
   def query_status(params, path_url, class_type)
     # Validation
-    @exception_array += %w[id]
-    if validate_input(params, @exception_array)
-      begin
-        query_body = {
+    validate_input(params, @exception_array += %w[id])
+    begin
+      query_body = {
           ID: params.select { |k| k.to_s.include?('id') }.each { |i| i }
-        }
-      rescue NoMethodError
-        query_body = {
+      }
+    rescue NoMethodError
+      query_body = {
           ID: params.permit!.to_hash.select { |k| k.to_s.include?('id') }.each { |i| i }
-        }
-      end
-      query_hash = K2Pay.make_hash(path_url, 'GET', @access_token, class_type, query_body)
-      @threads << Thread.new do
-        sleep 0.25
-        K2Connect.to_connect(query_hash)
-      end
-      @threads.each(&:join)
+      }
     end
+    query_hash = K2Pay.make_hash(path_url, 'GET', @access_token, class_type, query_body)
+    @threads << Thread.new do
+      sleep 0.25
+      K2Connect.to_connect(query_hash)
+    end
+    @threads.each(&:join)
   end
 end
