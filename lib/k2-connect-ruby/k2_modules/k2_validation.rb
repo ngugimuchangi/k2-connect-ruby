@@ -11,7 +11,7 @@ module K2Validation
         else
           begin
             if the_input.has_key?(:authenticity_token)
-              nil_values(the_input.permit(the_array).to_hash.with_indifferent_access)
+              nil_values((the_input.permit(the_array).to_hash).with_indifferent_access)
             else
               raise ArgumentError.new("Undefined Input Format.\n The Input is Neither a Hash nor a ActionController::Parameter Object.")
             end
