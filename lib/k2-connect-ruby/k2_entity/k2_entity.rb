@@ -2,6 +2,7 @@
 class K2Entity
   attr_accessor :access_token, :the_array
   attr_writer :query_hash
+  attr_reader :k2_response_body
 
   # Initialize with access token from Subscriber Class
   def initialize(access_token)
@@ -37,7 +38,7 @@ class K2Entity
     query_hash = K2Pay.make_hash(path_url, 'GET', @access_token, class_type, query_body)
     @threads << Thread.new do
       sleep 0.25
-      K2Connect.to_connect(query_hash)
+      @k2_response_body = K2Connect.to_connect(query_hash)
     end
     @threads.each(&:join)
   end

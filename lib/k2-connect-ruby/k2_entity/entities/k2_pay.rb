@@ -1,5 +1,6 @@
 # For PAY/ Send Money to others
 class K2Pay < K2Entity
+  attr_reader :location_url
   include K2Validation
 
   # Adding PAY Recipients with either mobile_wallets or bank_accounts as destination of your payments.
@@ -36,7 +37,7 @@ class K2Pay < K2Entity
     pay_recipient_hash = K2Pay.make_hash('pay_recipients', 'POST', @access_token, 'PAY', recipients_body)
     @threads << Thread.new do
       sleep 0.25
-      K2Connect.to_connect(pay_recipient_hash)
+      @location_url = K2Connect.to_connect(pay_recipient_hash)
     end
     @threads.each(&:join)
   end
@@ -63,7 +64,7 @@ class K2Pay < K2Entity
     create_payment_hash = K2Pay.make_hash('payments', 'POST', @access_token, 'PAY', create_payment_body)
     @threads << Thread.new do
       sleep 0.25
-      K2Connect.to_connect(create_payment_hash)
+      @location_url = K2Connect.to_connect(create_payment_hash)
     end
     @threads.each(&:join)
   end

@@ -1,5 +1,6 @@
 # For STK Push/Receive MPESA Payments from merchant's customers
 class K2Stk < K2Entity
+  attr_reader :location_url
   include K2Validation
 
   # Receive payments from M-PESA users.
@@ -33,7 +34,7 @@ class K2Stk < K2Entity
     receive_hash = K2Stk.make_hash('payment_requests', 'POST', @access_token, 'STK', receive_body)
     @threads << Thread.new do
       sleep 0.25
-      K2Connect.to_connect(receive_hash)
+      @location_url =  K2Connect.to_connect(receive_hash)
     end
     @threads.each(&:join)
   end
