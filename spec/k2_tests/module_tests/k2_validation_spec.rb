@@ -1,6 +1,6 @@
 include K2Validation
 RSpec.describe K2Validation do
-  let(:the_input) { {the_input: "the_input", ze_input: "ze_input"} }
+  let(:the_input) { { the_input: "the_input", ze_input: "ze_input" } }
   let(:array) { %w{the_input ze_input} }
 
   context "#validate_input" do
@@ -14,42 +14,66 @@ RSpec.describe K2Validation do
     end
 
     it 'should validate the_input with false is_query' do
-      expect{ validate_input(the_input, array) }.not_to raise_error
+      expect { validate_input(the_input, array) }.not_to raise_error
     end
 
     it 'should validate the_input with true is_query' do
-      expect{ validate_input(the_input, array) }.not_to raise_error
+      expect { validate_input(the_input, array) }.not_to raise_error
     end
   end
 
   context "#validate_hash" do
-    let(:invalid_input) { {the_input: "the_input", ze_input: ""} }
-    let(:incorrect_input) { {the_input: "the_input", za_input: "ze_input"} }
+    let(:invalid_input) { { the_input: "the_input", ze_input: "" } }
+    let(:incorrect_input) { { the_input: "the_input", za_input: "ze_input" } }
     it 'should raise an error if the_input parameters are incorrect' do
-      expect { validate_hash(incorrect_input, array) }.to raise_error IncorrectParams
+      expect { validate_hash(incorrect_input, array) }.to raise_error K2IncorrectParams
     end
 
     it 'should raise an error if the_input has empty values' do
-      expect { validate_hash(invalid_input, array) }.to raise_error K2InvalidHash
+      expect { validate_hash(invalid_input, array) }.to raise_error K2EmptyParams
     end
 
     it 'should validate whether the hash input has the correct format' do
-      expect{ validate_hash(the_input, array) }.not_to raise_error
+      expect { validate_hash(the_input, array) }.not_to raise_error
     end
   end
 
   context "#incorrect_keys" do
     let(:invalid_keys) { HashWithIndifferentAccess.new }
     it 'should check for any incorrect key formats' do
-      expect{ incorrect_keys(the_input, invalid_keys, array) }.not_to raise_error
+      expect { incorrect_keys(the_input, invalid_keys, array) }.not_to raise_error
     end
   end
 
-  context "#nil_params" do
+  context "#nil_values" do
     let(:empty_keys) { HashWithIndifferentAccess.new }
     it 'should check for hash symbols with nil values' do
-      expect{ nil_params(the_input, empty_keys) }.not_to raise_error
+      expect { nil_values(the_input, empty_keys) }.not_to raise_error
     end
   end
 
+  context "#validate_phone" do
+    it 'should raise an error if length of phone number is wrong' do
+      expect { validate_phone("+2547162309021") }.to raise_error ArgumentError
+      expect { validate_phone("07162309021") }.to raise_error ArgumentError
+    end
+
+    it 'should validate phone number with country code' do
+      expect { validate_phone("+254716230902") }.not_to raise_error
+    end
+
+    it 'should validate phone number without country code' do
+      expect { validate_phone("0716230902") }.not_to raise_error
+    end
+  end
+
+  context "#validate_email" do
+    it 'should raise an error if email format is wrong' do
+      expect { validate_email("davod") }.to raise_error ArgumentError
+    end
+
+    it 'should validate the email' do
+      expect { validate_email("david@d.com") }.not_to raise_error
+    end
+  end
 end
