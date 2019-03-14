@@ -22,5 +22,4 @@ RSpec.describe K2Client do
 
     pending 'parse the entire request'
   end
-
 end
