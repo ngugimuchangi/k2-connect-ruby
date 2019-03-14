@@ -7,10 +7,7 @@ module K2Authenticator
     raise ArgumentError.new("Nil Authentication Argument!\n Check whether your Input is Empty") if body.blank? || api_secret_key.blank? || signature.blank?
     digest = OpenSSL::Digest.new('sha256')
     hmac = OpenSSL::HMAC.hexdigest(digest, api_secret_key, body.to_json)
-    if ActiveSupport::SecurityUtils.secure_compare(hmac, signature)
-      return true
-    else
-      raise ArgumentError.new("Invalid Details Given!\n Ensure that your the Arguments Given are correct, namely:\n\t- The Response Body\n\t- Secret Key\n\t- Signature")
-    end
+    raise ArgumentError.new("Invalid Details Given!\n Ensure that your the Arguments Given are correct, namely:\n\t- The Response Body\n\t- Secret Key\n\t- Signature") unless ActiveSupport::SecurityUtils.secure_compare(hmac, signature)
+    return true
   end
 end
