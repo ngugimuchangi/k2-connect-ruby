@@ -99,7 +99,7 @@ Next, we formally create the webhook subscription by calling on the following me
     
 One can also pass the following Hash Object instead of the Rails Form params:
 
-    {first_name: "your_first_name", last_name: "your_last_name", phone: "your_phone_number", email: "your_email", currency: "your_currency", value: "your_value"}
+    {first_name: 'your_first_name', last_name: 'your_last_name', phone: 'your_phone_number', email: 'your_email', currency: 'your_currency', value: 'your_value'}
 
 A Successful Response will be received containing the URL of the Payment Location.
 
@@ -111,7 +111,7 @@ A Successful Response will be received containing the URL of the Payment Locatio
     
 One can also pass the following Hash Object instead of params:
 
-    {id: "your_id"}
+    {id: 'your_id'}
 
 
 As a result a JSON payload will be returned, accessible with the k2_response_body variable.
@@ -132,7 +132,7 @@ First Create the K2Pay Object passing the access token
 
 One can also pass the following Hash Object instead of params:
 
-    {first_name: "your_first_name", last_name: "your_last_name", phone: "your_phone_number", email: "your_email", currency: "your_currency", value: "your_value", network: "network", pay_type: "mobile_wallet", account_name: "account_name", bank_id: "bank_id", bank_branch_id: "bank_branch_id", account_number: "account_number"}
+    {first_name: 'your_first_name', last_name: 'your_last_name', phone: 'your_phone_number', email: 'your_email', currency: 'your_currency', value: 'your_value', network: 'network', pay_type: 'mobile_wallet', account_name: 'account_name', bank_id: 'bank_id', bank_branch_id: 'bank_branch_id', account_number: 'account_number'}
     
 The pay_type value can either be `mobile_wallet` or `bank_account`
 
@@ -146,7 +146,7 @@ The Params are passed as the argument containing all the form data sent. A Succe
     
 Or can also pass the following Hash Object instead of params:
 
-    {currency: "currency", value: "value", }
+    {currency: 'currency', value: 'value', }
 
 The Params are passed as the argument containing all the form data sent. A Successful Response is returned with the URL of the Payment resource in the HTTP Location Header.
 
@@ -158,7 +158,7 @@ The Params are passed as the argument containing all the form data sent. A Succe
     
 Or can also pass the following Hash Object instead of params:
 
-    {id: "your_id"}
+    {id: 'your_id'}
 
 As a result a JSON payload will be returned, accessible with the k2_response_body variable.
 
@@ -178,7 +178,7 @@ First Create the K2Transfer Object
     
 One can also pass the following Hash Object instead of params:
 
-    {account_name: "account_name", bank_ref: "bank_ref", bank_branch_ref: "bank_branch_ref", account_number: "account_number"}
+    {account_name: 'account_name', bank_ref: 'bank_ref', bank_branch_ref: 'bank_branch_ref', account_number: 'account_number'}
 
 The Params are passed as the argument having all the form data. A Successful Response is returned with the URL of the merchant bank account in the HTTP Location Header.
 
@@ -201,7 +201,7 @@ With `nil` representing that there are no specified destinations.
      
 Or can also pass the following Hash Object instead of params for either **Blind** or **Targeted** Transfer:
 
-    {currency: "currency", value: "value", }
+    {currency: 'currency', value: 'value', }
 
 The Params are passed as the argument containing all the form data sent. A Successful Response is returned with the URL of the Transfer in the HTTP Location Header.
 
@@ -213,7 +213,7 @@ The Params are passed as the argument containing all the form data sent. A Succe
      
 Or can also pass the following Hash Object instead of params:
 
-    {id: "your_id"}
+    {id: 'your_id'}
 
 A HTTP Response will be returned in a JSON Payload, accessible with the k2_response_body variable.
 

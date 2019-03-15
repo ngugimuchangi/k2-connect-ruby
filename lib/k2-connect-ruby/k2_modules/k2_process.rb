@@ -2,46 +2,45 @@
 module K2ProcessResult
   # Confirm Truth value and carry out splitting.
   def self.process(the_body)
-    raise ArgumentError.new("Empty/Nil Request Body Argument!") if the_body.blank?
-
+    raise ArgumentError.new('Empty/Nil Request Body Argument!') if the_body.blank?
     K2ProcessResult.check_topic(the_body)
   end
 
   # Check the Event Type.
   def self.check_topic(the_body)
-    case the_body.dig("topic")
-    when "buygoods_transaction_received"
-      puts "Buy Goods Transaction Received."
+    case the_body.dig('topic')
+    when 'buygoods_transaction_received'
+      puts 'Buy Goods Transaction Received.'
       buy_goods = BuyGoods.new
       buy_goods.components(the_body)
       K2ProcessResult.return_obj_hash(buy_goods)
-    when "buygoods_transaction_reversed"
-      puts "Buy Goods Transaction Reversed."
+    when 'buygoods_transaction_reversed'
+      puts 'Buy Goods Transaction Reversed.'
       reversals = Reversal.new
       reversals.components(the_body)
       K2ProcessResult.return_obj_hash(reversals)
-    when "settlement_transfer_completed"
-      puts "Settlement Transaction."
+    when 'settlement_transfer_completed'
+      puts 'Settlement Transaction.'
       settlement = Settlement.new
       settlement.components(the_body)
       K2ProcessResult.return_obj_hash(settlement)
-    when "customer_created"
+    when 'customer_created'
       puts "Customer Created."
       customer = CustomerCreated.new
       customer.components(the_body)
       K2ProcessResult.return_obj_hash(customer)
-    when "payment_request"
-      puts "STK Push Payment Request Result."
+    when 'payment_request'
+      puts 'STK Push Payment Request Result.'
       stk_result = K2ProcessStk.new
       stk_result.components(the_body)
       K2ProcessResult.return_obj_hash(stk_result)
-    when "pay_result"
-      puts "PAY Payment Request Result."
+    when 'pay_result'
+      puts 'PAY Payment Request Result.'
       pay_result = K2ProcessPay.new
       pay_result.components(the_body)
       K2ProcessResult.return_obj_hash(pay_result)
     else
-      raise ArgumentError.new("No Other Specified Event!")
+      raise ArgumentError.new('No Other Specified Event!')
     end
   end
 
