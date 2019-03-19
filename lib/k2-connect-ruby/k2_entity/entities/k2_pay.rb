@@ -1,7 +1,6 @@
 # For PAY/ Send Money to others
 class K2Pay < K2Entity
   attr_reader :location_url
-  include K2Validation
 
   # Adding PAY Recipients with either mobile_wallets or bank_accounts as destination of your payments.
   def pay_recipients(params)
@@ -70,7 +69,7 @@ class K2Pay < K2Entity
   end
 
   # Query/Check the status of a previously initiated PAY Payment request
-  def query_status(params, path_url = 'payments', class_type = 'PAY')
+  def query_status(path_url, class_type = 'PAY')
     super
   end
 end

@@ -3,6 +3,7 @@ module K2Config
   attr_accessor :host_url
   # Set the Host Url
   def self.set_host_url(host_url)
+    raise ArgumentError.new('Invalid URL Format.') unless host_url=~/\A#{URI::regexp(%w(http https))}\z/
     @host_url = host_url
   end
 

@@ -1,7 +1,6 @@
 # For STK Push/Receive MPESA Payments from merchant's customers
 class K2Stk < K2Entity
   attr_reader :location_url
-  include K2Validation
 
   # Receive payments from M-PESA users.
   def receive_mpesa_payments(params)
@@ -40,7 +39,7 @@ class K2Stk < K2Entity
   end
 
   # Query/Check STK Payment Request Status
-  def query_status(params, path_url = 'payment_requests', class_type = 'STK')
+  def query_status(path_url, class_type = 'STK')
     super
   end
 end

@@ -1,10 +1,10 @@
 RSpec.describe K2Stk do
   before(:all) do
-    @k2stk = K2Stk.new("access_token")
+    @k2stk = K2Stk.new('access_token')
     @k2stk.extend(K2Validation)
-    @mpesa_payments = HashWithIndifferentAccess.new(first_name: "first_name", last_name: "last_name", phone: "0716230902", email: "email@emailc.om", currency: "currency", value: "value")
-    @mpesa_payments_hash = {first_name: "first_name", last_name: "last_name", phone: "0716230902", email: "email@emailc.om", currency: "currency", value: "value"}
-    @query_status = HashWithIndifferentAccess.new(id: "id")
+    @mpesa_payments = HashWithIndifferentAccess.new(first_name: 'first_name', last_name: 'last_name', phone: '0716230902', email: 'email@emailc.om', currency: 'currency', value: 'value')
+    @mpesa_payments_hash = {first_name: 'first_name', last_name: 'last_name', phone: '0716230902', email: 'email@emailc.om', currency: 'currency', value: 'value'}
+    @query_input = 'https://3b815ff3-b118-4e25-8687-1e31c38a733b.mock.pstmn.io/payment_requests'
   end
 
   it 'should include K2Validation Module and inherit from K2Entity' do
@@ -23,12 +23,12 @@ RSpec.describe K2Stk do
   end
 
   context "#query_status" do
-    it 'validates input correctly' do
-      expect { @k2stk.validate_input(@query_status, %w{id}) }.not_to raise_error
+    it 'validates query URL correctly' do
+      expect { @k2stk.validate_url(@query_input) }.not_to raise_error
     end
 
     it 'should query payment request status' do
-      expect { @k2stk.query_status(@query_status) }.not_to raise_error
+      expect { @k2stk.query_status(@query_input) }.not_to raise_error
     end
   end
 end

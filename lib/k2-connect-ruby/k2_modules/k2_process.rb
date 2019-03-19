@@ -49,7 +49,7 @@ module K2ProcessResult
     obj.instance_variables.each do |value|
       instance_hash[:"#{value.to_s.tr('@', '')}"] = obj.instance_variable_get(value)
     end
-    instance_hash
+    instance_hash.each(&:freeze).freeze
   end
 
   # def self.return_obj_array(instance_array=Array.new, obj)

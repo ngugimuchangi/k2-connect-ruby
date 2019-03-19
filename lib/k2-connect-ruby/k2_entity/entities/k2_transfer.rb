@@ -1,6 +1,6 @@
 # For Transferring funds to pre-approved and owned settlement accounts
 class K2Transfer < K2Entity
-  include K2Validation
+  attr_reader :location_url
 
   # Create a Verified Settlement Account via API
   def settlement_account(params)
@@ -53,7 +53,7 @@ class K2Transfer < K2Entity
   end
 
   # Check the status of a prior initiated Transfer. Make sure to add the id to the url
-  def query_status(params, path_url = 'transfers', class_type = 'Transfer')
+  def query_status(path_url, class_type = 'Transfer')
     super
   end
 end

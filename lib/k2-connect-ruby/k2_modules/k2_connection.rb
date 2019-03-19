@@ -24,13 +24,12 @@ module K2Connect
       raise ArgumentError.new('No Access Token in Arguments!')
     end
 
-    k2_uri = URI.parse(host_url + '/' + path_url)
-    k2_https = Net::HTTP::Persistent.new
-
     case request_type
     when 'GET'
+      k2_uri = URI.parse(path_url)
       k2_request = Net::HTTP::Get.new(k2_uri.path)
     when 'POST'
+      k2_uri = URI.parse(host_url + '/' + path_url)
       k2_request = Net::HTTP::Post.new(k2_uri.path, 'Content-Type': 'application/json')
     else
       raise ArgumentError.new('Undefined Request Type')
@@ -42,7 +41,9 @@ module K2Connect
     end
     k2_request.body = connection_hash[:params].to_json
 
+    k2_https = Net::HTTP::Persistent.new
     k2_response = k2_https.request(k2_uri, k2_request)
+
     # Response Body
     response_body = Yajl::Parser.parse(k2_response.body)
     # Response Code
