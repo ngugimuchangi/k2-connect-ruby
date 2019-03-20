@@ -13,7 +13,8 @@ module K2ProcessResult
       puts 'Buy Goods Transaction Received.'
       buy_goods = BuyGoods.new
       buy_goods.components(the_body)
-      K2ProcessResult.return_obj_hash(buy_goods)
+      return buy_goods
+      # K2ProcessResult.return_obj_hash(buy_goods)
     when 'buygoods_transaction_reversed'
       puts 'Buy Goods Transaction Reversed.'
       reversals = Reversal.new
