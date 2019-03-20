@@ -4,10 +4,7 @@ class K2Payment < K2Result
               :notes,
               :status,
               :reference,
-              :origination_time,
-              :first_name,
-              :middle_name,
-              :last_name
+              :origination_time
 
   def components(the_body)
     @metadata = the_body.dig("metadata")

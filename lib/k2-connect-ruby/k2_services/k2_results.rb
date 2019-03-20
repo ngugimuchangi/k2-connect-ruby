@@ -1,15 +1,18 @@
 class K2Result
   attr_reader :id,
-              :resourceId,
+              :resource_id,
               :topic,
               :created_at,
               :event,
               :type,
               :resource,
-              :_links,
+              :links,
               :self,
               :amount,
-              :currency
+              :currency,
+              :first_name,
+              :middle_name,
+              :last_name
 
   def components(the_body)
     @id = the_body.dig("id")

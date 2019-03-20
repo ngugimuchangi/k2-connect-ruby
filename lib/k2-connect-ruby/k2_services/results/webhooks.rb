@@ -1,9 +1,6 @@
 class WebhookTransaction < K2Result
   # Can also implement Customer Created from Here
   attr_reader :msisdn,
-              :first_name,
-              :middle_name,
-              :last_name,
               :link_resource
 
   def components(the_body)
