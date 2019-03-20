@@ -5,7 +5,7 @@
 
     def components(the_body)
       super
-      @link_resource = the_body.dig("_links", "resource")
+      @link_resource = the_body.dig('_links', 'resource')
     end
   end
 
@@ -13,10 +13,10 @@
   class CustomerCreated < K2Webhook
     def components(the_body)
       super
-      @msisdn = the_body.dig("event", "resource", "msisdn")
-      @last_name = the_body.dig("event", "resource", "last_name")
-      @first_name = the_body.dig("event", "resource", "first_name")
-      @middle_name = the_body.dig("event", "resource", "middle_name")
+      @msisdn = the_body.dig('event', 'resource', 'msisdn')
+      @last_name = the_body.dig('event', 'resource', 'last_name')
+      @first_name = the_body.dig('event', 'resource', 'first_name')
+      @middle_name = the_body.dig('event', 'resource', 'middle_name')
     end
   end
 
@@ -28,11 +28,11 @@
 
     def components(the_body)
       super
-      @amount = the_body.dig("event", "resource", "amount")
-      @currency = the_body.dig("event", "resource", "currency")
-      @reference = the_body.dig("event", "resource", "reference")
-      @resource_status = the_body.dig("event", "resource", "status")
-      @origination_time = the_body.dig("event", "resource", "origination_time")
+      @amount = the_body.dig('event', 'resource', 'amount')
+      @currency = the_body.dig('event', 'resource', 'currency')
+      @reference = the_body.dig('event', 'resource', 'reference')
+      @resource_status = the_body.dig('event', 'resource', 'status')
+      @origination_time = the_body.dig('event', 'resource', 'origination_time')
     end
   end
 
@@ -46,12 +46,12 @@
 
     def components(the_body)
       super
-      @destination = the_body.dig("event", "resource", "destination")
-      @transfer_time = the_body.dig("event", "resource", "transfer_time")
-      @transfer_type = the_body.dig("event", "resource", "transfer_type")
-      @msisdn = the_body.dig("event", "resource", "destination", "msisdn")
-      @destination_type = the_body.dig("event", "resource", "destination", "type")
-      @destination_mm_system = the_body.dig("event", "resource", "destination", "mm_system")
+      @destination = the_body.dig('event', 'resource', 'destination')
+      @transfer_time = the_body.dig('event', 'resource', 'transfer_time')
+      @transfer_type = the_body.dig('event', 'resource', 'transfer_type')
+      @msisdn = the_body.dig('event', 'resource', 'destination', 'msisdn')
+      @destination_type = the_body.dig('event', 'resource', 'destination', 'type')
+      @destination_mm_system = the_body.dig('event', 'resource', 'destination', 'mm_system')
     end
 
    # For The Common Transaction Webhook
@@ -61,12 +61,12 @@
 
     def components(the_body)
       super
-      @system = the_body.dig("event", "resource", "system")
-      @msisdn = the_body.dig("event", "resource", "sender_msisdn")
-      @till_number = the_body.dig("event", "resource", "till_number")
-      @last_name = the_body.dig("event", "resource", "sender_last_name")
-      @first_name = the_body.dig("event", "resource", "sender_first_name")
-      @middle_name = the_body.dig("event", "resource", "sender_middle_name")
+      @system = the_body.dig('event', 'resource', 'system')
+      @msisdn = the_body.dig('event', 'resource', 'sender_msisdn')
+      @till_number = the_body.dig('event', 'resource', 'till_number')
+      @last_name = the_body.dig('event', 'resource', 'sender_last_name')
+      @first_name = the_body.dig('event', 'resource', 'sender_first_name')
+      @middle_name = the_body.dig('event', 'resource', 'sender_middle_name')
     end
   end
 
@@ -75,7 +75,7 @@
     attr_reader :reversal_time
     def components(the_body)
       super
-      @reversal_time = the_body.dig("event", "resource", "reversal_time")
+      @reversal_time = the_body.dig('event', 'resource', 'reversal_time')
     end
   end
 
@@ -100,7 +100,7 @@
     attr_reader :sending_merchant
     def components(the_body)
       super
-      @sending_merchant = the_body.dig("event", "resource", "sending_merchant")
+      @sending_merchant = the_body.dig('event', 'resource', 'sending_merchant')
     end
   end
 end
