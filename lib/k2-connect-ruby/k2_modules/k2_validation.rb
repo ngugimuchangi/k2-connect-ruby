@@ -82,7 +82,7 @@ module K2Validation
   end
 
   def validate_url(url)
-    raise ArgumentError.new('Invalid URL Format.') unless url=~/\A#{URI::regexp(%w(http https))}\z/
+    raise ArgumentError.new('Invalid URL Format.') unless url=~/\A#{URI::regexp(%w(https))}\z/
     url
   end
 end

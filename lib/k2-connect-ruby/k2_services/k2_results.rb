@@ -15,14 +15,14 @@ class K2Result
               :last_name
 
   def components(the_body)
-    @id = the_body.dig("id")
-    @resource_id = the_body.dig("resourceId")
-    @topic = the_body.dig("topic")
-    @created_at = the_body.dig("created_at")
-    @event = the_body.dig("event")
-    @type = the_body.dig("event", "type")
-    @resource = the_body.dig("event", "resource")
-    @links = the_body.dig("_links")
-    @self = the_body.dig("_links", "self")
+    @id = the_body.dig('id')
+    @topic = the_body.dig('topic')
+    @event = the_body.dig('event')
+    @links = the_body.dig('_links')
+    @type = the_body.dig('event', 'type')
+    @self = the_body.dig('_links', 'self')
+    @created_at = the_body.dig('created_at')
+    @resource_id = the_body.dig('resourceId')
+    @resource = the_body.dig('event', 'resource')
   end
 end
