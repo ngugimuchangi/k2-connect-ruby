@@ -88,6 +88,6 @@ module K2ProcessResult
     obj.instance_variables.each do |value|
       instance_array << obj.instance_variable_get(value)
     end
-    return instance_array
+    return instance_array.each(&:freeze).freeze
   end
 end
