@@ -28,10 +28,11 @@ class K2ProcessStk < BuyGoods
   def components(the_body)
     super
     @status = the_body.dig('status')
-    @errors = @event.dig('errors')
     # Links
     @link_resource = @links.dig('resource')
     @payment_request = @links.dig('payment_request')
+    # Event
+    @errors = the_body.dig('event','errors')
     # Metadata
     @metadata = the_body.dig('metadata')
     @notes = @metadata.dig('notes')
@@ -53,17 +54,17 @@ class K2FailedStk < BuyGoods
   def components(the_body)
     super
     @status = the_body.dig('status')
+    # Links
+    @payment_request = the_body.dig('_links','payment_request')
     # Metadata
     @metadata = the_body.dig('metadata')
     @notes = @metadata.dig('notes')
     @customer_id = @metadata.dig('customer_id')
     @metadata_reference = @metadata.dig('reference')
     # Errors
-    @errors = the_body.dig('event', 'errors')
+    @errors = the_body.dig('event','errors')
     @error_code = @errors.dig(0, 'code')
     @error_description = @errors.dig(0, 'description')
-    # Links
-    @payment_request = the_body.dig('_links', 'payment_request')
   end
 end
 
