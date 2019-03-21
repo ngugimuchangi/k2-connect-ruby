@@ -4,13 +4,12 @@ RSpec.describe K2Validation do
   let(:array) { %w[the_input ze_input] }
 
   context '#validate_input' do
-    let(:not_hash) { 'not a hash' }
     it 'should raise an error if the_input parameters is empty' do
       expect { validate_input('', array) }.to raise_error ArgumentError
     end
 
     it 'should raise an error if the_input parameters is not of a Hash or Parameter class instance' do
-      expect { validate_input(not_hash, array) }.to raise_error ArgumentError
+      expect { validate_input('not a hash', array) }.to raise_error ArgumentError
     end
 
     it 'should validate the_input with false is_query' do

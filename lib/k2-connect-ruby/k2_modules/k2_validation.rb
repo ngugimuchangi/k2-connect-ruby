@@ -10,7 +10,11 @@ module K2Validation
           validate_hash(the_input.with_indifferent_access, the_array)
         else
           begin
-            if the_input.key?(:authenticity_token)
+            if the_input.is_a?(String)
+              raise ArgumentError, "Wrong Input Format.\n The Input is a String."
+            elsif the_input.is_a?(Integer)
+              raise ArgumentError, "Wrong Input Format.\n The Input is an Integer."
+            elsif the_input.key?(:authenticity_token)
               nil_values(the_input.permit(the_array).to_hash.with_indifferent_access)
             else
               raise ArgumentError, "Undefined Input Format.\n The Input is Neither a Hash nor a ActionController::Parameter Object."
@@ -23,7 +27,6 @@ module K2Validation
         end
       end
     end
-
     convert_params(the_input)
   end
 
