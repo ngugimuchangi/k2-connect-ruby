@@ -2,7 +2,8 @@
 module K2ProcessResult
   # Confirm Truth value and carry out splitting.
   def self.process(the_body)
-    raise ArgumentError.new('Empty/Nil Request Body Argument!') if the_body.blank?
+    raise ArgumentError, 'Empty/Nil Request Body Argument!' if the_body.blank?
+
     K2ProcessResult.check_topic(the_body)
   end
 
@@ -31,7 +32,7 @@ module K2ProcessResult
         buy_goods.components(the_body)
         return buy_goods
       else
-        raise ArgumentError.new('No Other Specified Event!')
+        raise ArgumentError, 'No Other Specified Event!'
       end
 
     else
@@ -69,7 +70,7 @@ module K2ProcessResult
 
         # For Query Results
       else
-        raise ArgumentError.new('No Other Specified Event!')
+        raise ArgumentError, 'No Other Specified Event!'
       end
     end
   end
@@ -84,10 +85,10 @@ module K2ProcessResult
   end
 
   # Returns an Array Object
-  def self.return_obj_array(instance_array=Array.new, obj)
+  def self.return_obj_array(instance_array = [], obj)
     obj.instance_variables.each do |value|
       instance_array << obj.instance_variable_get(value)
     end
-    return instance_array.each(&:freeze).freeze
+    instance_array.each(&:freeze).freeze
   end
 end

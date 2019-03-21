@@ -5,7 +5,8 @@ class K2Subscribe
 
   # Intialize with the event_type
   def initialize(event_type, webhook_secret)
-    raise ArgumentError.new('Nil or Empty Event Type Specified!') if event_type.blank?
+    raise ArgumentError, 'Nil or Empty Event Type Specified!' if event_type.blank?
+
     @event_type = event_type
     @webhook_secret = webhook_secret
   end
@@ -62,8 +63,26 @@ class K2Subscribe
         secret: @webhook_secret
       }
       the_path_url = 'settlement'
+
+      # Settlement Transfer Completed
+    when 'external_till_to_till'
+      k2_request_body = {
+        event_type: 'b2b_transaction_received',
+        url: 'https://myapplication.com/webhooks',
+        secret: @webhook_secret
+      }
+      the_path_url = 'b2b-transaction-received'
+
+      # Settlement Transfer Completed
+    when 'k2_merchant_to_merchant'
+      k2_request_body = {
+        event_type: 'merchant_to_merchant',
+        url: 'https://myapplication.com/webhooks',
+        secret: @webhook_secret
+      }
+      the_path_url = 'merchant-to-merchant'
     else
-      raise ArgumentError.new('Subscription Service does not Exist!')
+      raise ArgumentError, 'Subscription Service does not Exist!'
     end
     subscribe_hash = K2Subscribe.make_hash(the_path_url, 'POST', 'Subscription', k2_request_body)
     K2Connect.to_connect(subscribe_hash)
@@ -71,7 +90,7 @@ class K2Subscribe
 
   # Method for Validating the input itself
   def validate_input(id, secret)
-    raise ArgumentError.new('Empty Client Credentials') if id.blank? || secret.blank?
+    raise ArgumentError, 'Empty Client Credentials' if id.blank? || secret.blank?
   end
 
   # Create a Hash containing important details accessible for K2Connect

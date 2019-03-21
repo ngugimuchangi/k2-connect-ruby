@@ -12,8 +12,8 @@ RSpec.describe K2Transfer do
     expect(K2Transfer).to include(K2Validation)
   end
 
-  context "#settlement_account" do
-    let(:array) { %w{account_name bank_ref bank_branch_ref account_number currency value} }
+  context '#settlement_account' do
+    let(:array) { %w[account_name bank_ref bank_branch_ref account_number currency value] }
     it 'validates input correctly' do
       expect { @k2transfer.validate_input(@settle_params, array) }.not_to raise_error
     end
@@ -23,9 +23,9 @@ RSpec.describe K2Transfer do
     end
   end
 
-  context "#transfer_funds" do
+  context '#transfer_funds' do
     it 'validates input correctly' do
-      expect { @k2transfer.validate_input(@transfer_params, %w{currency value}) }.not_to raise_error
+      expect { @k2transfer.validate_input(@transfer_params, %w[currency value]) }.not_to raise_error
     end
 
     it 'should create a blind transfer request' do
@@ -33,11 +33,11 @@ RSpec.describe K2Transfer do
     end
 
     it 'should create a targeted transfer request' do
-      expect { @k2transfer.transfer_funds("nil", @transfer_params) }.not_to raise_error
+      expect { @k2transfer.transfer_funds('nil', @transfer_params) }.not_to raise_error
     end
   end
 
-  context "Query the status of a prior Transfer" do
+  context 'Query the status of a prior Transfer' do
     it 'validates query URL correctly' do
       expect { @k2transfer.validate_url(@query_input) }.not_to raise_error
     end

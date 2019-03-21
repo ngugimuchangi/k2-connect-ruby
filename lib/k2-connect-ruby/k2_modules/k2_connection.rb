@@ -21,7 +21,7 @@ module K2Connect
     request_type = connection_hash[:request_type]
 
     unless class_type.eql?('Subscription') || access_token.present?
-      raise ArgumentError.new('No Access Token in Arguments!')
+      raise ArgumentError, 'No Access Token in Arguments!'
     end
 
     case request_type
@@ -32,7 +32,7 @@ module K2Connect
       k2_uri = URI.parse(host_url + '/' + path_url)
       k2_request = Net::HTTP::Post.new(k2_uri.path, 'Content-Type': 'application/json')
     else
-      raise ArgumentError.new('Undefined Request Type')
+      raise ArgumentError, 'Undefined Request Type'
     end
 
     unless path_url.eql?('ouath')
@@ -49,13 +49,15 @@ module K2Connect
     # Response Code
     response_code = k2_response.code.to_s
 
-    raise K2ConnectionError.new(response_code) unless response_code[0].eql?(2.to_s)
+    raise K2ConnectionError, response_code unless response_code[0].eql?(2.to_s)
     # If successful, add a method to fetch the components of the response
     return response_body['access_token'] if path_url.eql?('ouath')
+
     # For STK Push, PAY and Transfers
     unless class_type.eql?('Subscription')
       # Return the result of the Query
       return response_body if request_type.eql?('GET')
+
       # Return the location url for POST Requests
       return response_body['location']
     end

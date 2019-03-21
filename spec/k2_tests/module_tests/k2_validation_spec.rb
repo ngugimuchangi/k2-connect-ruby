@@ -1,10 +1,10 @@
 include K2Validation
 RSpec.describe K2Validation do
   let(:the_input) { { the_input: 'the_input', ze_input: 'ze_input' } }
-  let(:array) { %w{the_input ze_input} }
+  let(:array) { %w[the_input ze_input] }
 
-  context "#validate_input" do
-    let(:not_hash) { "not a hash" }
+  context '#validate_input' do
+    let(:not_hash) { 'not a hash' }
     it 'should raise an error if the_input parameters is empty' do
       expect { validate_input('', array) }.to raise_error ArgumentError
     end
@@ -22,7 +22,7 @@ RSpec.describe K2Validation do
     end
   end
 
-  context "#validate_hash" do
+  context '#validate_hash' do
     let(:invalid_input) { { the_input: 'the_input', ze_input: '' } }
     let(:incorrect_input) { { the_input: 'the_input', za_input: 'ze_input' } }
     it 'should raise an error if the_input parameters are incorrect' do
@@ -38,21 +38,21 @@ RSpec.describe K2Validation do
     end
   end
 
-  context "#incorrect_keys" do
+  context '#incorrect_keys' do
     let(:invalid_keys) { HashWithIndifferentAccess.new }
     it 'should check for any incorrect key formats' do
       expect { incorrect_keys(the_input, invalid_keys, array) }.not_to raise_error
     end
   end
 
-  context "#nil_values" do
+  context '#nil_values' do
     let(:empty_keys) { HashWithIndifferentAccess.new }
     it 'should check for hash symbols with nil values' do
       expect { nil_values(the_input, empty_keys) }.not_to raise_error
     end
   end
 
-  context "#validate_phone" do
+  context '#validate_phone' do
     it 'should raise an error if length of phone number is wrong' do
       expect { validate_phone('+2547162309021') }.to raise_error ArgumentError
       expect { validate_phone('07162309021') }.to raise_error ArgumentError
@@ -67,7 +67,7 @@ RSpec.describe K2Validation do
     end
   end
 
-  context "#validate_email" do
+  context '#validate_email' do
     it 'should raise an error if email format is wrong' do
       expect { validate_email('davod') }.to raise_error ArgumentError
     end
@@ -77,13 +77,13 @@ RSpec.describe K2Validation do
     end
   end
 
-  context "#convert_params" do
+  context '#convert_params' do
     it 'should validate the email' do
-      expect { convert_params({davod: 'davod'}) }.not_to raise_error
+      expect { convert_params(davod: 'davod') }.not_to raise_error
     end
   end
 
-  context "#validate_url" do
+  context '#validate_url' do
     it 'should raise an error if email format is wrong' do
       expect { validate_url('davod') }.to raise_error ArgumentError
     end

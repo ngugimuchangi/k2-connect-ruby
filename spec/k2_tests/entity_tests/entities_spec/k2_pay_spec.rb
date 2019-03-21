@@ -12,9 +12,9 @@ RSpec.describe K2Pay do
     expect(K2Pay).to include(K2Validation)
   end
 
-  context "#pay_recipients" do
+  context '#pay_recipients' do
     it 'validates input correctly' do
-      expect { @k2pay.validate_input(@pay_params, %w{first_name last_name phone email network pay_type currency value account_name bank_id bank_branch_id account_number}) }.not_to raise_error
+      expect { @k2pay.validate_input(@pay_params, %w[first_name last_name phone email network pay_type currency value account_name bank_id bank_branch_id account_number]) }.not_to raise_error
     end
 
     it 'should add pay recipient request' do
@@ -22,9 +22,9 @@ RSpec.describe K2Pay do
     end
   end
 
-  context "#create_payment" do
+  context '#create_payment' do
     it 'validates input correctly' do
-      expect { @k2pay.validate_input(@create_params, %w(currency value)) }.not_to raise_error
+      expect { @k2pay.validate_input(@create_params, %w[currency value]) }.not_to raise_error
     end
 
     it 'should create outgoing payment request' do
@@ -32,7 +32,7 @@ RSpec.describe K2Pay do
     end
   end
 
-  context "#query_pay" do
+  context '#query_pay' do
     it 'validates query URL correctly' do
       expect { @k2pay.validate_url(@query_input) }.not_to raise_error
     end

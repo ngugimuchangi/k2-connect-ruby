@@ -3,7 +3,7 @@ RSpec.describe K2Stk do
     @k2stk = K2Stk.new('access_token')
     @k2stk.extend(K2Validation)
     @mpesa_payments = HashWithIndifferentAccess.new(first_name: 'first_name', last_name: 'last_name', phone: '0716230902', email: 'email@emailc.om', currency: 'currency', value: 'value')
-    @mpesa_payments_hash = {first_name: 'first_name', last_name: 'last_name', phone: '0716230902', email: 'email@emailc.om', currency: 'currency', value: 'value'}
+    @mpesa_payments_hash = { first_name: 'first_name', last_name: 'last_name', phone: '0716230902', email: 'email@emailc.om', currency: 'currency', value: 'value' }
     @query_input = 'https://3b815ff3-b118-4e25-8687-1e31c38a733b.mock.pstmn.io/payment_requests'
   end
 
@@ -12,9 +12,9 @@ RSpec.describe K2Stk do
     expect(K2Stk).to include(K2Validation)
   end
 
-  context "#receive_mpesa_payments" do
+  context '#receive_mpesa_payments' do
     it 'validates input correctly' do
-      expect { @k2stk.validate_input(@mpesa_payments_hash, %w{first_name last_name phone email currency value}) }.not_to raise_error
+      expect { @k2stk.validate_input(@mpesa_payments_hash, %w[first_name last_name phone email currency value]) }.not_to raise_error
     end
 
     it 'should add pay recipient request' do
@@ -22,7 +22,7 @@ RSpec.describe K2Stk do
     end
   end
 
-  context "#query_status" do
+  context '#query_status' do
     it 'validates query URL correctly' do
       expect { @k2stk.validate_url(@query_input) }.not_to raise_error
     end
