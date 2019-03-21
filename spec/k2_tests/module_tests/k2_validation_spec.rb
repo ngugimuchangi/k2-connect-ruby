@@ -12,6 +12,10 @@ RSpec.describe K2Validation do
       expect { validate_input('not a hash', array) }.to raise_error ArgumentError
     end
 
+    it 'should raise an error if the_input parameters is an Integer' do
+      expect { validate_input('not a hash', array) }.to raise_error ArgumentError
+    end
+
     it 'should validate the_input with false is_query' do
       expect { validate_input(the_input, array) }.not_to raise_error
     end
