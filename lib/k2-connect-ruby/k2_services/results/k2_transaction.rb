@@ -9,9 +9,10 @@ class K2Payment < K2Result
   def components(the_body)
     super
     @status = the_body.dig('status')
+    # Metadata
     @metadata = the_body.dig('metadata')
-    @notes = the_body.dig('metadata', 'notes')
-    @customer_id = the_body.dig('metadata', 'customer_id')
+    @notes = @metadata.dig('notes')
+    @customer_id = @metadata.dig('customer_id')
   end
 end
 
@@ -50,13 +51,16 @@ class K2FailedStk < BuyGoods
   def components(the_body)
     super
     @status = the_body.dig('status')
+    # Metadata
     @metadata = the_body.dig('metadata')
+    @notes = @metadata.dig('notes')
+    @customer_id = @metadata.dig('customer_id')
+    @metadata_reference = @metadata.dig('reference')
+    # Errors
     @errors = the_body.dig('event', 'errors')
-    @notes = the_body.dig('metadata', 'notes')
-    @error_code = the_body.dig('event', 'errors', 0, 'code')
-    @error_description = the_body.dig('event', 'errors', 1, 'description')
-    @customer_id = the_body.dig('metadata', 'customer_id')
-    @metadata_reference = the_body.dig('metadata', 'reference')
+    @error_code = @errors.dig(0, 'code')
+    @error_description = @errors.dig(0, 'description')
+    # Links
     @payment_request = the_body.dig('_links', 'payment_request')
   end
 end
