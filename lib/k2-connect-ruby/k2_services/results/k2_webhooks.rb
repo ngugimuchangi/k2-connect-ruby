@@ -30,11 +30,11 @@ class GeneralWebhook < K2Webhook
   def components(the_body)
     super
     # Resources
-    @amount = @resource.dig('amount')
-    @currency = @resource.dig('currency')
-    @reference = @resource.dig('reference')
-    @resource_status = @resource.dig('status')
-    @origination_time = @resource.dig('origination_time')
+    @amount = the_body.dig('resource', 'amount')
+    @currency = the_body.dig('resource', 'currency')
+    @reference = the_body.dig('resource', 'reference')
+    @resource_status = the_body.dig('resource', 'status')
+    @origination_time = the_body.dig('resource', 'origination_time')
   end
 end
 
@@ -67,12 +67,12 @@ class K2FinancialTransaction < GeneralWebhook
   def components(the_body)
     super
     # Resources
-    @system = @resource.dig('system')
-    @msisdn = @resource.dig('sender_msisdn')
-    @till_number = @resource.dig('till_number')
-    @last_name = @resource.dig('sender_last_name')
-    @first_name = @resource.dig('sender_first_name')
-    @middle_name = @resource.dig('sender_middle_name')
+    @system = the_body.dig('resource', 'system')
+    @msisdn = the_body.dig('resource', 'sender_msisdn')
+    @till_number = the_body.dig('resource', 'till_number')
+    @last_name = the_body.dig('resource', 'sender_last_name')
+    @first_name = the_body.dig('resource', 'sender_first_name')
+    @middle_name = the_body.dig('resource', 'sender_middle_name')
   end
 end
 
@@ -99,7 +99,7 @@ class B2B < K2FinancialTransaction
   def components(the_body)
     super
     # Resources
-    @sending_till = the_body.dig('sending_till')
+    @sending_till = @resource.dig('sending_till')
   end
 end
 

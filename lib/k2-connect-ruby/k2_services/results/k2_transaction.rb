@@ -16,7 +16,7 @@ class K2Payment < K2Result
   end
 end
 
-class K2ProcessStk < BuyGoods
+class K2ProcessStk < K2FinancialTransaction
   attr_reader :notes,
               :errors,
               :metadata,
@@ -41,7 +41,7 @@ class K2ProcessStk < BuyGoods
   end
 end
 
-class K2FailedStk < BuyGoods
+class K2FailedStk < K2ProcessStk
   attr_reader :notes,
               :errors,
               :error_code,
@@ -53,16 +53,6 @@ class K2FailedStk < BuyGoods
 
   def components(the_body)
     super
-    @status = the_body.dig('status')
-    # Links
-    @payment_request = the_body.dig('_links','payment_request')
-    # Metadata
-    @metadata = the_body.dig('metadata')
-    @notes = @metadata.dig('notes')
-    @customer_id = @metadata.dig('customer_id')
-    @metadata_reference = @metadata.dig('reference')
-    # Errors
-    @errors = the_body.dig('event','errors')
     @error_code = @errors.dig(0, 'code')
     @error_description = @errors.dig(0, 'description')
   end
