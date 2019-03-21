@@ -28,13 +28,15 @@ class K2ProcessStk < BuyGoods
   def components(the_body)
     super
     @status = the_body.dig('status')
+    @errors = @event.dig('errors')
+    # Links
+    @link_resource = @links.dig('resource')
+    @payment_request = @links.dig('payment_request')
+    # Metadata
     @metadata = the_body.dig('metadata')
-    @errors = the_body.dig('event', 'errors')
-    @notes = the_body.dig('metadata', 'notes')
-    @link_resource = the_body.dig('_links', 'resource')
-    @customer_id = the_body.dig('metadata', 'customer_id')
-    @metadata_reference = the_body.dig('metadata', 'reference')
-    @payment_request = the_body.dig('_links', 'payment_request')
+    @notes = @metadata.dig('notes')
+    @customer_id = @metadata.dig('customer_id')
+    @metadata_reference = @metadata.dig('reference')
   end
 end
 
@@ -71,11 +73,12 @@ class K2ProcessPay < K2Payment
 
   def components(the_body)
     super
-    @amount = the_body.dig('amount')
     @reference = the_body.dig('reference')
-    @value = the_body.dig('amount', 'value')
     @destination = the_body.dig('destination')
-    @currency = the_body.dig('amount', 'currency')
     @origination_time = the_body.dig('origination_time')
+    # Amount
+    @amount = the_body.dig('amount')
+    @value = @amount.dig('value')
+    @currency = @amount.dig('currency')
   end
 end

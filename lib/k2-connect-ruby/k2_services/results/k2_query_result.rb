@@ -6,10 +6,11 @@ class K2Query < K2Result
 
   def components(the_body)
     super
-    @amount = the_body.dig('amount')
     @status = the_body.dig('status')
-    @value = the_body.dig('amount', 'value')
-    @currency = the_body.dig('amount', 'currency')
+    # Amount
+    @amount = the_body.dig('amount')
+    @value = @amount.dig('value')
+    @currency = @amount.dig('currency')
   end
 end
 
@@ -30,12 +31,13 @@ class QueryPay < K2Query
 
   def components(the_body)
     super
-    @metadata = the_body.dig('metadata')
     @reference = the_body.dig('reference')
-    @notes = the_body.dig('metadata', 'notes')
     @destination = the_body.dig('destination')
     @origination_time = the_body.dig('origination_time')
-    @customer_id = the_body.dig('metadata', 'customerId')
+    # Metadata
+    @metadata = the_body.dig('metadata')
+    @notes = @metadata.dig('notes')
+    @customer_id = @metadata.dig('customerId')
   end
 end
 

@@ -17,12 +17,14 @@ class K2Result
   def components(the_body)
     @id = the_body.dig('id')
     @topic = the_body.dig('topic')
-    @event = the_body.dig('event')
-    @links = the_body.dig('_links')
-    @type = the_body.dig('event', 'type')
-    @self = the_body.dig('_links', 'self')
     @created_at = the_body.dig('created_at')
     @resource_id = the_body.dig('resourceId')
-    @resource = the_body.dig('event', 'resource')
+    # Links
+    @links = the_body.dig('_links')
+    @self = @links.dig('self')
+    # Event
+    @event = the_body.dig('event')
+    @type = @event.dig('type')
+    @resource = @event.dig('resource')
   end
 end

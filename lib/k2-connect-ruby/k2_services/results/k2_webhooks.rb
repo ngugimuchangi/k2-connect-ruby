@@ -5,7 +5,7 @@ class K2Webhook < K2Result
 
   def components(the_body)
     super
-    @link_resource = the_body.dig('_links', 'resource')
+    @link_resource = @links.dig('resource')
   end
 end
 
@@ -13,10 +13,11 @@ end
 class CustomerCreated < K2Webhook
   def components(the_body)
     super
-    @msisdn = the_body.dig('event', 'resource', 'msisdn')
-    @last_name = the_body.dig('event', 'resource', 'last_name')
-    @first_name = the_body.dig('event', 'resource', 'first_name')
-    @middle_name = the_body.dig('event', 'resource', 'middle_name')
+    # Resources
+    @msisdn = @resource.dig('msisdn')
+    @last_name = @resource.dig('last_name')
+    @first_name = @resource.dig('first_name')
+    @middle_name = @resource.dig('middle_name')
   end
 end
 
@@ -28,11 +29,12 @@ class GeneralWebhook < K2Webhook
 
   def components(the_body)
     super
-    @amount = the_body.dig('event', 'resource', 'amount')
-    @currency = the_body.dig('event', 'resource', 'currency')
-    @reference = the_body.dig('event', 'resource', 'reference')
-    @resource_status = the_body.dig('event', 'resource', 'status')
-    @origination_time = the_body.dig('event', 'resource', 'origination_time')
+    # Resources
+    @amount = @resource.dig('amount')
+    @currency = @resource.dig('currency')
+    @reference = @resource.dig('reference')
+    @resource_status = @resource.dig('status')
+    @origination_time = @resource.dig('origination_time')
   end
 end
 
@@ -46,12 +48,14 @@ class Settlement < GeneralWebhook
 
   def components(the_body)
     super
-    @destination = the_body.dig('event', 'resource', 'destination')
-    @transfer_time = the_body.dig('event', 'resource', 'transfer_time')
-    @transfer_type = the_body.dig('event', 'resource', 'transfer_type')
-    @msisdn = the_body.dig('event', 'resource', 'destination', 'msisdn')
-    @destination_type = the_body.dig('event', 'resource', 'destination', 'type')
-    @destination_mm_system = the_body.dig('event', 'resource', 'destination', 'mm_system')
+    # Resources
+    @transfer_time = @resource.dig('transfer_time')
+    @transfer_type = @resource.dig('transfer_type')
+    # Destination
+    @destination = @resource.dig('destination')
+    @msisdn = @destination.dig('msisdn')
+    @destination_type = @destination.dig('type')
+    @destination_mm_system = @destination.dig('mm_system')
   end
 end
 
@@ -62,12 +66,13 @@ class K2FinancialTransaction < GeneralWebhook
 
   def components(the_body)
     super
-    @system = the_body.dig('event', 'resource', 'system')
-    @msisdn = the_body.dig('event', 'resource', 'sender_msisdn')
-    @till_number = the_body.dig('event', 'resource', 'till_number')
-    @last_name = the_body.dig('event', 'resource', 'sender_last_name')
-    @first_name = the_body.dig('event', 'resource', 'sender_first_name')
-    @middle_name = the_body.dig('event', 'resource', 'sender_middle_name')
+    # Resources
+    @system = @resource.dig('system')
+    @msisdn = @resource.dig('sender_msisdn')
+    @till_number = @resource.dig('till_number')
+    @last_name = @resource.dig('sender_last_name')
+    @first_name = @resource.dig('sender_first_name')
+    @middle_name = @resource.dig('sender_middle_name')
   end
 end
 
@@ -76,7 +81,8 @@ class Reversal < K2FinancialTransaction
   attr_reader :reversal_time
   def components(the_body)
     super
-    @reversal_time = the_body.dig('event', 'resource', 'reversal_time')
+    # Resources
+    @reversal_time = @resource.dig('reversal_time')
   end
 end
 
@@ -92,7 +98,8 @@ class B2B < K2FinancialTransaction
   attr_reader :sending_till
   def components(the_body)
     super
-    @sending_till = the_body.dig('event', 'resource', 'sending_till')
+    # Resources
+    @sending_till = the_body.dig('sending_till')
   end
 end
 
@@ -101,6 +108,7 @@ class MerchantTransaction < K2FinancialTransaction
   attr_reader :sending_merchant
   def components(the_body)
     super
-    @sending_merchant = the_body.dig('event', 'resource', 'sending_merchant')
+    # Resources
+    @sending_merchant = @resource.dig('sending_merchant')
   end
 end
