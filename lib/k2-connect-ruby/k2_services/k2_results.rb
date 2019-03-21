@@ -24,7 +24,7 @@ class K2Result
     @self = @links.dig('self')
     # Event
     @event = the_body.dig('event')
-    @type = @event.dig('type')
-    @resource = @event.dig('resource')
+    @type = the_body.dig('event', 'type')
+    @resource = the_body.dig('event', 'resource')
   end
 end
