@@ -58,12 +58,19 @@ module K2ProcessResult
 
       # STK Process Payment Request Result
       when 'payment_request'
-        stk_result = K2ProcessStk.new
-        stk_result.components(the_body)
-        return stk_result
+        status = the_body.dig('status')
+        if status.eql?('Success')
+          stk_result = K2ProcessStk.new
+          stk_result.components(the_body)
+          return stk_result
+        elsif status.eql?('Failed')
+          stk_result = K2FailedStk.new
+          stk_result.components(the_body)
+          return stk_result
+        end
 
       # PAY Process Payment Result
-      when 'pay_result'
+      when 'pay_request'
         pay_result = K2ProcessPay.new
         pay_result.components(the_body)
         return pay_result

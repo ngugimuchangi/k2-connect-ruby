@@ -37,6 +37,30 @@ class K2ProcessStk < BuyGoods
   end
 end
 
+class K2FailedStk < BuyGoods
+  attr_reader :notes,
+              :errors,
+              :error_code,
+              :error_description,
+              :metadata,
+              :customer_id,
+              :payment_request,
+              :metadata_reference
+
+  def components(the_body)
+    super
+    @status = the_body.dig('status')
+    @metadata = the_body.dig('metadata')
+    @errors = the_body.dig('event', 'errors')
+    @notes = the_body.dig('metadata', 'notes')
+    @error_code = the_body.dig('event', 'errors', 0)
+    @error_description = the_body.dig('event', 'errors', 1)
+    @customer_id = the_body.dig('metadata', 'customer_id')
+    @metadata_reference = the_body.dig('metadata', 'reference')
+    @payment_request = the_body.dig('_links', 'payment_request')
+  end
+end
+
 class K2ProcessPay < K2Payment
   attr_reader :value,
               :destination

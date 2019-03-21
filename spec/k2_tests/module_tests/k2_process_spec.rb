@@ -7,8 +7,9 @@ RSpec.describe K2ProcessResult do
     @bg_reversal = HashWithIndifferentAccess.new(topic: 'buygoods_transaction_reversed').merge(@the_body)
     @settlement = HashWithIndifferentAccess.new(topic: 'settlement_transfer_completed').merge(@the_body)
     @customer = HashWithIndifferentAccess.new(topic: 'customer_created').merge(@the_body)
-    @stk = HashWithIndifferentAccess.new(topic: 'payment_request').merge(@the_body)
-    @pay = HashWithIndifferentAccess.new(topic: 'pay_result').merge(@the_body)
+    @stk = HashWithIndifferentAccess.new(topic: 'payment_request', status: 'Success').merge(@the_body)
+    @failed_stk = HashWithIndifferentAccess.new(topic: 'payment_request', status: 'Failed').merge(@the_body)
+    @pay = HashWithIndifferentAccess.new(topic: 'pay_request').merge(@the_body)
   end
   context '#process' do
     it 'should raise an error if any of the the_body argument is empty' do
@@ -41,6 +42,10 @@ RSpec.describe K2ProcessResult do
 
     it 'Process Stk Result' do
       expect { K2ProcessResult.process(@stk) }.not_to raise_error
+    end
+
+    it 'Failed Stk Result' do
+      expect { K2ProcessResult.process(@failed_stk) }.not_to raise_error
     end
 
     it 'Process PAY Result' do
