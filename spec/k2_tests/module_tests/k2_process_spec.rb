@@ -1,18 +1,83 @@
 RSpec.describe K2ProcessResult do
   before(:context) do
-    @the_body = HashWithIndifferentAccess.new(the_body: 'the_body')
-    @bg_received = HashWithIndifferentAccess.new(topic: 'transaction_received', event: { type: 'Buygoods Transaction' }).merge(@the_body)
-    @b2b = HashWithIndifferentAccess.new(topic: 'transaction_received', event: { type: 'B2b Transaction' }).merge(@the_body)
-    @m2m = HashWithIndifferentAccess.new(topic: 'transaction_received', event: { type: 'Merchant to Merchant Transaction' }).merge(@the_body)
-    @bg_reversal = HashWithIndifferentAccess.new(topic: 'buygoods_transaction_reversed').merge(@the_body)
-    @settlement = HashWithIndifferentAccess.new(topic: 'settlement_transfer_completed').merge(@the_body)
-    @customer = HashWithIndifferentAccess.new(topic: 'customer_created').merge(@the_body)
-    @stk = HashWithIndifferentAccess.new(topic: 'payment_request', status: 'Success').merge(@the_body)
-    @failed_stk = HashWithIndifferentAccess.new(topic: 'payment_request', status: 'Failed').merge(@the_body)
-    @pay = HashWithIndifferentAccess.new(topic: 'pay_request').merge(@the_body)
+    @bg_received = HashWithIndifferentAccess.new( id: 'cac95329-9fa5-42f1-a4fc-c08af7b868fb', resourceId: 'cdb5f11f-62df-e611-80ee-0aa34a9b2388', topic: 'transaction_received',
+                                                  created_at: '2017-01-20T22:45:12.790Z',
+                                                  event: { type: 'Buygoods Transaction',
+                                                           resource: { reference: 'KKPPLLMMNN', origination_time: '2017-01-20T22:45:12.790Z', sender_msisdn: '+2549703119050',
+                                                                       amount: 3_000, currency: 'KES', till_number: 111_222, system: 'Lipa Na M-PESA', status: 'Received',
+                                                                       sender_first_name: 'John', sender_middle_name: 'O', sender_last_name: 'Doe' } },
+                                                  _links: { self: 'https://api-sandbox.kopokopo.com/events/cac95329-9fa5-42f1-a4fc-c08af7b868fb',
+                                                            resource: 'https://api-sandbox.kopokopo.com/buygoods_transaction/cdb5f11f-62df-e611-80ee-0aa34a9b2388' })
+
+    @b2b = HashWithIndifferentAccess.new( id: 'cac95329-9fa5-42f1-a4fc-c08af7b868fb', resourceId: 'cdb5f11f-62df-e611-80ee-0aa34a9b2388', topic: 'transaction_received',
+                                          created_at: '2017-01-20T22:45:12.790Z',
+                                          event: { type: 'B2b Transaction',
+                                                   resource: { reference: 'KKPPLLMMNN', origination_time: '2017-01-20T22:45:12.790Z', sending_till: 119_050,
+                                                               amount: 3_000, currency: 'KES', till_number: 111_222, system: 'Lipa Na M-PESA', status: 'Received' } },
+                                          _links: { self: 'https://api-sandbox.kopokopo.com/events/cac95329-9fa5-42f1-a4fc-c08af7b868fb',
+                                                    resource: 'https://api-sandbox.kopokopo.com/buygoods_transaction/cdb5f11f-62df-e611-80ee-0aa34a9b2388' })
+
+    @m2m = HashWithIndifferentAccess.new( id: 'cac95329-9fa5-42f1-a4fc-c08af7b868fb', resourceId: 'cdb5f11f-62df-e611-80ee-0aa34a9b2388', topic: 'transaction_received',
+                                          created_at: '2017-01-20T22:45:12.790Z',
+                                          event: { type: 'Merchant to Merchant Transaction',
+                                                   resource: { reference: 'KKPPLLMMNN', origination_time: '2017-01-20T22:45:12.790Z', sending_merchant: 'Kings Landing Enterprises',
+                                                               amount: 3_000, currency: 'KES', till_number: 111_222, system: 'Lipa Na M-PESA', status: 'Received' } },
+                                          _links: { self: 'https://api-sandbox.kopokopo.com/events/cac95329-9fa5-42f1-a4fc-c08af7b868fb',
+                                                    resource: 'https://api-sandbox.kopokopo.com/buygoods_transaction/cdb5f11f-62df-e611-80ee-0aa34a9b2388' })
+
+    @bg_reversal = HashWithIndifferentAccess.new( id: 'cac95329-9fa5-42f1-a4fc-c08af7b868fb', resourceId: 'cdb5f11f-62df-e611-80ee-0aa34a9b2388', topic: 'buygoods_transaction_reversed',
+                                                  created_at: '2017-01-20T22:45:12.790Z',
+                                                  event: { type: 'Buygoods Transaction Reversed',
+                                                           resource: { reference: 'KKPPLLMMNN', origination_time: '2018-01-20T22:45:12.790Z', reversal_time: '2018-01-21T22:45:12.790Z',
+                                                                       sender_msisdn: '+2549703119050', amount: 3_000, currency: 'KES', till_number: 111_222, system: 'Lipa Na M-PESA',
+                                                                       status: 'Reversed', sender_first_name: 'John', sender_middle_name: 'O', sender_last_name: 'Doe' } },
+                                                  _links: { self: 'https://api-sandbox.kopokopo.com/events/cac95329-9fa5-42f1-a4fc-c08af7b868fb',
+                                                            resource: 'https://api-sandbox.kopokopo.com/buygoods_transaction/cdb5f11f-62df-e611-80ee-0aa34a9b2388' })
+
+    @settlement = HashWithIndifferentAccess.new( id: 'cac95329-9fa5-42f1-a4fc-c08af7b868fb', resourceId: 'cdb5f11f-62df-e611-80ee-0aa34a9b2388', topic: 'settlement_transfer_completed',
+                                                 created_at: '2017-01-20T22:45:12.790Z',
+                                                 event: { type: 'Settlement',
+                                                          resource: { reference: 'KKPPLLMMNN', origination_time: '2017-01-20T22:45:12.790Z', transfer_time: '2018-01-21T22:45:12.790Z',
+                                                                      transfer_type: 'Mobile Transfer', amount: 3_000, currency: 'KES', status: 'Transferred',
+                                                                      destination: { type: 'mobile', msisdn: '+254909999999', mm_system: 'Safaricom' } } },
+                                                 _links: { self: 'https://api-sandbox.kopokopo.com/events/cac95329-9fa5-42f1-a4fc-c08af7b868fb',
+                                                           resource: 'https://api-sandbox.kopokopo.com/buygoods_transaction/cdb5f11f-62df-e611-80ee-0aa34a9b2388' })
+
+    @customer = HashWithIndifferentAccess.new( id: 'cac95329-9fa5-42f1-a4fc-c08af7b868fb', resourceId: 'cdb5f11f-62df-e611-80ee-0aa34a9b2388', topic: 'customer_created',
+                                               created_at: '2017-01-20T22:45:12.790Z',
+                                               event: { type: 'Customer Created',
+                                                        resource: { msisdn: '+2549703119050', first_name: 'John', middle_name: 'O', last_name: 'Doe' } },
+                                               _links: { self: 'https://api-sandbox.kopokopo.com/events/cac95329-9fa5-42f1-a4fc-c08af7b868fb',
+                                                         resource: 'https://api-sandbox.kopokopo.com/buygoods_transaction/cdb5f11f-62df-e611-80ee-0aa34a9b2388' })
+
+    @stk = HashWithIndifferentAccess.new( id: 'cac95329-9fa5-42f1-a4fc-c08af7b868fb', resourceId: 'cdb5f11f-62df-e611-80ee-0aa34a9b2388', topic: 'payment_request',
+                                          created_at: '2017-01-20T22:45:12.790Z', status: 'Success',
+                                          event: { type: 'Payment Request',
+                                                   resource: { reference: 'KKPPLLMMNN', origination_time: '2017-01-20T22:45:12.790Z', sender_msisdn: '+2549703119050',
+                                                               amount: 20_000, currency: 'KES', till_number: 111_222, system: 'Lipa Na M-PESA', status: 'Received',
+                                                               sender_first_name: 'John', sender_middle_name: 'O', sender_last_name: 'Doe' },
+                                                   errors: [] },
+                                          metadata: { customer_id: 123_456_789, reference: 123_456, notes: 'Payment for invoice 123456' },
+                                          _links: { self: 'https://api-sandbox.kopokopo.com/events/cac95329-9fa5-42f1-a4fc-c08af7b868fb',
+                                                    payment_request: 'https://api-sandbox.kopokopo.com/payment_requests/cac95329-9fa5-42f1-a4fc-c08af7b868fb',
+                                                    resource: 'https://api-sandbox.kopokopo.com/buygoods_transaction/cdb5f11f-62df-e611-80ee-0aa34a9b2388' })
+
+    @failed_stk = HashWithIndifferentAccess.new( id: 'cac95329-9fa5-42f1-a4fc-c08af7b868fb', resourceId: 'null', topic: 'payment_request',
+                                                 created_at: '2017-01-20T22:45:12.790Z', status: 'Failed',
+                                                 event: { type: 'Payment Request',
+                                                          resource: 'null', errors: [ { code: 501, description: 'Insufficient funds' } ] },
+                                                 metadata: { customer_id: 123_456_789, reference: 123_456, notes: 'Payment for invoice 123456' },
+                                                 _links: { self: 'https://api-sandbox.kopokopo.com/events/cac95329-9fa5-42f1-a4fc-c08af7b868fb',
+                                                           resource: 'https://api-sandbox.kopokopo.com/buygoods_transaction/cdb5f11f-62df-e611-80ee-0aa34a9b2388' })
+
+    @pay = HashWithIndifferentAccess.new( id: 'cac95329-9fa5-42f1-a4fc-c08af7b868fb', topic: 'pay_request', status: 'Sent', reference: 'KKPPLLMMNN',
+                                          origination_time: '2017-01-20T22:45:12.790Z',  destination: 'c7f300c0-f1ef-4151-9bbe-005005aa3747',
+                                          amount: { currency: 'KES', value: 20_000 },
+                                          metadata: { customerId: 8_675_309, notes: 'Salary payment for May 2018' },
+                                          _links: { self: 'https://api-sandbox.kopokopo.com/events/cac95329-9fa5-42f1-a4fc-c08af7b868fb' })
   end
   context '#process' do
-    it 'should raise an error if any of the the_body argument is empty' do
+    it 'should raise an error if argument is empty' do
       expect { K2ProcessResult.process('') }.to raise_error ArgumentError
     end
 
@@ -55,7 +120,7 @@ RSpec.describe K2ProcessResult do
 
   context '#check_topic' do
     it 'should raise an error if event_type is not specified' do
-      expect { K2ProcessResult.check_topic(@the_body) }.to raise_error ArgumentError
+      expect { K2ProcessResult.check_topic( {the_body: { event: nil} } ) }.to raise_error ArgumentError
     end
   end
 

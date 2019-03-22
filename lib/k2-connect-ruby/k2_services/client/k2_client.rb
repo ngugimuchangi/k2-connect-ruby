@@ -8,7 +8,6 @@ class K2Client
   # Initialize method
   def initialize(api_secret_key)
     raise ArgumentError, 'No Secret Key Given!' if api_secret_key.blank?
-
     @api_secret_key = api_secret_key
   end
 

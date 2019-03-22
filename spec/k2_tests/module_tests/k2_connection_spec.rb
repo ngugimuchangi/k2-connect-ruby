@@ -1,4 +1,5 @@
 RSpec.describe K2Connect do
+
   context '#to_connect' do
     let(:token_hash) { { path_url: 'ouath', access_token: 'access_token', request_type: 'POST', class_type: 'class_type', params: 'body' } }
     let(:nil_token_hash) { { path_url: 'sub', access_token: '', request_type: 'POST', class_type: 'class_type', params: 'body' } }

@@ -24,7 +24,7 @@ class K2Stk < K2Entity
     }
     receive_body = {
       payment_channel: 'M-PESA',
-      till_identifier: '444555',
+      till_identifier: 444_555,
       subscriber: k2_request_subscriber,
       amount: k2_request_amount,
       metadata: k2_request_metadata,

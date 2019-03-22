@@ -14,6 +14,7 @@ class K2Result
               :middle_name,
               :last_name
 
+  # TODO, David Nino, alter first_name and co.
   def components(the_body)
     @id = the_body.dig('id')
     @topic = the_body.dig('topic')
@@ -21,7 +22,7 @@ class K2Result
     @resource_id = the_body.dig('resourceId')
     # Links
     @links = the_body.dig('_links')
-    @self = @links.dig('self')
+    @self = the_body.dig('_links','self')
     # Event
     @event = the_body.dig('event')
     @type = the_body.dig('event', 'type')

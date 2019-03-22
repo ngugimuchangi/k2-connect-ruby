@@ -42,14 +42,8 @@ class K2ProcessStk < K2FinancialTransaction
 end
 
 class K2FailedStk < K2ProcessStk
-  attr_reader :notes,
-              :errors,
-              :error_code,
-              :error_description,
-              :metadata,
-              :customer_id,
-              :payment_request,
-              :metadata_reference
+  attr_reader :error_code,
+              :error_description
 
   def components(the_body)
     super

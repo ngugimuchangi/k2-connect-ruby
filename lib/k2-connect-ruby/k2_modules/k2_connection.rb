@@ -13,6 +13,7 @@ module K2Connect
     # No access token given except for token_request in the Subscription class.
     # Access Token
     access_token = connection_hash[:access_token]
+    # puts "The Access Token:\t#{access_token}"
     # Class type
     class_type = connection_hash[:class_type]
     # Path Url
@@ -35,7 +36,7 @@ module K2Connect
       raise ArgumentError, 'Undefined Request Type'
     end
 
-    unless path_url.eql?('ouath')
+    unless path_url.eql?('oauth')
       k2_request.add_field('Accept', 'application/json')
       k2_request.add_field('Authorization', "Bearer #{access_token}")
     end
@@ -49,9 +50,9 @@ module K2Connect
     # Response Code
     response_code = k2_response.code.to_s
 
-    raise K2ConnectionError, response_code unless response_code[0].eql?(2.to_s)
+    raise K2ConnectionError.new(response_code) unless response_code[0].eql?(2.to_s)
     # If successful, add a method to fetch the components of the response
-    return response_body['access_token'] if path_url.eql?('ouath')
+    return response_body['access_token'] if path_url.eql?('oauth')
 
     # For STK Push, PAY and Transfers
     unless class_type.eql?('Subscription')

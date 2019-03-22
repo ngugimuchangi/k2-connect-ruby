@@ -82,7 +82,6 @@ module K2ProcessResult
     end
   end
 
-  # TODO, Identify which is better, Hash, Object itself or Array
   # Returns a Hash Object
   def self.return_obj_hash(instance_hash = HashWithIndifferentAccess.new, obj)
     obj.instance_variables.each do |value|

@@ -21,7 +21,7 @@ class K2Subscribe
       client_secret: client_secret,
       grant_type: 'client_credentials'
     }
-    token_hash = K2Subscribe.make_hash('ouath', 'POST', 'Subscription', token_params)
+    token_hash = K2Subscribe.make_hash('oauth', 'POST', 'Subscription', token_params)
     @access_token = K2Connect.to_connect(token_hash)
   end
 
