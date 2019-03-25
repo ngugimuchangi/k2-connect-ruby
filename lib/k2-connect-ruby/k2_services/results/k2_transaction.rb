@@ -1,55 +1,69 @@
 class K2Payment < K2Result
-  attr_reader :metadata,
-              :customer_id,
-              :notes,
+  attr_reader :notes,
               :status,
-              :reference,
-              :origination_time,
-              :first_name,
-              :middle_name,
-              :last_name
-
-  def components(the_body)
-    @metadata = the_body.dig("metadata")
-    @customer_id = the_body.dig("metadata", "customer_id")
-    @notes = the_body.dig("metadata", "notes")
-    @status = the_body.dig("status")
-  end
-end
-
-class K2ProcessStk < BuyGoods
-  attr_reader :payment_request,
-              :metadata_reference,
-              :link_resource,
               :metadata,
+              :reference,
               :customer_id,
-              :notes,
-              :errors
+              :origination_time
 
   def components(the_body)
     super
-    @status = the_body.dig("status")
-    @payment_request = the_body.dig("_links", "payment_request")
-    @metadata_reference = the_body.dig("metadata", "reference")
-    @link_resource = the_body.dig("_links", "resource")
-    @errors = the_body.dig("event", "errors")
-    @metadata = the_body.dig("metadata")
-    @customer_id = the_body.dig("metadata", "customer_id")
-    @notes = the_body.dig("metadata", "notes")
+    @status = the_body.dig('status')
+    # Metadata
+    @metadata = the_body.dig('metadata')
+    @notes = @metadata.dig('notes')
+    @customer_id = @metadata.dig('customer_id')
+  end
+end
+
+class K2ProcessStk < K2FinancialTransaction
+  attr_reader :notes,
+              :errors,
+              :metadata,
+              :customer_id,
+              :link_resource,
+              :payment_request,
+              :metadata_reference
+
+  def components(the_body)
+    super
+    @status = the_body.dig('status')
+    # Links
+    @link_resource = @links.dig('resource')
+    @payment_request = @links.dig('payment_request')
+    # Event
+    @errors = the_body.dig('event','errors')
+    # Metadata
+    @metadata = the_body.dig('metadata')
+    @notes = @metadata.dig('notes')
+    @customer_id = @metadata.dig('customer_id')
+    @metadata_reference = @metadata.dig('reference')
+  end
+end
+
+class K2FailedStk < K2ProcessStk
+  attr_reader :error_code,
+              :error_description
+
+  def components(the_body)
+    super
+    @error_code = @errors.dig(0, 'code')
+    @error_description = @errors.dig(0, 'description')
   end
 end
 
 class K2ProcessPay < K2Payment
-  attr_reader :destination,
-              :value
+  attr_reader :value,
+              :destination
 
   def components(the_body)
     super
-    @reference = the_body.dig("reference")
-    @origination_time = the_body.dig("origination_time")
-    @destination = the_body.dig("destination")
-    @amount = the_body.dig("amount")
-    @currency = the_body.dig("amount", "currency")
-    @value = the_body.dig("amount", "value")
+    @reference = the_body.dig('reference')
+    @destination = the_body.dig('destination')
+    @origination_time = the_body.dig('origination_time')
+    # Amount
+    @amount = the_body.dig('amount')
+    @value = @amount.dig('value')
+    @currency = @amount.dig('currency')
   end
 end

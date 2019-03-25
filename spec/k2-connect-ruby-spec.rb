@@ -7,6 +7,7 @@ require 'k2_tests/module_tests/k2_authorize_spec'
 require 'k2_tests/module_tests/k2_connection_spec'
 require 'k2_tests/module_tests/k2_process_spec'
 require 'k2_tests/module_tests/k2_validation_spec'
+require 'k2_tests/module_tests/k2_config_spec'
 
 # Services
 require 'k2_tests/service_tests/client_spec/k2_client_spec'

@@ -4,6 +4,7 @@
       <w>mpesa</w>
       <w>msisdn</w>
       <w>webhook</w>
+      <w>webhooks</w>
     </words>
   </dictionary>
 </component>

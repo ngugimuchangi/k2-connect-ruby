@@ -1,8 +1,8 @@
 # Common Class Behaviours for stk, pay and transfers
 class K2Entity
   attr_accessor :access_token, :the_array
-  attr_writer :query_hash
-  attr_reader :k2_response_body
+  attr_reader :k2_response_body, :query_hash
+  include K2Validation
 
   # Initialize with access token from Subscriber Class
   def initialize(access_token)
@@ -23,19 +23,9 @@ class K2Entity
   end
 
   # Query/Check the status of a previously initiated request
-  def query_status(params, path_url, class_type)
-    # Validation
-    params = validate_input(params, @exception_array += %w[id])
-    begin
-      query_body = {
-          ID: params.select { |k| k.to_s.include?('id') }.each { |i| i }
-      }
-    rescue NoMethodError
-      query_body = {
-          ID: params.permit!.to_hash.select { |k| k.to_s.include?('id') }.each { |i| i }
-      }
-    end
-    query_hash = K2Pay.make_hash(path_url, 'GET', @access_token, class_type, query_body)
+  def query_status(path_url, class_type)
+    path_url = validate_url(path_url)
+    query_hash = K2Pay.make_hash(path_url, 'GET', @access_token, class_type, nil)
     @threads << Thread.new do
       sleep 0.25
       @k2_response_body = K2Connect.to_connect(query_hash)
