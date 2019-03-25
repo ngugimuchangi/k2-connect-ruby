@@ -72,7 +72,7 @@ RSpec.describe K2Validation do
 
   context '#validate_email' do
     it 'should raise an error if email format is wrong' do
-      expect { validate_email('davod') }.to raise_error ArgumentError
+      expect { validate_email('email') }.to raise_error ArgumentError
     end
 
     it 'should validate the email' do
@@ -81,14 +81,15 @@ RSpec.describe K2Validation do
   end
 
   context '#convert_params' do
-    it 'should validate the email' do
-      expect { convert_params(davod: 'davod') }.not_to raise_error
+    it 'correct email format' do
+      expect { convert_params(davod: 'daudi') }.not_to raise_error
     end
   end
 
   context '#validate_url' do
-    it 'should raise an error if email format is wrong' do
-      expect { validate_url('davod') }.to raise_error ArgumentError
+    it 'error for wrong url format' do
+      url = 'url'
+      expect { validate_url(url) }.to raise_error ArgumentError
     end
 
     it 'should validate the email' do

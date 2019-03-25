@@ -19,7 +19,5 @@ RSpec.describe K2Client do
       allow(@k2client).to receive(:parse_request).with(the_request)
       expect { @k2client.parse_request(the_request) }.not_to raise_error
     end
-
-    pending 'parse the entire request'
   end
 end
