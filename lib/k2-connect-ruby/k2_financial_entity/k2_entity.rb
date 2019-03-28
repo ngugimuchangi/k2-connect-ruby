@@ -1,7 +1,7 @@
 # Common Class Behaviours for stk, pay and transfers
 class K2Entity
   attr_accessor :access_token, :the_array
-  attr_reader :k2_response_body, :query_hash
+  attr_reader :k2_response_body, :query_hash, :location_url
   include K2Validation
 
   # Initialize with access token from Subscriber Class

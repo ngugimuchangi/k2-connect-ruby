@@ -1,12 +1,12 @@
 # DISCLAIMER!!
 
-The following library has not yet been finalised to production, and as such, neither consumable or usable as a gem/ruby library.
+The following library has yet to be finalised to production, and as such, neither consumable or usable as a gem/ruby library.
 
 # K2ConnectRuby For Rails
 
 Ruby SDK for connection to the Kopo Kopo API.
 This documentation gives you the specifications for connecting your systems to the Kopo Kopo Application.
-Primarily you can connect to the Kopo Kopo system to perform the following:
+Primarily, the library provides functionality to do the following:
 
  - Receive Webhook notifications.
  - Receive payments from your users/customers.
@@ -42,47 +42,46 @@ Initially, you add the require line:
 
 In order to request for application authorization we need to execute the client credentials flow, this is done so by having your application server make a HTTPS request to the Kopo Kopo authorization server, through the K2Subscribe class.
 
-Create an Object of the K2Subscription class, passing an event-type parameter, used to differentiate which Webhook Subscription you are identifying, together with the webhook secret.
+Create an Object of the K2Subscription class, passing the webhook secret as a parameter.
 
- - For Buygoods Transaction Received
+    k2subscriber = K2ConnectRuby::K2Subscribe.new(webhook_secret)
 
-
-    buygoods_received = K2ConnectRuby::K2Subscribe.new('buygoods_transaction_received', webhook_secret)
-
-
-- For Buygoods Transaction Reversed
-
-
-    buygoods_reversed = K2ConnectRuby::K2Subscribe.new('buygoods_transaction_reversed', webhook_secret)
-
-
- - For Customer Created
-
-
-    customer_create = K2ConnectRuby::K2Subscribe.new('customer_created', webhook_secret)
-
-
- - For Settlement Transfer Completed
-
-
-    settlement_transfer = K2ConnectRuby::K2Subscribe.new('settlement_transfer_completed', webhook_secret)
-
-
+ 
 Next is to request for the token, done through the recently created K2Subscribe Object. From here you will pass in your client_id and client_secret details.
 
     buygoods_received.token_request('CLIENT_ID', 'CLIENT_SECRET')
  
  The Access Token that is returned is stored within the Object, accessible under the local variable 'access_token' of the Object.
  
-    your_access_token = buygoods_received.access_token
+    your_access_token = k2subscriber.access_token
  
  ##### Remember to store highly sensitive information or core details like the client_id, client_secret, access_token and such, in a config file, while ensuring to indicate them in your .gitignore file, to avoid publicly uploading them to Github.
 
-Next, we formally create the webhook subscription by calling on the following method:
+Next, we formally create the webhook subscription by calling on the following method.
+We specify the event type to differentiate the type of webhook subscription, as follows:
 
-    buygoods_reversed.webhook_subscribe
- 
- The event-type parameter specified during creating the K2Subscription Object will be used to specify what event type we intend to use.
+- For Buy Goods Transaction Received
+
+
+    k2subscriber.webhook_subscribe('buygoods_transaction_received')
+
+
+- For Buy Goods Transaction Reversed
+
+    
+    k2subscriber.webhook_subscribe('buygoods_transaction_reversed')
+
+
+ - For Customer Created
+
+
+    k2subscriber.webhook_subscribe('customer_created')
+
+
+ - For Settlement Transfer Completed
+
+
+    k2subscriber.webhook_subscribe('settlement_transfer_completed')
  
  
  ### STK-Push
@@ -103,15 +102,10 @@ One can also pass the following Hash Object instead of the Rails Form params:
 
 A Successful Response will be received containing the URL of the Payment Location.
 
- - To Query the STK Payment Request Status pass the reference number or id to the following method as shown:
+ - To Query the STK Payment Request Status pass the location_url response that is returned and accessible within the class:
 
 
-    k2_stk.query_status(params)
-    
-    
-One can also pass the following Hash Object instead of params:
-
-    {id: 'your_id'}
+    k2_stk.query_status(k2_stk.location_url)
 
 
 As a result a JSON payload will be returned, accessible with the k2_response_body variable.
@@ -150,15 +144,11 @@ Or can also pass the following Hash Object instead of params:
 
 The Params are passed as the argument containing all the form data sent. A Successful Response is returned with the URL of the Payment resource in the HTTP Location Header.
 
- - To Query the PAYment Request Status pass the reference number or payment_id to the following method as shown:
+ - To Query the PAYment Request Status pass the location_url response:
 
 
-    k2_pay.query_status(params)
+    k2_pay.query_status(k2_pay.location_url)
     
-    
-Or can also pass the following Hash Object instead of params:
-
-    {id: 'your_id'}
 
 As a result a JSON payload will be returned, accessible with the k2_response_body variable.
 
@@ -205,22 +195,18 @@ Or can also pass the following Hash Object instead of params for either **Blind*
 
 The Params are passed as the argument containing all the form data sent. A Successful Response is returned with the URL of the Transfer in the HTTP Location Header.
 
- - To Query the status of the prior initiated Transfer Request pass the reference number or payment_id to the following method as shown:
+ - To Query the status of the prior initiated Transfer Request pass the location_url response as shown:
 
 
-     k2_transfers.query_status(params)
+     k2_transfers.query_status(k2_transfers.location_url)
      
-     
-Or can also pass the following Hash Object instead of params:
-
-    {id: 'your_id'}
 
 A HTTP Response will be returned in a JSON Payload, accessible with the k2_response_body variable.
 
 ### Parsing the JSON Payload
 
 The K2Client class will be use to parse the Payload received from Kopo Kopo, and to further consume the webhooks and split the responses into components, the K2Authenticator and
-K2SplitRequest Classes will be used.
+K2ProcessResult Classes will be used.
 
  - First Create an Object of the K2Client class to Parse the response, passing the client_secret_key received from Kopo Kopo:
 
@@ -242,13 +228,13 @@ K2SplitRequest Classes will be used.
      K2Authenticator.authenticate(k2_parse.hash_body, k2_parse.api_secret_key, k2_parse.k2_signature)
 
 
- - Create a Hash Object to receive the hash components resulting from processing the parsed request results:
+ - Create an Object to receive the components resulting from processing the parsed request results which will be returned by the following method:
 
 
      k2_components = K2ProcessResult.process(k2_parse.hash_body)
      
      
- Below is a list of key symbols accessible for each of the Results retrieved after processing it into a Hash Object.
+ Below is a list of key symbols accessible for each of the Results retrieved after processing it into an Object.
  
 1. Buy Goods Transaction Received:
     - id
@@ -286,12 +272,11 @@ K2SplitRequest Classes will be used.
     - resource
     - reference
     - origination_time
-    - resource_status
     - transfer_time
     - transfer_type
     - amount
     - currency
-    - status
+    - resource_status
     - destination
     - destination_type
     - msisdn
@@ -316,7 +301,45 @@ K2SplitRequest Classes will be used.
     - self
     - link_resource
     
-5. Process STK Push Payment Request Result
+5. B2b Transaction Transaction (External Till to Till):
+    - id
+    - resource_id
+    - topic
+    - created_at
+    - event
+    - type
+    - resource
+    - reference
+    - origination_time
+    - amount
+    - currency
+    - till_number
+    - system
+    - resource_status
+    - links
+    - self
+    - link_resource
+    - sending_till
+
+6. Merchant to Merchant Transaction:
+    - id
+    - resource_id
+    - topic
+    - created_at
+    - event
+    - type
+    - resource
+    - reference
+    - origination_time
+    - amount
+    - currency
+    - resource_status
+    - links
+    - self
+    - link_resource
+    - sending_merchant
+    
+7. Process STK Push Payment Request Result
     - id
     - resource_id
     - topic
@@ -341,12 +364,35 @@ K2SplitRequest Classes will be used.
     - customer_id
     - metadata_reference
     - notes
+    - links
     - self
     - payment_request
     - link_resource
-
-6. Process PAY Result
+    
+8. Unsuccessful Process STK Push Payment Request Result
     - id
+    - resource_id
+    - topic
+    - created_at
+    - status
+    - event
+    - type
+    - resource
+    - errors
+    - error_code
+    - error_description
+    - metadata
+    - customer_id
+    - metadata_reference
+    - notes
+    - links
+    - self
+    - payment_request
+
+9. Process PAY Result
+    - id
+    - topic
+    - status
     - reference
     - origination_time
     - destination
@@ -358,6 +404,19 @@ K2SplitRequest Classes will be used.
     - notes
     - links
     - self
+    
+If you want to convert the Object into a Hash or Array, the following methods can be used.
+- Hash:
+   
+   
+        k2_hash_components = K2ProcessResult.return_obj_hash(k2_components)
+    
+    
+- Array:
+   
+    
+        k2_array_components = K2ProcessResult.return_obj_array(k2_components)
+
 
 
 ## Development

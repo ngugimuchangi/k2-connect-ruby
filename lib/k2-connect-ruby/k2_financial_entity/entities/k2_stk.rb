@@ -1,6 +1,5 @@
 # For STK Push/Receive MPESA Payments from merchant's customers
 class K2Stk < K2Entity
-  attr_reader :location_url
 
   # Receive payments from M-PESA users.
   def receive_mpesa_payments(params)

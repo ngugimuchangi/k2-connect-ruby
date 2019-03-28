@@ -1,6 +1,5 @@
 # For Transferring funds to pre-approved and owned settlement accounts
 class K2Transfer < K2Entity
-  attr_reader :location_url
 
   # Create a Verified Settlement Account via API
   def settlement_account(params)
