@@ -411,6 +411,8 @@ Sample Web Application examples written in Rails and Sinatra frameworks that uti
  - [Rails example application](https://github.com/DavidKar1uk1/kt_tips_rails)
 
  - [Sinatra example application](https://github.com/DavidKar1uk1/kt_tips)
+ 
+ ##### Take Note; the Library is optimized for Rails frameworks version 5.
 
 ## Development
 
@@ -418,9 +420,7 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 
 ## Author
 
-**Name**:   [David Kariuki Mwangi](https://github.com/DavidKar1uk1)
-
-**Email**:  David.mwangi@kopokopo.com
+**Name**:   [David Kariuki Mwangi](https://github.com/DavidJonKariz)
 
 ## Contributing
 
@@ -428,7 +428,11 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/kopoko
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License]vv.
+The gem is available as open source under the terms of the [MIT License].
+
+## Changelog
+
+
 
 ## Code of Conduct
 
