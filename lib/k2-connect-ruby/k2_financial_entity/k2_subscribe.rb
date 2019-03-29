@@ -1,13 +1,10 @@
 # Class for Subscription Service
 class K2Subscribe
-  attr_accessor :access_token
-  attr_reader :event_type
+  attr_reader :event_type, :access_token
 
   # Intialize with the event_type
-  def initialize(event_type, webhook_secret)
-    raise ArgumentError, 'Nil or Empty Event Type Specified!' if event_type.blank?
-
-    @event_type = event_type
+  def initialize(webhook_secret)
+    raise ArgumentError, 'Nil or Empty Event Type Specified!' if webhook_secret.blank?
     @webhook_secret = webhook_secret
   end
 
@@ -26,8 +23,9 @@ class K2Subscribe
   end
 
   # Implemented a Case condition that minimises repetition
-  def webhook_subscribe
-    case @event_type
+  def webhook_subscribe(event_type)
+    raise ArgumentError, 'Nil or Empty Event Type Specified!' if event_type.blank?
+    case event_type
       # Buygoods Received
     when 'buygoods_transaction_received'
       k2_request_body = {
@@ -40,7 +38,7 @@ class K2Subscribe
       # Buygoods Reversed
     when 'buygoods_transaction_reversed'
       k2_request_body = {
-        event_type: 'buygooods_transaction_reversed',
+        event_type: 'buygoods_transaction_reversed',
         url: 'https://myapplication.com/webhooks',
         secret: @webhook_secret
       }

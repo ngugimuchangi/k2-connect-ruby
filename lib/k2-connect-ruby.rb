@@ -20,5 +20,3 @@ require 'k2-connect-ruby/k2_financial_entity/entity'
 # ActiveSupport
 require 'active_support/core_ext/hash/indifferent_access'
 
-# For Stub Requests
-require 'k2_tests/mock_requests'

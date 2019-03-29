@@ -1,6 +1,5 @@
 # For PAY/ Send Money to others
 class K2Pay < K2Entity
-  attr_reader :location_url
 
   # Adding PAY Recipients with either mobile_wallets or bank_accounts as destination of your payments.
   def pay_recipients(params)

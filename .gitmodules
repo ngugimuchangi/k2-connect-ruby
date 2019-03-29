@@ -1,0 +1,6 @@
+[submodule "example_app/rails/kt_tips_rails"]
+	path = example_app/rails/kt_tips_rails
+	url = git@github.com:DavidKar1uk1/kt_tips_rails.git
+[submodule "example_app/sinatra/kt_tips"]
+	path = example_app/sinatra/kt_tips
+	url = git@github.com:DavidKar1uk1/kt_tips.git

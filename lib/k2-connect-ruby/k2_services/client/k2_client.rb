@@ -16,7 +16,7 @@ class K2Client
     raise ArgumentError, 'Nil Request Parameter Input!' if the_request.blank?
 
     # The Response Body.
-    @hash_body = Yajl::Parser.parse(the_request.body.string.as_json)
+    @hash_body = Yajl::Parser.parse(the_request.body.read.as_json)
     # The Response Header
     hash_header = Yajl::Parser.parse(the_request.env.select { |k, _| k =~ /^HTTP_/ }.to_json)
     # The K2 Signature
