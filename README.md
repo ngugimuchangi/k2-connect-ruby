@@ -49,7 +49,7 @@ Create an Object of the K2Subscription class, passing the webhook secret as a pa
  
 Next is to request for the token, done through the recently created K2Subscribe Object. From here you will pass in your client_id and client_secret details.
 
-    buygoods_received.token_request('CLIENT_ID', 'CLIENT_SECRET')
+    k2subscriber.token_request('CLIENT_ID', 'CLIENT_SECRET')
  
  The Access Token that is returned is stored within the Object, accessible under the local variable 'access_token' of the Object.
  
@@ -418,10 +418,21 @@ If you want to convert the Object into a Hash or Array, the following methods ca
         k2_array_components = K2ProcessResult.return_obj_array(k2_components)
 
 
+Sample Web Application examples written in Rails and Sinatra frameworks that utilize this library are available in the example_app folder or in the following GitHub hyperlinks:
+
+ - [Rails example application](https://github.com/DavidKar1uk1/kt_tips_rails)
+
+ - [Sinatra example application](https://github.com/DavidKar1uk1/kt_tips)
 
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+
+## Author
+
+**Name**:   [David Kariuki Mwangi](https://github.com/DavidKar1uk1)
+
+**Email**:  David.mwangi@kopokopo.com
 
 ## Contributing
 
@@ -429,7 +440,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/kopoko
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+The gem is available as open source under the terms of the [MIT License]vv.
 
 ## Code of Conduct
 
