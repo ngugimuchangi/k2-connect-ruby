@@ -17,22 +17,25 @@ class K2Stk < K2Entity
       value: params['value']
     }
     k2_request_metadata = {
-      customer_id: 123_456_789,
-      reference: 123_456,
+      customer_id: "123_456_789",
+      reference: "123_456",
       notes: 'Payment for invoice 12345'
+    }
+    k2_request_links = {
+        call_back_url: 'https://call_back_to_your_app.your_application.com'
     }
     receive_body = {
       payment_channel: 'M-PESA',
-      till_identifier: 444_555,
+      till_identifier: '444555',
       subscriber: k2_request_subscriber,
       amount: k2_request_amount,
-      metadata: k2_request_metadata,
-      call_back_url: 'https://call_back_to_your_app.your_application.com'
+      meta_data: k2_request_metadata,
+      _links: k2_request_links
     }
     receive_hash = K2Stk.make_hash('api/v1/incoming_payments', 'POST', @access_token, 'STK', receive_body)
     @threads << Thread.new do
       sleep 0.25
-      @location_url = K2Connect.to_connect(receive_hash)
+      @location_url = K2Connect.connect(receive_hash)
     end
     @threads.each(&:join)
   end

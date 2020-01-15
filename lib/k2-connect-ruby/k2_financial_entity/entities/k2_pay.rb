@@ -35,7 +35,7 @@ class K2Pay < K2Entity
     pay_recipient_hash = K2Pay.make_hash('api/v1/pay_recipients', 'POST', @access_token, 'PAY', recipients_body)
     @threads << Thread.new do
       sleep 0.25
-      @location_url = K2Connect.to_connect(pay_recipient_hash)
+      @location_url = K2Connect.connect(pay_recipient_hash)
     end
     @threads.each(&:join)
   end
@@ -53,16 +53,19 @@ class K2Pay < K2Entity
       customerId: 8_675_309,
       notes: 'Salary payment for May 2018'
     }
+    k2_request_links = {
+        call_back_url: 'https://call_back_to_your_app.your_application.com'
+    }
     create_payment_body = {
       destination: 'c7f300c0-f1ef-4151-9bbe-005005aa3747',
       amount: k2_request_pay_amount,
       metadata: k2_request_pay_metadata,
-      callback_url: 'https://your-call-bak.yourapplication.com/payment_result'
+      _links: k2_request_links
     }
     create_payment_hash = K2Pay.make_hash('api/v1/payments', 'POST', @access_token, 'PAY', create_payment_body)
     @threads << Thread.new do
       sleep 0.25
-      @location_url = K2Connect.to_connect(create_payment_hash)
+      @location_url = K2Connect.connect(create_payment_hash)
     end
     @threads.each(&:join)
   end

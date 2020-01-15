@@ -28,7 +28,7 @@ class K2Entity
     query_hash = K2Pay.make_hash(path_url, 'GET', @access_token, class_type, nil)
     @threads << Thread.new do
       sleep 0.25
-      @k2_response_body = K2Connect.to_connect(query_hash)
+      @k2_response_body = K2Connect.connect(query_hash)
     end
     @threads.each(&:join)
   end

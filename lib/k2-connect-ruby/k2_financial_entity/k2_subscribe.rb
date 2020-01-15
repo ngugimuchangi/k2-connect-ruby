@@ -72,7 +72,7 @@ class K2Subscribe
       raise ArgumentError, 'Subscription Service does not Exist!'
     end
     subscribe_hash = K2Subscribe.make_hash(the_path_url, 'POST', @access_token,'Subscription', k2_request_body)
-    K2Connect.to_connect(subscribe_hash)
+    K2Connect.connect(subscribe_hash)
   end
 
   # Method for Validating the input itself

@@ -4,7 +4,7 @@ require 'yajl'
 # Module for Sending the Requests
 module K2Connect
   # Method for sending the request to K2 sandbox or Mock Server
-  def self.to_connect(connection_hash)
+  def self.connect(connection_hash)
     # The Server. WONT BE HARD CODED.
     #host_url = 'https://3b815ff3-b118-4e25-8687-1e31c38a733b.mock.pstmn.io'
     # Sandbox API host url
@@ -12,10 +12,8 @@ module K2Connect
     # Sets the URL through the Config Module
     host_url ||= K2Config.get_host_url
 
-    # No access token given except for token_request in the Subscription class.
     # Access Token
     access_token = connection_hash[:access_token]
-    # puts "The Access Token:\t#{access_token}"
     # Class type
     class_type = connection_hash[:class_type]
     # Path Url
@@ -39,7 +37,7 @@ module K2Connect
     end
 
     unless path_url.eql?('oauth')
-      k2_request.add_field('Accept', 'application/json')
+      k2_request.add_field('Accept', ' application/vnd.kopokopo.v1.hal+json')
       k2_request.add_field('Authorization', "Bearer #{access_token}")
     end
     k2_request.body = connection_hash[:params].to_json
@@ -49,6 +47,7 @@ module K2Connect
 
     # Response Body
     response_body = Yajl::Parser.parse(k2_response.body)
+    response_headers = Yajl::Parser.parse(k2_response.header.to_json)
     # Response Code
     response_code = k2_response.code.to_s
 
@@ -61,8 +60,11 @@ module K2Connect
       # Return the result of the Query
       return response_body if request_type.eql?('GET')
 
+      # Print the Response Headers for POST Requests
+      puts "Location URL: #{response_headers['location']}"
+
       # Return the location url for POST Requests
-      return response_body['location']
+      return response_headers['location']
     end
 
     k2_https.shutdown

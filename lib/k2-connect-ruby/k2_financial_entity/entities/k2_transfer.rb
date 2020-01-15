@@ -16,7 +16,7 @@ class K2Transfer < K2Entity
     settlement_hash = K2Transfer.make_hash('api/v1/merchant_bank_accounts', 'POST', @access_token, 'Transfer', settlement_body)
     @threads << Thread.new do
       sleep 0.25
-      @location_url = K2Connect.to_connect(settlement_hash)
+      @location_url = K2Connect.connect(settlement_hash)
     end
     @threads.each(&:join)
   end
@@ -47,7 +47,7 @@ class K2Transfer < K2Entity
     transfer_hash = K2Transfer.make_hash('api/v1/transfers', 'POST', @access_token, 'Transfer', transfer_body)
     @threads << Thread.new do
       sleep 0.25
-      @location_url = K2Connect.to_connect(transfer_hash)
+      @location_url = K2Connect.connect(transfer_hash)
     end
     @threads.each(&:join)
   end
