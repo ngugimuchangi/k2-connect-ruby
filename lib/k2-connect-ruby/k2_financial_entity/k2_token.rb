@@ -8,7 +8,7 @@ class K2AccessToken
   end
 
   # Method for sending the request to K2 sandbox or Mock Server (Receives the access_token)
-  def token_request
+  def request_token
     token_params = {
         client_id: @client_id,
         client_secret: @client_secret,

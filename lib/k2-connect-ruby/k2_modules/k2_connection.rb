@@ -8,7 +8,7 @@ module K2Connect
     # The Server. WONT BE HARD CODED.
     #host_url = 'https://3b815ff3-b118-4e25-8687-1e31c38a733b.mock.pstmn.io'
     # Sandbox API host url
-    #host_url = 'http://127.0.0.1:3000'
+    host_url = 'http://127.0.0.1:3000'
     # Sets the URL through the Config Module
     host_url ||= K2Config.get_host_url
 
