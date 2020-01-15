@@ -32,7 +32,7 @@ class K2Pay < K2Entity
       type: params['pay_type'],
       pay_recipient: k2_request_pay_recipient
     }
-    pay_recipient_hash = K2Pay.make_hash('pay_recipients', 'POST', @access_token, 'PAY', recipients_body)
+    pay_recipient_hash = K2Pay.make_hash('api/v1/pay_recipients', 'POST', @access_token, 'PAY', recipients_body)
     @threads << Thread.new do
       sleep 0.25
       @location_url = K2Connect.to_connect(pay_recipient_hash)
@@ -59,7 +59,7 @@ class K2Pay < K2Entity
       metadata: k2_request_pay_metadata,
       callback_url: 'https://your-call-bak.yourapplication.com/payment_result'
     }
-    create_payment_hash = K2Pay.make_hash('payments', 'POST', @access_token, 'PAY', create_payment_body)
+    create_payment_hash = K2Pay.make_hash('api/v1/payments', 'POST', @access_token, 'PAY', create_payment_body)
     @threads << Thread.new do
       sleep 0.25
       @location_url = K2Connect.to_connect(create_payment_hash)

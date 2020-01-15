@@ -1,25 +1,14 @@
 # Class for Subscription Service
 class K2Subscribe
-  attr_reader :event_type, :access_token
+  attr_reader :event_type
+  attr_accessor :access_token
 
   # Intialize with the event_type
-  def initialize(webhook_secret)
-    raise ArgumentError, 'Nil or Empty Event Type Specified!' if webhook_secret.blank?
+  def initialize(webhook_secret, access_token)
+    raise ArgumentError, 'Nil or Empty Webhook Specified!' if webhook_secret.blank?
+    raise ArgumentError, 'Nil or Empty Access Token Given!' if access_token.blank?
     @webhook_secret = webhook_secret
-  end
-
-  # Method for sending the request to K2 sandbox or Mock Server (Receives the access_token)
-  def token_request(client_id, client_secret)
-    # Validation
-    validate_input(client_id, client_secret) && return
-
-    token_params = {
-      client_id: client_id,
-      client_secret: client_secret,
-      grant_type: 'client_credentials'
-    }
-    token_hash = K2Subscribe.make_hash('oauth', 'POST', 'Subscription', token_params)
-    @access_token = K2Connect.to_connect(token_hash)
+    @access_token = access_token
   end
 
   # Implemented a Case condition that minimises repetition
@@ -33,7 +22,7 @@ class K2Subscribe
         url: 'https://myapplication.com/webhooks',
         secret: @webhook_secret
       }
-      the_path_url = 'webhook-subscription'
+      the_path_url = 'api/v1/webhook_subscriptions'
 
       # Buygoods Reversed
     when 'buygoods_transaction_reversed'
@@ -42,7 +31,7 @@ class K2Subscribe
         url: 'https://myapplication.com/webhooks',
         secret: @webhook_secret
       }
-      the_path_url = 'buygoods-transaction-reversed'
+      the_path_url = 'api/v1/buygoods-transaction-reversed'
 
       # Customer Created.
     when 'customer_created'
@@ -51,7 +40,7 @@ class K2Subscribe
         url: 'https://myapplication.com/webhooks',
         secret: @webhook_secret
       }
-      the_path_url = 'customer-created'
+      the_path_url = 'api/v1/customer-created'
 
       # Settlement Transfer Completed
     when 'settlement_transfer_completed'
@@ -60,7 +49,7 @@ class K2Subscribe
         url: 'https://myapplication.com/webhooks',
         secret: @webhook_secret
       }
-      the_path_url = 'settlement'
+      the_path_url = 'api/v1/settlement'
 
       # Settlement Transfer Completed
     when 'external_till_to_till'
@@ -69,7 +58,7 @@ class K2Subscribe
         url: 'https://myapplication.com/webhooks',
         secret: @webhook_secret
       }
-      the_path_url = 'b2b-transaction-received'
+      the_path_url = 'api/v1/b2b-transaction-received'
 
       # Settlement Transfer Completed
     when 'k2_merchant_to_merchant'
@@ -78,11 +67,11 @@ class K2Subscribe
         url: 'https://myapplication.com/webhooks',
         secret: @webhook_secret
       }
-      the_path_url = 'merchant-to-merchant'
+      the_path_url = 'api/v1/merchant-to-merchant'
     else
       raise ArgumentError, 'Subscription Service does not Exist!'
     end
-    subscribe_hash = K2Subscribe.make_hash(the_path_url, 'POST', 'Subscription', k2_request_body)
+    subscribe_hash = K2Subscribe.make_hash(the_path_url, 'POST', @access_token,'Subscription', k2_request_body)
     K2Connect.to_connect(subscribe_hash)
   end
 
@@ -92,9 +81,10 @@ class K2Subscribe
   end
 
   # Create a Hash containing important details accessible for K2Connect
-  def self.make_hash(path_url, request, class_type, body)
+  def self.make_hash(path_url, request, access_token, class_type, body)
     {
       path_url: path_url,
+      access_token: access_token,
       request_type: request,
       class_type: class_type,
       params: body

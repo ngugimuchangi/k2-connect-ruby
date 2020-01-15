@@ -6,7 +6,9 @@ module K2Connect
   # Method for sending the request to K2 sandbox or Mock Server
   def self.to_connect(connection_hash)
     # The Server. WONT BE HARD CODED.
-    host_url = 'https://3b815ff3-b118-4e25-8687-1e31c38a733b.mock.pstmn.io'
+    #host_url = 'https://3b815ff3-b118-4e25-8687-1e31c38a733b.mock.pstmn.io'
+    # Sandbox API host url
+    #host_url = 'http://127.0.0.1:3000'
     # Sets the URL through the Config Module
     host_url ||= K2Config.get_host_url
 
@@ -21,7 +23,7 @@ module K2Connect
     # Request Type
     request_type = connection_hash[:request_type]
 
-    unless class_type.eql?('Subscription') || access_token.present?
+    unless class_type.eql?('Access Token') || access_token.present?
       raise ArgumentError, 'No Access Token in Arguments!'
     end
 
@@ -52,7 +54,7 @@ module K2Connect
 
     raise K2ConnectionError.new(response_code) unless response_code[0].eql?(2.to_s)
     # If successful, add a method to fetch the components of the response
-    return response_body['access_token'] if path_url.eql?('oauth')
+    return response_body['access_token'] if path_url.eql?('oauth/token')
 
     # For STK Push, PAY and Transfers
     unless class_type.eql?('Subscription')

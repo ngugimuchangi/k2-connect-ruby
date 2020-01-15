@@ -1,4 +1,5 @@
 # For Transferring funds to pre-approved and owned settlement accounts
+# TODO: Not added to the K2 API
 class K2Transfer < K2Entity
 
   # Create a Verified Settlement Account via API
@@ -12,7 +13,7 @@ class K2Transfer < K2Entity
       bank_branch_ref: params['bank_branch_ref'],
       account_number: params['account_number']
     }
-    settlement_hash = K2Transfer.make_hash('merchant_bank_accounts', 'POST', @access_token, 'Transfer', settlement_body)
+    settlement_hash = K2Transfer.make_hash('api/v1/merchant_bank_accounts', 'POST', @access_token, 'Transfer', settlement_body)
     @threads << Thread.new do
       sleep 0.25
       @location_url = K2Connect.to_connect(settlement_hash)
@@ -43,7 +44,7 @@ class K2Transfer < K2Entity
                         destination: destination
                       }
                     end
-    transfer_hash = K2Transfer.make_hash('transfers', 'POST', @access_token, 'Transfer', transfer_body)
+    transfer_hash = K2Transfer.make_hash('api/v1/transfers', 'POST', @access_token, 'Transfer', transfer_body)
     @threads << Thread.new do
       sleep 0.25
       @location_url = K2Connect.to_connect(transfer_hash)

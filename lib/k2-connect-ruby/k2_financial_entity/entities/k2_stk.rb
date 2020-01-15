@@ -29,7 +29,7 @@ class K2Stk < K2Entity
       metadata: k2_request_metadata,
       call_back_url: 'https://call_back_to_your_app.your_application.com'
     }
-    receive_hash = K2Stk.make_hash('payment_requests', 'POST', @access_token, 'STK', receive_body)
+    receive_hash = K2Stk.make_hash('api/v1/incoming_payments', 'POST', @access_token, 'STK', receive_body)
     @threads << Thread.new do
       sleep 0.25
       @location_url = K2Connect.to_connect(receive_hash)

@@ -18,6 +18,20 @@ Please note, all requests MUST be made over HTTPS.
 Any non-secure requests are met with a redirect (HTTP 302) to the HTTPS equivalent URI.
 All calls made without authentication will also fail.
 
+## LINKS
+
+ - [Installation](https://github.com/DavidKar1uk1/k2-connect-ruby#installation)
+ - [Usage](https://github.com/DavidKar1uk1/k2-connect-ruby#usage)
+    - [Authentication](https://github.com/DavidKar1uk1/k2-connect-ruby#authentication)
+    - [STK Push](https://github.com/DavidKar1uk1/k2-connect-ruby#stk-push)
+    - [PAY](https://github.com/DavidKar1uk1/k2-connect-ruby#pay)
+    - [Transfers](https://github.com/DavidKar1uk1/k2-connect-ruby#transfers)
+    - [Parsing the JSON Payload](https://github.com/DavidKar1uk1/k2-connect-ruby#parsing-the-json-payload)
+ - [Development](https://github.com/DavidKar1uk1/k2-connect-ruby#development)
+ - [Contributing](https://github.com/DavidKar1uk1/k2-connect-ruby#contributing)
+ - [License](https://github.com/DavidKar1uk1/k2-connect-ruby#license)
+ - [Code of Conduct](https://github.com/DavidKar1uk1/k2-connect-ruby#code-of-conduct)
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -38,24 +52,26 @@ Initially, you add the require line:
 
     require 'k2-connect-ruby'
 
-### Authentication
+### Authorization
 
-In order to request for application authorization we need to execute the client credentials flow, this is done so by having your application server make a HTTPS request to the Kopo Kopo authorization server, through the K2Subscribe class.
+Ensure you first Register your application with the [Kopo Kopo Sandbox](To be added later when launched).
+Once an application is registered you will obtain your `client_id` and `client_secret` (aka client credentials), which will be used to identify your application when calling the Kopo Kopo API.
 
-Create an Object of the K2Subscription class, passing the webhook secret as a parameter.
+In order to request for application authorization and receive an access token, we need to execute the client credentials flow, this is done so by having your application server make a HTTPS request to the Kopo Kopo authorization server, through the K2AccessToken class.
 
-    k2subscriber = K2ConnectRuby::K2Subscribe.new(webhook_secret)
+```ruby
+k2_token = K2AccessToken.new('your_client_id', 'your_client_secret').token_request
+```
 
+### Webhook Subscription
+
+Create an Object of the K2Subscription class, with the webhook secret and access token passed as arguments.
+    
+```ruby
+k2subscriber = K2Subscribe.new('webhook_secret', k2_token)
+```
  
-Next is to request for the token, done through the recently created K2Subscribe Object. From here you will pass in your client_id and client_secret details.
-
-    k2subscriber.token_request('CLIENT_ID', 'CLIENT_SECRET')
- 
- The Access Token that is returned is stored within the Object, accessible under the local variable 'access_token' of the Object.
- 
-    your_access_token = k2subscriber.access_token
- 
- ##### Remember to store highly sensitive information or core details like the client_id, client_secret, access_token and such, in a config file, while ensuring to indicate them in your .gitignore file, to avoid publicly uploading them to Github.
+##### Remember to store highly sensitive information or core details like the client_id, client_secret, access_token and such, in a config file, while ensuring to indicate them in your .gitignore file, to avoid publicly uploading them to Github.
 
 Next, we formally create the webhook subscription by calling on the following method.
 We specify the event type to differentiate the type of webhook subscription, as follows:
@@ -75,6 +91,14 @@ We specify the event type to differentiate the type of webhook subscription, as 
 ###### For Settlement Transfer Completed
 
     k2subscriber.webhook_subscribe('settlement_transfer_completed')
+    
+Buy Goods Transaction Received Code Example:
+
+```ruby
+require 'k2-connect-ruby'
+k2_token = K2AccessToken.new('your_client_id', 'your_client_secret').token_request
+k2subscriber = K2Subscribe.new('webhook_secret', k2_token)
+```
  
  
  ### STK-Push
@@ -225,173 +249,173 @@ Create an Object to receive the components resulting from processing the parsed 
  Below is a list of key symbols accessible for each of the Results retrieved after processing it into an Object.
  
 1. Buy Goods Transaction Received:
-    - id
-    - resource_id
-    - topic
-    - created_at
-    - event
-    - type
-    - resource
-    - reference
-    - origination_time
-    - msisdn
-    - amount
-    - currency
-    - till_number
-    - system
-    - resource_status
-    - first_name
-    - middle_name
-    - last_name
-    - links
-    - self
-    - link_resource
+    - `id`
+    - `resource_id`
+    - `topic`
+    - `created_at`
+    - `event`
+    - `type`
+    - `resource`
+    - `reference`
+    - `origination_time`
+    - `msisdn`
+    - `amount`
+    - `currency`
+    - `till_number`
+    - `system`
+    - `resource_status`
+    - `first_name`
+    - `middle_name`
+    - `last_name`
+    - `links`
+    - `self`
+    - `link_resource`
     
 2. Buy Goods Transaction Reversed. Has the same key symbols as Buy Goods Transaction Received, plus:
-    - reversal_time 
+    - `reversal_time` 
     
 3. Settlement Transfer:
-    - id
-    - resource_id
-    - topic
-    - created_at
-    - event
-    - type
-    - resource
-    - reference
-    - origination_time
-    - transfer_time
-    - transfer_type
-    - amount
-    - currency
-    - resource_status
-    - destination
-    - destination_type
-    - msisdn
-    - destination_mm_system
-    - links
-    - self
-    - link_resource
+    - `id`
+    - `resource_id`
+    - `topic`
+    - `created_at`
+    - `event`
+    - `type`
+    - `resource`
+    - `reference`
+    - `origination_time`
+    - `transfer_time`
+    - `transfer_type`
+    - `amount`
+    - `currency`
+    - `resource_status`
+    - `destination`
+    - `destination_type`
+    - `msisdn`
+    - `destination_mm_system`
+    - `links`
+    - `self`
+    - `link_resource`
 
 4. Customer Created:
-    - id
-    - resource_id
-    - topic
-    - created_at
-    - event
-    - type
-    - resource
-    - first_name
-    - middle_name
-    - last_name
-    - msisdn
-    - links
-    - self
-    - link_resource
+    - `id`
+    - `resource_id`
+    - `topic`
+    - `created_at`
+    - `event`
+    - `type`
+    - `resource`
+    - `first_name`
+    - `middle_name`
+    - `last_name`
+    - `msisdn`
+    - `links`
+    - `self`
+    - `link_resource`
     
 5. B2b Transaction Transaction (External Till to Till):
-    - id
-    - resource_id
-    - topic
-    - created_at
-    - event
-    - type
-    - resource
-    - reference
-    - origination_time
-    - amount
-    - currency
-    - till_number
-    - system
-    - resource_status
-    - links
-    - self
-    - link_resource
-    - sending_till
+    - `id`
+    - `resource_id`
+    - `topic`
+    - `created_at`
+    - `event`
+    - `type`
+    - `resource`
+    - `reference`
+    - `origination_time`
+    - `amount`
+    - `currency`
+    - `till_number`
+    - `system`
+    - `resource_status`
+    - `links`
+    - `self`
+    - `link_resource`
+    - `sending_till`
 
 6. Merchant to Merchant Transaction:
-    - id
-    - resource_id
-    - topic
-    - created_at
-    - event
-    - type
-    - resource
-    - reference
-    - origination_time
-    - amount
-    - currency
-    - resource_status
-    - links
-    - self
-    - link_resource
-    - sending_merchant
+    - `id`
+    - `resource_id`
+    - `topic`
+    - `created_at`
+    - `event`
+    - `type`
+    - `resource`
+    - `reference`
+    - `origination_time`
+    - `amount`
+    - `currency`
+    - `resource_status`
+    - `links`
+    - `self`
+    - `link_resource`
+    - `sending_merchant`
     
 7. Process STK Push Payment Request Result
-    - id
-    - resource_id
-    - topic
-    - created_at
-    - status
-    - event
-    - type
-    - resource
-    - reference
-    - origination_time
-    - msisdn
-    - amount
-    - currency
-    - till_number
-    - system
-    - resource_status
-    - first_name
-    - middle_name
-    - last_name
-    - errors
-    - metadata
-    - customer_id
-    - metadata_reference
-    - notes
-    - links
-    - self
-    - payment_request
-    - link_resource
+    - `id`
+    - `resource_id`
+    - `topic`
+    - `created_at`
+    - `status`
+    - `event`
+    - `type`
+    - `resource`
+    - `reference`
+    - `origination_time`
+    - `msisdn`
+    - `amount`
+    - `currency`
+    - `till_number`
+    - `system`
+    - `resource_status`
+    - `first_name`
+    - `middle_name`
+    - `last_name`
+    - `errors`
+    - `metadata`
+    - `customer_id`
+    - `metadata_reference`
+    - `notes`
+    - `links`
+    - `self`
+    - `payment_request`
+    - `link_resource`
     
 8. Unsuccessful Process STK Push Payment Request Result
-    - id
-    - resource_id
-    - topic
-    - created_at
-    - status
-    - event
-    - type
-    - resource
-    - errors
-    - error_code
-    - error_description
-    - metadata
-    - customer_id
-    - metadata_reference
-    - notes
-    - links
-    - self
-    - payment_request
+    - `id`
+    - `resource_id`
+    - `topic`
+    - `created_at`
+    - `status`
+    - `event`
+    - `type`
+    - `resource`
+    - `errors`
+    - `error_code`
+    - `error_description`
+    - `metadata`
+    - `customer_id`
+    - `metadata_reference`
+    - `notes`
+    - `links`
+    - `self`
+    - `payment_request`
 
 9. Process PAY Result
-    - id
-    - topic
-    - status
-    - reference
-    - origination_time
-    - destination
-    - amount
-    - currency
-    - value
-    - metadata
-    - customer_id
-    - notes
-    - links
-    - self
+    - `id`
+    - `topic`
+    - `status`
+    - `reference`
+    - `origination_time`
+    - `destination`
+    - `amount`
+    - `currency`
+    - `value`
+    - `metadata`
+    - `customer_id`
+    - `notes`
+    - `links`
+    - `self`
     
 If you want to convert the Object into a Hash or Array, the following methods can be used.
 - Hash:
