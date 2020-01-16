@@ -1,78 +1,90 @@
 # Class for Subscription Service
 class K2Subscribe
-  attr_reader :event_type
+  attr_reader :event_type, :location_url
   attr_accessor :access_token
 
   # Intialize with the event_type
-  def initialize(webhook_secret, access_token)
-    raise ArgumentError, 'Nil or Empty Webhook Specified!' if webhook_secret.blank?
+  def initialize(access_token)
     raise ArgumentError, 'Nil or Empty Access Token Given!' if access_token.blank?
-    @webhook_secret = webhook_secret
     @access_token = access_token
   end
 
   # Implemented a Case condition that minimises repetition
-  def webhook_subscribe(event_type)
+  def webhook_subscribe(webhook_secret = nil, event_type, callback_url)
     raise ArgumentError, 'Nil or Empty Event Type Specified!' if event_type.blank?
+    raise ArgumentError, 'Nil or Empty Webhook Specified!' if webhook_secret.blank?
+    @webhook_secret = webhook_secret
     case event_type
       # Buygoods Received
     when 'buygoods_transaction_received'
       k2_request_body = {
         event_type: 'buygoods_transaction_received',
-        url: 'https://myapplication.com/webhooks',
-        secret: @webhook_secret
+        url: callback_url,
+        secret: @webhook_secret,
+        scope: 'Till',
+        scope_reference: '5555'
       }
-      the_path_url = 'api/v1/webhook_subscriptions'
 
       # Buygoods Reversed
     when 'buygoods_transaction_reversed'
       k2_request_body = {
         event_type: 'buygoods_transaction_reversed',
-        url: 'https://myapplication.com/webhooks',
-        secret: @webhook_secret
+        url: callback_url,
+        secret: @webhook_secret,
+        scope: 'Till',
+        scope_reference: '5555'
       }
-      the_path_url = 'api/v1/buygoods-transaction-reversed'
 
       # Customer Created.
     when 'customer_created'
       k2_request_body = {
         event_type: 'customer_created',
-        url: 'https://myapplication.com/webhooks',
-        secret: @webhook_secret
+        url: callback_url,
+        secret: @webhook_secret,
+        scope: 'Till',
+        scope_reference: '5555'
       }
-      the_path_url = 'api/v1/customer-created'
 
       # Settlement Transfer Completed
     when 'settlement_transfer_completed'
       k2_request_body = {
         event_type: 'settlement',
-        url: 'https://myapplication.com/webhooks',
-        secret: @webhook_secret
+        url: callback_url,
+        secret: @webhook_secret,
+        scope: 'Till',
+        scope_reference: '5555'
       }
-      the_path_url = 'api/v1/settlement'
 
       # Settlement Transfer Completed
     when 'external_till_to_till'
       k2_request_body = {
         event_type: 'b2b_transaction_received',
-        url: 'https://myapplication.com/webhooks',
-        secret: @webhook_secret
+        url: callback_url,
+        secret: @webhook_secret,
+        scope: 'Till',
+        scope_reference: '5555'
       }
-      the_path_url = 'api/v1/b2b-transaction-received'
 
       # Settlement Transfer Completed
     when 'k2_merchant_to_merchant'
       k2_request_body = {
         event_type: 'merchant_to_merchant',
-        url: 'https://myapplication.com/webhooks',
-        secret: @webhook_secret
+        url: callback_url,
+        secret: @webhook_secret,
+        scope: 'Till',
+        scope_reference: '5555'
       }
-      the_path_url = 'api/v1/merchant-to-merchant'
     else
       raise ArgumentError, 'Subscription Service does not Exist!'
     end
+    the_path_url = 'api/v1/webhook_subscriptions'
     subscribe_hash = K2Subscribe.make_hash(the_path_url, 'POST', @access_token,'Subscription', k2_request_body)
-    K2Connect.connect(subscribe_hash)
+    @location_url =  K2Connect.connect(subscribe_hash)
+  end
+
+  def query_webhook()
+    query_hash = K2Pay.make_hash(@location_url, 'GET', @access_token, 'Subscription', nil)
+    K2Connect.connect(query_hash)
   end
 
   # Method for Validating the input itself

@@ -20,17 +20,20 @@ All calls made without authentication will also fail.
 
 ## LINKS
 
- - [Installation](https://github.com/DavidKar1uk1/k2-connect-ruby#installation)
- - [Usage](https://github.com/DavidKar1uk1/k2-connect-ruby#usage)
-    - [Authentication](https://github.com/DavidKar1uk1/k2-connect-ruby#authentication)
-    - [STK Push](https://github.com/DavidKar1uk1/k2-connect-ruby#stk-push)
-    - [PAY](https://github.com/DavidKar1uk1/k2-connect-ruby#pay)
-    - [Transfers](https://github.com/DavidKar1uk1/k2-connect-ruby#transfers)
-    - [Parsing the JSON Payload](https://github.com/DavidKar1uk1/k2-connect-ruby#parsing-the-json-payload)
- - [Development](https://github.com/DavidKar1uk1/k2-connect-ruby#development)
- - [Contributing](https://github.com/DavidKar1uk1/k2-connect-ruby#contributing)
- - [License](https://github.com/DavidKar1uk1/k2-connect-ruby#license)
- - [Code of Conduct](https://github.com/DavidKar1uk1/k2-connect-ruby#code-of-conduct)
+ - [Installation](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#installation)
+ - [Usage](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#installation)
+    - [Authorization](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#authorization)
+    - [Webhook Subscription](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#webhook-subscription)
+    - [STK Push](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#stk-push)
+    - [PAY](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#pay)
+    - [Transfers](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#transfers)
+    - [Parsing the JSON Payload](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#parsing-the-json-payload)
+ - [Development](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#development)
+ - [Author](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#author)
+ - [Contributing](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#contributing)
+ - [License](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#license)
+ - [Changelog](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#changelog)
+ - [Code of Conduct](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#code-of-conduct)
 
 ## Installation
 

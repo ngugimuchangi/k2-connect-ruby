@@ -57,7 +57,7 @@ module K2Validation
     # Kenyan Phone Numbers
     unless phone.blank?
       if phone[-(number = phone.to_i.to_s.size).to_i, 3].eql?(254.to_s)
-        raise ArgumentError, 'Invalid Phone Number.' unless phone[-9, 9][0].eql?(7.to_s)
+        raise ArgumentError, 'Invalid Kenyan Phone Number.' unless phone[-9, 9][0].eql?(7.to_s)
       else
         raise ArgumentError, 'Invalid Phone Number.' unless number.eql?(9)
       end
@@ -85,7 +85,6 @@ module K2Validation
 
   def validate_url(url)
     raise ArgumentError, 'Invalid URL Format.' unless url =~ /\A#{URI.regexp(%w[https])}\z/
-
     url
   end
 end

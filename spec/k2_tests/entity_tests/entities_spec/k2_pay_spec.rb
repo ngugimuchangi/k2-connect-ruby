@@ -21,7 +21,7 @@ RSpec.describe K2Pay do
 
     it 'should add pay recipient request' do
       # pay_recipients stub components
-      request_body = { type: 'mobile_wallet', pay_recipient: { firstName: 'first_name', lastName: 'last_name', phone: '0716230902', email: 'email@email.com', network: 'network' } }
+      request_body = { type: 'mobile_wallet', pay_recipient: { first_name: 'first_name', last_name: 'last_name', phone: '0716230902', email: 'email@email.com', network: 'network' } }
       return_response = { location: 'https://api-sandbox.kopokopo.com/pay_recipients/c7f300c0-f1ef-4151-9bbe-005005aa3747' }
       # pay_recipients stub method
       mock_stub_request('post', 'pay_recipients', request_body,200, return_response)

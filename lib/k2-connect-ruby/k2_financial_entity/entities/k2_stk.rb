@@ -1,20 +1,22 @@
 # For STK Push/Receive MPESA Payments from merchant's customers
+# TODO: Add K2Config configuration for the callback URL
 class K2Stk < K2Entity
 
   # Receive payments from M-PESA users.
   def receive_mpesa_payments(params)
     # Validation
-    params = validate_input(params, @exception_array += %w[first_name last_name phone email currency value])
+    #params = validate_input(params, @exception_array += %w[first_name last_name phone email currency value])
+    params = validate_input(params, @exception_array += %w[payment_channel till_identifier subscriber amount metadata _links])
     # The Request Body Parameters
     k2_request_subscriber = {
-      first_name: params['first_name'],
-      last_name: params['last_name'],
-      phone: validate_phone(params['phone']),
-      email: validate_email(params['email'])
+      first_name: params[:first_name],
+      last_name: params[:last_name],
+      phone: validate_phone(params[:phone]),
+      email: validate_email(params[:email])
     }
     k2_request_amount = {
-      currency: params['currency'],
-      value: params['value']
+      currency: params[:currency],
+      value: params[:value]
     }
     k2_request_metadata = {
       customer_id: "123_456_789",
@@ -22,7 +24,7 @@ class K2Stk < K2Entity
       notes: 'Payment for invoice 12345'
     }
     k2_request_links = {
-        call_back_url: 'https://call_back_to_your_app.your_application.com'
+        call_back_url: 'http://127.0.0.1:3003'
     }
     receive_body = {
       payment_channel: 'M-PESA',
@@ -41,7 +43,7 @@ class K2Stk < K2Entity
   end
 
   # Query/Check STK Payment Request Status
-  def query_status(path_url, class_type = 'STK')
-    super
+  def query_status(path_url = @location_url)
+    super('STK')
   end
 end

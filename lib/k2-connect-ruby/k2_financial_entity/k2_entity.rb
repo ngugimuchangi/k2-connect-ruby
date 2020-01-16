@@ -23,8 +23,9 @@ class K2Entity
   end
 
   # Query/Check the status of a previously initiated request
-  def query_status(path_url, class_type)
-    path_url = validate_url(path_url)
+  def query_status(class_type, path_url = @location_url)
+    # TODO: Add back the validation to ensure only https location urls are returned
+    # path_url = validate_url(@location_url)
     query_hash = K2Pay.make_hash(path_url, 'GET', @access_token, class_type, nil)
     @threads << Thread.new do
       sleep 0.25

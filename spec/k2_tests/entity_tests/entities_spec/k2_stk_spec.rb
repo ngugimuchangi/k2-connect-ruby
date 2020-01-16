@@ -25,7 +25,7 @@ RSpec.describe K2Stk do
                        subscriber: { first_name: 'first_name', last_name: 'last_name', phone: '0716230902', email: 'email@emailc.om'},
                        amount: { currency: 'currency', value: 'value' },
                        metadata: { customer_id: 123_456_789, reference: 123_456, notes: 'Payment for invoice 12345' },
-                       call_back_url: 'https://call_back_to_your_app.your_application.com' }
+                       call_back_url: 'http://127.0.0.1:3003' }
       return_response = { location: 'https://api-sandbox.kopokopo.com/payment_requests/247b1bd8-f5a0-4b71-a898-f62f67b8ae1c' }
       # receive_mpesa_payments stub method
       mock_stub_request('post', 'payment_requests', request_body,200, return_response)
@@ -49,7 +49,7 @@ RSpec.describe K2Stk do
                              subscriber: { first_name: 'Joe', last_name: 'Buyer', phone: '+254999999999', email: 'jbuyer@mail.net' },
                              amount: { currency: 'KES', value: 'value' },
                              metadata: { customer_id: 'customer_id', reference: 'reference', notes: 'Payment for invoice 12345' },
-                             _links: { call_back_url: 'https://call_back_to_your_app.your_application.com' } },
+                             _links: { call_back_url: 'http://127.0.0.1:3003' } },
           payment_request_result: { id: 'cac95329-9fa5-42f1-a4fc-c08af7b868fb', resourceId: 'cdb5f11f-62df-e611-80ee-0aa34a9b2388', topic: 'payment_request',
                                     created_at: '2018-06-20T22:45:12.790Z', status: 'Success',
                                     event: { type: 'Payment Request',

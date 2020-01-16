@@ -27,7 +27,7 @@ module K2Connect
 
     case request_type
     when 'GET'
-      k2_uri = URI.parse(path_url)
+      k2_uri = K2UrlParse.remove_localhost(URI.parse(path_url))
       k2_request = Net::HTTP::Get.new(k2_uri.path)
     when 'POST'
       k2_uri = URI.parse(host_url + '/' + path_url)
@@ -50,23 +50,19 @@ module K2Connect
     response_headers = Yajl::Parser.parse(k2_response.header.to_json)
     # Response Code
     response_code = k2_response.code.to_s
+    raise K2ConnectionError.new(response_code) && k2_https.shutdown unless response_code[0].eql?(2.to_s)
 
-    raise K2ConnectionError.new(response_code) unless response_code[0].eql?(2.to_s)
-    # If successful, add a method to fetch the components of the response
-    return response_body['access_token'] if path_url.eql?('oauth/token')
-
-    # For STK Push, PAY and Transfers
-    unless class_type.eql?('Subscription')
-      # Return the result of the Query
-      return response_body if request_type.eql?('GET')
-
-      # Print the Response Headers for POST Requests
-      puts "Location URL: #{response_headers['location']}"
+    unless request_type.eql?('GET')
+      puts "Response Location URL: #{response_headers["location"][0]}" unless class_type.eql?("Access Token") || response_headers.blank?
+      # Returns the access token for authorization
+      return response_body['access_token'] if path_url.eql?('oauth/token')
 
       # Return the location url for POST Requests
-      return response_headers['location']
+      return response_headers["location"][0]
     end
 
-    k2_https.shutdown
+    # Return the result of the Query
+    puts "Response Body: #{response_body}" unless response_body.blank?
+    return response_body
   end
 end
