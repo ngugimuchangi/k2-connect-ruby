@@ -11,8 +11,8 @@ class K2Pay < K2Entity
     # In the case of mobile pay
     # if params['pay_type'].eql?('mobile_wallet')
     if params[:type].eql?('mobile_wallet')
-      puts "Phone: #{params[:pay_recipient][:phone]}"
-      puts "Validated Phone: #{validate_phone(params[:pay_recipient][:phone])}"
+      #puts "Phone: #{params[:pay_recipient][:phone]}"
+      #puts "Validated Phone: #{validate_phone(params[:pay_recipient][:phone])}"
       k2_request_pay_recipient = {
         first_name: params[:pay_recipient][:first_name],
         last_name: params[:pay_recipient][:last_name],
@@ -20,7 +20,7 @@ class K2Pay < K2Entity
         email: validate_email(params[:pay_recipient][:email]),
         network: params[:pay_recipient][:network]
       }
-      puts "Pay Recipient: #{k2_request_pay_recipient}"
+      #puts "Pay Recipient: #{k2_request_pay_recipient}"
     #elsif params['pay_type'].eql?('bank_account')
     elsif params[:type].eql?('bank_account')
       # In the case of bank pay

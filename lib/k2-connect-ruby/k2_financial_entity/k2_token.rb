@@ -15,7 +15,7 @@ class K2AccessToken
         grant_type: 'client_credentials'
     }
     token_hash = K2AccessToken.make_hash('oauth/token', 'POST', 'Access Token', token_params)
-    K2Connect.connect(token_hash)
+    @access_token = K2Connect.connect(token_hash)
   end
 
   def validate_client_credentials(client_id, client_secret)

@@ -1,69 +1,59 @@
-include SpecStubRequest
+include SpecStubRequest, K2Config, K2Validation
 RSpec.describe K2Pay do
   before(:all) do
-    @query_pay = 'https://3b815ff3-b118-4e25-8687-1e31c38a733b.mock.pstmn.io/'
-    @k2pay = K2Pay.new('access_token')
-    @k2pay.extend(K2Validation)
-    @create_params = HashWithIndifferentAccess.new(currency: 'currency', value: 'value')
-    @pay_params = HashWithIndifferentAccess.new(first_name: 'first_name', last_name: 'last_name', phone: '0716230902', email: 'email@email.com', network: 'network', pay_type: 'mobile_wallet', account_name: 'account_name', bank_id: 'bank_id', bank_branch_id: 'bank_branch_id', account_number: 'acc_no').merge(@create_params)
-    @query_input = 'https://3b815ff3-b118-4e25-8687-1e31c38a733b.mock.pstmn.io/payments'
-  end
+    @create_request_body = { destination: "c7f300c0-f1ef-4151-9bbe-005005aa3747", amount: { currency: "KES", value: 20000 }, metadata: { customerId: "8675309", notes: "Salary payment for May 2018", something_else: "Something else" },
+                             _links: { callback_url: "http://127.0.0.1:3003/payment_result" } }
+    @pay_request_body = { type: "mobile_wallet", pay_recipient: { first_name: "John", last_name: "Doe", email: "johndoe@nomail.net", phone: "+254716230902", network: "Safaricom" } }
 
-  it 'should include K2Validation Module and inherit from K2Entity' do
-    expect(K2Pay).to be < K2Entity
-    expect(K2Pay).to include(K2Validation)
+    @query_create_pay_url = 'http://localhost:3000/api/v1/payments/'
+    @query_pay_recipient_url = 'http://localhost:3000/api/v1/pay_recipients/9b4333bb-1f37-453a-b555-5924b5118a5b'
+
+    @query_create_pay_response = { status: 'Scheduled', reference: 'KKKKKKKKK', origination_time: '2018-07-20T22:45:12.790Z', destination: 'c7f300c0-f1ef-4151-9bbe-005005aa3747',
+                                   amount: { currency: 'KES', 'value': 20_000 }, metadata: { customerId: 8_675_309, notes: 'Salary payment for May 2018' },
+                                   _links: { self: 'https://api-sandbox.kopokopo.com/payments/d76265cd-0951-e511-80da-0aa34a9b2388' } }
+    @query_pay_recipient_response = { data: { id: "f8889531-c96f-4d2d-9f4e-ddb86f3a7acd", type: "pay_recipient",
+                                             attributes: { recipient_type: "BankAccount", first_name: 'David', last_name: 'Mwangi', phone: "+254999999999", email: "johndoe@nomail.net", network: 'Safaricom', account_name: "John Bank", account_number: "123456789",
+                                                           bank_id: "c7f300c0-f1ef-4151-9bbe-005005aa3747", bank_branch_id: "c7f300c0-f1ef-4151-9bbe-005005aa3747" } } }
   end
 
   context '#pay_recipients' do
     it 'validates input correctly' do
-      expect { @k2pay.validate_input(@pay_params, %w[first_name last_name phone email network pay_type currency value account_name bank_id bank_branch_id account_number]) }.not_to raise_error
+      expect { validate_input(@pay_request_body, %w[type pay_recipient]) }.not_to raise_error
     end
 
     it 'should add pay recipient request' do
-      # pay_recipients stub components
-      request_body = { type: 'mobile_wallet', pay_recipient: { first_name: 'first_name', last_name: 'last_name', phone: '0716230902', email: 'email@email.com', network: 'network' } }
-      return_response = { location: 'https://api-sandbox.kopokopo.com/pay_recipients/c7f300c0-f1ef-4151-9bbe-005005aa3747' }
-      # pay_recipients stub method
-      mock_stub_request('post', 'pay_recipients', request_body,200, return_response)
-
-      expect { @k2pay.pay_recipients(@pay_params) }.not_to raise_error
+      test_response = SpecStubRequest.mock_stub_request('post', K2Config.path_variable('pay_recipient'), @pay_request_body,201,
+                                                        'http://localhost:3000/api/v1/pay_recipients/9b4333bb-1f37-453a-b555-5924b5118a5b')
+      expect(Yajl::Parser.parse(test_response.header.to_json)["location"]).not_to eq(nil)
+      expect(WebMock).to have_requested(:post, URI.parse(K2Config.complete_url('pay_recipient')))
     end
   end
 
   context '#create_payment' do
     it 'validates input correctly' do
-      expect { @k2pay.validate_input(@create_params, %w[currency value]) }.not_to raise_error
+      expect { validate_input(@create_request_body, %w[destination amount metadata _links]) }.not_to raise_error
     end
 
     it 'should create outgoing payment request' do
-      # create_pay stub components
-      request_body = { destination: 'c7f300c0-f1ef-4151-9bbe-005005aa3747',
-                       amount: { currency: 'currency', 'value': 'value'},
-                       metadata: { customerId: 8_675_309, notes: 'Salary payment for May 2018'},
-                       callback_url: 'https://your-call-bak.yourapplication.com/payment_result' }
-      return_response = { location: 'https://api-sandbox.kopokopo.com/payments/c7f300c0-f1ef-4151-9bbe-005005aa3747' }
-      # create_pay stub method
-      mock_stub_request('post', 'payments', request_body, 200, return_response)
-
-      expect { @k2pay.create_payment(@create_params) }.not_to raise_error
+      test_response = SpecStubRequest.mock_stub_request('post', K2Config.path_variable('payments'), @create_request_body,201,
+                                                        'http://localhost:3000/api/v1/payments/9b4333bb-1f37-453a-b555-5924b5118a5b')
+      expect(Yajl::Parser.parse(test_response.header.to_json)["location"]).not_to eq(nil)
+      expect(WebMock).to have_requested(:post, URI.parse(K2Config.complete_url('payments')))
     end
   end
 
   context '#query_pay' do
-    it 'validates query URL correctly' do
-      expect { @k2pay.validate_url(@query_input) }.not_to raise_error
+    pending("Not returning resource URL details in the location url of the result")
+    it 'should query adding pay recipients' do
+      test_response = SpecStubRequest.mock_stub_request('post', 'api/v1/pay_recipients/9b4333bb-1f37-453a-b555-5924b5118a5b', @create_request_body,200, nil, @query_pay_recipient_response)
+      expect(Yajl::Parser.parse(test_response.header.to_json)["location"]).not_to eq(nil)
+      expect(WebMock).to have_requested(:get, URI.parse('http://localhost:3000/api/v1/pay_recipients/9b4333bb-1f37-453a-b555-5924b5118a5b'))
     end
 
-    it 'should query payment request status' do
-      # query_pay stub components
-      request_body = 'null'
-      return_response = { status: 'Scheduled', reference: 'KKKKKKKKK', origination_time: '2018-07-20T22:45:12.790Z', destination: 'c7f300c0-f1ef-4151-9bbe-005005aa3747',
-                          amount: { currency: 'KES', 'value': 20_000 }, metadata: { customerId: 8_675_309, notes: 'Salary payment for May 2018' },
-                          _links: { self: 'https://api-sandbox.kopokopo.com/payments/d76265cd-0951-e511-80da-0aa34a9b2388' } }
-      # query_pay stub method
-      mock_stub_request('get', 'payments', request_body,200, return_response)
-
-      expect { @k2pay.query_status(@query_input) }.not_to raise_error
+    it 'should query creating payment request status' do
+      test_response = SpecStubRequest.mock_stub_request('get', 'api/v1/payments/', @create_request_body,200, nil, @query_create_pay_response)
+      expect(Yajl::Parser.parse(test_response.body)).not_to eq(nil)
+      expect(WebMock).to have_requested(:get, URI.parse('http://localhost:3000/api/v1/payments/'))
     end
   end
 end

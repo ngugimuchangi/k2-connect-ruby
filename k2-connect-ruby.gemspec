@@ -35,11 +35,19 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
+  spec.add_development_dependency 'yajl-ruby'
   spec.add_development_dependency 'activesupport'
+  spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'net-http-persistent', '>= 3.0'
-  spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'yajl-ruby'
+  #Testing
+  spec.add_development_dependency 'rspec', '>= 3.9.0'
+  spec.add_development_dependency "rspec-nc"
+  spec.add_development_dependency "guard"
+  spec.add_development_dependency "guard-rspec"
+  spec.add_development_dependency "pry"
+  spec.add_development_dependency "pry-remote"
+  spec.add_development_dependency "pry-nav"
+  spec.add_development_dependency 'vcr'
   spec.add_development_dependency 'webmock'
 end

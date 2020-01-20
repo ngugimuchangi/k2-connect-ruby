@@ -1,4 +1,5 @@
 # Module for Validating Input
+# TODO: Correct validation of url so that it only accepts https
 module K2Validation
   # Validating Method
   def validate_input(the_input, the_array)
@@ -84,7 +85,8 @@ module K2Validation
   end
 
   def validate_url(url)
-    raise ArgumentError, 'Invalid URL Format.' unless url =~ /\A#{URI.regexp(%w[https])}\z/
+    raise ArgumentError, 'Invalid URL Format.' unless url =~ /\A#{URI.regexp(%w[https http])}\z/
+    #raise ArgumentError, 'Invalid URL Format.' unless url =~ /\A#{URI.regexp(%w[https])}\z/
     url
   end
 end

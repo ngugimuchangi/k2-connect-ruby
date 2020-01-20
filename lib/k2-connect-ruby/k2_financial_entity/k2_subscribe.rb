@@ -10,7 +10,7 @@ class K2Subscribe
   end
 
   # Implemented a Case condition that minimises repetition
-  def webhook_subscribe(webhook_secret = nil, event_type, callback_url)
+  def webhook_subscribe(webhook_secret = @webhook_secret, event_type, callback_url)
     raise ArgumentError, 'Nil or Empty Event Type Specified!' if event_type.blank?
     raise ArgumentError, 'Nil or Empty Webhook Specified!' if webhook_secret.blank?
     @webhook_secret = webhook_secret

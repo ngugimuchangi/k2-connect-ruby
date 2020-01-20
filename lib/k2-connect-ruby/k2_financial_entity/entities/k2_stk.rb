@@ -1,5 +1,4 @@
 # For STK Push/Receive MPESA Payments from merchant's customers
-# TODO: Add K2Config configuration for the callback URL
 class K2Stk < K2Entity
 
   # Receive payments from M-PESA users.
