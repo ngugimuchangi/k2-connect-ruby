@@ -45,7 +45,7 @@ module K2Connect
     # Response Body
     response_body = Yajl::Parser.parse(k2_response.body)
     response_headers = Yajl::Parser.parse(k2_response.header.to_json)
-    # Response Code TODO: Uncomment
+    # Response Code TODO: Uncomment amd to be before response_body
     #response_code = k2_response.code.to_s
     #raise K2ConnectionError.new(response_code) && k2_https.shutdown unless response_code[0].eql?(2.to_s)
 

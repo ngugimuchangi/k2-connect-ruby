@@ -1,7 +1,9 @@
 include K2Validation
 RSpec.describe K2Stk do
   before(:all) do
-    @location_url = ''
+    # K2Stk Object
+    @k2stk = K2Stk.new(K2AccessToken.new('BwuGu77i5M0SdCc9-R8haR3v0rIR5XsG4xYte27zxjs', '42aPhB6gF7u5n-r0-aL7fQkOVHAzoIYNPr4Nw-wCxQE').request_token)
+
     @mpesa_payments = { payment_channel: 'M-PESA', till_identifier: 444_555, subscriber: { first_name: 'first_name', last_name: 'last_name', phone: '0716230902', email: 'email@emailc.om'}, amount: { currency: 'currency', value: 2000 },
                         metadata: { customer_id: 123_456_789, reference: 123_456, notes: 'Payment for invoice 12345' }, _links: { callback_url: 'http://127.0.0.1:3003' } }
     @query_incoming_payment_result = { payment_request: { payment_channel: 'M-PESA', 'till_identifier': 'till_identifier', status: 'Success', subscriber: { first_name: 'Joe', last_name: 'Buyer', phone: '+254999999999', email: 'jbuyer@mail.net' },
@@ -21,20 +23,20 @@ RSpec.describe K2Stk do
       expect { validate_input(@mpesa_payments, %w[payment_channel till_identifier subscriber amount metadata _links]) }.not_to raise_error
     end
 
-    it 'should add pay recipient request' do
-      test_response = SpecStubRequest.stub_request('post', K2Config.path_variable('incoming_payments'), @mpesa_payments, 200,
-                                                   'http://localhost:3000/api/v1/incoming_payments/247b1bd8-f5a0-4b71-a898-f62f67b8ae1c')
-      @location_url = Yajl::Parser.parse(test_response.header.to_json)["location"][0]
-      expect(Yajl::Parser.parse(test_response.header.to_json)["location"][0]).not_to eq(nil)
+    it 'should send incoming payment request' do
+      SpecStubRequest.stub_request('post', K2Config.path_variable('incoming_payments'), @mpesa_payments, 200)
+      @k2stk.receive_mpesa_payments(@mpesa_payments)
+      expect(@k2stk.location_url).not_to eq(nil)
       expect(WebMock).to have_requested(:post, URI.parse(K2Config.complete_url('incoming_payments')))
     end
   end
 
   context '#query_status' do
-    pending("should query payment request status: Doesn't Provide Complete Resource URL")
     it 'should query payment request status' do
-      test_response = SpecStubRequest.stub_request('get', 'api/v1/incoming_payments', '', 200, nil, @query_incoming_payment_result)
-      expect(test_response.body).not_to eq(nil)
+      skip "Doesn't Provide Complete Resource URL"
+      SpecStubRequest.stub_request('get', 'api/v1/incoming_payments', '', 200)
+      @k2stk.query_status(@k2pay.recipients_location_url)
+      expect(@k2stk.k2_response_body).not_to eq(nil)
       expect(WebMock).to have_requested(:get, URI.parse('http://127.0.0.1:3000/api/v1/incoming_payments'))
     end
   end

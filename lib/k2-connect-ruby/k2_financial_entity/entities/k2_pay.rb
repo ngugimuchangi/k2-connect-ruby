@@ -2,6 +2,7 @@
 # TODO: Add K2Config configuration for the callback URL
 # TODO: metadata vs meta_data
 class K2Pay < K2Entity
+  attr_reader :recipients_location_url, :payments_location_url
 
   # Adding PAY Recipients with either mobile_wallets or bank_accounts as destination of your payments.
   def pay_recipients(params)
@@ -44,7 +45,7 @@ class K2Pay < K2Entity
     pay_recipient_hash = K2Pay.make_hash('api/v1/pay_recipients', 'POST', @access_token, 'PAY', recipients_body)
     @threads << Thread.new do
       sleep 0.25
-      @location_url = K2Connect.connect(pay_recipient_hash)
+      @recipients_location_url = K2Connect.connect(pay_recipient_hash)
     end
     @threads.each(&:join)
   end
@@ -75,13 +76,13 @@ class K2Pay < K2Entity
     create_payment_hash = K2Pay.make_hash('api/v1/payments', 'POST', @access_token, 'PAY', create_payment_body)
     @threads << Thread.new do
       sleep 0.25
-      @location_url = K2Connect.connect(create_payment_hash)
+      @payments_location_url = K2Connect.connect(create_payment_hash)
     end
     @threads.each(&:join)
   end
 
   # Query/Check the status of a previously initiated PAY Payment request
-  def query_status(path_url = @location_url)
-    super('PAY')
+  def query_status(path_url)
+    super('PAY', path_url)
   end
 end

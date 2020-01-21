@@ -7,7 +7,7 @@ module K2Config
   @base_url = "http://127.0.0.1:3000"
   @path_endpoints = HashWithIndifferentAccess.new(oauth_token: 'oauth/token', webhook_subscriptions: "api/#{@version_no}/webhook_subscriptions", pay_recipient: "api/#{@version_no}/pay_recipients",
                                                   payments: "api/#{@version_no}/payments", incoming_payments: "api/#{@version_no}/incoming_payments")
-  @callback_urls = HashWithIndifferentAccess.new(webhook_subscriptions: 'http://127.0.0.1:3003/webhook_subscription', payments: 'http://127.0.0.1:3003/payment_result',
+  @callback_urls = HashWithIndifferentAccess.new(webhook: 'http://127.0.0.1:3003/webhook_subscription', payments: 'http://127.0.0.1:3003/payment_result',
                                                  incoming_payments: 'http://127.0.0.1:3003/stk_payment')
 
   # Set the Host Url

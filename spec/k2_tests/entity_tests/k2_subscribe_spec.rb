@@ -1,15 +1,10 @@
 include SpecStubRequest
 RSpec.describe K2Subscribe do
   before(:all) do
-    K2Config.set_base_url('http://127.0.0.1:3000')
     @access_token = K2AccessToken.new('BwuGu77i5M0SdCc9-R8haR3v0rIR5XsG4xYte27zxjs', '42aPhB6gF7u5n-r0-aL7fQkOVHAzoIYNPr4Nw-wCxQE').request_token
     @k2subscriber = K2Subscribe.new(@access_token)
     @k2sub_not_exist = K2Subscribe.new(@access_token)
-    @callback_url = 'http://webhook.site/c9ec5df6-192f-4a18-a6a3-d10142cba13a'
-
-    # For subscription
-    @subscription_headers = { 'Accept': %w(*/* application/json), 'Accept-Encoding': 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Keep-Alive': '30',
-                        'User-Agent': 'Ruby' }
+    @callback_url = K2Config.callback_url('webhook')
   end
 
   context '#initialize' do
@@ -33,42 +28,42 @@ RSpec.describe K2Subscribe do
 
     it 'should send webhook subscription for buy goods received' do
       # webhook_subscribe buy goods received stub method
-      #subscription_stub_request('buygoods_transaction_received', @callback_url)
+      subscription_stub_request('buygoods_transaction_received', @callback_url)
 
       expect { @k2subscriber.webhook_subscribe('webhook_secret','buygoods_transaction_received', @callback_url) }.not_to raise_error
     end
 
     it 'should send webhook subscription for buy goods reversed' do
       # webhook_subscribe buy goods reversed stub method
-      #subscription_stub_request('buygoods_transaction_reversed', @callback_url)
+      subscription_stub_request('buygoods_transaction_reversed', @callback_url)
 
       expect { @k2subscriber.webhook_subscribe('webhook_secret','buygoods_transaction_reversed', @callback_url) }.not_to raise_error
     end
 
     it 'should send webhook subscription for customer created' do
       # webhook_subscribe customer created stub method
-      #subscription_stub_request('customer_created', @callback_url)
+      subscription_stub_request('customer_created', @callback_url)
 
       expect { @k2subscriber.webhook_subscribe('webhook_secret','customer_created', @callback_url) }.not_to raise_error
     end
 
     it 'should send webhook subscription for settlement' do
       # webhook_subscribe settlement stub method
-      #subscription_stub_request('settlement', @callback_url)
+      subscription_stub_request('settlement', @callback_url)
 
       expect { @k2subscriber.webhook_subscribe('webhook_secret','settlement_transfer_completed', @callback_url) }.not_to raise_error
     end
 
     it 'should send webhook subscription for external till to till (b2b)' do
       # webhook_subscribe external till to till (b2b) stub method
-      #subscription_stub_request('b2b_transaction_received', @callback_url)
+      subscription_stub_request('b2b_transaction_received', @callback_url)
 
       expect { @k2subscriber.webhook_subscribe('webhook_secret','external_till_to_till', @callback_url) }.not_to raise_error
     end
 
     it 'should send webhook subscription for merchant to merchant transaction' do
       # webhook_subscribe merchant to merchant transaction stub method
-      #subscription_stub_request('merchant_to_merchant', @callback_url)
+      subscription_stub_request('merchant_to_merchant', @callback_url)
 
       expect { @k2subscriber.webhook_subscribe('webhook_secret','k2_merchant_to_merchant', @callback_url) }.not_to raise_error
     end

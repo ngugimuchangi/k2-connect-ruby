@@ -42,7 +42,7 @@ class K2Stk < K2Entity
   end
 
   # Query/Check STK Payment Request Status
-  def query_status(path_url = @location_url)
-    super('STK')
+  def query_status(path_url)
+    super('STK', path_url)
   end
 end
