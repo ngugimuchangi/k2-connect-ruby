@@ -64,7 +64,7 @@ class K2Pay < K2Entity
       notes: 'Salary payment for May 2018'
     }
     k2_request_links = {
-        call_back_url: 'http://127.0.0.1:3003'
+        call_back_url: params[:callback_url]
     }
     create_payment_body = {
       destination: 'c7f300c0-f1ef-4151-9bbe-005005aa3747',

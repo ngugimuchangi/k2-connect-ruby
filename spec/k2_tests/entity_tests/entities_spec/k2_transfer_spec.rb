@@ -1,17 +1,10 @@
-include SpecStubRequest
+include SpecStubRequest, K2Validation
 RSpec.describe K2Transfer do
   pending("Transfer yet to be set up on the Sandbox API")
   before(:all) do
-    @k2transfer = K2Transfer.new('access_token')
-    @k2transfer.extend(K2Validation)
     @transfer_params = HashWithIndifferentAccess.new(currency: 'currency', value: 'value')
     @settle_params = HashWithIndifferentAccess.new(account_name: 'account_name', bank_ref: 'bank_ref', bank_branch_ref: 'bank_branch_ref', account_number: 'account_number').merge(@transfer_params)
     @query_input = 'https://3b815ff3-b118-4e25-8687-1e31c38a733b.mock.pstmn.io/transfers'
-  end
-
-  it 'should include K2Validation Module and inherit from K2Entity' do
-    expect(K2Transfer).to be < K2Entity
-    expect(K2Transfer).to include(K2Validation)
   end
 
   context '#settlement_account' do

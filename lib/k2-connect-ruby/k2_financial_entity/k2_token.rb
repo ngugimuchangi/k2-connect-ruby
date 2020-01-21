@@ -14,7 +14,7 @@ class K2AccessToken
         client_secret: @client_secret,
         grant_type: 'client_credentials'
     }
-    token_hash = K2AccessToken.make_hash('oauth/token', 'POST', 'Access Token', token_params)
+    token_hash = K2AccessToken.make_hash(K2Config.path_variable('oauth_token'), 'POST', 'Access Token', token_params)
     @access_token = K2Connect.connect(token_hash)
   end
 

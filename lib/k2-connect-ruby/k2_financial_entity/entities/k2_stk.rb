@@ -23,7 +23,7 @@ class K2Stk < K2Entity
       notes: 'Payment for invoice 12345'
     }
     k2_request_links = {
-        call_back_url: 'http://127.0.0.1:3003'
+        call_back_url: params[:callback_url]
     }
     receive_body = {
       payment_channel: 'M-PESA',
