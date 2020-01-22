@@ -1,6 +1,6 @@
 # Class for Subscription Service
 class K2Subscribe
-  attr_reader :event_type, :location_url, :response
+  attr_reader :event_type, :location_url, :response_body
   attr_accessor :access_token
 
   # Intialize with the event_type
@@ -85,7 +85,7 @@ class K2Subscribe
 
   def query_webhook
     query_hash = K2Pay.make_hash(@location_url, 'GET', @access_token, 'Subscription', nil)
-    @response = K2Connect.connect(query_hash)
+    @response_body = K2Connect.connect(query_hash)
   end
 
   # Method for Validating the input itself
