@@ -68,4 +68,13 @@ RSpec.describe K2Subscribe do
       expect { @k2subscriber.webhook_subscribe('webhook_secret','k2_merchant_to_merchant', @callback_url) }.not_to raise_error
     end
   end
+
+  context '#query_webhook' do
+    it 'should query recent wenhook subscription' do
+      skip "Yet to Do it Properly"
+      # query settlement stub method
+
+      expect { @k2subscriber.query_webhook }.not_to raise_error
+    end
+  end
 end
