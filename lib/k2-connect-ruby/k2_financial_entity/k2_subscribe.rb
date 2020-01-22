@@ -85,11 +85,16 @@ class K2Subscribe
 
   end
 
+  # Query Recent Webhook
   def query_webhook
     query_hash = K2Pay.make_hash(@location_url, 'GET', @access_token, 'Subscription', nil)
     @k2_response_body = K2Connect.connect(query_hash)
-    puts "The Library within K2Subscribe Outputs Event Type as: #{@event_type}"
-    puts "The Library within K2Subscribe Outputs Response Body as: #{@k2_response_body}"
+  end
+
+  # Query Specific Webhook URL
+  def query_resource_url(url)
+    query_hash = K2Pay.make_hash(url, 'GET', @access_token, 'Subscription', nil)
+    @k2_response_body = K2Connect.connect(query_hash)
   end
 
   # Method for Validating the input itself
