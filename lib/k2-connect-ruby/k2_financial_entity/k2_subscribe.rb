@@ -1,6 +1,6 @@
 # Class for Subscription Service
 class K2Subscribe
-  attr_reader :event_type, :location_url
+  attr_reader :event_type, :location_url, :response
   attr_accessor :access_token
 
   # Intialize with the event_type
@@ -78,13 +78,14 @@ class K2Subscribe
       raise ArgumentError, 'Subscription Service does not Exist!'
     end
     the_path_url = 'api/v1/webhook_subscriptions'
+    @event_type = event_type
     subscribe_hash = K2Subscribe.make_hash(the_path_url, 'POST', @access_token,'Subscription', k2_request_body)
     @location_url =  K2Connect.connect(subscribe_hash)
   end
 
-  def query_webhook()
+  def query_webhook
     query_hash = K2Pay.make_hash(@location_url, 'GET', @access_token, 'Subscription', nil)
-    K2Connect.connect(query_hash)
+    @response = K2Connect.connect(query_hash)
   end
 
   # Method for Validating the input itself
