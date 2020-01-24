@@ -18,17 +18,17 @@ module K2Validation
             elsif the_input.key?(:authenticity_token)
               nil_values(the_input.permit(the_array).to_hash.with_indifferent_access)
             else
-              raise ArgumentError, "Undefined Input Format.\n The Input is Neither a Hash nor a ActionController::Parameter Object."
+              raise ArgumentError, "Undefined Input Format.\n The Input is Neither a Hash nor an ActionController::Parameter Object."
             end
           rescue NoMethodError => nme
             if nme.message.include?('has_key?')
-              raise ArgumentError, "Undefined Input Format.\n The Input is Neither a Hash nor a ActionController::Parameter Object."
+              raise ArgumentError, "Undefined Input Format.\n The Input is Neither a Hash nor an ActionController::Parameter Object."
             end
           end
         end
       end
     end
-    convert_params(the_input)
+    to_indifferent_access(the_input)
   end
 
   # Validate the Hash Input Parameters
@@ -75,7 +75,7 @@ module K2Validation
   end
 
   # Converts Hash Objects to HashWithIndifferentAccess Objects
-  def convert_params(params)
+  def to_indifferent_access(params)
     if params.is_a?(Hash)
       params.with_indifferent_access
     else

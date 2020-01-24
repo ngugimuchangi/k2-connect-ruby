@@ -82,7 +82,7 @@ RSpec.describe K2Validation do
 
   context '#convert_params' do
     it 'correct email format' do
-      expect { convert_params(davod: 'daudi') }.not_to raise_error
+      expect { to_indifferent_access(davod: 'daudi') }.not_to raise_error
     end
   end
 
