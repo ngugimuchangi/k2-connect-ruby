@@ -35,7 +35,7 @@ class K2Entity
   end
 
   # Query Location URL
-  def query_resource_url(url)
+  def query_resource_url(class_type, url)
     query_hash = K2Pay.make_hash(url, 'GET', @access_token, class_type, nil)
     @threads << Thread.new do
       sleep 0.25

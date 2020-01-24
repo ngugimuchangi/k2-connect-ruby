@@ -56,4 +56,9 @@ class K2Transfer < K2Entity
   def query_status(path_url)
     super('Transfer', path_url)
   end
+
+  # Query Location URL
+  def query_resource_url(url)
+    super('Transfer', url)
+  end
 end

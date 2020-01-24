@@ -45,4 +45,9 @@ class K2Stk < K2Entity
   def query_status(path_url)
     super('STK', path_url)
   end
+
+  # Query Location URL
+  def query_resource_url(url)
+    super('STK', url)
+  end
 end

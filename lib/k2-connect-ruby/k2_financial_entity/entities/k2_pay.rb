@@ -85,4 +85,9 @@ class K2Pay < K2Entity
   def query_status(path_url)
     super('PAY', path_url)
   end
+
+  # Query Location URL
+  def query_resource_url(url)
+    super('PAY', url)
+  end
 end
