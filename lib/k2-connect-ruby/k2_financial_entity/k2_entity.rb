@@ -33,4 +33,14 @@ class K2Entity
     end
     @threads.each(&:join)
   end
+
+  # Query Location URL
+  def query_resource_url(url)
+    query_hash = K2Pay.make_hash(url, 'GET', @access_token, class_type, nil)
+    @threads << Thread.new do
+      sleep 0.25
+      @k2_response_body = K2Connect.connect(query_hash)
+    end
+    @threads.each(&:join)
+  end
 end
