@@ -6,6 +6,7 @@ class K2Pay < K2Entity
 
   # Adding PAY Recipients with either mobile_wallets or bank_accounts as destination of your payments.
   def pay_recipients(params)
+    puts "Input: #{params}"
     @exception_array += %w[first_name last_name phone email]
     # In the case of mobile pay
     # if params['pay_type'].eql?('mobile_wallet')
