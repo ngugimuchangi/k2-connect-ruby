@@ -33,11 +33,11 @@ RSpec.describe K2Stk do
 
   context '#query_status' do
     it 'should query payment request status' do
-      skip "Doesn't Provide Complete Resource URL"
+      # skip "Doesn't Provide Complete Resource URL"
       SpecStubRequest.stub_request('get', 'api/v1/incoming_payments', '', 200)
-      @k2stk.query_status(@k2pay.recipients_location_url)
+      @k2stk.query_status(@k2stk.location_url)
       expect(@k2stk.k2_response_body).not_to eq(nil)
-      expect(WebMock).to have_requested(:get, URI.parse('http://127.0.0.1:3000/api/v1/incoming_payments'))
+      expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2stk.location_url)))
     end
   end
 end

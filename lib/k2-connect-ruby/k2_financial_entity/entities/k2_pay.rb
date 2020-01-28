@@ -6,11 +6,8 @@ class K2Pay < K2Entity
 
   # Adding PAY Recipients with either mobile_wallets or bank_accounts as destination of your payments.
   def pay_recipients(params)
-    puts "Input: #{params}"
-    puts "Input Payment Type: #{params[:type]}"
-    puts "Input payment Type Method 2: #{params["type"]}"
-    @exception_array += %w[first_name last_name phone email]
-    params = validate_input(params, @exception_array)
+    params = params.with_indifferent_access
+    @exception_array += %w[first_name last_name phone email type]
     # In the case of mobile pay
     # if params['pay_type'].eql?('mobile_wallet')
     if params[:type].eql?('mobile_wallet')
@@ -57,7 +54,7 @@ class K2Pay < K2Entity
   # Create an outgoing Payment to a third party.
   def create_payment(params)
     # Validation
-    params = validate_input(params, @exception_array += %w[currency value])
+    params = validate_input(params, @exception_array += %w[currency value callback_url])
     # params = validate_input(params, @exception_array += %w[destination amount metadata _links])
     # The Request Body Parameters
     k2_request_pay_amount = {
