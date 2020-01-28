@@ -10,6 +10,7 @@ class K2Pay < K2Entity
     puts "Input Payment Type: #{params[:type]}"
     puts "Input payment Type Method 2: #{params["type"]}"
     @exception_array += %w[first_name last_name phone email]
+    params = validate_input(params, @exception_array)
     # In the case of mobile pay
     # if params['pay_type'].eql?('mobile_wallet')
     if params[:type].eql?('mobile_wallet')
