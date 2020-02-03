@@ -13,10 +13,10 @@ class K2Transaction
     @id = payload.dig('data', 'id')
     @type = payload.dig('data', 'type')
     @attributes = payload.dig('data', 'attributes')
-    @metadata = payload.dig('data', 'meta_data')
-    @links = payload.dig('data', '_links')
-    @links_self = payload.dig('data', '_links', 'self')
-    @callback_url = payload.dig('data', '_links', 'callback_url')
+    @metadata = payload.dig('data', 'attributes', 'meta_data')
+    @links = payload.dig('data', 'attributes', '_links')
+    @links_self = payload.dig('data', 'attributes', '_links', 'self')
+    @callback_url = payload.dig('data', 'attributes', '_links', 'callback_url')
   end
 end
 
@@ -77,7 +77,6 @@ class OutgoingPayments < CommonPayments
   :origination_time
 
   def components(payload)
-    puts "The Payload Again before decomposing: #{payload}"
     super
     @transaction_reference = payload.dig('data', 'attributes', 'transaction_reference')
     @destination = payload.dig('data', 'attributes', 'destination')
@@ -85,8 +84,6 @@ class OutgoingPayments < CommonPayments
     @currency = payload.dig('data', 'attributes', 'amount', 'currency')
     @value = payload.dig('data', 'attributes', 'amount', 'value')
     @origination_time = payload.dig('data', 'attributes', 'origination_time')
-    puts "The Transaction Reference: #{@transaction_reference}"
-    puts "The ID: #{@id}"
   end
 
 end
