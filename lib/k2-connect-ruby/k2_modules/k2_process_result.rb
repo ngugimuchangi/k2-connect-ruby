@@ -7,13 +7,16 @@ module K2ProcessResult
 
   # Check the Event Type.
   def self.check_topic(payload)
+    puts "The Payload: #{payload}"
     result_type = payload.dig('data', 'type')
     case result_type
       # Incoming Payments
     when 'incoming_payment'
+      puts "This is an Incoming Payment"
       return IncomingPayments.new.components(payload)
       # Outgoing Payments
     when 'payment'
+      puts "This is an Outgoing Payment"
       return OutgoingPayments.new.components(payload)
     else
       raise ArgumentError, 'No Other Specified Payment Type!'

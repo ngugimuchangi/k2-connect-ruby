@@ -77,6 +77,7 @@ class OutgoingPayments < CommonPayments
   :origination_time
 
   def components(payload)
+    puts "The Payload Again before decomposing: #{payload}"
     super
     @transaction_reference = payload.dig('data', 'attributes', 'transaction_reference')
     @destination = payload.dig('data', 'attributes', 'destination')
@@ -84,6 +85,8 @@ class OutgoingPayments < CommonPayments
     @currency = payload.dig('data', 'attributes', 'amount', 'currency')
     @value = payload.dig('data', 'attributes', 'amount', 'value')
     @origination_time = payload.dig('data', 'attributes', 'origination_time')
+    puts "The Transaction Reference: #{@transaction_reference}"
+    puts "The ID: #{@id}"
   end
 
 end
