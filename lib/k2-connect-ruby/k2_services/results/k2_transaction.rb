@@ -1,69 +1,89 @@
-class K2Payment < K2Result
-  attr_reader :notes,
-              :status,
-              :metadata,
-              :reference,
-              :customer_id,
-              :origination_time
+class K2Transaction
+  attr_reader :data,
+  :id,
+  :type,
+  :attributes,
+  :metadata,
+  :links,
+  :links_self,
+  :callback_url
 
-  def components(the_body)
-    super
-    @status = the_body.dig('status')
-    # Metadata
-    @metadata = the_body.dig('metadata')
-    @notes = @metadata.dig('notes')
-    @customer_id = @metadata.dig('customer_id')
+  def components(payload)
+    @data = payload.dig('data')
+    @id = payload.dig('data', 'id')
+    @type = payload.dig('data', 'type')
+    @attributes = payload.dig('data', 'attributes')
+    @metadata = payload.dig('data', 'meta_data')
+    @links = payload.dig('data', '_links')
+    @links_self = payload.dig('data', '_links', 'self')
+    @callback_url = payload.dig('data', '_links', 'callback_url')
   end
 end
 
-class K2ProcessStk < K2FinancialTransaction
-  attr_reader :notes,
-              :errors,
-              :metadata,
-              :customer_id,
-              :link_resource,
-              :payment_request,
-              :metadata_reference
+class CommonPayments < K2Transaction
+  attr_reader :status,
+  :initiation_time
 
-  def components(the_body)
+  def components(payload)
     super
-    @status = the_body.dig('status')
-    # Links
-    @link_resource = @links.dig('resource')
-    @payment_request = @links.dig('payment_request')
-    # Event
-    @errors = the_body.dig('event','errors')
-    # Metadata
-    @metadata = the_body.dig('metadata')
-    @notes = @metadata.dig('notes')
-    @customer_id = @metadata.dig('customer_id')
-    @metadata_reference = @metadata.dig('reference')
+    @status = payload.dig('data', 'attributes', 'status')
+    @initiation_time = payload.dig('data', 'attributes', 'initiation_time')
   end
+
 end
 
-class K2FailedStk < K2ProcessStk
-  attr_reader :error_code,
-              :error_description
+class IncomingPayments < CommonPayments
+  attr_reader :event,
+  :event_type,
+  :event_resource,
+  :transaction_reference,
+  :origination_time,
+  :sender_msisdn,
+  :amount,
+  :currency,
+  :till_identifier,
+  :system,
+  :resource_status,
+  :sender_first_name,
+  :sender_last_name,
+  :errors
 
-  def components(the_body)
+  def components(payload)
     super
-    @error_code = @errors.dig(0, 'code')
-    @error_description = @errors.dig(0, 'description')
+    @event = payload.dig('data', 'attributes', 'event')
+    @event_type = payload.dig('data', 'attributes', 'event', 'type')
+    @event_resource = payload.dig('data', 'attributes', 'event', 'resource')
+    @transaction_reference = payload.dig('data', 'attributes', 'event', 'resource', 'transaction_reference')
+    @origination_time = payload.dig('data', 'attributes', 'event', 'resource', 'origination_time')
+    @sender_msisdn = payload.dig('data', 'attributes', 'event', 'resource', 'sender_msisdn')
+    @amount = payload.dig('data', 'attributes', 'event', 'resource', 'amount')
+    @currency = payload.dig('data', 'attributes', 'event', 'resource', 'currency')
+    @till_identifier = payload.dig('data', 'attributes', 'event', 'resource', 'till_identifier')
+    @system = payload.dig('data', 'attributes', 'event', 'resource', 'system')
+    @resource_status = payload.dig('data', 'attributes', 'event', 'resource', 'status')
+    @sender_first_name = payload.dig('data', 'attributes', 'event', 'resource', 'sender_first_name')
+    @sender_last_name = payload.dig('data', 'attributes', 'event', 'resource', 'sender_last_name')
+    @errors = payload.dig('data', 'attributes', 'event', 'errors')
   end
+
 end
 
-class K2ProcessPay < K2Payment
-  attr_reader :value,
-              :destination
+class OutgoingPayments < CommonPayments
+  attr_reader :transaction_reference,
+  :destination,
+  :amount,
+  :currency,
+  :value,
+  :origination_time
 
-  def components(the_body)
+  def components(payload)
     super
-    @reference = the_body.dig('reference')
-    @destination = the_body.dig('destination')
-    @origination_time = the_body.dig('origination_time')
-    # Amount
-    @amount = the_body.dig('amount')
-    @value = @amount.dig('value')
-    @currency = @amount.dig('currency')
+    @transaction_reference = payload.dig('data', 'attributes', 'transaction_reference')
+    @destination = payload.dig('data', 'attributes', 'destination')
+    @amount = payload.dig('data', 'attributes', 'amount')
+    @currency = payload.dig('data', 'attributes', 'amount', 'currency')
+    @value = payload.dig('data', 'attributes', 'amount', 'value')
+    @origination_time = payload.dig('data', 'attributes', 'origination_time')
   end
+
 end

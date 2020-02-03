@@ -11,7 +11,7 @@ require 'k2_tests/module_tests/k2_config_spec'
 
 # Services
 require 'k2_tests/service_tests/client_spec/k2_client_spec'
-require 'k2_tests/service_tests/results_spec/k2_transaction_spec'
+require 'k2_tests/service_tests/results_spec/k2_common_events_spec'
 require 'k2_tests/service_tests/results_spec/webhook_spec'
 require 'k2_tests/service_tests/k2_results_spec'
 

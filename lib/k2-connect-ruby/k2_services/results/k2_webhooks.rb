@@ -1,114 +1,130 @@
-# Common Structure for Webhook Results
-class K2Webhook < K2Result
-  attr_reader :msisdn,
-              :link_resource
+class Webhook
+  attr_reader :id,
+              :links,
+              :event,
+              :topic,
+              :created_at,
+              :links_self,
+              :event_type,
+              :links_resource,
+              :event_resource,
+              :resource_id
 
-  def components(the_body)
-    super
-    @link_resource = @links.dig('resource')
+  def components(payload)
+    @id = payload.dig('id')
+    @topic = payload.dig('topic')
+    @created_at = payload.dig('created_at')
+    # Event
+    @event = payload.dig('event')
+    @event_type = payload.dig('event', 'type')
+    @event_resource = payload.dig('event', 'resource')
+    @resource_id = payload.dig('event', 'resource', 'id')
+    # Links
+    @links = payload.dig('_links')
+    @links_self = payload.dig('_links', 'self')
+    @links_resource = payload.dig('_links', 'resource')
   end
 end
 
-# For The Customer Created Webhook
-class CustomerCreated < K2Webhook
-  def components(the_body)
+class K2CommonEvents < Webhook
+  attr_reader :resource_reference,
+  :resource_origination_time,
+  :resource_amount,
+  :resource_currency,
+  :resource_status
+
+  def components(payload)
     super
-    # Resources
-    @msisdn = @resource.dig('msisdn')
-    @last_name = @resource.dig('last_name')
-    @first_name = @resource.dig('first_name')
-    @middle_name = @resource.dig('middle_name')
+    @resource_reference = payload.dig('event', 'resource', 'reference')
+    @resource_origination_time = payload.dig('event', 'resource', 'origination_time')
+    @resource_amount = payload.dig('event', 'resource', 'amount')
+    @resource_currency = payload.dig('event', 'resource', 'currency')
+    @resource_status = payload.dig('event', 'resource', 'status')
+  end
+
+end
+
+class Buygoods < K2CommonEvents
+  attr_reader :resource_system,
+              :resource_till_number,
+              :resource_sender_msisdn,
+              :resource_sender_first_name,
+              :resource_sender_last_name
+
+  def components(payload)
+    super
+    @resource_system = payload.dig('event', 'resource', 'system')
+    @resource_till_number = payload.dig('event', 'resource', 'till_number')
+    @resource_sender_msisdn = payload.dig('event', 'resource', 'sender_msisdn')
+    @resource_sender_first_name = payload.dig('event', 'resource', 'sender_first_name')
+    @resource_sender_last_name = payload.dig('event', 'resource', 'sender_last_name')
   end
 end
 
-# For The General Webhook except Customer Created Result
-class GeneralWebhook < K2Webhook
-  attr_reader :reference,
-              :origination_time,
-              :resource_status
-
-  def components(the_body)
+class BuygoodsTransactionReceived < Buygoods
+  def components(payload)
     super
-    # Resources
-    @amount = the_body.dig('resource', 'amount')
-    @currency = the_body.dig('resource', 'currency')
-    @reference = the_body.dig('resource', 'reference')
-    @resource_status = the_body.dig('resource', 'status')
-    @origination_time = the_body.dig('resource', 'origination_time')
   end
 end
 
-# For Settlement Transfer Webhook
-class Settlement < GeneralWebhook
-  attr_reader :destination,
-              :destination_type,
-              :transfer_time,
-              :transfer_type,
-              :destination_mm_system
+class BuygoodsTransactionReversed < Buygoods
+  attr_reader :resource_reversal_time
 
-  def components(the_body)
+  def components(payload)
     super
-    # Resources
-    @transfer_time = @resource.dig('transfer_time')
-    @transfer_type = @resource.dig('transfer_type')
+    @resource_reversal_time = payload.dig('event', 'resource', 'reversal_time')
+  end
+end
+
+class B2b < K2CommonEvents
+  attr_reader :resource_sending_till
+
+  def components(payload)
+    super
+    @resource_sending_till = payload.dig('event', 'resource', 'sending_till')
+  end
+end
+
+class MerchantToMerchant < K2CommonEvents
+  attr_reader :resource_sending_merchant
+
+  def components(payload)
+    super
+    @resource_sending_merchant = payload.dig('event', 'resource', 'sending_merchant')
+  end
+end
+
+class Settlements < K2CommonEvents
+  attr_reader :resource_transfer_time,
+  :resource_transfer_type,
+  :resource_destination,
+  :resource_destination_type,
+  :resource_destination_msisdn,
+  :resource_destination_mm_system
+
+  def components(payload)
+    super
+    @resource_transfer_time = payload.dig('event', 'resource', 'transfer_time')
+    @resource_transfer_type = payload.dig('event', 'resource', 'transfer_type')
     # Destination
-    @destination = @resource.dig('destination')
-    @msisdn = @destination.dig('msisdn')
-    @destination_type = @destination.dig('type')
-    @destination_mm_system = @destination.dig('mm_system')
+    @resource_destination = payload.dig('event', 'resource', 'destination')
+    @resource_destination_type = payload.dig('event', 'resource', 'destination', 'type')
+    @resource_destination_msisdn = payload.dig('event', 'resource', 'destination', 'msisdn')
+    @resource_destination_mm_system = payload.dig('event', 'resource', 'destination', 'mm_system')
   end
 end
 
-# For The Common Transaction Webhook
-class K2FinancialTransaction < GeneralWebhook
-  attr_reader :till_number,
-              :system
+class CustomerCreated < Webhook
+  attr_reader :resource_first_name,
+              :resource_middle_name,
+              :resource_last_name,
+              :resource_msisdn
 
-  def components(the_body)
+  def components(payload)
     super
-    # Resources
-    @system = the_body.dig('resource', 'system')
-    @msisdn = the_body.dig('resource', 'sender_msisdn')
-    @till_number = the_body.dig('resource', 'till_number')
-    @last_name = the_body.dig('resource', 'sender_last_name')
-    @first_name = the_body.dig('resource', 'sender_first_name')
-    @middle_name = the_body.dig('resource', 'sender_middle_name')
-  end
-end
-
-# For The BuyGoods Reversed Webhook
-class Reversal < K2FinancialTransaction
-  attr_reader :reversal_time
-  def components(the_body)
-    super
-    # Resources
-    @reversal_time = @resource.dig('reversal_time')
-  end
-end
-
-# For The BuyGoods Received Webhook
-class BuyGoods < K2FinancialTransaction
-  def components(the_body)
-    super
-  end
-end
-
-# For The External Till to Till transaction
-class B2B < K2FinancialTransaction
-  attr_reader :sending_till
-  def components(the_body)
-    super
-    # Resources
-    @sending_till = @resource.dig('sending_till')
-  end
-end
-
-# For The Merchant to Merchant Transaction Received
-class MerchantTransaction < K2FinancialTransaction
-  attr_reader :sending_merchant
-  def components(the_body)
-    super
-    # Resources
-    @sending_merchant = @resource.dig('sending_merchant')
+    @resource_first_name = payload.dig('resource', 'first_name')
+    @resource_middle_name = payload.dig('resource', 'middle_name')
+    @resource_last_name = payload.dig('resource', 'last_name')
+    @resource_msisdn = payload.dig('resource', 'msisdn')
   end
 end

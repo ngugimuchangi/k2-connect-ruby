@@ -10,8 +10,7 @@ require 'active_support/core_ext'
 require 'k2-connect-ruby/modules'
 
 # Services
-require 'k2-connect-ruby/k2_services/k2_results'
-require 'k2-connect-ruby/k2_services/results'
+require 'k2-connect-ruby/k2_services/payload_process'
 
 # Entity
 require 'k2-connect-ruby/k2_financial_entity/k2_entity'
