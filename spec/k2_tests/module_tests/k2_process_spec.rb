@@ -27,13 +27,33 @@ RSpec.describe K2ProcessResult do
                                                          resource:"https://api-sandbox.kopokopo.com/transaction_simulation/6"
                                                      })
 
-    # @b2b = HashWithIndifferentAccess.new( id: 'cac95329-9fa5-42f1-a4fc-c08af7b868fb', resourceId: 'cdb5f11f-62df-e611-80ee-0aa34a9b2388', topic: 'transaction_received',
-    #                                       created_at: '2017-01-20T22:45:12.790Z',
-    #                                       event: { type: 'B2b Transaction',
-    #                                                resource: { reference: 'KKPPLLMMNN', origination_time: '2017-01-20T22:45:12.790Z', sending_till: 119_050,
-    #                                                            amount: 3_000, currency: 'KES', till_number: 111_222, system: 'Lipa Na M-PESA', status: 'Received' } },
-    #                                       _links: { self: 'https://api-sandbox.kopokopo.com/events/cac95329-9fa5-42f1-a4fc-c08af7b868fb',
-    #                                                 resource: 'https://api-sandbox.kopokopo.com/buygoods_transaction/cdb5f11f-62df-e611-80ee-0aa34a9b2388' })
+    @b2b = HashWithIndifferentAccess.new(topic:"b2b_transaction_received",
+                                         id:"e59ac18c-9e61-433a-bd98-e96459ccc878",
+                                         created_at:"2020-02-04T10:44:42+03:00",
+                                         event:
+                                             {
+                                                 type:"B2b Transaction",
+                                                 resource:
+                                                     {
+                                                         id:"ResourceID",
+                                                         amount:"1000",
+                                                         status:"Complete",
+                                                         system:"76812468712",
+                                                         currency:"KES",
+                                                         reference:"Rf13131ju3741341",
+                                                         till_number:"112233",
+                                                         sending_till:"666666",
+                                                         origination_time:"nil",
+                                                         sender_last_name:"Mwangi",
+                                                         sender_first_name:"David"
+                                                     }
+                                             },
+                                         _links:
+                                             {
+                                                 self:"https://api-sandbox.kopokopo.com/webhook_events/b0021d30-2a1c-4912-a801-671a85ae157f",
+                                                 resource:"https://api-sandbox.kopokopo.com/transaction_simulation/6"
+                                             },)
+
     #
     # @m2m = HashWithIndifferentAccess.new( id: 'cac95329-9fa5-42f1-a4fc-c08af7b868fb', resourceId: 'cdb5f11f-62df-e611-80ee-0aa34a9b2388', topic: 'transaction_received',
     #                                       created_at: '2017-01-20T22:45:12.790Z',
@@ -152,13 +172,13 @@ RSpec.describe K2ProcessResult do
       expect { K2ProcessWebhook.process('') }.to raise_error ArgumentError
     end
 
-    # it 'Buy Goods Received' do
-    #   expect { K2ProcessResult.process(@bg_received) }.not_to raise_error
-    # end
+    it 'Buy Goods Received' do
+      expect { K2ProcessWebhook.process(@bg_received) }.not_to raise_error
+    end
 
-    # it 'B2b Transaction' do
-    #   expect { K2ProcessResult.process(@b2b) }.not_to raise_error
-    # end
+    it 'B2b Transaction' do
+      expect { K2ProcessWebhook.process(@b2b) }.not_to raise_error
+    end
     #
     # it 'Merchant to Merchant Transaction' do
     #   expect { K2ProcessResult.process(@m2m) }.not_to raise_error
@@ -199,7 +219,7 @@ RSpec.describe K2ProcessResult do
 
   context '#return_hash' do
     it 'returns a hash object' do
-      # expect(K2ProcessResult.return_obj_hash(OutgoingPayments.new.components(@pay))).to be_instance_of(HashWithIndifferentAccess)
+      expect(K2ProcessResult.return_obj_hash(OutgoingPayments.new.components(@pay))).to be_instance_of(HashWithIndifferentAccess)
     end
   end
 end

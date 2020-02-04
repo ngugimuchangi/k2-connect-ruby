@@ -19,7 +19,7 @@ module K2ProcessWebhook
       buygoods_reversed.components(payload)
       return buygoods_reversed
       # B2b Transaction
-    when 'b2b_transaction'
+    when 'b2b_transaction_received'
       b2b_transaction = B2b.new
       b2b_transaction.components(payload)
       return b2b_transaction
