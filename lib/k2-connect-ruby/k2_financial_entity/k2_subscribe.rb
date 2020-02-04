@@ -48,15 +48,15 @@ class K2Subscribe
       # Settlement Transfer Completed
     when 'settlement_transfer_completed'
       k2_request_body = {
-        event_type: 'settlement',
+        event_type: 'settlement_transfer',
         url: callback_url,
         secret: @webhook_secret,
         scope: 'Till',
         scope_reference: '5555'
       }
 
-      # Settlement Transfer Completed
-    when 'external_till_to_till'
+      # External Till to Till Transfer Completed
+    when 'b2b_transaction_received'
       k2_request_body = {
         event_type: 'b2b_transaction_received',
         url: callback_url,
@@ -65,8 +65,8 @@ class K2Subscribe
         scope_reference: '5555'
       }
 
-      # Settlement Transfer Completed
-    when 'k2_merchant_to_merchant'
+      # Merchant to Merchant Transaction
+    when 'merchant_to_merchant'
       k2_request_body = {
         event_type: 'merchant_to_merchant',
         url: callback_url,
