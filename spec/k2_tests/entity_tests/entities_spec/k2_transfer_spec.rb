@@ -1,77 +1,54 @@
 include SpecStubRequest, K2Validation
 RSpec.describe K2Transfer do
-  pending("Transfer yet to be set up on the Sandbox API")
   before(:all) do
-    @transfer_params = HashWithIndifferentAccess.new(currency: 'currency', value: 'value')
-    @settle_params = HashWithIndifferentAccess.new(account_name: 'account_name', bank_ref: 'bank_ref', bank_branch_ref: 'bank_branch_ref', account_number: 'account_number').merge(@transfer_params)
-    @query_input = 'https://3b815ff3-b118-4e25-8687-1e31c38a733b.mock.pstmn.io/transfers'
+    @k2transfer = K2Transfer.new(K2AccessToken.new('BwuGu77i5M0SdCc9-R8haR3v0rIR5XsG4xYte27zxjs', '42aPhB6gF7u5n-r0-aL7fQkOVHAzoIYNPr4Nw-wCxQE').request_token)
+
+    @transfer_params = HashWithIndifferentAccess.new(currency: 'currency', value: 'value', callback_url: 'https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3')
+    @mobile_settle_account = HashWithIndifferentAccess.new(type: 'mobile_wallet', msisdn: '254716230902', network: 'Safaricom')
+    @bank_settle_account = HashWithIndifferentAccess.new(type: 'bank_account', account_name: 'account_name', bank_id: 'bank_id', bank_branch_id: 'bank_branch_id', account_number: 'account_number')
   end
 
   context '#settlement_account' do
-    let(:array) { %w[account_name bank_ref bank_branch_ref account_number currency value] }
-    it 'validates input correctly' do
-      skip "Not yet Implemented on the API Sandbox"
-      expect { @k2transfer.validate_input(@settle_params, array) }.not_to raise_error
+    it 'should creating verified mobile wallet settlement account' do
+      SpecStubRequest.stub_request('post', K2Config.path_variable('settlement_mobile_wallet'), @mobile_settle_account, 200)
+      expect { @k2transfer.settlement_account(@mobile_settle_account) }.not_to raise_error
+      expect(WebMock).to have_requested(:post, URI.parse(K2Config.complete_url('settlement_mobile_wallet')))
     end
 
-    it 'should add pay recipient request' do
-      skip "Not yet Implemented on the API Sandbox"
-      # settlement_account stub components
-            request_body = { account_name: 'account_name', bank_ref: 'bank_ref', bank_branch_ref: 'bank_branch_ref', account_number: 'account_number' }
-            return_response = { location: 'https://api-sandbox.kopokopo.com/merchant_bank_accounts/AB443D36-3757-44C1-A1B4-29727FB3111C' }
-            # receive_mpesa_payments stub method
-            mock_stub_request('post', 'merchant_bank_accounts', request_body,200, return_response)
-
-      expect { @k2transfer.settlement_account(@settle_params) }.not_to raise_error
+    it 'should creating verified bank settlement account' do
+      SpecStubRequest.stub_request('post', K2Config.path_variable('settlement_bank_account'), @bank_settle_account, 200)
+      expect { @k2transfer.settlement_account(@bank_settle_account) }.not_to raise_error
+      expect(WebMock).to have_requested(:post, URI.parse(K2Config.complete_url('settlement_bank_account')))
     end
   end
 
   context '#transfer_funds' do
-    it 'validates input correctly' do
-      skip "Not yet Implemented on the API Sandbox"
-      expect { @k2transfer.validate_input(@transfer_params, %w[currency value]) }.not_to raise_error
-    end
-
     it 'should create a blind transfer request' do
-      skip "Not yet Implemented on the API Sandbox"
-      # transfer_funds stub components
-      request_body = { amount: { currency: 'currency', 'value': 'value'} }
-      return_response = { location: 'https://api-sandbox.kopokopo.com/pay_recipients/c7f300c0-f1ef-4151-9bbe-005005aa3747' }
-      # transfer_funds stub method
-      mock_stub_request('post', 'transfers', request_body,200, return_response)
-
+      SpecStubRequest.stub_request('post', K2Config.path_variable('transfers'), @transfer_params, 200)
       expect { @k2transfer.transfer_funds(nil, @transfer_params) }.not_to raise_error
+      expect(WebMock).to have_requested(:post, URI.parse(K2Config.complete_url('transfers')))
     end
 
     it 'should create a targeted transfer request' do
-      skip "Not yet Implemented on the API Sandbox"
-      # transfer_funds stub components
-      request_body = { amount: { currency: 'currency', 'value': 'value'}, destination: 'nil'}
-      return_response = { location: 'https://api-sandbox.kopokopo.com/pay_recipients/c7f300c0-f1ef-4151-9bbe-005005aa3747' }
-      # transfer_funds stub method
-      mock_stub_request('post', 'transfers', request_body,200, return_response)
-
-      expect { @k2transfer.transfer_funds('nil', @transfer_params) }.not_to raise_error
+      SpecStubRequest.stub_request('post', K2Config.path_variable('transfers'), @transfer_params, 200)
+      expect { @k2transfer.transfer_funds('bb4e84a9-d944-42b1-a74a-e81ecec3576a', @transfer_params) }.not_to raise_error
+      expect(WebMock).to have_requested(:post, URI.parse(K2Config.complete_url('transfers')))
     end
   end
 
   context 'Query the status of a prior Transfer' do
-    it 'validates query URL correctly' do
-      skip "Not yet Implemented on the API Sandbox"
-      expect { @k2transfer.validate_url(@query_input) }.not_to raise_error
+    it 'should query creating verified settlement account status' do
+      SpecStubRequest.stub_request('get', URI.parse(@k2transfer.settlement_location_url).path, '', 200)
+      expect { @k2transfer.query_status(@k2transfer.settlement_location_url) }.not_to raise_error
+      expect(@k2transfer.k2_response_body).not_to eq(nil)
+      expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2transfer.settlement_location_url)))
     end
 
-    it 'should query payment request status' do
-      skip "Not yet Implemented on the API Sandbox"
-      # query transfer stub components
-      request_body = 'null'
-      return_response = { id: 'd76265cd-0951-e511-80da-0aa34a9b2388', status: 'Pending', initiated_at: '2018-05-02T00:30:25.580Z',
-                          amount: { 'value': 225.00, currency: 'KES' },
-                          _links: { self: 'https://api-sandbox.kopokopo.com/transfers/d76265cd-0951-e511-80da-0aa34a9b2388' } }
-      # transfer_funds stub method
-      mock_stub_request('get', 'transfers', request_body,200, return_response)
-
-      expect { @k2transfer.query_status(@query_input) }.not_to raise_error
+    it 'should query transfer status' do
+      SpecStubRequest.stub_request('get', URI.parse(@k2transfer.transfer_location_url).path, '', 200)
+      expect { @k2transfer.query_status(@k2transfer.transfer_location_url) }.not_to raise_error
+      expect(@k2transfer.k2_response_body).not_to eq(nil)
+      expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2transfer.transfer_location_url)))
     end
   end
 end

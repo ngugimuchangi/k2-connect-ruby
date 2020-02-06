@@ -9,9 +9,7 @@ class K2Pay < K2Entity
     params = params.with_indifferent_access
     @exception_array += %w[first_name last_name phone email type]
     # In the case of mobile pay
-    # if params['pay_type'].eql?('mobile_wallet')
     if params[:type].eql?('mobile_wallet')
-      # Validation
       params = validate_input(params, @exception_array += %w[network])
       k2_request_pay_recipient = {
         first_name: params[:first_name],
@@ -20,12 +18,9 @@ class K2Pay < K2Entity
         email: validate_email(params[:email]),
         network: params[:network]
       }
-      #puts "Pay Recipient: #{k2_request_pay_recipient}"
-    #elsif params['pay_type'].eql?('bank_account')
-    elsif params[:type].eql?('bank_account')
-      # Validation
-      params = validate_input(params, @exception_array += %w[account_name bank_id bank_branch_id account_number])
       # In the case of bank pay
+    elsif params[:type].eql?('bank_account')
+      params = validate_input(params, @exception_array += %w[account_name bank_id bank_branch_id account_number])
       k2_request_pay_recipient = {
         name: "#{params[:first_name]} #{params[:last_name]}",
         account_name: params[:account_name],

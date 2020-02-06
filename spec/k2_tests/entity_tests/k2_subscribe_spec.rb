@@ -58,23 +58,23 @@ RSpec.describe K2Subscribe do
       # webhook_subscribe external till to till (b2b) stub method
       subscription_stub_request('b2b_transaction_received', @callback_url)
 
-      expect { @k2subscriber.webhook_subscribe('webhook_secret','external_till_to_till', @callback_url) }.not_to raise_error
+      expect { @k2subscriber.webhook_subscribe('webhook_secret','b2b_transaction_received', @callback_url) }.not_to raise_error
     end
 
     it 'should send webhook subscription for merchant to merchant transaction' do
       # webhook_subscribe merchant to merchant transaction stub method
       subscription_stub_request('merchant_to_merchant', @callback_url)
 
-      expect { @k2subscriber.webhook_subscribe('webhook_secret','k2_merchant_to_merchant', @callback_url) }.not_to raise_error
+      expect { @k2subscriber.webhook_subscribe('webhook_secret','merchant_to_merchant', @callback_url) }.not_to raise_error
     end
   end
 
   context '#query_webhook' do
     it 'should query recent wenhook subscription' do
-      skip "Yet to Do it Properly"
-      # query settlement stub method
-
+      SpecStubRequest.stub_request('get', URI.parse(@k2subscriber.location_url).path, '', 200)
       expect { @k2subscriber.query_webhook }.not_to raise_error
+      expect(@k2subscriber.k2_response_body).not_to eq(nil)
+      expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2subscriber.location_url)))
     end
   end
 end

@@ -6,7 +6,8 @@ module K2Config
   @universal_callback_url = ''
   @base_url = "http://127.0.0.1:3000"
   @path_endpoints = HashWithIndifferentAccess.new(oauth_token: 'oauth/token', webhook_subscriptions: "api/#{@version_no}/webhook_subscriptions", pay_recipient: "api/#{@version_no}/pay_recipients",
-                                                  payments: "api/#{@version_no}/payments", incoming_payments: "api/#{@version_no}/incoming_payments")
+                                                  payments: "api/#{@version_no}/payments", incoming_payments: "api/#{@version_no}/incoming_payments", settlement_mobile_wallet: "api/#{@version_no}/merchant_wallets",
+                                                  settlement_bank_account: "api/#{@version_no}/merchant_bank_accounts", transfers: "api/#{@version_no}/transfers")
   @callback_urls = HashWithIndifferentAccess.new(webhook: 'http://127.0.0.1:3003/webhook_subscription', payments: 'http://127.0.0.1:3003/payment_result',
                                                  incoming_payments: 'http://127.0.0.1:3003/stk_payment')
 

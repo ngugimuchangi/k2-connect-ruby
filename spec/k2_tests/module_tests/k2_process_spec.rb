@@ -213,7 +213,7 @@ RSpec.describe K2ProcessResult do
 
   context '#check_topic' do
     it 'should raise an error if event_type is not specified' do
-      expect { K2ProcessResult.check_topic( {the_body: { event: nil} } ) }.to raise_error ArgumentError
+      expect { K2ProcessResult.check_type({the_body: {event: nil} } ) }.to raise_error ArgumentError
     end
   end
 

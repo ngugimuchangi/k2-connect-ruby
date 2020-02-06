@@ -2,11 +2,11 @@
 module K2ProcessResult
   def self.process(payload)
     raise ArgumentError, 'Empty/Nil Request Body Argument!' if payload.blank?
-    K2ProcessResult.check_topic(payload)
+    K2ProcessResult.check_type(payload)
   end
 
   # Check the Event Type.
-  def self.check_topic(payload)
+  def self.check_type(payload)
     result_type = payload.dig('data', 'type')
     case result_type
       # Incoming Payments

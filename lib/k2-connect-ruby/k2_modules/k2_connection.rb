@@ -50,8 +50,8 @@ module K2Connect
     #raise K2ConnectionError.new(response_code) && k2_https.shutdown unless response_code[0].eql?(2.to_s)
 
     unless request_type.eql?('GET')
-      #puts "Response Header: #{response_headers}" unless class_type.eql?("Access Token") || response_headers.blank?
-      #puts "Response Location URL: #{response_headers["location"][0]}" unless class_type.eql?("Access Token") || response_headers.blank?
+      # puts "Response Header: #{response_headers}" unless class_type.eql?("Access Token") || response_headers.blank?
+      # puts "Response Location URL: #{response_headers["location"][0]}" unless class_type.eql?("Access Token") || response_headers.blank?
       # Returns the access token for authorization
       return response_body['access_token'] if path_url.eql?('oauth/token')
 

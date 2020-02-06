@@ -37,15 +37,14 @@ RSpec.describe K2Pay do
   context '#query_pay' do
     it 'should query adding pay recipients' do
       SpecStubRequest.stub_request('get', URI.parse(@k2pay.recipients_location_url).path, '', 200)
-      @k2pay.query_status(@k2pay.recipients_location_url)
+      expect { @k2pay.query_status(@k2pay.recipients_location_url) }.not_to raise_error
       expect(@k2pay.k2_response_body).not_to eq(nil)
       expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2pay.recipients_location_url)))
     end
 
     it 'should query creating payment request status' do
-      # skip "Does not return resource in the location_url from the API Sandbox"
       SpecStubRequest.stub_request('get', URI.parse(@k2pay.payments_location_url).path, @create_request_body, 200)
-      @k2pay.query_status(@k2pay.payments_location_url)
+      expect { @k2pay.query_status(@k2pay.payments_location_url) }.not_to raise_error
       expect(@k2pay.k2_response_body).not_to eq(nil)
       expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2pay.payments_location_url)))
     end
