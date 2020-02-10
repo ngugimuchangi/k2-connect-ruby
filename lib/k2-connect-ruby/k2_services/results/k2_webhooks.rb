@@ -15,12 +15,12 @@ class Webhook
     @topic = payload.dig('topic')
     @created_at = payload.dig('created_at')
     # Event
-    @event = payload.dig('event')
+    # @event = payload.dig('event')
     @event_type = payload.dig('event', 'type')
     @event_resource = payload.dig('event', 'resource')
     @resource_id = payload.dig('event', 'resource', 'id')
     # Links
-    @links = payload.dig('_links')
+    # @links = payload.dig('_links')
     @links_self = payload.dig('_links', 'self')
     @links_resource = payload.dig('_links', 'resource')
   end

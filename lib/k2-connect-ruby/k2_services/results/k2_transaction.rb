@@ -9,12 +9,12 @@ class K2Transaction
   :callback_url
 
   def components(payload)
-    @data = payload.dig('data')
+    # @data = payload.dig('data')
     @id = payload.dig('data', 'id')
     @type = payload.dig('data', 'type')
-    @attributes = payload.dig('data', 'attributes')
-    @metadata = payload.dig('data', 'attributes', 'meta_data')
-    @links = payload.dig('data', 'attributes', '_links')
+    # @attributes = payload.dig('data', 'attributes')
+    # @metadata = payload.dig('data', 'attributes', 'meta_data')
+    # @links = payload.dig('data', 'attributes', '_links')
     @links_self = payload.dig('data', 'attributes', '_links', 'self')
     @callback_url = payload.dig('data', 'attributes', '_links', 'callback_url')
   end
