@@ -17,7 +17,7 @@ class Webhook
     # Event
     # @event = payload.dig('event')
     @event_type = payload.dig('event', 'type')
-    @event_resource = payload.dig('event', 'resource')
+    # @event_resource = payload.dig('event', 'resource')
     @resource_id = payload.dig('event', 'resource', 'id')
     # Links
     # @links = payload.dig('_links')

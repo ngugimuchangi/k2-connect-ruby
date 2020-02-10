@@ -52,7 +52,7 @@ class IncomingPayments < CommonPayments
     super
     @event = payload.dig('data', 'attributes', 'event')
     @event_type = payload.dig('data', 'attributes', 'event', 'type')
-    @event_resource = payload.dig('data', 'attributes', 'event', 'resource')
+    # @event_resource = payload.dig('data', 'attributes', 'event', 'resource')
     @transaction_reference = payload.dig('data', 'attributes', 'event', 'resource', 'transaction_reference')
     @origination_time = payload.dig('data', 'attributes', 'event', 'resource', 'origination_time')
     @sender_msisdn = payload.dig('data', 'attributes', 'event', 'resource', 'sender_msisdn')
