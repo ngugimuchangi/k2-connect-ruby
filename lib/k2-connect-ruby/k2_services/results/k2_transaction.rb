@@ -87,3 +87,5 @@ class OutgoingPayments < CommonPayments
   end
 
 end
+
+class Transfer < OutgoingPayments ; end

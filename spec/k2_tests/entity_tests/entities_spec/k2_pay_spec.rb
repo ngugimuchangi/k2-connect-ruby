@@ -4,7 +4,7 @@ RSpec.describe K2Pay do
     # K2Pay object
     @k2pay = K2Pay.new(K2AccessToken.new('BwuGu77i5M0SdCc9-R8haR3v0rIR5XsG4xYte27zxjs', '42aPhB6gF7u5n-r0-aL7fQkOVHAzoIYNPr4Nw-wCxQE').request_token)
 
-    @create_request_body = {  currency: "KES", value: 20000, callback_url: "http://127.0.0.1:3003/payment_result" }
+    @create_request_body = {  currency: "KES", value: 20000, callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3" }
     @mobile_pay_request_body = { type: "mobile_wallet", first_name: "John", last_name: "Doe", email: "johndoe@nomail.net", phone: "+254716230902", network: "Safaricom" }
     @bank_pay_request_body = { type: "bank_account", first_name: "John", last_name: "Doe", email: "johndoe@nomail.net", phone: "+254716230902", account_name: "David Kariuki", account_number: 566566, bank_id: 21, bank_branch_id: 2133 }
   end

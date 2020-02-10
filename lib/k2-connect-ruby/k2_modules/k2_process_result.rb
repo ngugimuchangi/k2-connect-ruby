@@ -19,6 +19,10 @@ module K2ProcessResult
       outgoing_payments = OutgoingPayments.new
       outgoing_payments.components(payload)
       return outgoing_payments
+    when 'transfer'
+      transfer = Transfer.new
+      transfer.components(payload)
+      return transfer
     else
       raise ArgumentError, 'No Other Specified Payment Type!'
     end

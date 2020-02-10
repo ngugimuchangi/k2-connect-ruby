@@ -22,13 +22,14 @@ class K2Pay < K2Entity
     elsif params[:type].eql?('bank_account')
       params = validate_input(params, @exception_array += %w[account_name bank_id bank_branch_id account_number])
       k2_request_pay_recipient = {
-        name: "#{params[:first_name]} #{params[:last_name]}",
-        account_name: params[:account_name],
-        bank_id: params[:bank_id],
-        bank_branch_id: params[:bank_branch_id],
-        account_number: params[:account_number],
-        email: validate_email(params[:email]),
-        phone: validate_phone(params[:phone])
+          first_name: "#{params[:first_name]} #{params[:last_name]}",
+          last_name: "#{params[:last_name]}",
+          account_name: params[:account_name],
+          bank_id: params[:bank_id],
+          bank_branch_id: params[:bank_branch_id],
+          account_number: params[:account_number],
+          email: validate_email(params[:email]),
+          phone: validate_phone(params[:phone])
       }
     else
       raise ArgumentError, 'Undefined Payment Method.'

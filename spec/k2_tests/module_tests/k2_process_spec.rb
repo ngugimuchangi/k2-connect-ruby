@@ -166,6 +166,37 @@ RSpec.describe K2ProcessResult do
                     }
             }
     })
+
+    @transfer = HashWithIndifferentAccess.new(data: {
+        id:"7db9f7f7-4ef8-4df9-a6a9-d62db042fcc1",
+        type:"transfer",
+        attributes:
+            {
+                transaction_reference:"1581315324",
+                destination:"c7f300c0-f1ef-4151-9bbe-005005aa3747",
+                status:"Sent",
+                origination_time:"2020-02-03T08:01:51.481+03:00",
+                initiation_time:"2020-02-03T08:01:51.433+03:00",
+                amount:
+                    {
+                        currency:"KES",
+                        value:"20000.0"
+
+                    },
+                meta_data:
+                    {
+                        notes:"Salary payment for May 2018",
+                        customerId:"8675309",
+                        something_else:"Something else"
+
+                    },
+                _links:
+                    {
+                        callback_url:"https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3",
+                        self:"http://localhost:3000/api/v1/payments/59f350e0-7695-422f-9f52-c25b9cb05180"
+                    }
+            }
+    })
   end
   context '#process' do
     it 'should raise an error if argument is empty' do
@@ -208,6 +239,11 @@ RSpec.describe K2ProcessResult do
     it 'Process PAY Result' do
       expect { K2ProcessResult.process(@pay) }.not_to raise_error
       expect(K2ProcessResult.process(@pay)).not_to be nil
+    end
+
+    it 'Process Transfer Result' do
+      expect { K2ProcessResult.process(@transfer) }.not_to raise_error
+      expect(K2ProcessResult.process(@transfer)).not_to be nil
     end
   end
 
