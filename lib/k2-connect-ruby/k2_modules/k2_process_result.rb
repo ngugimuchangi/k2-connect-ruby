@@ -11,17 +11,14 @@ module K2ProcessResult
     case result_type
       # Incoming Payments
     when 'incoming_payment'
-      incoming_payments = IncomingPayments.new
-      incoming_payments.components(payload)
+      incoming_payments = IncomingPayments.new(payload)
       return incoming_payments
       # Outgoing Payments
     when 'payment'
-      outgoing_payments = OutgoingPayments.new
-      outgoing_payments.components(payload)
+      outgoing_payments = OutgoingPayment.new(payload)
       return outgoing_payments
     when 'transfer'
-      transfer = Transfer.new
-      transfer.components(payload)
+      transfer = Transfer.new(payload)
       return transfer
     else
       raise ArgumentError, 'No Other Specified Payment Type!'

@@ -76,12 +76,7 @@ module K2Validation
 
   # Converts Hash Objects to HashWithIndifferentAccess Objects
   def to_indifferent_access(params)
-    if params.is_a?(Hash)
-      params.with_indifferent_access
-    else
-      params
-    end
-    params
+    params.with_indifferent_access
   end
 
   def validate_url(url)

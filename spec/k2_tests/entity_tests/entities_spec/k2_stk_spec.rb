@@ -17,7 +17,7 @@ RSpec.describe K2Stk do
       SpecStubRequest.stub_request('post', K2Config.path_variable('incoming_payments'), @mpesa_payments, 200)
       @k2stk.receive_mpesa_payments(@mpesa_payments)
       expect(@k2stk.location_url).not_to eq(nil)
-      expect(WebMock).to have_requested(:post, URI.parse(K2Config.complete_url('incoming_payments')))
+      expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('incoming_payments')))
     end
   end
 

@@ -255,7 +255,7 @@ RSpec.describe K2ProcessResult do
 
   context '#return_hash' do
     it 'returns a hash object' do
-      expect(K2ProcessResult.return_obj_hash(OutgoingPayments.new.components(@pay))).to be_instance_of(HashWithIndifferentAccess)
+      expect(K2ProcessResult.return_obj_hash(OutgoingPayment.new(@pay))).to be_instance_of(HashWithIndifferentAccess)
     end
   end
 end

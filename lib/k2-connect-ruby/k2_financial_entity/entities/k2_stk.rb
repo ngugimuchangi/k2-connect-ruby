@@ -3,7 +3,7 @@ class K2Stk < K2Entity
 
   # Receive payments from M-PESA users.
   def receive_mpesa_payments(params)
-    params = params.with_indifferent_access
+    # params = params.with_indifferent_access
     # Validation
     #params = validate_input(params, @exception_array += %w[first_name last_name phone email currency value])
     params = validate_input(params, @exception_array += %w[payment_channel till_identifier subscriber first_name last_name phone email amount currency value metadata _links callback_url])

@@ -64,7 +64,7 @@ module K2Config
     @path_endpoints
   end
 
-  def self.complete_url(key)
+  def self.path_url(key)
     @base_url + '/' + path_variable(key)
   end
 

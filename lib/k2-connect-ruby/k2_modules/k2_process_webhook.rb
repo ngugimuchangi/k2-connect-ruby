@@ -10,33 +10,27 @@ module K2ProcessWebhook
     case result_topic
       # Buygoods Transaction Received
     when 'buygoods_transaction_received'
-      buygoods_received = BuygoodsTransactionReceived.new
-      buygoods_received.components(payload)
+      buygoods_received = BuygoodsTransactionReceived.new(payload)
       return buygoods_received
       # Buygoods Transaction Reversed
     when 'buygoods_transaction_reversed'
-      buygoods_reversed = BuygoodsTransactionReversed.new
-      buygoods_reversed.components(payload)
+      buygoods_reversed = BuygoodsTransactionReversed.new(payload)
       return buygoods_reversed
       # B2b Transaction
     when 'b2b_transaction_received'
-      b2b_transaction = B2b.new
-      b2b_transaction.components(payload)
+      b2b_transaction = B2b.new(payload)
       return b2b_transaction
       # Merchant to Merchant
     when 'merchant_to_merchant'
-      merchant_to_merchant = MerchantToMerchant.new
-      merchant_to_merchant.components(payload)
+      merchant_to_merchant = MerchantToMerchant.new(payload)
       return merchant_to_merchant
       # Settlement Transfer
     when 'settlement_transfer_completed'
-      settlement_transfer = Settlements.new
-      settlement_transfer.components(payload)
+      settlement_transfer = SettlementWebhook.new(payload)
       return settlement_transfer
       # Customer Created
     when 'customer_created'
-      customer_created = CustomerCreated.new
-      customer_created.components(payload)
+      customer_created = CustomerCreated.new(payload)
       return customer_created
     else
       raise ArgumentError, 'No Other Specified Event!'

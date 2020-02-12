@@ -62,7 +62,7 @@ RSpec.describe K2Config do
     end
 
     it 'should retrieve whole Path variable URL (Oauth Token)' do
-      expect { K2Config.complete_url('oauth_token') }.not_to raise_error
+      expect { K2Config.path_url('oauth_token') }.not_to raise_error
     end
   end
 end

@@ -16,9 +16,9 @@ require 'k2_tests/service_tests/results_spec/webhook_spec'
 require 'k2_tests/service_tests/k2_results_spec'
 
 # Entity
-require 'k2_tests/entity_tests/entities_spec/k2_pay_spec'
-require 'k2_tests/entity_tests/entities_spec/k2_stk_spec'
-require 'k2_tests/entity_tests/entities_spec/k2_transfer_spec'
 require 'k2_tests/entity_tests/k2_entity_spec'
 require 'k2_tests/entity_tests/k2_token_spec'
 require 'k2_tests/entity_tests/k2_subscribe_spec'
+require 'k2_tests/entity_tests/entities_spec/k2_pay_spec'
+require 'k2_tests/entity_tests/entities_spec/k2_stk_spec'
+require 'k2_tests/entity_tests/entities_spec/k2_transfer_spec'

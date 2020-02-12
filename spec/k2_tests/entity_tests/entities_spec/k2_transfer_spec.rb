@@ -12,13 +12,13 @@ RSpec.describe K2Transfer do
     it 'should creating verified mobile wallet settlement account' do
       SpecStubRequest.stub_request('post', K2Config.path_variable('settlement_mobile_wallet'), @mobile_settle_account, 200)
       expect { @k2transfer.settlement_account(@mobile_settle_account) }.not_to raise_error
-      expect(WebMock).to have_requested(:post, URI.parse(K2Config.complete_url('settlement_mobile_wallet')))
+      expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('settlement_mobile_wallet')))
     end
 
     it 'should creating verified bank settlement account' do
       SpecStubRequest.stub_request('post', K2Config.path_variable('settlement_bank_account'), @bank_settle_account, 200)
       expect { @k2transfer.settlement_account(@bank_settle_account) }.not_to raise_error
-      expect(WebMock).to have_requested(:post, URI.parse(K2Config.complete_url('settlement_bank_account')))
+      expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('settlement_bank_account')))
     end
   end
 
@@ -26,13 +26,13 @@ RSpec.describe K2Transfer do
     it 'should create a blind transfer request' do
       SpecStubRequest.stub_request('post', K2Config.path_variable('transfers'), @transfer_params, 200)
       expect { @k2transfer.transfer_funds(nil, @transfer_params) }.not_to raise_error
-      expect(WebMock).to have_requested(:post, URI.parse(K2Config.complete_url('transfers')))
+      expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('transfers')))
     end
 
     it 'should create a targeted transfer request' do
       SpecStubRequest.stub_request('post', K2Config.path_variable('transfers'), @transfer_params, 200)
       expect { @k2transfer.transfer_funds('bb4e84a9-d944-42b1-a74a-e81ecec3576a', @transfer_params) }.not_to raise_error
-      expect(WebMock).to have_requested(:post, URI.parse(K2Config.complete_url('transfers')))
+      expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('transfers')))
     end
   end
 
