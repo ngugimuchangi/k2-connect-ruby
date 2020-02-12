@@ -52,6 +52,7 @@ class K2Pay < K2Entity
     # Validation
     params = validate_input(params, @exception_array += %w[destination currency value callback_url])
     # params = validate_input(params, @exception_array += %w[destination amount metadata _links])
+    puts "Value: #{params[:value]}"
     # The Request Body Parameters
     k2_request_pay_amount = {
       currency: params[:currency],
