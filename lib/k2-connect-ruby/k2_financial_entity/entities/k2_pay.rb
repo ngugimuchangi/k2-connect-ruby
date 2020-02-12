@@ -49,10 +49,15 @@ class K2Pay < K2Entity
 
   # Create an outgoing Payment to a third party.
   def create_payment(params)
+    params = params.with_indifferent_access
     # Validation
     params = validate_input(params, @exception_array += %w[destination currency value callback_url])
     # params = validate_input(params, @exception_array += %w[destination amount metadata _links])
     puts "All Parameters: #{params}"
+    puts "Destination: #{params["destination"]}"
+    puts "Destination With Indifferent Access: #{params[:destination]}"
+    puts "Value: #{params["value"]}"
+    puts "Value With Indifferent Access: #{params[:value]}"
     # The Request Body Parameters
     k2_request_pay_amount = {
       currency: params[:currency],
