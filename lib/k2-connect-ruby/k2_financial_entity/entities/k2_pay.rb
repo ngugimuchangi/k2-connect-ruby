@@ -50,7 +50,7 @@ class K2Pay < K2Entity
   # Create an outgoing Payment to a third party.
   def create_payment(params)
     # Validation
-    params = validate_input(params, @exception_array += %w[currency value callback_url])
+    params = validate_input(params, @exception_array += %w[destination currency value callback_url])
     # params = validate_input(params, @exception_array += %w[destination amount metadata _links])
     # The Request Body Parameters
     k2_request_pay_amount = {
@@ -65,9 +65,9 @@ class K2Pay < K2Entity
         callback_url: params[:callback_url]
     }
     create_payment_body = {
-      destination: 'c7f300c0-f1ef-4151-9bbe-005005aa3747',
+      destination: params[:destination],
       amount: k2_request_pay_amount,
-      metadata: k2_request_pay_metadata,
+      meta_data: k2_request_pay_metadata,
       _links: k2_request_links
     }
     create_payment_hash = K2Pay.make_hash('api/v1/payments', 'POST', @access_token, 'PAY', create_payment_body)
