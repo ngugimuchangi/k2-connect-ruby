@@ -34,7 +34,7 @@ class K2Stk < K2Entity
       meta_data: k2_request_metadata,
       _links: k2_request_links
     }
-    receive_hash = K2Stk.make_hash('api/v1/incoming_payments', 'POST', @access_token, 'STK', receive_body)
+    receive_hash = K2Stk.make_hash(K2Config.path_variable('incoming_payments'), 'POST', @access_token, 'STK', receive_body)
     @threads << Thread.new do
       sleep 0.25
       @location_url = K2Connect.connect(receive_hash)

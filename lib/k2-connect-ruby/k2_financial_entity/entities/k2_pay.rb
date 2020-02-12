@@ -39,7 +39,7 @@ class K2Pay < K2Entity
       #type: params['pay_type'],
       pay_recipient: k2_request_pay_recipient
     }
-    pay_recipient_hash = K2Pay.make_hash('api/v1/pay_recipients', 'POST', @access_token, 'PAY', recipients_body)
+    pay_recipient_hash = K2Pay.make_hash(K2Config.path_variable('pay_recipient'), 'POST', @access_token, 'PAY', recipients_body)
     @threads << Thread.new do
       sleep 0.25
       @recipients_location_url = K2Connect.connect(pay_recipient_hash)
@@ -71,7 +71,7 @@ class K2Pay < K2Entity
       meta_data: k2_request_pay_metadata,
       _links: k2_request_links
     }
-    create_payment_hash = K2Pay.make_hash('api/v1/payments', 'POST', @access_token, 'PAY', create_payment_body)
+    create_payment_hash = K2Pay.make_hash(K2Config.path_variable('payments'), 'POST', @access_token, 'PAY', create_payment_body)
     @threads << Thread.new do
       sleep 0.25
       @payments_location_url = K2Connect.connect(create_payment_hash)
