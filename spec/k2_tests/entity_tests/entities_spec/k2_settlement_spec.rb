@@ -1,0 +1,37 @@
+include SpecStubRequest, K2Validation
+RSpec.describe K2Settlement do
+  before(:all) do
+    @k2settlement = K2Settlement.new(K2AccessToken.new('BwuGu77i5M0SdCc9-R8haR3v0rIR5XsG4xYte27zxjs', '42aPhB6gF7u5n-r0-aL7fQkOVHAzoIYNPr4Nw-wCxQE').request_token)
+
+    @mobile_settle_account = HashWithIndifferentAccess.new(type: 'mobile_wallet', msisdn: '254716230902', network: 'Safaricom')
+    @bank_settle_account = HashWithIndifferentAccess.new(type: 'bank_account', account_name: 'account_name', bank_id: 'bank_id', bank_branch_id: 'bank_branch_id', account_number: 'account_number')
+  end
+
+  context 'Creating a Settlement Account' do
+    it 'should creating verified mobile wallet settlement account' do
+      SpecStubRequest.stub_request('post', K2Config.path_variable('settlement_mobile_wallet'), @mobile_settle_account, 200)
+      expect { @k2settlement.settlement_account(@mobile_settle_account) }.not_to raise_error
+      expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('settlement_mobile_wallet')))
+    end
+
+    it 'should query creating verified settlement account status' do
+      SpecStubRequest.stub_request('get', URI.parse(@k2settlement.location_url).path, '', 200)
+      expect { @k2settlement.query_status(@k2settlement.location_url) }.not_to raise_error
+      expect(@k2settlement.k2_response_body).not_to eq(nil)
+      expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2settlement.location_url)))
+    end
+
+    it 'should creating verified bank settlement account' do
+      SpecStubRequest.stub_request('post', K2Config.path_variable('settlement_bank_account'), @bank_settle_account, 200)
+      expect { @k2settlement.settlement_account(@bank_settle_account) }.not_to raise_error
+      expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('settlement_bank_account')))
+    end
+
+    it 'should query transfer status' do
+      SpecStubRequest.stub_request('get', URI.parse(@k2settlement.location_url).path, '', 200)
+      expect { @k2settlement.query_status(@k2settlement.location_url) }.not_to raise_error
+      expect(@k2settlement.k2_response_body).not_to eq(nil)
+      expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2settlement.location_url)))
+    end
+  end
+end
