@@ -21,9 +21,9 @@ module K2ProcessWebhook
       b2b_transaction = B2b.new(payload)
       return b2b_transaction
       # Merchant to Merchant
-    when 'merchant_to_merchant'
-      merchant_to_merchant = MerchantToMerchant.new(payload)
-      return merchant_to_merchant
+    when 'm2m_transaction_received'
+      m2m_transaction_received = MerchantToMerchant.new(payload)
+      return m2m_transaction_received
       # Settlement Transfer
     when 'settlement_transfer_completed'
       settlement_transfer = SettlementWebhook.new(payload)

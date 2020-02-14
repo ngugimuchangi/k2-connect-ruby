@@ -55,22 +55,56 @@ RSpec.describe K2ProcessResult do
                                              },)
 
     #
-    # @m2m = HashWithIndifferentAccess.new( id: 'cac95329-9fa5-42f1-a4fc-c08af7b868fb', resourceId: 'cdb5f11f-62df-e611-80ee-0aa34a9b2388', topic: 'transaction_received',
-    #                                       created_at: '2017-01-20T22:45:12.790Z',
-    #                                       event: { type: 'Merchant to Merchant Transaction',
-    #                                                resource: { reference: 'KKPPLLMMNN', origination_time: '2017-01-20T22:45:12.790Z', sending_merchant: 'Kings Landing Enterprises',
-    #                                                            amount: 3_000, currency: 'KES', till_number: 111_222, system: 'Lipa Na M-PESA', status: 'Received' } },
-    #                                       _links: { self: 'https://api-sandbox.kopokopo.com/events/cac95329-9fa5-42f1-a4fc-c08af7b868fb',
-    #                                                 resource: 'https://api-sandbox.kopokopo.com/buygoods_transaction/cdb5f11f-62df-e611-80ee-0aa34a9b2388' })
-    #
-    # @bg_reversal = HashWithIndifferentAccess.new( id: 'cac95329-9fa5-42f1-a4fc-c08af7b868fb', resourceId: 'cdb5f11f-62df-e611-80ee-0aa34a9b2388', topic: 'buygoods_transaction_reversed',
-    #                                               created_at: '2017-01-20T22:45:12.790Z',
-    #                                               event: { type: 'Buygoods Transaction Reversed',
-    #                                                        resource: { reference: 'KKPPLLMMNN', origination_time: '2018-01-20T22:45:12.790Z', reversal_time: '2018-01-21T22:45:12.790Z',
-    #                                                                    sender_msisdn: '+2549703119050', amount: 3_000, currency: 'KES', till_number: 111_222, system: 'Lipa Na M-PESA',
-    #                                                                    status: 'Reversed', sender_first_name: 'John', sender_middle_name: 'O', sender_last_name: 'Doe' } },
-    #                                               _links: { self: 'https://api-sandbox.kopokopo.com/events/cac95329-9fa5-42f1-a4fc-c08af7b868fb',
-    #                                                         resource: 'https://api-sandbox.kopokopo.com/buygoods_transaction/cdb5f11f-62df-e611-80ee-0aa34a9b2388' })
+    @m2m = HashWithIndifferentAccess.new(topic:"m2m_transaction_received",
+                                         id:"0e85db10-b902-437c-a8cf-c163ffe3a409",
+                                         created_at:"2020-02-14T09:43:19+03:00",
+                                         event:
+                                             {
+                                                 type:"Merchant to Merchant Transaction",
+                                                 resource:
+                                                     {
+                                                         id:"ResourceID",
+                                                         amount:"20500",
+                                                         currency:"KES",
+                                                         status:"Complete",
+                                                         reference:"dd188dav1d_099sddd-eff",
+                                                         origination_time:"2020-02-14T09:43:19+03:00",
+                                                         sending_merchant:"Tossa Coin"
+                                                     }
+                                             },
+                                         _links:
+                                             {
+                                                 self:"https://api-sandbox.kopokopo.com/webhook_events/0e85db10-b902-437c-a8cf-c163ffe3a409",
+                                                 resource:"https://api-sandbox.kopokopo.com/transaction_simulation/58"
+                                             })
+
+    @bg_reversal = HashWithIndifferentAccess.new(topic:"buygoods_transaction_reversed",
+                                                 id:"4474c949-0580-4d75-918d-59e9f8e608a4",
+                                                 created_at:"2020-02-14T11:02:57+03:00",
+                                                 event:
+                                                     {
+                                                         type:"Buygoods Transaction Reversed",
+                                                         resource:
+                                                             {
+                                                                 id:"ResourceID",
+                                                                 amount:"8000",
+                                                                 status:"Complete",
+                                                                 system:"Safaricom",
+                                                                 currency:"KES",
+                                                                 reference:"kkt_t1p5531144_eff1ll",
+                                                                 till_number:"855802",
+                                                                 reversal_time: "2020-02-03T08:10:58+03:00",
+                                                                 sender_msisdn:"254711111111",
+                                                                 origination_time:"2020-02-03T08:10:58+03:00",
+                                                                 sender_last_name:"Tips",
+                                                                 sender_first_name:"Kt"
+                                                             }
+                                                     },
+                                                 _links:
+                                                     {
+                                                         self:"https://api-sandbox.kopokopo.com/webhook_events/4474c949-0580-4d75-918d-59e9f8e608a4",
+                                                         resource:"https://api-sandbox.kopokopo.com/transaction_simulation/61"
+                                                     })
     #
     # @settlement = HashWithIndifferentAccess.new( id: 'cac95329-9fa5-42f1-a4fc-c08af7b868fb', resourceId: 'cdb5f11f-62df-e611-80ee-0aa34a9b2388', topic: 'settlement_transfer_completed',
     #                                              created_at: '2017-01-20T22:45:12.790Z',
@@ -210,14 +244,14 @@ RSpec.describe K2ProcessResult do
     it 'B2b Transaction' do
       expect { K2ProcessWebhook.process(@b2b) }.not_to raise_error
     end
-    #
-    # it 'Merchant to Merchant Transaction' do
-    #   expect { K2ProcessResult.process(@m2m) }.not_to raise_error
-    # end
-    #
-    # it 'Buy Goods Reversed' do
-    #   expect { K2ProcessResult.process(@bg_reversal) }.not_to raise_error
-    # end
+
+    it 'Merchant to Merchant Transaction' do
+      expect { K2ProcessWebhook.process(@m2m) }.not_to raise_error
+    end
+
+    it 'Buy Goods Reversed' do
+      expect { K2ProcessWebhook.process(@bg_reversal) }.not_to raise_error
+    end
     #
     # it 'Settlement Transfer Completed' do
     #   expect { K2ProcessResult.process(@settlement) }.not_to raise_error
