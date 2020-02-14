@@ -1,7 +1,7 @@
 # For Creating pre-approved and owned settlement accounts
 class K2Settlement < K2Entity
   # Create a Verified Settlement Account via API (Mobile Wallet and Bank Account)
-  def settlement_account(params)
+  def add_settlement_account(params)
     params=params.with_indifferent_access
     the_path_url = ''
     settlement_body = {}

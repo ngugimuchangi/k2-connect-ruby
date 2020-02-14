@@ -66,9 +66,9 @@ class K2Subscribe
       }
 
       # Merchant to Merchant Transaction
-    when 'merchant_to_merchant'
+    when 'm2m_transaction_received'
       k2_request_body = {
-        event_type: 'merchant_to_merchant',
+        event_type: 'm2m_transaction_received',
         url: callback_url,
         secret: @webhook_secret,
         scope: 'Till',

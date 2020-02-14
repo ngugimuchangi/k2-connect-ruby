@@ -10,7 +10,7 @@ RSpec.describe K2Settlement do
   context 'Creating a Settlement Account' do
     it 'should creating verified mobile wallet settlement account' do
       SpecStubRequest.stub_request('post', K2Config.path_variable('settlement_mobile_wallet'), @mobile_settle_account, 200)
-      expect { @k2settlement.settlement_account(@mobile_settle_account) }.not_to raise_error
+      expect { @k2settlement.add_settlement_account(@mobile_settle_account) }.not_to raise_error
       expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('settlement_mobile_wallet')))
     end
 
@@ -23,7 +23,7 @@ RSpec.describe K2Settlement do
 
     it 'should creating verified bank settlement account' do
       SpecStubRequest.stub_request('post', K2Config.path_variable('settlement_bank_account'), @bank_settle_account, 200)
-      expect { @k2settlement.settlement_account(@bank_settle_account) }.not_to raise_error
+      expect { @k2settlement.add_settlement_account(@bank_settle_account) }.not_to raise_error
       expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('settlement_bank_account')))
     end
 

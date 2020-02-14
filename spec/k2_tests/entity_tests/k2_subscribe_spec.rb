@@ -20,10 +20,12 @@ RSpec.describe K2Subscribe do
   context '#webhook_subscribe' do
     it 'raises error if event type does not match' do
       expect { @k2sub_not_exist.webhook_subscribe('event_type', @callback_url) }.to raise_error ArgumentError
+      expect(WebMock).not_to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
     end
 
     it 'raises error if event type is empty' do
       expect { @k2subscriber.webhook_subscribe('', @callback_url) }.to raise_error ArgumentError
+      expect(WebMock).not_to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
     end
 
     it 'should send webhook subscription for buy goods received' do
@@ -31,6 +33,7 @@ RSpec.describe K2Subscribe do
       subscription_stub_request('buygoods_transaction_received', @callback_url)
 
       expect { @k2subscriber.webhook_subscribe('webhook_secret','buygoods_transaction_received', @callback_url) }.not_to raise_error
+      expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
     end
 
     it 'should send webhook subscription for buy goods reversed' do
@@ -38,6 +41,7 @@ RSpec.describe K2Subscribe do
       subscription_stub_request('buygoods_transaction_reversed', @callback_url)
 
       expect { @k2subscriber.webhook_subscribe('webhook_secret','buygoods_transaction_reversed', @callback_url) }.not_to raise_error
+      expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
     end
 
     it 'should send webhook subscription for customer created' do
@@ -45,6 +49,7 @@ RSpec.describe K2Subscribe do
       subscription_stub_request('customer_created', @callback_url)
 
       expect { @k2subscriber.webhook_subscribe('webhook_secret','customer_created', @callback_url) }.not_to raise_error
+      expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
     end
 
     it 'should send webhook subscription for settlement' do
@@ -52,6 +57,7 @@ RSpec.describe K2Subscribe do
       subscription_stub_request('settlement', @callback_url)
 
       expect { @k2subscriber.webhook_subscribe('webhook_secret','settlement_transfer_completed', @callback_url) }.not_to raise_error
+      expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
     end
 
     it 'should send webhook subscription for external till to till (b2b)' do
@@ -59,13 +65,15 @@ RSpec.describe K2Subscribe do
       subscription_stub_request('b2b_transaction_received', @callback_url)
 
       expect { @k2subscriber.webhook_subscribe('webhook_secret','b2b_transaction_received', @callback_url) }.not_to raise_error
+      expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
     end
 
     it 'should send webhook subscription for merchant to merchant transaction' do
       # webhook_subscribe merchant to merchant transaction stub method
-      subscription_stub_request('merchant_to_merchant', @callback_url)
+      subscription_stub_request('m2m_transaction_received', @callback_url)
 
-      expect { @k2subscriber.webhook_subscribe('webhook_secret','merchant_to_merchant', @callback_url) }.not_to raise_error
+      expect { @k2subscriber.webhook_subscribe('webhook_secret','m2m_transaction_received', @callback_url) }.not_to raise_error
+      expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
     end
   end
 
