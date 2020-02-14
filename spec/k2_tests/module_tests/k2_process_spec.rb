@@ -88,14 +88,14 @@ RSpec.describe K2ProcessResult do
                                                              {
                                                                  id:"ResourceID",
                                                                  amount:"8000",
+                                                                 currency:"KES",
                                                                  status:"Complete",
                                                                  system:"Safaricom",
-                                                                 currency:"KES",
                                                                  reference:"kkt_t1p5531144_eff1ll",
                                                                  till_number:"855802",
                                                                  reversal_time: "2020-02-03T08:10:58+03:00",
                                                                  sender_msisdn:"254711111111",
-                                                                 origination_time:"2020-02-03T08:10:58+03:00",
+                                                                 origination_time:"2020-02-14T11:02:57+03:00",
                                                                  sender_last_name:"Tips",
                                                                  sender_first_name:"Kt"
                                                              }

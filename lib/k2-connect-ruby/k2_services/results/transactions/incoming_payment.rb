@@ -12,7 +12,7 @@ class IncomingPayments < CommonPayment
               :sender_last_name,
               :errors
 
-  def self.new(payload)
+  def initialize(payload)
     super
     @event_type = payload.dig('data', 'attributes', 'event', 'type')
     @transaction_reference = payload.dig('data', 'attributes', 'event', 'resource', 'transaction_reference')

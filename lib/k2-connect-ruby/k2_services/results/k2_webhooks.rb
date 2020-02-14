@@ -10,7 +10,7 @@ class Webhook
               :event_resource,
               :resource_id
 
-  def self.new(payload)
+  def initialize(payload)
     @id = payload.dig('id')
     @topic = payload.dig('topic')
     @created_at = payload.dig('created_at')
@@ -33,7 +33,7 @@ class K2CommonEvents < Webhook
   :resource_currency,
   :resource_status
 
-  def self.new(payload)
+  def initialize(payload)
     super
     @resource_reference = payload.dig('event', 'resource', 'reference')
     @resource_origination_time = payload.dig('event', 'resource', 'origination_time')
@@ -51,7 +51,7 @@ class Buygoods < K2CommonEvents
               :resource_sender_first_name,
               :resource_sender_last_name
 
-  def self.new(payload)
+  def initialize(payload)
     super
     @resource_system = payload.dig('event', 'resource', 'system')
     @resource_till_number = payload.dig('event', 'resource', 'till_number')

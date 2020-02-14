@@ -6,7 +6,7 @@ class OutgoingPayment < CommonPayment
               :value,
               :origination_time
 
-  def self.new(payload)
+  def initialize(payload)
     super
     @transaction_reference = payload.dig('data', 'attributes', 'transaction_reference')
     @destination = payload.dig('data', 'attributes', 'destination')

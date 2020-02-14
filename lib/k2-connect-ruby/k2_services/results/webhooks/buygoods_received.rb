@@ -1,5 +1,5 @@
 class BuygoodsTransactionReceived < Buygoods
-  def self.new(payload)
+  def initialize(payload)
     super
   end
 end

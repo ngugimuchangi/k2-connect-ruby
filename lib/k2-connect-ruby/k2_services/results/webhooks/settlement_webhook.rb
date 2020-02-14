@@ -6,7 +6,7 @@ class SettlementWebhook < K2CommonEvents
               :resource_destination_msisdn,
               :resource_destination_mm_system
 
-  def self.new(payload)
+  def initialize(payload)
     super
     @resource_transfer_time = payload.dig('event', 'resource', 'transfer_time')
     @resource_transfer_type = payload.dig('event', 'resource', 'transfer_type')

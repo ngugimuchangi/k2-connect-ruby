@@ -4,7 +4,7 @@ class CustomerCreated < Webhook
               :resource_last_name,
               :resource_msisdn
 
-  def self.new(payload)
+  def initialize(payload)
     super
     @resource_first_name = payload.dig('resource', 'first_name')
     @resource_middle_name = payload.dig('resource', 'middle_name')

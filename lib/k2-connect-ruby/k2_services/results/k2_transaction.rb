@@ -6,7 +6,7 @@ class K2Transaction
   :links_self,
   :callback_url
 
-  def self.new(payload)
+  def initialize(payload)
     @id = payload.dig('data', 'id')
     @type = payload.dig('data', 'type')
     @links_self = payload.dig('data', 'attributes', '_links', 'self')
@@ -18,7 +18,7 @@ class CommonPayment < K2Transaction
   attr_reader :status,
   :initiation_time
 
-  def self.new(payload)
+  def initialize(payload)
     super
     @status = payload.dig('data', 'attributes', 'status')
     @initiation_time = payload.dig('data', 'attributes', 'initiation_time')
