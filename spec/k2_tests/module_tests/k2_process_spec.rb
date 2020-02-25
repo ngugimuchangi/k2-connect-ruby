@@ -232,7 +232,7 @@ RSpec.describe K2ProcessResult do
             }
     })
   end
-  context '#process' do
+  describe '#process' do
     it 'should raise an error if argument is empty' do
       expect { K2ProcessWebhook.process('') }.to raise_error ArgumentError
     end
@@ -281,13 +281,13 @@ RSpec.describe K2ProcessResult do
     end
   end
 
-  context '#check_topic' do
+  describe '#check_topic' do
     it 'should raise an error if event_type is not specified' do
       expect { K2ProcessResult.check_type({the_body: {event: nil} } ) }.to raise_error ArgumentError
     end
   end
 
-  context '#return_hash' do
+  describe '#return_hash' do
     it 'returns a hash object' do
       expect(K2ProcessResult.return_obj_hash(OutgoingPayment.new(@pay))).to be_instance_of(HashWithIndifferentAccess)
     end

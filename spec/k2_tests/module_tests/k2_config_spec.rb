@@ -1,7 +1,7 @@
 # TODO: Add for newer Configuration commands
 RSpec.describe K2Config do
   include K2Config
-  context '#set_base_url' do
+  describe '#set_base_url' do
     it 'should raise error if not a url' do
       expect { K2Config.set_base_url('url') }.to raise_error ArgumentError
     end
@@ -10,7 +10,7 @@ RSpec.describe K2Config do
     end
   end
 
-  context '#set_callback_url' do
+  describe '#set_callback_url' do
     it 'should raise error if not a url' do
       expect { K2Config.set_universal_callback_url('url') }.to raise_error ArgumentError
     end
@@ -32,7 +32,7 @@ RSpec.describe K2Config do
     end
   end
 
-  context '#get all URLs set' do
+  context 'get all URLs set' do
     it 'should retrieve Base URL' do
       expect { K2Config.base_url }.not_to raise_error
     end

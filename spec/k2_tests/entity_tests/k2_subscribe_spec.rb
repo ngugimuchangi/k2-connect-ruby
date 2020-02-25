@@ -1,13 +1,13 @@
 include SpecStubRequest
 RSpec.describe K2Subscribe do
   before(:all) do
-    @access_token = K2AccessToken.new('BwuGu77i5M0SdCc9-R8haR3v0rIR5XsG4xYte27zxjs', '42aPhB6gF7u5n-r0-aL7fQkOVHAzoIYNPr4Nw-wCxQE').request_token
+    @access_token = K2AccessToken.new('KkcZEdj7qx7qfcFMyTWFaUXV7xZv8z8WIm72U06BiPI', 'mVoTlmrjsMw2mnfTXQrynz49ZcDX05Xp5wty-uNaZX8').request_token
     @k2subscriber = K2Subscribe.new(@access_token)
     @k2sub_not_exist = K2Subscribe.new(@access_token)
     @callback_url = K2Config.callback_url('webhook')
   end
 
-  context '#initialize' do
+  describe '#initialize' do
     it 'should initialize with access_token' do
       K2Subscribe.new('access_token')
     end
@@ -17,7 +17,7 @@ RSpec.describe K2Subscribe do
     end
   end
 
-  context '#webhook_subscribe' do
+  describe '#webhook_subscribe' do
     it 'raises error if event type does not match' do
       expect { @k2sub_not_exist.webhook_subscribe('event_type', @callback_url) }.to raise_error ArgumentError
       expect(WebMock).not_to have_requested(:post, K2Config.path_url('webhook_subscriptions'))

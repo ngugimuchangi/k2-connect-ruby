@@ -2,6 +2,9 @@ PATH
   remote: .
   specs:
     k2-connect-ruby (0.10.7)
+      activesupport
+      net-http-persistent (>= 3.0)
+      yajl-ruby
 
 GEM
   remote: https://rubygems.org/
@@ -54,11 +57,6 @@ GEM
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
-    pry-nav (0.3.0)
-      pry (>= 0.9.10, < 0.13.0)
-    pry-remote (0.1.8)
-      pry (~> 0.9)
-      slop (~> 3.0)
     public_suffix (4.0.3)
     rake (10.5.0)
     rb-fsevent (0.10.3)
@@ -82,7 +80,6 @@ GEM
     rspec-support (3.9.2)
     safe_yaml (1.0.5)
     shellany (0.0.1)
-    slop (3.6.0)
     terminal-notifier (2.0.0)
     thor (1.0.1)
     thread_safe (0.3.6)
@@ -100,21 +97,15 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport
   bundler (~> 2.0)
   guard
   guard-rspec
   k2-connect-ruby!
-  net-http-persistent (>= 3.0)
-  pry
-  pry-nav
-  pry-remote
   rake (~> 10.0)
   rspec (>= 3.9.0)
   rspec-nc
   vcr
   webmock
-  yajl-ruby
 
 BUNDLED WITH
    2.1.4

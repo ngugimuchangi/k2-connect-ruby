@@ -1,7 +1,7 @@
 include SpecStubRequest
 RSpec.describe K2Connect do
 
-  context '#to_connect' do
+  describe '#to_connect' do
     let(:token_hash) { { path_url: 'oauth', access_token: 'access_token', request_type: 'POST', class_type: 'class_type', params: 'body' } }
     let(:nil_token_hash) { { path_url: 'sub', access_token: '', request_type: 'POST', class_type: 'class_type', params: 'body' } }
     let(:push_hash) { { path_url: 'not_ouath', access_token: 'access_token', request_type: 'PUSH', class_type: 'class_type', params: 'body' } }
