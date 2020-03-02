@@ -1,3 +1,4 @@
+# TODO: If the simulation fails, it should not create an entry into the database
 include SpecStubRequest, K2Validation
 RSpec.describe K2Transfer do
   before(:all) do
