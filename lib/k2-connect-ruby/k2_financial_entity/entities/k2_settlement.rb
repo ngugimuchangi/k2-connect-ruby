@@ -7,14 +7,14 @@ class K2Settlement < K2Entity
     settlement_body = {}
     @exception_array += %w[type]
     # The Request Body Parameters
-    if params[:type].eql?('mobile_wallet')
+    if params[:type].eql?('merchant_wallet')
       params = validate_input(params, @exception_array += %w[msisdn network])
       settlement_body = {
           msisdn: validate_phone(params[:msisdn]),
           network: params[:network]
       }
       the_path_url = K2Config.path_url('settlement_mobile_wallet')
-    elsif params[:type].eql?('bank_account')
+    elsif params[:type].eql?('merchant_bank_account')
       params = validate_input(params, @exception_array += %w[account_name bank_id bank_branch_id account_number currency value])
       settlement_body = {
           account_name: params[:account_name],
@@ -23,6 +23,8 @@ class K2Settlement < K2Entity
           account_number: params[:account_number]
       }
       the_path_url = K2Config.path_url('settlement_bank_account')
+    else
+      raise ArgumentError 'Unknown Settlement Account'
     end
 
     settlement_hash = K2Transfer.make_hash(the_path_url, 'post', @access_token, 'Transfer', settlement_body)
