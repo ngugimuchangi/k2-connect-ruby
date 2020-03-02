@@ -106,14 +106,37 @@ RSpec.describe K2ProcessResult do
                                                          resource:"https://api-sandbox.kopokopo.com/transaction_simulation/61"
                                                      })
     #
-    # @settlement = HashWithIndifferentAccess.new( id: 'cac95329-9fa5-42f1-a4fc-c08af7b868fb', resourceId: 'cdb5f11f-62df-e611-80ee-0aa34a9b2388', topic: 'settlement_transfer_completed',
-    #                                              created_at: '2017-01-20T22:45:12.790Z',
-    #                                              event: { type: 'Settlement',
-    #                                                       resource: { reference: 'KKPPLLMMNN', origination_time: '2017-01-20T22:45:12.790Z', transfer_time: '2018-01-21T22:45:12.790Z',
-    #                                                                   transfer_type: 'Mobile Transfer', amount: 3_000, currency: 'KES', status: 'Transferred',
-    #                                                                   destination: { type: 'mobile', msisdn: '+254909999999', mm_system: 'Safaricom' } } },
-    #                                              _links: { self: 'https://api-sandbox.kopokopo.com/events/cac95329-9fa5-42f1-a4fc-c08af7b868fb',
-    #                                                        resource: 'https://api-sandbox.kopokopo.com/buygoods_transaction/cdb5f11f-62df-e611-80ee-0aa34a9b2388' })
+    @settlement = HashWithIndifferentAccess.new(topic:"settlement_transfer_completed",
+                                                id:"f45fbc1c-8f09-4a3e-8c77-94ffe919112a",
+                                                created_at:"2020-03-02T08:55:35+03:00",
+                                                event:
+                                                    {
+                                                        type:"Settlement Transfer",
+                                                        resource:
+                                                            {
+                                                                id:"ResourceID",
+                                                                amount:"value",
+                                                                currency:"KES",
+                                                                status:"Transferred",
+                                                                system:"Safaricom",
+                                                                reference:"58b86edc-97bc-47a8-a853-6cd06075db63",
+                                                                destination: {
+                                                                    type: "merchant_bank_account",
+                                                                    resource: {
+                                                                        bank_id: "bank_id",
+                                                                        account_name: "account_name",
+                                                                        account_number: "account_number",
+                                                                        bank_branch_id: "bank_branch_id"
+                                                                    }
+                                                                },
+                                                                origination_time:"2020-02-14T11:02:57+03:00"
+                                                            }
+                                                    },
+                                                _links:
+                                                    {
+                                                        self:"https://api-sandbox.kopokopo.com/webhook_events/f45fbc1c-8f09-4a3e-8c77-94ffe919112a",
+                                                        resource:"https://api-sandbox.kopokopo.com/transaction_simulation/4"
+                                                    })
     #
     # @customer = HashWithIndifferentAccess.new( id: 'cac95329-9fa5-42f1-a4fc-c08af7b868fb', resourceId: 'cdb5f11f-62df-e611-80ee-0aa34a9b2388', topic: 'customer_created',
     #                                            created_at: '2017-01-20T22:45:12.790Z',
@@ -162,14 +185,6 @@ RSpec.describe K2ProcessResult do
             }
     })
 
-    # @failed_stk = HashWithIndifferentAccess.new( id: 'cac95329-9fa5-42f1-a4fc-c08af7b868fb', resourceId: 'null', topic: 'payment_request',
-    #                                              created_at: '2017-01-20T22:45:12.790Z', status: 'Failed',
-    #                                              event: { type: 'Payment Request',
-    #                                                       resource: 'null', errors: [ { code: 501, description: 'Insufficient funds' } ] },
-    #                                              metadata: { customer_id: 123_456_789, reference: 123_456, notes: 'Payment for invoice 123456' },
-    #                                              _links: { self: 'https://api-sandbox.kopokopo.com/events/cac95329-9fa5-42f1-a4fc-c08af7b868fb',
-    #                                                        resource: 'https://api-sandbox.kopokopo.com/buygoods_transaction/cdb5f11f-62df-e611-80ee-0aa34a9b2388' })
-
     @pay = HashWithIndifferentAccess.new(data: {
         id:"59f350e0-7695-422f-9f52-c25b9cb05180",
         type:"payment",
@@ -203,26 +218,24 @@ RSpec.describe K2ProcessResult do
 
     @transfer = HashWithIndifferentAccess.new(data: {
         id:"7db9f7f7-4ef8-4df9-a6a9-d62db042fcc1",
-        type:"transfer",
+        type:"settlement_transfer",
         attributes:
             {
-                transaction_reference:"1581315324",
-                destination:"c7f300c0-f1ef-4151-9bbe-005005aa3747",
-                status:"Sent",
+                destination_type: "merchant_wallet",
+                destination_reference: "cbe4bcff-c453-49e1-a504-85b6845e4018",
+                status:"Transferred",
                 origination_time:"2020-02-03T08:01:51.481+03:00",
                 initiation_time:"2020-02-03T08:01:51.433+03:00",
                 amount:
                     {
                         currency:"KES",
                         value:"20000.0"
-
                     },
                 meta_data:
                     {
                         notes:"Salary payment for May 2018",
                         customerId:"8675309",
                         something_else:"Something else"
-
                     },
                 _links:
                     {
@@ -253,22 +266,18 @@ RSpec.describe K2ProcessResult do
       expect { K2ProcessWebhook.process(@bg_reversal) }.not_to raise_error
     end
     #
-    # it 'Settlement Transfer Completed' do
-    #   expect { K2ProcessResult.process(@settlement) }.not_to raise_error
-    # end
+    it 'Settlement Transfer Completed' do
+      expect { K2ProcessWebhook.process(@settlement) }.not_to raise_error
+    end
     #
-    # it 'Customer Created' do
-    #   expect { K2ProcessResult.process(@customer) }.not_to raise_error
-    # end
+    it 'Customer Created' do
+      # expect { K2ProcessResult.process(@customer) }.not_to raise_error
+    end
 
     it 'Process Stk Result' do
       expect { K2ProcessResult.process(@stk) }.not_to raise_error
       expect(K2ProcessResult.process(@stk)).not_to be nil
     end
-
-    # it 'Failed Stk Result' do
-    #   expect { K2ProcessResult.process(@failed_stk) }.not_to raise_error
-    # end
 
     it 'Process PAY Result' do
       expect { K2ProcessResult.process(@pay) }.not_to raise_error

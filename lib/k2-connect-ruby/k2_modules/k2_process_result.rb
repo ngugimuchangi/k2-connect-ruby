@@ -17,7 +17,7 @@ module K2ProcessResult
     when 'payment'
       outgoing_payments = OutgoingPayment.new(payload)
       return outgoing_payments
-    when 'transfer'
+    when 'settlement_transfer'
       transfer = Transfer.new(payload)
       return transfer
     else
