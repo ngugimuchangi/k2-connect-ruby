@@ -138,12 +138,26 @@ RSpec.describe K2ProcessResult do
                                                         resource:"https://api-sandbox.kopokopo.com/transaction_simulation/4"
                                                     })
     #
-    # @customer = HashWithIndifferentAccess.new( id: 'cac95329-9fa5-42f1-a4fc-c08af7b868fb', resourceId: 'cdb5f11f-62df-e611-80ee-0aa34a9b2388', topic: 'customer_created',
-    #                                            created_at: '2017-01-20T22:45:12.790Z',
-    #                                            event: { type: 'Customer Created',
-    #                                                     resource: { msisdn: '+2549703119050', first_name: 'John', middle_name: 'O', last_name: 'Doe' } },
-    #                                            _links: { self: 'https://api-sandbox.kopokopo.com/events/cac95329-9fa5-42f1-a4fc-c08af7b868fb',
-    #                                                      resource: 'https://api-sandbox.kopokopo.com/buygoods_transaction/cdb5f11f-62df-e611-80ee-0aa34a9b2388' })
+    @customer = HashWithIndifferentAccess.new(topic:"customer_created",
+                                              id:"09a3be89-8b09-4884-b851-b2bcf1a5a111",
+                                              created_at:"2020-03-02T11:06:43+03:00",
+                                              event:
+                                                  {
+                                                      type:"Customer Created",
+                                                      resource:
+                                                          {
+                                                              id:"ResourceID",
+                                                              msisdn: "254722222224",
+                                                              last_name: "Mwangi",
+                                                              first_name: "David",
+                                                              middle_name: "Kariuki"
+                                                          }
+                                                  },
+                                              _links:
+                                                  {
+                                                      self:"https://api-sandbox.kopokopo.com/webhook_events/09a3be89-8b09-4884-b851-b2bcf1a5a111",
+                                                      resource:"https://api-sandbox.kopokopo.com/transaction_simulation/8"
+                                                  })
 
     @stk = HashWithIndifferentAccess.new(data: {
         id:"678ea9f2-0958-4c57-beed-1417394fce45",
@@ -271,7 +285,7 @@ RSpec.describe K2ProcessResult do
     end
     #
     it 'Customer Created' do
-      # expect { K2ProcessResult.process(@customer) }.not_to raise_error
+      expect { K2ProcessWebhook.process(@customer) }.not_to raise_error
     end
 
     it 'Process Stk Result' do

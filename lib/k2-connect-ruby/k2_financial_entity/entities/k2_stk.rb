@@ -19,7 +19,7 @@ class K2Stk < K2Entity
     }
     k2_request_metadata = params[:metadata]
     k2_request_links = {
-        call_back_url: params[:callback_url]
+        callback_url: params[:callback_url]
     }
     receive_body = {
       payment_channel: params[:payment_channel],
