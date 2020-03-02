@@ -13,7 +13,7 @@ class K2Settlement < K2Entity
           msisdn: validate_phone(params[:msisdn]),
           network: params[:network]
       }
-      the_path_url = K2Config.path_variable('settlement_mobile_wallet')
+      the_path_url = K2Config.path_url('settlement_mobile_wallet')
     elsif params[:type].eql?('bank_account')
       params = validate_input(params, @exception_array += %w[account_name bank_id bank_branch_id account_number currency value])
       settlement_body = {
@@ -22,13 +22,13 @@ class K2Settlement < K2Entity
           bank_branch_id: params[:bank_branch_id],
           account_number: params[:account_number]
       }
-      the_path_url = K2Config.path_variable('settlement_bank_account')
+      the_path_url = K2Config.path_url('settlement_bank_account')
     end
 
-    settlement_hash = K2Transfer.make_hash(the_path_url, 'POST', @access_token, 'Transfer', settlement_body)
+    settlement_hash = K2Transfer.make_hash(the_path_url, 'post', @access_token, 'Transfer', settlement_body)
     @threads << Thread.new do
       sleep 0.25
-      @location_url = K2Connect.connect(settlement_hash)
+      @location_url = K2Connect.make_request(settlement_hash)
     end
     @threads.each(&:join)
   end

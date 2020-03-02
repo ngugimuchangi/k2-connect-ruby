@@ -15,10 +15,10 @@ class K2MobilePay < K2Pay
         type: params['pay_type'],
         pay_recipient: k2_request_pay_recipient
     }
-    pay_recipient_hash = K2Pay.make_hash('api/v1/pay_recipients', 'POST', @access_token, 'PAY', recipients_body)
+    pay_recipient_hash = K2Pay.make_hash('api/v1/pay_recipients', 'post', @access_token, 'PAY', recipients_body)
     @threads << Thread.new do
       sleep 0.25
-      @location_url = K2Connect.connect(pay_recipient_hash)
+      @location_url = K2Connect.make_request(pay_recipient_hash)
     end
     @threads.each(&:join)
   end

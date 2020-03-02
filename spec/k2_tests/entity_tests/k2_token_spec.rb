@@ -18,7 +18,7 @@ RSpec.describe K2AccessToken do
   describe '#request_token' do
     let(:k2token) { K2AccessToken.new('KkcZEdj7qx7qfcFMyTWFaUXV7xZv8z8WIm72U06BiPI', 'mVoTlmrjsMw2mnfTXQrynz49ZcDX05Xp5wty-uNaZX8') }
     it 'should return an access token' do
-      #test_response = SpecStubRequest.stub_request('post', K2Config.path_variable('oauth_token'), @token_request_body, 200, nil, @token_response_body)
+      SpecStubRequest.stub_request('post', K2Config.path_url('oauth_token'), @token_request_body, 200)
       expect { k2token.request_token }.not_to raise_error
       expect(k2token.access_token).not_to eq(nil)
     end

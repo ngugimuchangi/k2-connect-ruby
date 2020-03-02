@@ -54,7 +54,7 @@ RSpec.describe K2Subscribe do
 
     it 'should send webhook subscription for settlement' do
       # webhook_subscribe settlement stub method
-      subscription_stub_request('settlement', @callback_url)
+      subscription_stub_request('settlement_transfer_completed', @callback_url)
 
       expect { @k2subscriber.webhook_subscribe('webhook_secret','settlement_transfer_completed', @callback_url) }.not_to raise_error
       expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
@@ -79,7 +79,7 @@ RSpec.describe K2Subscribe do
 
   context '#query_webhook' do
     it 'should query recent wenhook subscription' do
-      SpecStubRequest.stub_request('get', URI.parse(@k2subscriber.location_url).path, '', 200)
+      SpecStubRequest.stub_request('get', @k2subscriber.location_url, '', 200)
       expect { @k2subscriber.query_webhook }.not_to raise_error
       expect(@k2subscriber.k2_response_body).not_to eq(nil)
       expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2subscriber.location_url)))

@@ -1,3 +1,10 @@
-require 'k2-connect-ruby/k2_services/results/transactions/outgoing_payment'
+class Transfer < OutgoingTransaction
+  attr_reader :destination_reference,
+              :destination_type
 
-class Transfer < OutgoingPayment ; end
+  def initialize(payload)
+    super
+    @destination_reference = payload.dig('data', 'attributes', 'destination_reference')
+    @destination_type = payload.dig('data', 'attributes', 'destination_type')
+  end
+end

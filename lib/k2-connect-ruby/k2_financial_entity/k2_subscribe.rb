@@ -48,7 +48,7 @@ class K2Subscribe
       # Settlement Transfer Completed
     when 'settlement_transfer_completed'
       k2_request_body = {
-        event_type: 'settlement_transfer',
+        event_type: 'settlement_transfer_completed',
         url: callback_url,
         secret: @webhook_secret,
         scope: 'Till',
@@ -77,24 +77,23 @@ class K2Subscribe
     else
       raise ArgumentError, 'Subscription Service does not Exist!'
     end
-    the_path_url = 'api/v1/webhook_subscriptions'
     @event_type = event_type
-    subscribe_hash = K2Subscribe.make_hash(the_path_url, 'POST', @access_token,'Subscription', k2_request_body)
-    @location_url =  K2Connect.connect(subscribe_hash)
+    subscribe_hash = K2Subscribe.make_hash(K2Config.path_url('webhook_subscriptions'), 'post', @access_token,'Subscription', k2_request_body)
+    @location_url =  K2Connect.make_request(subscribe_hash)
 
 
   end
 
   # Query Recent Webhook
   def query_webhook
-    query_hash = K2Pay.make_hash(@location_url, 'GET', @access_token, 'Subscription', nil)
-    @k2_response_body = K2Connect.connect(query_hash)
+    query_hash = K2Pay.make_hash(@location_url, 'get', @access_token, 'Subscription', nil)
+    @k2_response_body = K2Connect.make_request(query_hash)
   end
 
   # Query Specific Webhook URL
   def query_resource_url(url)
-    query_hash = K2Pay.make_hash(url, 'GET', @access_token, 'Subscription', nil)
-    @k2_response_body = K2Connect.connect(query_hash)
+    query_hash = K2Pay.make_hash(url, 'get', @access_token, 'Subscription', nil)
+    @k2_response_body = K2Connect.make_request(query_hash)
   end
 
   # Method for Validating the input itself

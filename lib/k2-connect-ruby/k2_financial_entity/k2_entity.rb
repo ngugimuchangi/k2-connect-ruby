@@ -26,20 +26,20 @@ class K2Entity
   def query_status(class_type, path_url)
     # TODO: Add back the validation to ensure only https location urls are returned
     # path_url = validate_url(@location_url)
-    query_hash = K2Pay.make_hash(path_url, 'GET', @access_token, class_type, nil)
+    query_hash = K2Pay.make_hash(path_url, 'get', @access_token, class_type, nil)
     @threads << Thread.new do
       sleep 0.25
-      @k2_response_body = K2Connect.connect(query_hash)
+      @k2_response_body = K2Connect.make_request(query_hash)
     end
     @threads.each(&:join)
   end
 
   # Query Location URL
   def query_resource_url(class_type, url)
-    query_hash = K2Pay.make_hash(url, 'GET', @access_token, class_type, nil)
+    query_hash = K2Pay.make_hash(url, 'get', @access_token, class_type, nil)
     @threads << Thread.new do
       sleep 0.25
-      @k2_response_body = K2Connect.connect(query_hash)
+      @k2_response_body = K2Connect.make_request(query_hash)
     end
     @threads.each(&:join)
   end

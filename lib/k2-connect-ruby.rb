@@ -19,3 +19,12 @@ require 'k2-connect-ruby/k2_financial_entity/entity'
 # ActiveSupport
 require 'active_support/core_ext/hash/indifferent_access'
 
+# YAJL
+require 'yajl'
+
+# Rest Client
+require 'rest-client'
+
+# JSON
+require 'json'
+
