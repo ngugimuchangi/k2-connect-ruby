@@ -106,10 +106,10 @@ RSpec.describe K2ProcessResult do
                                                          resource:"https://api-sandbox.kopokopo.com/transaction_simulation/61"
                                                      })
     #
-    @settlement = HashWithIndifferentAccess.new(topic:"settlement_transfer_completed",
-                                                id:"f45fbc1c-8f09-4a3e-8c77-94ffe919112a",
-                                                created_at:"2020-03-02T08:55:35+03:00",
-                                                event:
+    @settlement_bank_account = HashWithIndifferentAccess.new(topic:"settlement_transfer_completed",
+                                                             id:"f45fbc1c-8f09-4a3e-8c77-94ffe919112a",
+                                                             created_at:"2020-03-02T08:55:35+03:00",
+                                                             event:
                                                     {
                                                         type:"Settlement Transfer",
                                                         resource:
@@ -132,12 +132,42 @@ RSpec.describe K2ProcessResult do
                                                                 origination_time:"2020-02-14T11:02:57+03:00"
                                                             }
                                                     },
+                                                             _links:
+                                                    {
+                                                        self:"https://api-sandbox.kopokopo.com/webhook_events/f45fbc1c-8f09-4a3e-8c77-94ffe919112a",
+                                                        resource:"https://api-sandbox.kopokopo.com/transaction_simulation/4"
+                                                    })
+
+    @settlement_merchant_wallet = HashWithIndifferentAccess.new(topic:"settlement_transfer_completed",
+                                                id:"f45fbc1c-8f09-4a3e-8c77-94ffe919112a",
+                                                created_at:"2020-03-02T08:55:35+03:00",
+                                                event:
+                                                    {
+                                                        type:"Settlement Transfer",
+                                                        resource:
+                                                            {
+                                                                id:"ResourceID",
+                                                                amount:"value",
+                                                                currency:"KES",
+                                                                status:"Transferred",
+                                                                system:"Safaricom",
+                                                                reference:"58b86edc-97bc-47a8-a853-6cd06075db63",
+                                                                destination: {
+                                                                    type: "merchant_wallet",
+                                                                    resource: {
+                                                                        msisdn: "254716230902",
+                                                                        network: "Safaricom"
+                                                                    }
+                                                                },
+                                                                origination_time:"2020-02-14T11:02:57+03:00"
+                                                            }
+                                                    },
                                                 _links:
                                                     {
                                                         self:"https://api-sandbox.kopokopo.com/webhook_events/f45fbc1c-8f09-4a3e-8c77-94ffe919112a",
                                                         resource:"https://api-sandbox.kopokopo.com/transaction_simulation/4"
                                                     })
-    #
+
     @customer = HashWithIndifferentAccess.new(topic:"customer_created",
                                               id:"09a3be89-8b09-4884-b851-b2bcf1a5a111",
                                               created_at:"2020-03-02T11:06:43+03:00",
@@ -279,11 +309,15 @@ RSpec.describe K2ProcessResult do
     it 'Buy Goods Reversed' do
       expect { K2ProcessWebhook.process(@bg_reversal) }.not_to raise_error
     end
-    #
-    it 'Settlement Transfer Completed' do
-      expect { K2ProcessWebhook.process(@settlement) }.not_to raise_error
+
+    it 'Settlement Transfer Completed merchant_bank_account' do
+      expect { K2ProcessWebhook.process(@settlement_bank_account) }.not_to raise_error
     end
-    #
+
+    it 'Settlement Transfer Completed merchant_wallet' do
+      expect { K2ProcessWebhook.process(@settlement_merchant_wallet) }.not_to raise_error
+    end
+
     it 'Customer Created' do
       expect { K2ProcessWebhook.process(@customer) }.not_to raise_error
     end
