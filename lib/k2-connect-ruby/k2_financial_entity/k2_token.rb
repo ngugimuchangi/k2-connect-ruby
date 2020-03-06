@@ -5,6 +5,8 @@ class K2AccessToken
     validate_client_credentials(client_id, client_secret)
     @client_id = client_id
     @client_secret = client_secret
+
+    request_token
   end
 
   # Method for sending the request to K2 sandbox or Mock Server (Receives the access_token)

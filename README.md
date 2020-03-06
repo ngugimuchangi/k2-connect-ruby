@@ -45,13 +45,13 @@ And then execute:
 
     $ bundle install
 
-Or install it yourself as:
+Or install it yourself:
 
     $ gem install k2-connect-ruby
 
 ## Usage
 
-Initially, you add the require line:
+Add the require line to use the gem:
 
     require 'k2-connect-ruby'
 

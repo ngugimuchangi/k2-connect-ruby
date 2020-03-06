@@ -24,7 +24,7 @@ class K2Settlement < K2Entity
       }
       the_path_url = K2Config.path_url('settlement_bank_account')
     else
-      raise ArgumentError 'Unknown Settlement Account'
+      raise ArgumentError, 'Unknown Settlement Account'
     end
 
     settlement_hash = K2Transfer.make_hash(the_path_url, 'post', @access_token, 'Transfer', settlement_body)
