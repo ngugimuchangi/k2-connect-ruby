@@ -5,7 +5,7 @@ class K2Pay < K2Entity
   attr_reader :recipients_location_url, :payments_location_url
 
   # Adding PAY Recipients with either mobile_wallets or bank_accounts as destination of your payments.
-  def pay_recipients(params)
+  def add_recipient(params)
     params = params.with_indifferent_access
     @exception_array += %w[first_name last_name phone email type]
     # In the case of mobile pay
@@ -75,12 +75,16 @@ class K2Pay < K2Entity
   end
 
   # Query/Check the status of a previously initiated PAY Payment request
-  def query_status(path_url)
-    super('PAY', path_url)
+  def query_status(method_type)
+    if method_type.eql?('recipients')
+      super('PAY', @recipients_location_url)
+    elsif method_type.eql?('payments')
+      super('PAY', @payments_location_url)
+    end
   end
 
   # Query Location URL
-  def query_resource_url(url)
+  def query_resource(url)
     super('PAY', url)
   end
 end

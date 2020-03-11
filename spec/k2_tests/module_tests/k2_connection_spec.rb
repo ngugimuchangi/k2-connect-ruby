@@ -1,4 +1,3 @@
-include SpecStubRequest
 RSpec.describe K2Connect do
 
   describe '#to_connect' do

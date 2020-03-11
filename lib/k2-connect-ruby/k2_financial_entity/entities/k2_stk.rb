@@ -3,7 +3,6 @@ class K2Stk < K2Entity
 
   # Receive payments from M-PESA users.
   def receive_mpesa_payments(params)
-    params = params.with_indifferent_access
     # Validation
     params = validate_input(params, @exception_array += %w[payment_channel till_identifier first_name last_name phone email currency value metadata callback_url])
     # The Request Body Parameters
@@ -38,12 +37,12 @@ class K2Stk < K2Entity
   end
 
   # Query/Check STK Payment Request Status
-  def query_status(path_url)
-    super('STK', path_url)
+  def query_status
+    super('STK', path_url=@location_url)
   end
 
   # Query Location URL
-  def query_resource_url(url)
+  def query_resource(url)
     super('STK', url)
   end
 end

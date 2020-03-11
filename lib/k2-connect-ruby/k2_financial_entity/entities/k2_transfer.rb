@@ -51,12 +51,12 @@ class K2Transfer < K2Entity
   end
 
   # Check the status of a prior initiated Transfer. Make sure to add the id to the url
-  def query_status(path_url)
-    super('Transfer', path_url)
+  def query_status
+    super('Transfer', path_url=@location_url)
   end
 
   # Query Location URL
-  def query_resource_url(url)
+  def query_resource(url)
     super('Transfer', url)
   end
 end

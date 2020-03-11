@@ -22,6 +22,9 @@ require 'active_support/core_ext/hash/indifferent_access'
 # YAJL
 require 'yajl'
 
+# YAML
+require 'yaml'
+
 # Rest Client
 require 'rest-client'
 

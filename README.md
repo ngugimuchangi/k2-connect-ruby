@@ -60,6 +60,8 @@ Add the require line to use the gem:
 Ensure you first Register your application with the [Kopo Kopo Sandbox](To be added later when launched).
 Once an application is registered you will obtain your `client_id` and `client_secret` (aka client credentials), which will be used to identify your application when calling the Kopo Kopo API.
 
+For more Information, visit our [API docs]().
+
 In order to request for application authorization and receive an access token, we need to execute the client credentials flow, this is done so by having your application server make a HTTPS request to the Kopo Kopo authorization server, through the K2AccessToken class.
 
 ```ruby
@@ -68,39 +70,23 @@ k2_token = K2AccessToken.new('your_client_id', 'your_client_secret').token_reque
 
 ### Webhook Subscription
 
-Create an Object of the K2Subscription class, with the webhook secret and access token passed as arguments.
-    
-```ruby
-k2subscriber = K2Subscribe.new('webhook_secret', k2_token)
-```
+##### Remember to store highly sensitive information like the client credentials, in a config file, while indicating in your .gitignore file.
+
+Next, we formally create the webhook subscription by calling on the webhook_subscribe method.
+Ensure the following arguments are passed: 
+ - client secret `REQUIRED`
+ - event type `REQUIRED`
+ - url `REQUIRED`
+ - scope `REQUIRED`
+ - scope reference `REQUIRED`
  
-##### Remember to store highly sensitive information or core details like the client_id, client_secret, access_token and such, in a config file, while ensuring to indicate them in your .gitignore file, to avoid publicly uploading them to Github.
-
-Next, we formally create the webhook subscription by calling on the following method.
-We specify the event type to differentiate the type of webhook subscription, as follows:
-
-###### For Buy Goods Transaction Received
-
-    k2subscriber.webhook_subscribe('buygoods_transaction_received')
-
-###### For Buy Goods Transaction Reversed
-   
-    k2subscriber.webhook_subscribe('buygoods_transaction_reversed')
-
-###### For Customer Created
-
-    k2subscriber.webhook_subscribe('customer_created')
-
-###### For Settlement Transfer Completed
-
-    k2subscriber.webhook_subscribe('settlement_transfer_completed')
+Code example;
     
-Buy Goods Transaction Received Code Example:
-
 ```ruby
 require 'k2-connect-ruby'
 k2_token = K2AccessToken.new('your_client_id', 'your_client_secret').token_request
-k2subscriber = K2Subscribe.new('webhook_secret', k2_token)
+k2subscriber = K2Subscribe.new(k2_token)
+k2subscriber.webhook_subscribe(ENV["K2_SECRET_KEY"], your_input)
 ```
  
  
@@ -110,86 +96,141 @@ k2subscriber = K2Subscribe.new('webhook_secret', k2_token)
  
  To receive payments from M-PESA users via STK Push we first create a K2Stk Object, passing the access_token that was created prior.
  
-    k2_stk = K2ConnectRuby::K2Stk.new(your_access_token)
+    k2_stk = K2Stk.new(your_access_token)
   
  Afterwards we send a POST request for receiving Payments by calling the following method and passing the params value received from the POST Form Request: 
 
-    k2_stk.receive_mpesa_payments(params)
+    k2_stk.receive_mpesa_payments(your_input)
     
-One can also pass the following Hash Object instead of the Rails Form params:
-
-    {first_name: 'your_first_name', last_name: 'your_last_name', phone: 'your_phone_number', email: 'your_email', currency: 'your_currency', value: 'your_value'}
+Ensure the following arguments are passed: 
+ - first_name `REQUIRED`
+ - last_name `REQUIRED`
+ - phone `REQUIRED`
+ - email `REQUIRED`
+ - currency `REQUIRED`
+ - value `REQUIRED`
 
 A Successful Response will be received containing the URL of the Payment Location.
 
 #### Query Request Status
 
- To Query the STK Payment Request Status pass the location_url response that is returned and accessible within the class:
+ To Query the STK Payment Request Status pass the Payment location URL response that is returned:
 
-    k2_stk.query_status(k2_stk.location_url)
+    k2_stk.query_resource(k2_stk.location_url)
 
 As a result a JSON payload will be returned, accessible with the k2_response_body variable.
+ 
+Code example;
+    
+```ruby
+k2_stk = K2Stk.new(your_access_token)
+k2_stk.receive_mpesa_payments(your_input)
+k2_stk.query_resource(k2_stk.location_url)
+```
 
 ### PAY
 
 First Create the K2Pay Object passing the access token
 
 
-    k2_pay = K2ConnectRuby::K2Pay.new(access_token)
+    k2_pay = K2Pay.new(access_token)
 
 #### Add PAY Recipients
 
-To Add PAY Recipients, a request is sent by calling:
+Add a PAY Recipient, with the following arguments:
+
+**Mobile** PAY Recipient
+- type: 'mobile_wallet' `REQUIRED`
+- first_name `REQUIRED`
+- last_name `REQUIRED`
+- phone `REQUIRED`
+- email `REQUIRED`
+- network `REQUIRED`
+
+**Bank** PAY Recipient
+- type: 'bank_account' `REQUIRED`
+- first_name `REQUIRED`
+- last_name `REQUIRED`
+- phone `REQUIRED`
+- email `REQUIRED`
+- account_name `REQUIRED`
+- account_number `REQUIRED`
+- bank_id `REQUIRED`
+- bank_branch_id `REQUIRED`
+
   
-    k2_pay.pay_recipients(params)
+    k2_pay.add_recipients(your_input)
     
-One can also pass the following Hash Object instead of params:
+The type value can either be `mobile_wallet` or `bank_account`
 
-    {first_name: 'your_first_name', last_name: 'your_last_name', phone: 'your_phone_number', email: 'your_email', currency: 'your_currency', value: 'your_value', network: 'network', pay_type: 'mobile_wallet', account_name: 'account_name', bank_id: 'bank_id', bank_branch_id: 'bank_branch_id', account_number: 'account_number'}
-    
-The pay_type value can either be `mobile_wallet` or `bank_account`
-
-The Params are passed as the argument containing all the form data sent. A Successful Response is returned with the URL of the recipient resource in the HTTP Location Header.
+A Successful Response is returned with the URL of the recipient resource.
 
 #### Create Outgoing Payment
 
-To Create Outgoing PAYment to a third party.
+Creating an Outgoing Payment to a third party.
 
-    k2_pay.create_payment(params)
+    k2_pay.create_payment(your_input)
     
-Or can also pass the following Hash Object instead of params:
+The following arguments should be passed:
 
-    {currency: 'currency', value: 'value', }
+- currency `REQUIRED`
+- value `REQUIRED`
 
-The Params are passed as the argument containing all the form data sent. A Successful Response is returned with the URL of the Payment resource in the HTTP Location Header.
+A Successful Response is returned with the URL of the Payment resource in the HTTP Location Header.
 
 #### Query PAYment Request Status
 
-To Query the PAYment Request Status pass the location_url response:
+To Query the status of the Add Recipient or Outgoing Payment request::
 
-    k2_pay.query_status(k2_pay.location_url)
+    // add recipient
+    k2_pay.query_resource(k2_pay.recipients_location_url)
+    // create outgoing payment 
+    k2_pay.query_resource(k2_pay.payments_location_url)
 
 As a result a JSON payload will be returned, accessible with the k2_response_body variable.
+ 
+Code example;
+    
+```ruby
+k2_pay = K2Pay.new(your_access_token)
+k2_pay.add_recipient(your_input)
+k2_pay.query_resource(k2_pay.recipients_location_url)
+k2_pay.create_payment(your_input)
+k2_pay.query_resource(k2_pay.payments_location_url)
+```
+
+### Settlement Accounts
+
+Add pre-approved settlement accounts, to which one can transfer funds to. Can be either a bank or mobile wallet account,
+ with the following details:
+
+**Mobile** Settlement Account
+- type: 'merchant_wallet' `REQUIRED`
+- msisdn `REQUIRED`
+- network: 'Safaricom' `REQUIRED`
+
+**Bank** Settlement Account
+- type: 'merchant_bank_account' `REQUIRED`
+- account_name `REQUIRED`
+- account_number `REQUIRED`
+- bank_id `REQUIRED`
+- bank_branch_id `REQUIRED`
+
+```ruby
+k2_settlement = K2Settlement.new(your_access_token)
+# Add a mobile merchant wallet
+k2_settlement.add_settlement_account(merchant_wallet)
+# Add a merchant bank account
+k2_settlement.add_settlement_account(merchant_bank_account)
+```
 
 ### Transfers
 
-This will Enable one to transfer funds to your pre-approved settlement accounts.
+This will Enable one to transfer funds to your settlement accounts.
 
 First Create the K2Transfer Object
 
-    k2_transfers = K2ConnectRuby::K2Transfer.new(access_token)
-
-#### Create Verified Settlement Account 
-
-Create a Verified Settlement Account through the following method:
-  
-    k2_transfers.settlement_account(params)
-    
-One can also pass the following Hash Object instead of params:
-
-    {account_name: 'account_name', bank_ref: 'bank_ref', bank_branch_ref: 'bank_branch_ref', account_number: 'account_number'}
-
-The Params are passed as the argument having all the form data. A Successful Response is returned with the URL of the merchant bank account in the HTTP Location Header.
+    k2_transfers = K2Transfer.new(access_token)
 
 #### Create Transfer Request
 
@@ -229,19 +270,11 @@ K2ProcessResult Classes will be used.
 
 First Create an Object of the K2Client class to Parse the response, passing the client_secret_key received from Kopo Kopo:
 
-     k2_parse = K2ConnectRuby::K2Client.new('K2_SECRET_KEY'])
-
-##### Remember to have kept it safe in a config file, it is highly recommended so as to keep it safe. Also add that specific config file destination in your .gitignore.
+     k2_parse = K2Client.new(client_secret)
 
 ###### Parse the request
 
      k2_parse.parse_request(request)
-
-###### Authenticating the Response
-
-To ensure it came from Kopo Kopo:
-
-     K2Authenticator.authenticate(k2_parse.hash_body, k2_parse.api_secret_key, k2_parse.k2_signature)
 
 ###### Create an Object 
 
@@ -256,35 +289,28 @@ Create an Object to receive the components resulting from processing the parsed 
     - `resource_id`
     - `topic`
     - `created_at`
-    - `event`
-    - `type`
-    - `resource`
+    - `event_type`
     - `reference`
     - `origination_time`
-    - `msisdn`
+    - `sender_msisdn`
     - `amount`
     - `currency`
     - `till_number`
     - `system`
     - `resource_status`
-    - `first_name`
-    - `middle_name`
-    - `last_name`
-    - `links`
-    - `self`
-    - `link_resource`
+    - `sender_first_name`
+    - `sender_last_name`
+    - `links_self`
+    - `links_resource`
     
-2. Buy Goods Transaction Reversed. Has the same key symbols as Buy Goods Transaction Received, plus:
-    - `reversal_time` 
+2. Buy Goods Transaction Reversed. Has the same key symbols as Buy Goods Transaction Received. 
     
 3. Settlement Transfer:
     - `id`
     - `resource_id`
     - `topic`
     - `created_at`
-    - `event`
     - `type`
-    - `resource`
     - `reference`
     - `origination_time`
     - `transfer_time`
@@ -296,44 +322,37 @@ Create an Object to receive the components resulting from processing the parsed 
     - `destination_type`
     - `msisdn`
     - `destination_mm_system`
-    - `links`
-    - `self`
-    - `link_resource`
+    - `links_self`
+    - `links_resource`
 
 4. Customer Created:
     - `id`
     - `resource_id`
     - `topic`
     - `created_at`
-    - `event`
     - `type`
-    - `resource`
     - `first_name`
     - `middle_name`
     - `last_name`
     - `msisdn`
-    - `links`
     - `self`
-    - `link_resource`
+    - `resource`
     
 5. B2b Transaction Transaction (External Till to Till):
     - `id`
     - `resource_id`
     - `topic`
     - `created_at`
-    - `event`
     - `type`
-    - `resource`
     - `reference`
     - `origination_time`
     - `amount`
     - `currency`
     - `till_number`
     - `system`
-    - `resource_status`
-    - `links`
+    - `status`
     - `self`
-    - `link_resource`
+    - `resource`
     - `sending_till`
 
 6. Merchant to Merchant Transaction:
@@ -341,17 +360,14 @@ Create an Object to receive the components resulting from processing the parsed 
     - `resource_id`
     - `topic`
     - `created_at`
-    - `event`
     - `type`
-    - `resource`
     - `reference`
     - `origination_time`
     - `amount`
     - `currency`
     - `resource_status`
-    - `links`
     - `self`
-    - `link_resource`
+    - `resource`
     - `sending_merchant`
     
 7. Process STK Push Payment Request Result
@@ -360,9 +376,7 @@ Create an Object to receive the components resulting from processing the parsed 
     - `topic`
     - `created_at`
     - `status`
-    - `event`
     - `type`
-    - `resource`
     - `reference`
     - `origination_time`
     - `msisdn`
@@ -370,7 +384,7 @@ Create an Object to receive the components resulting from processing the parsed 
     - `currency`
     - `till_number`
     - `system`
-    - `resource_status`
+    - `status`
     - `first_name`
     - `middle_name`
     - `last_name`
@@ -379,10 +393,9 @@ Create an Object to receive the components resulting from processing the parsed 
     - `customer_id`
     - `metadata_reference`
     - `notes`
-    - `links`
     - `self`
     - `payment_request`
-    - `link_resource`
+    - `resource`
     
 8. Unsuccessful Process STK Push Payment Request Result
     - `id`
@@ -390,7 +403,6 @@ Create an Object to receive the components resulting from processing the parsed 
     - `topic`
     - `created_at`
     - `status`
-    - `event`
     - `type`
     - `resource`
     - `errors`
@@ -400,7 +412,6 @@ Create an Object to receive the components resulting from processing the parsed 
     - `customer_id`
     - `metadata_reference`
     - `notes`
-    - `links`
     - `self`
     - `payment_request`
 
@@ -417,7 +428,6 @@ Create an Object to receive the components resulting from processing the parsed 
     - `metadata`
     - `customer_id`
     - `notes`
-    - `links`
     - `self`
     
 If you want to convert the Object into a Hash or Array, the following methods can be used.

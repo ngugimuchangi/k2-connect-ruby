@@ -1,16 +1,9 @@
 module K2Connect
   # Method for sending the request to K2 sandbox or Mock Server
   def self.make_request(connection_hash)
-    # Sets the host URL through the Config Module
-    base_url ||= K2Config.base_url
-
-    # Access Token
     access_token = connection_hash[:access_token]
-    # Class type
     class_type = connection_hash[:class_type]
-    # Path Url
     path_url = connection_hash[:path_url]
-    # Request Type
     request_type = connection_hash[:request_type]
 
     unless class_type.eql?('Access Token') || access_token.present?
@@ -19,7 +12,7 @@ module K2Connect
 
     # Set up Headers
     headers = { 'Content-Type': 'application/json', Accept: 'application/vnd.kopokopo.v1.hal+json', Authorization: "Bearer #{access_token}" }
-    if path_url.eql?('oauth')
+    if path_url.include?('oauth/token')
       headers = { 'Content-Type': 'application/json' }
     end
 

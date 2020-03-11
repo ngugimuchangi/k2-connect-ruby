@@ -1,5 +1,5 @@
 # TODO: If the simulation fails, it should not create an entry into the database
-include SpecStubRequest, K2Validation
+include SpecConfig, K2Validation
 RSpec.describe K2Transfer do
   before(:all) do
     @k2transfer = K2Transfer.new(K2AccessToken.new('KkcZEdj7qx7qfcFMyTWFaUXV7xZv8z8WIm72U06BiPI', 'mVoTlmrjsMw2mnfTXQrynz49ZcDX05Xp5wty-uNaZX8').request_token)
@@ -16,15 +16,33 @@ RSpec.describe K2Transfer do
     # end
 
     it 'should create a transfer request to a merchant_bank_account' do
-      SpecStubRequest.stub_request('post', K2Config.path_url('transfers'), @bank_transfer_params, 200)
+      SpecConfig.custom_stub_request('post', K2Config.path_url('transfers'), @bank_transfer_params, 200)
       expect { @k2transfer.transfer_funds(@bank_transfer_params) }.not_to raise_error
       expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('transfers')))
     end
 
     it 'should create a transfer request to a merchant_wallet' do
-      SpecStubRequest.stub_request('post', K2Config.path_url('transfers'), @mobile_transfer_params, 200)
+      SpecConfig.custom_stub_request('post', K2Config.path_url('transfers'), @mobile_transfer_params, 200)
       expect { @k2transfer.transfer_funds(@mobile_transfer_params) }.not_to raise_error
       expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('transfers')))
+    end
+  end
+
+  describe '#query_status' do
+    it 'should query specified payment request status' do
+      SpecConfig.custom_stub_request('get', K2Config.path_url('transfers'), '', 200)
+      expect { @k2transfer.query_status }.not_to raise_error
+      expect(@k2transfer.k2_response_body).not_to eq(nil)
+      expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2transfer.location_url)))
+    end
+  end
+
+  describe '#query_resource' do
+    it 'should query specified payment request status' do
+      SpecConfig.custom_stub_request('get', K2Config.path_url('transfers'), '', 200)
+      expect { @k2transfer.query_resource(@k2transfer.location_url) }.not_to raise_error
+      expect(@k2transfer.k2_response_body).not_to eq(nil)
+      expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2transfer.location_url)))
     end
   end
 end

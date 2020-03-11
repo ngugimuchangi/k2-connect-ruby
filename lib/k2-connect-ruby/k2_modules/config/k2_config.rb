@@ -1,72 +1,51 @@
-# Module for Setting User-defined Environment Variables.
 # TODO: try to see if you can implement Environment variables
 module K2Config
-  # Initialize module's instance variables
-  @version_no = 'v1'
-  @universal_callback_url = ''
-  @base_url = "http://127.0.0.1:3000/"
-  @path_endpoints = HashWithIndifferentAccess.new(oauth_token: 'oauth/token', webhook_subscriptions: "api/#{@version_no}/webhook_subscriptions", pay_recipient: "api/#{@version_no}/pay_recipients",
-                                                  payments: "api/#{@version_no}/payments", incoming_payments: "api/#{@version_no}/incoming_payments", settlement_mobile_wallet: "api/#{@version_no}/merchant_wallets",
-                                                  settlement_bank_account: "api/#{@version_no}/merchant_bank_accounts", transfers: "api/#{@version_no}/transfers")
-  @callback_urls = HashWithIndifferentAccess.new(webhook: 'https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3', payments: 'https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3',
-                                                 incoming_payments: 'https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3', transfers: 'https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3')
+  @config = YAML.load_file(File.join('lib', 'k2-connect-ruby', 'k2_modules', 'config', 'k2_config.yml')).with_indifferent_access
 
-  # Set the Host Url
-  def self.set_base_url(base_url)
-    raise ArgumentError, 'Invalid URL Format.' unless base_url =~ /\A#{URI.regexp(%w[http https])}\z/
-    @base_url ||= base_url
-  end
+  class << self
+    # Set the Host Url
+    def set_base_url(base_url)
+      raise ArgumentError, 'Invalid URL Format.' unless base_url =~ /\A#{URI.regexp(%w[http https])}\z/
+      @config[:base_url] = base_url
+      File.open("lib/k2-connect-ruby/k2_modules/config/k2_config.yml", 'w') { |f| YAML.dump(@config, f) }
+    end
 
-  def self.set_universal_callback_url(callback_url)
-    raise ArgumentError, 'Invalid URL Format.' unless callback_url =~ /\A#{URI.regexp(%w[http https])}\z/
-    @universal_callback_url = callback_url
-  end
+    # TODO: Versioning
+    def set_version(version_number)
+      raise ArgumentError, 'Invalid Format: Version Number input should be Numeric' unless version_number.is_a?(Numeric)
+      @config[:version] = "v#{version_number}"
+      File.open("lib/k2-connect-ruby/k2_modules/config/k2_config.yml", 'w') { |f| YAML.dump(@config, f) }
+    end
 
-  def self.set_webhook_callback(callback_url)
-    @callback_urls[:webhook_subscriptions] = callback_url
-  end
+    def version
+      @config[:version]
+    end
 
-  def self.set_payments_callback(callback_url)
-    @callback_urls[:payments] = callback_url
-  end
+    def path_endpoint(key)
+      unless key.eql?('oauth_token')
+        return "api/#{version}/#{@config[:endpoints][:"#{key}"]}"
+      end
+      @config[:endpoints][:"#{key}"]
+    end
 
-  def self.set_incoming_payments_callback(callback_url)
-    @callback_urls[:incoming_payments] = callback_url
-  end
+    def path_endpoints
+      @config[:endpoints]
+    end
 
-  # TODO: Versioning
-  def self.set_version_no(version_no)
-    raise ArgumentError, 'Invalid Format: Version Number input should be Numeric' unless version_no.is_a?(Numeric)
-    @version_no = "v#{version_no}"
-  end
+    def path_url(key)
+      # TODO: Custom error/exception message
+      base_url + path_endpoint(key)
+    end
 
-  def self.base_url
-    @base_url
-  end
+    def network_operators
+      @config[:network_operators]
+    end
 
-  def self.version_no
-    @version_no = "v#{@version_no}"
-  end
+    private
 
-  def self.universal_callback_url
-    @universal_callback_url
-  end
-
-  def self.callback_url(context)
-    @callback_urls[:"#{context}"]
-  end
-
-  def self.path_variable(key)
-    @path_endpoints[:"#{key}"]
-  end
-
-  def self.path_variables
-    @path_endpoints
-  end
-
-  def self.path_url(key)
-    # TODO: Custom error/exception message
-    @base_url + path_variable(key)
+    def base_url
+      @config[:base_url]
+    end
   end
 
 end

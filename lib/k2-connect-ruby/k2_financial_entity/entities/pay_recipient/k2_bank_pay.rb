@@ -1,7 +1,7 @@
 # To add Bank Pay recipient
 class K2BankPay < K2Pay
   # Adding PAY Recipients with either mobile_wallets or bank_accounts as destination of your payments.
-  def pay_recipients(params)
+  def add_recipient(params)
     # Validation
     params = validate_input(params, @exception_array += %w[first_name last_name phone email network pay_type currency value account_name bank_id bank_branch_id account_number])
     k2_request_pay_recipient = {

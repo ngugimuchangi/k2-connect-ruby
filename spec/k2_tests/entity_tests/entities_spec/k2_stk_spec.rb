@@ -28,7 +28,7 @@ RSpec.describe K2Stk do
     end
 
     it 'should send incoming payment request' do
-      SpecStubRequest.stub_request('post', K2Config.path_url('incoming_payments'), @mpesa_payments, 200)
+      SpecConfig.custom_stub_request('post', K2Config.path_url('incoming_payments'), @mpesa_payments, 200)
       @k2stk.receive_mpesa_payments(@mpesa_payments)
       expect(@k2stk.location_url).not_to eq(nil)
       expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('incoming_payments')))
@@ -36,9 +36,18 @@ RSpec.describe K2Stk do
   end
 
   describe '#query_status' do
-    it 'should query payment request status' do
-      SpecStubRequest.stub_request('get', K2Config.path_url('incoming_payments'), '', 200)
-      expect { @k2stk.query_status(@k2stk.location_url) }.not_to raise_error
+    it 'should query recent payment request status' do
+      SpecConfig.custom_stub_request('get', K2Config.path_url('incoming_payments'), '', 200)
+      expect { @k2stk.query_status }.not_to raise_error
+      expect(@k2stk.k2_response_body).not_to eq(nil)
+      expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2stk.location_url)))
+    end
+  end
+
+  describe '#query_resource' do
+    it 'should query specified payment request status' do
+      SpecConfig.custom_stub_request('get', K2Config.path_url('incoming_payments'), '', 200)
+      expect { @k2stk.query_resource(@k2stk.location_url) }.not_to raise_error
       expect(@k2stk.k2_response_body).not_to eq(nil)
       expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2stk.location_url)))
     end
