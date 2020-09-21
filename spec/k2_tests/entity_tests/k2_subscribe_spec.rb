@@ -29,63 +29,70 @@ RSpec.describe K2Subscribe do
     let(:bg_reversed){ webhook_structure('buygoods_transaction_reversed') }
 
     it 'raises error if event type does not match' do
-      expect { @k2sub_not_exist.webhook_subscribe('wrong_event', wrong_event) }.to raise_error ArgumentError
+      expect { @k2sub_not_exist.webhook_subscribe(wrong_event, 'wrong_event') }.to raise_error ArgumentError
       expect(WebMock).not_to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
     end
 
     it 'raises error if event type is empty' do
-      expect { @k2subscriber.webhook_subscribe('empty_event', empty_event) }.to raise_error K2EmptyParams
+      expect { @k2subscriber.webhook_subscribe(empty_event, 'empty_event') }.to raise_error K2EmptyParams
       expect(WebMock).not_to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
     end
 
     it 'should send webhook subscription for buy goods received' do
       subscription_stub_request('buygoods_transaction_received', @callback_url)
 
-      expect { @k2subscriber.webhook_subscribe('webhook_secret', bg) }.not_to raise_error
+      expect { @k2subscriber.webhook_subscribe(bg, 'webhook_secret') }.not_to raise_error
       expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
     end
 
     it 'should send webhook subscription for buy goods reversed' do
       subscription_stub_request('buygoods_transaction_reversed', @callback_url)
 
-      expect { @k2subscriber.webhook_subscribe('webhook_secret', bg_reversed) }.not_to raise_error
+      expect { @k2subscriber.webhook_subscribe(bg_reversed, 'webhook_secret') }.not_to raise_error
       expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
     end
 
     it 'should send webhook subscription for customer created' do
       subscription_stub_request('customer_created', @callback_url)
 
-      expect { @k2subscriber.webhook_subscribe('webhook_secret', customer_created) }.not_to raise_error
+      expect { @k2subscriber.webhook_subscribe(customer_created, 'webhook_secret') }.not_to raise_error
       expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
     end
 
     it 'should send webhook subscription for settlement' do
       subscription_stub_request('settlement_transfer_completed', @callback_url)
 
-      expect { @k2subscriber.webhook_subscribe('webhook_secret', settlement) }.not_to raise_error
+      expect { @k2subscriber.webhook_subscribe(settlement, 'webhook_secret') }.not_to raise_error
       expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
     end
 
     it 'should send webhook subscription for external till to till (b2b)' do
       subscription_stub_request('b2b_transaction_received', @callback_url)
 
-      expect { @k2subscriber.webhook_subscribe('webhook_secret', b2b) }.not_to raise_error
+      expect { @k2subscriber.webhook_subscribe(b2b, 'webhook_secret') }.not_to raise_error
       expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
     end
 
     it 'should send webhook subscription for merchant to merchant transaction' do
       subscription_stub_request('m2m_transaction_received', @callback_url)
 
-      expect { @k2subscriber.webhook_subscribe('webhook_secret', m2m) }.not_to raise_error
+      expect { @k2subscriber.webhook_subscribe(m2m, 'webhook_secret') }.not_to raise_error
       expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
     end
   end
 
-  context '#query_webhook' do
-    it 'should query recent wenhook subscription' do
+  describe '#query_webhook' do
+    it 'should query recent webhook subscription' do
       SpecConfig.custom_stub_request('get', @k2subscriber.location_url, '', 200)
-      expect { @k2subscriber.query_webhook }.not_to raise_error
-      expect(@k2subscriber.k2_response_body).not_to eq(nil)
+      expect { expect(@k2subscriber.query_webhook).not_to eq(nil) }.not_to raise_error
+      expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2subscriber.location_url)))
+    end
+  end
+
+  describe '#query_resource_url' do
+    it 'should query recent webhook subscription' do
+      SpecConfig.custom_stub_request('get', @k2subscriber.location_url, '', 200)
+      expect { expect(@k2subscriber.query_resource_url(@k2subscriber.location_url)).not_to eq(nil) }.not_to raise_error
       expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2subscriber.location_url)))
     end
   end

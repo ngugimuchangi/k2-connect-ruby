@@ -9,6 +9,7 @@ class K2Transaction
   def initialize(payload)
     @id = payload.dig('data', 'id')
     @type = payload.dig('data', 'type')
+    @metadata = payload.dig('data', 'attributes', 'meta_data')
     @links_self = payload.dig('data', 'attributes', '_links', 'self')
     @callback_url = payload.dig('data', 'attributes', '_links', 'callback_url')
   end

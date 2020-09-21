@@ -1,6 +1,5 @@
 # For STK Push/Receive MPESA Payments from merchant's customers
 class K2Stk < K2Entity
-
   # Receive payments from M-PESA users.
   def receive_mpesa_payments(params)
     # Validation
@@ -28,7 +27,7 @@ class K2Stk < K2Entity
       meta_data: k2_request_metadata,
       _links: k2_request_links
     }
-    receive_hash = K2Stk.make_hash(K2Config.path_url('incoming_payments'), 'post', @access_token, 'STK', receive_body)
+    receive_hash = make_hash(K2Config.path_url('incoming_payments'), 'post', @access_token, 'STK', receive_body)
     @threads << Thread.new do
       sleep 0.25
       @location_url = K2Connect.make_request(receive_hash)

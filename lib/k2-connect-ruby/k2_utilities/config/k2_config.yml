@@ -9,6 +9,6 @@ endpoints: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
   incoming_payments: incoming_payments
   settlement_mobile_wallet: merchant_wallets
   settlement_bank_account: merchant_bank_accounts
-  transfers: transfers
+  transfers: settlement_transfers
 network_operators:
 - SAFARICOM

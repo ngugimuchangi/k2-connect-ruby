@@ -1,5 +1,7 @@
 # To add Bank Pay recipient
 class K2BankPay < K2Pay
+  include K2Utilities
+
   # Adding PAY Recipients with either mobile_wallets or bank_accounts as destination of your payments.
   def add_recipient(params)
     # Validation
@@ -17,7 +19,7 @@ class K2BankPay < K2Pay
         type: params['pay_type'],
         pay_recipient: k2_request_pay_recipient
     }
-    pay_recipient_hash = K2Pay.make_hash('api/v1/pay_recipients', 'post', @access_token, 'PAY', recipients_body)
+    pay_recipient_hash = make_hash('api/v1/pay_recipients', 'post', @access_token, 'PAY', recipients_body)
     @threads << Thread.new do
       sleep 0.25
       @location_url = K2Connect.make_request(pay_recipient_hash)

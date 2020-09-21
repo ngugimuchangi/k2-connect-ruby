@@ -1,6 +1,7 @@
 # Class for Gaining Access Token
 class K2AccessToken
   attr_reader :access_token
+
   def initialize(client_id, client_secret)
     validate_client_credentials(client_id, client_secret)
     @client_id = client_id
@@ -22,13 +23,15 @@ class K2AccessToken
     raise ArgumentError, 'Nil or Empty Client Id or Secret!' if client_id.blank? || client_secret.blank?
   end
 
-  # Create a Hash containing important details accessible for K2Connect
-  def self.make_hash(path_url, request, class_type, body)
-    {
-        path_url: path_url,
-        request_type: request,
-        class_type: class_type,
-        params: body
-    }.with_indifferent_access
+  class << self
+    # Create a Hash containing important details accessible for K2Connect
+    def make_hash(path_url, request, class_type, body)
+      {
+          path_url: path_url,
+          request_type: request,
+          class_type: class_type,
+          params: body
+      }.with_indifferent_access
+    end
   end
 end

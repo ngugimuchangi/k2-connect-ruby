@@ -245,19 +245,39 @@ With `nil` representing that there are no specified destinations.
 
 ##### Target Transfer
 
-     k2_transfers.transfer_funds(params[:target], params)
+     k2_transfers.transfer_funds(params)
       
-Or can also pass the following Hash Object instead of params for either **Blind** or **Targeted** Transfer:
+The Following Details should be passed for either **Blind** or **Targeted** Transfer:
 
-    {currency: 'currency', value: 'value', }
+**Blind** Transfer
+- destination_type: `merchant_wallet` or `merchant_bank_account` `REQUIRED`
+- currency `REQUIRED`
+- value `REQUIRED`
+- callback_url `REQUIRED`
+
+**Targeted** Transfer
+- destination_reference `REQUIRED`
+- destination_type: `merchant_wallet` or `merchant_bank_account` `REQUIRED`
+- currency `REQUIRED`
+- value `REQUIRED`
+- callback_url `REQUIRED`
 
 The Params are passed as the argument containing all the form data sent. A Successful Response is returned with the URL of the Transfer in the HTTP Location Header.
+
+Sample code example:
+
+```ruby
+# TODO Confirm for Blind Transfer
+k2_transfer = K2Transfer.new(your_access_token)
+# Blind or Targeted Transfer
+k2_transfer.transfer_funds(your_input)
+```
 
 #### Query Prior Transfer
 
 To Query the status of the prior initiated Transfer Request pass the location_url response as shown:
 
-     k2_transfers.query_status(k2_transfers.location_url)  
+     k2_transfers.query_resource(k2_transfers.location_url)  
 
 A HTTP Response will be returned in a JSON Payload, accessible with the k2_response_body variable.
 
@@ -281,6 +301,14 @@ First Create an Object of the K2Client class to Parse the response, passing the 
 Create an Object to receive the components resulting from processing the parsed request results which will be returned by the following method:
 
      k2_components = K2ProcessResult.process(k2_parse.hash_body)
+     
+Code example:
+
+```ruby
+k2_parse = K2Client.new(client_secret)
+k2_parse.parse_request(request)
+k2_components = K2ProcessResult.process(k2_parse.hash_body)
+```
          
  Below is a list of key symbols accessible for each of the Results retrieved after processing it into an Object.
  
@@ -372,63 +400,37 @@ Create an Object to receive the components resulting from processing the parsed 
     
 7. Process STK Push Payment Request Result
     - `id`
-    - `resource_id`
-    - `topic`
-    - `created_at`
-    - `status`
     - `type`
-    - `reference`
+    - `initiation_time`
+    - `status`
+    - `event_type`
+    - `transaction_reference`
     - `origination_time`
     - `msisdn`
     - `amount`
     - `currency`
     - `till_number`
     - `system`
-    - `status`
-    - `first_name`
-    - `middle_name`
-    - `last_name`
+    - `sender_first_name`
+    - `sender_last_name`
     - `errors`
     - `metadata`
-    - `customer_id`
-    - `metadata_reference`
-    - `notes`
-    - `self`
-    - `payment_request`
-    - `resource`
-    
-8. Unsuccessful Process STK Push Payment Request Result
-    - `id`
-    - `resource_id`
-    - `topic`
-    - `created_at`
-    - `status`
-    - `type`
-    - `resource`
-    - `errors`
-    - `error_code`
-    - `error_description`
-    - `metadata`
-    - `customer_id`
-    - `metadata_reference`
-    - `notes`
-    - `self`
-    - `payment_request`
+    - `links_self`
+    - `callback_url`
 
-9. Process PAY Result
+8. Process PAY Result
     - `id`
-    - `topic`
+    - `type`
+    - `initiation_time`
     - `status`
-    - `reference`
+    - `transaction_reference`
     - `origination_time`
     - `destination`
-    - `amount`
     - `currency`
-    - `value`
+    - `value`: refers to the amount
     - `metadata`
-    - `customer_id`
-    - `notes`
-    - `self`
+    - `links_self`
+    - `callback_url`
     
 If you want to convert the Object into a Hash or Array, the following methods can be used.
 - Hash:

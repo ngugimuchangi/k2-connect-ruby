@@ -1,8 +1,8 @@
 # Processes Webhook
 module K2ProcessWebhook
-  def self.process(payload)
+  def self.process(payload, secret_key, signature)
     raise ArgumentError, 'Empty/Nil Request Body Argument!' if payload.blank?
-    self.check_topic(payload)
+    self.check_topic(payload) if K2Authenticator.authenticate(payload, secret_key, signature)
   end
 
   def self.check_topic(payload)

@@ -6,8 +6,8 @@ require 'active_support/json'
 require 'active_support/dependencies/autoload'
 require 'active_support/core_ext'
 
-# Modules
-require 'k2-connect-ruby/modules'
+# Utilities
+require 'k2-connect-ruby/utilities'
 
 # Services
 require 'k2-connect-ruby/k2_services/payload_process'

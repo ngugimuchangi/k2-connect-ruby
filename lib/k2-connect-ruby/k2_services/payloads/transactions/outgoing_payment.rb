@@ -1,10 +1,6 @@
 class OutgoingPayment < OutgoingTransaction
   attr_reader :transaction_reference,
-              :destination,
-              :amount,
-              :currency,
-              :value,
-              :origination_time
+              :destination
 
   def initialize(payload)
     super

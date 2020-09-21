@@ -3,7 +3,10 @@ class K2Transfer < K2Entity
   # Create a either a 'blind' transfer, for when destination is specified, and a 'targeted' transfer which has a specified destination.
   def transfer_funds(params)
     # Validation
-    params = validate_input(params, @exception_array += %w[destination_reference destination_type currency value callback_url metadata])
+    unless params["destination_reference"].blank? && params["destination_type"].blank?
+      params = validate_input(params, @exception_array += %w[destination_reference destination_type currency value callback_url metadata])
+    end
+    params = params.with_indifferent_access
     # The Request Body Parameters
     k2_request_transfer = {
         destination_reference: params[:destination_reference],
@@ -42,7 +45,7 @@ class K2Transfer < K2Entity
                 },
             metadata: metadata
         })
-    transfer_hash = K2Transfer.make_hash(K2Config.path_url('transfers'), 'post', @access_token, 'Transfer', transfer_body)
+    transfer_hash = make_hash(K2Config.path_url('transfers'), 'post', @access_token, 'Transfer', transfer_body)
     @threads << Thread.new do
       sleep 0.25
       @location_url = K2Connect.make_request(transfer_hash)
