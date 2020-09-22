@@ -123,10 +123,10 @@ RSpec.describe K2ProcessResult do
                                                                 destination: {
                                                                     type: "merchant_bank_account",
                                                                     resource: {
-                                                                        bank_id: "bank_id",
+                                                                        bank_ref: "bank_ref",
                                                                         account_name: "account_name",
                                                                         account_number: "account_number",
-                                                                        bank_branch_id: "bank_branch_id"
+                                                                        bank_branch_ref: "bank_branch_ref"
                                                                     }
                                                                 },
                                                                 origination_time:"2020-02-14T11:02:57+03:00"

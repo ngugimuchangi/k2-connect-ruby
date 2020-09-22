@@ -4,7 +4,7 @@ RSpec.describe K2Settlement do
     @k2settlement = K2Settlement.new(K2AccessToken.new('KkcZEdj7qx7qfcFMyTWFaUXV7xZv8z8WIm72U06BiPI', 'mVoTlmrjsMw2mnfTXQrynz49ZcDX05Xp5wty-uNaZX8').request_token)
 
     @mobile_settle_account = HashWithIndifferentAccess.new(type: 'merchant_wallet', msisdn: '254716230902', network: 'Safaricom')
-    @bank_settle_account = HashWithIndifferentAccess.new(type: 'merchant_bank_account', account_name: 'account_name', bank_id: 'bank_id', bank_branch_id: 'bank_branch_id', account_number: 'account_number')
+    @bank_settle_account = HashWithIndifferentAccess.new(type: 'merchant_bank_account', account_name: 'account_name', bank_ref: 'bank_ref', bank_branch_ref: 'bank_branch_ref', account_number: 'account_number')
   end
 
   context "Mobile Wallet settlement account" do
