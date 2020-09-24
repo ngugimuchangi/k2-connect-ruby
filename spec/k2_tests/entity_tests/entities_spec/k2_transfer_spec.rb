@@ -44,7 +44,7 @@ RSpec.describe K2Transfer do
   end
 
   describe '#query_status' do
-    it 'should query specified payment request status' do
+    it 'should query recent payment/transfer request status' do
       SpecConfig.custom_stub_request('get', K2Config.path_url('transfers'), '', 200)
       expect { @k2transfer.query_status }.not_to raise_error
       expect(@k2transfer.k2_response_body).not_to eq(nil)
@@ -53,7 +53,7 @@ RSpec.describe K2Transfer do
   end
 
   describe '#query_resource' do
-    it 'should query specified payment request status' do
+    it 'should query specified payment/transfer request status' do
       SpecConfig.custom_stub_request('get', K2Config.path_url('transfers'), '', 200)
       expect { @k2transfer.query_resource(@k2transfer.location_url) }.not_to raise_error
       expect(@k2transfer.k2_response_body).not_to eq(nil)
