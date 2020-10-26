@@ -9,9 +9,13 @@ RSpec.describe K2Pay do
     @till_payment = {  destination_reference: "3344-effefnkka-132", destination_type: "till", currency: "KES", value: 20000, callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }
     @k2_merchant_payment = {  destination_reference: "3344-effefnkka-132", destination_type: "kopo_kopo_merchant", currency: "KES", value: 20000, callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }
     @mobile_pay_request_body = { type: "mobile_wallet", first_name: "John", last_name: "Doe", email: "johndoe@nomail.net", phone_number: "+254716230902", network: "Safaricom" }
-    @incorrect_network = { type: "mobile_wallet", first_name: "John", last_name: "Doe", email: "johndoe@nomail.net", phone_number: "+254716230902", network: "Safarm" }
     @bank_pay_request_body_eft = { type: "bank_account", account_name: "David Kariuki", account_number: 566566, bank_branch_ref: "633aa26c-7b7c-4091-ae28-96c0687cf886", settlement_method: 'EFT' }
     @bank_pay_request_body_rts = { type: "bank_account", account_name: "David Kariuki", account_number: 566566, bank_branch_ref: "633aa26c-7b7c-4091-ae28-96c0687cf886", settlement_method: 'RTS' }
+    @till_pay_request_body = { type: "till", till_name: "John Doe", till_number: "098098" }
+    @k2_merchant_pay_request_body = { type: "kopo_kopo_merchant", alias_name: "John Doe", till_number: "112233" }
+
+    @incorrect_network = { type: "mobile_wallet", first_name: "John", last_name: "Doe", email: "johndoe@nomail.net", phone_number: "+254716230902", network: "Safarm" }
+    @wrong_bank_pay_request_body = { type: "bank_account", first_name: "John", last_name: "Doe", email: "johndoe@nomail.net", phone_number: "+254716230902", account_name: "David Kariuki", account_number: 566566, bank_ref: 21, bank_branch_ref: "633aa26c-7b7c-4091-ae28-96c0687cf886", settlement_method: 'RTI' }
   end
 
   describe '#add_recipients' do
@@ -57,11 +61,31 @@ RSpec.describe K2Pay do
       context "Wrong recipient details" do
         context "Wrong settlment method" do
           it 'should not send an add bank account pay recipient request' do
-            wrong_bank_pay_request_body = { type: "bank_account", first_name: "John", last_name: "Doe", email: "johndoe@nomail.net", phone_number: "+254716230902", account_name: "David Kariuki", account_number: 566566, bank_ref: 21, bank_branch_ref: "633aa26c-7b7c-4091-ae28-96c0687cf886", settlement_method: 'RTI' }
-
-            expect { @k2pay.add_recipient(wrong_bank_pay_request_body) }.to raise_error ArgumentError
+            expect { @k2pay.add_recipient(@wrong_bank_pay_request_body) }.to raise_error ArgumentError
             expect(WebMock).not_to have_requested(:post, URI.parse(K2Config.path_url('pay_recipient')))
           end
+        end
+      end
+    end
+
+    context "Adding a Till PAY Recipient" do
+      context "Correct recipient details" do
+        it 'should send an add till pay recipient request' do
+          SpecConfig.custom_stub_request('post', K2Config.path_url('pay_recipient'), @till_pay_request_body, 201)
+          @k2pay.add_recipient(@till_pay_request_body)
+          expect(@k2pay.recipients_location_url).not_to eq(nil)
+          expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('pay_recipient')))
+        end
+      end
+    end
+
+    context "Adding a K2 Merchant PAY Recipient" do
+      context "Correct recipient details" do
+        it 'should send an add kopo_kopo_merchant pay recipient request' do
+          SpecConfig.custom_stub_request('post', K2Config.path_url('pay_recipient'), @k2_merchant_pay_request_body, 201)
+          @k2pay.add_recipient(@k2_merchant_pay_request_body)
+          expect(@k2pay.recipients_location_url).not_to eq(nil)
+          expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('pay_recipient')))
         end
       end
     end

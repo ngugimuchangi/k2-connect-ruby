@@ -8,7 +8,7 @@ class K2Pay < K2Entity
   def add_recipient(params)
     params = params.with_indifferent_access
     @exception_array += %w[type]
-    # In the case of mobile pay
+    # In the case of mobile pay recipient
     if params[:type].eql?('mobile_wallet')
       params = validate_input(params, @exception_array += %w[first_name last_name phone_number email network])
       k2_request_pay_recipient = {
@@ -18,7 +18,7 @@ class K2Pay < K2Entity
         email: validate_email(params[:email]),
         network: params[:network]
       }
-      # In the case of bank pay
+      # In the case of bank pay recipient
     elsif params[:type].eql?('bank_account')
       params = validate_input(params, @exception_array += %w[account_name account_number bank_branch_ref settlement_method])
       k2_request_pay_recipient = {
@@ -26,6 +26,20 @@ class K2Pay < K2Entity
           account_number: params[:account_number],
           bank_branch_ref: params[:bank_branch_ref],
           settlement_method: params[:settlement_method]
+      }
+      # In the case of till pay recipient
+    elsif params[:type].eql?('till')
+      params = validate_input(params, @exception_array += %w[till_name till_number])
+      k2_request_pay_recipient = {
+        till_name: params[:till_name],
+        till_number: params[:till_number]
+      }
+      # In the case of bank pay recipient
+    elsif params[:type].eql?('kopo_kopo_merchant')
+      params = validate_input(params, @exception_array += %w[alias_name till_number])
+      k2_request_pay_recipient = {
+        alias_name: params[:alias_name],
+        till_number: params[:till_number]
       }
     else
       raise ArgumentError, 'Undefined Payment Method.'
