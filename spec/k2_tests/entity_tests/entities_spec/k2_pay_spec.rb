@@ -10,13 +10,14 @@ RSpec.describe K2Pay do
     @k2_merchant_payment = {  destination_reference: "3344-effefnkka-132", destination_type: "kopo_kopo_merchant", currency: "KES", value: 20000, callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }
     @mobile_pay_request_body = { type: "mobile_wallet", first_name: "John", last_name: "Doe", email: "johndoe@nomail.net", phone_number: "+254716230902", network: "Safaricom" }
     @incorrect_network = { type: "mobile_wallet", first_name: "John", last_name: "Doe", email: "johndoe@nomail.net", phone_number: "+254716230902", network: "Safarm" }
-    @bank_pay_request_body = { type: "bank_account", first_name: "John", last_name: "Doe", email: "johndoe@nomail.net", phone_number: "+254716230902", account_name: "David Kariuki", account_number: 566566, bank_ref: 21, bank_branch_ref: "633aa26c-7b7c-4091-ae28-96c0687cf886" }
+    @bank_pay_request_body_eft = { type: "bank_account", first_name: "John", last_name: "Doe", email: "johndoe@nomail.net", phone_number: "+254716230902", account_name: "David Kariuki", account_number: 566566, bank_ref: 21, bank_branch_ref: "633aa26c-7b7c-4091-ae28-96c0687cf886", settlement_method: 'EFT' }
+    @bank_pay_request_body_rts = { type: "bank_account", first_name: "John", last_name: "Doe", email: "johndoe@nomail.net", phone_number: "+254716230902", account_name: "David Kariuki", account_number: 566566, bank_ref: 21, bank_branch_ref: "633aa26c-7b7c-4091-ae28-96c0687cf886", settlement_method: 'RTS' }
   end
 
   describe '#add_recipients' do
     context "Adding a Mobile PAY Recipient" do
       context "Correct recipient details" do
-        it 'should add mobile wallet pay recipient request' do
+        it 'should send an add mobile wallet pay recipient request' do
           SpecConfig.custom_stub_request('post', K2Config.path_url('pay_recipient'), @mobile_pay_request_body, 201)
           @k2pay.add_recipient(@mobile_pay_request_body)
           expect(@k2pay.recipients_location_url).not_to eq(nil)
@@ -25,7 +26,7 @@ RSpec.describe K2Pay do
       end
 
       context "Wrong recipient details" do
-        it 'should not add mobile wallet pay recipient request' do
+        it 'should not send an add mobile wallet pay recipient request' do
           expect { @k2pay.add_recipient(@incorrect_network) }.to raise_error ArgumentError
           expect(WebMock).not_to have_requested(:post, URI.parse(K2Config.path_url('pay_recipient')))
         end
@@ -33,11 +34,35 @@ RSpec.describe K2Pay do
     end
 
     context "Adding a Bank PAY Recipient" do
-      it 'should add bank account pay recipient request' do
-        SpecConfig.custom_stub_request('post', K2Config.path_url('pay_recipient'), @bank_pay_request_body, 201)
-        @k2pay.add_recipient(@bank_pay_request_body)
-        expect(@k2pay.recipients_location_url).not_to eq(nil)
-        expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('pay_recipient')))
+      context "Correct recipient details" do
+        context "EFT settlement_method" do
+          it 'should send an add bank account pay recipient request' do
+            SpecConfig.custom_stub_request('post', K2Config.path_url('pay_recipient'), @bank_pay_request_body_eft, 201)
+            @k2pay.add_recipient(@bank_pay_request_body_eft)
+            expect(@k2pay.recipients_location_url).not_to eq(nil)
+            expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('pay_recipient')))
+          end
+        end
+
+        context "RTS settlement_method" do
+          it 'should send an add bank account pay recipient request' do
+            SpecConfig.custom_stub_request('post', K2Config.path_url('pay_recipient'), @bank_pay_request_body_rts, 201)
+            @k2pay.add_recipient(@bank_pay_request_body_rts)
+            expect(@k2pay.recipients_location_url).not_to eq(nil)
+            expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('pay_recipient')))
+          end
+        end
+      end
+
+      context "Wrong recipient details" do
+        context "Wrong settlment method" do
+          it 'should not send an add bank account pay recipient request' do
+            wrong_bank_pay_request_body = { type: "bank_account", first_name: "John", last_name: "Doe", email: "johndoe@nomail.net", phone_number: "+254716230902", account_name: "David Kariuki", account_number: 566566, bank_ref: 21, bank_branch_ref: "633aa26c-7b7c-4091-ae28-96c0687cf886", settlement_method: 'RTI' }
+
+            expect { @k2pay.add_recipient(wrong_bank_pay_request_body) }.to raise_error ArgumentError
+            expect(WebMock).not_to have_requested(:post, URI.parse(K2Config.path_url('pay_recipient')))
+          end
+        end
       end
     end
   end

@@ -157,6 +157,7 @@ Add a PAY Recipient, with the following arguments:
 - account_number `REQUIRED`
 - bank_ref `REQUIRED`
 - bank_branch_ref `REQUIRED`
+- settlement_method: 'EFT' or 'RTS' `REQUIRED`
 
   
     k2_pay.add_recipients(your_input)
