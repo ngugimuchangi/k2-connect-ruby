@@ -12,7 +12,7 @@ module SpecConfig
         event_type: event_type,
         url: @callback_url,
         scope: 'Till',
-        scope_reference: '5555'
+        scope_reference: '112233'
     }
   end
 

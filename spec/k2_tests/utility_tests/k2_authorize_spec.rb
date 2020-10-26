@@ -1,4 +1,4 @@
-RSpec.describe K2Authenticatorlast_name do
+RSpec.describe K2Authenticator do
   describe '#authenticate' do
     let(:the_body) { HashWithIndifferentAccess.new(the_body: 'the_body') }
     it 'should raise an error if any of the parameters are empty' do
