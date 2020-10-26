@@ -291,35 +291,35 @@ RSpec.describe K2ProcessResult do
   end
   describe '#process' do
     it 'should raise an error if argument is empty' do
-      expect { K2ProcessWebhook.process('') }.to raise_error ArgumentError
+      expect { K2ProcessWebhook.process('', '', '') }.to raise_error ArgumentError
     end
 
     it 'Buy Goods Received' do
-      expect { K2ProcessWebhook.process(@bg_received) }.not_to raise_error
+      expect { K2ProcessWebhook.process(@bg_received, 'k2_secret_key', '761bbc9ef079d23df790297ada7c5277ab9e86f511d016399eeafd6b992aaa7a') }.not_to raise_error
     end
 
     it 'B2b Transaction' do
-      expect { K2ProcessWebhook.process(@b2b) }.not_to raise_error
+      expect { K2ProcessWebhook.process(@b2b, 'k2_secret_key', '977cfd1dc695228364db6aed1e52caf05334be4bcb4fcd7f8a0e84cba7e11a53') }.not_to raise_error
     end
 
     it 'Merchant to Merchant Transaction' do
-      expect { K2ProcessWebhook.process(@m2m) }.not_to raise_error
+      expect { K2ProcessWebhook.process(@m2m, 'k2_secret_key', '3b25829df384226afafd3f71aa39b16b27e1cd3bdbc7d415eaaa961c4419d140') }.not_to raise_error
     end
 
     it 'Buy Goods Reversed' do
-      expect { K2ProcessWebhook.process(@bg_reversal) }.not_to raise_error
+      expect { K2ProcessWebhook.process(@bg_reversal, 'k2_secret_key', 'e485beae2a6cb34917d702af3159466afd213f910bcff8454df2bf3b525049b0') }.not_to raise_error
     end
 
     it 'Settlement Transfer Completed merchant_bank_account' do
-      expect { K2ProcessWebhook.process(@settlement_bank_account) }.not_to raise_error
+      expect { K2ProcessWebhook.process(@settlement_bank_account, 'k2_secret_key', '7bb229680faf6840206d8bf16b8711b3cd38c6057ecf5379762f5de543edebe6') }.not_to raise_error
     end
 
     it 'Settlement Transfer Completed merchant_wallet' do
-      expect { K2ProcessWebhook.process(@settlement_merchant_wallet) }.not_to raise_error
+      expect { K2ProcessWebhook.process(@settlement_merchant_wallet, 'k2_secret_key', '05dcf18e3a23a71e7484e3d56e195e6ac24d4ab8a274c206a7d735e4251ee189') }.not_to raise_error
     end
 
     it 'Customer Created' do
-      expect { K2ProcessWebhook.process(@customer) }.not_to raise_error
+      expect { K2ProcessWebhook.process(@customer, 'k2_secret_key', 'fe76c961fca01493619100c68e1f37a257171952e3584122d6952e0af2b32897') }.not_to raise_error
     end
 
     it 'Process Stk Result' do
