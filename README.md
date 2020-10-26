@@ -250,7 +250,6 @@ With `nil` representing that there are no specified destinations.
 The Following Details should be passed for either **Blind** or **Targeted** Transfer:
 
 **Blind** Transfer
-- destination_type: `merchant_wallet` or `merchant_bank_account` `REQUIRED`
 - currency `REQUIRED`
 - value `REQUIRED`
 - callback_url `REQUIRED`
@@ -278,6 +277,10 @@ k2_transfer.transfer_funds(your_input)
 To Query the status of the prior initiated Transfer Request pass the location_url response as shown:
 
      k2_transfers.query_resource(k2_transfers.location_url)  
+
+To Query the most recent initiated Transfer Request:
+
+     k2_transfers.query_status  
 
 A HTTP Response will be returned in a JSON Payload, accessible with the k2_response_body variable.
 
