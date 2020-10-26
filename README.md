@@ -149,13 +149,8 @@ Add a PAY Recipient, with the following arguments:
 
 **Bank** PAY Recipient
 - type: 'bank_account' `REQUIRED`
-- first_name `REQUIRED`
-- last_name `REQUIRED`
-- phone_number `REQUIRED`
-- email `REQUIRED`
 - account_name `REQUIRED`
 - account_number `REQUIRED`
-- bank_ref `REQUIRED`
 - bank_branch_ref `REQUIRED`
 - settlement_method: 'EFT' or 'RTS' `REQUIRED`
 
