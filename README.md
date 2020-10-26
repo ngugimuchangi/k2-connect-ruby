@@ -206,15 +206,17 @@ Add pre-approved settlement accounts, to which one can transfer funds to. Can be
 
 **Mobile** Settlement Account
 - type: 'merchant_wallet' `REQUIRED`
-- msisdn `REQUIRED`
+- first_name `REQUIRED`
+- last_name `REQUIRED`
+- phone_number `REQUIRED`
 - network: 'Safaricom' `REQUIRED`
 
 **Bank** Settlement Account
 - type: 'merchant_bank_account' `REQUIRED`
 - account_name `REQUIRED`
 - account_number `REQUIRED`
-- bank_id `REQUIRED`
-- bank_branch_id `REQUIRED`
+- bank_ref `REQUIRED`
+- bank_branch_ref `REQUIRED`
 
 ```ruby
 k2_settlement = K2Settlement.new(your_access_token)
