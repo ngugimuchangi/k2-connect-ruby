@@ -9,7 +9,7 @@ RSpec.describe K2Stk do
         till_identifier: 444_555,
         first_name: 'first_name',
         last_name: 'last_name',
-        phone: '0716230902',
+        phone_number: '0716230902',
         email: 'email@emailc.om',
         currency: 'currency',
         value: 2000,

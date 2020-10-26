@@ -102,13 +102,16 @@ k2subscriber.webhook_subscribe(ENV["K2_SECRET_KEY"], your_input)
 
     k2_stk.receive_mpesa_payments(your_input)
     
-Ensure the following arguments are passed: 
+Ensure the following arguments are passed:
+ - payment_channel `REQUIRED`
+ - till_identifier `REQUIRED` 
  - first_name `REQUIRED`
  - last_name `REQUIRED`
- - phone `REQUIRED`
+ - phone_number `REQUIRED`
  - email `REQUIRED`
  - currency `REQUIRED`
  - value `REQUIRED`
+ - callback_url `REQUIRED`
 
 A Successful Response will be received containing the URL of the Payment Location.
 
@@ -117,6 +120,10 @@ A Successful Response will be received containing the URL of the Payment Locatio
  To Query the STK Payment Request Status pass the Payment location URL response that is returned:
 
     k2_stk.query_resource(k2_stk.location_url)
+
+ To Query the most recent STK Request Status is as follows:
+
+    k2_stk.query_status
 
 As a result a JSON payload will be returned, accessible with the k2_response_body variable.
  
