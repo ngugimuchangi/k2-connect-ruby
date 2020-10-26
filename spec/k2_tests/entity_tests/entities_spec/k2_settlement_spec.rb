@@ -4,8 +4,8 @@ RSpec.describe K2Settlement do
     @k2settlement = K2Settlement.new(K2AccessToken.new('ReMYAYdLKcg--XNmKhzkLNTIbXPvOUPs3hyycUF8WmI', '4707e306330759f4b63716f0525f6634a4685b4b4bf75b3381f1244ee77eb3fa').request_token)
 
     @mobile_settle_account = HashWithIndifferentAccess.new(type: 'merchant_wallet', first_name: 'first_name', last_name: 'last_name', phone_number: '254716230902', network: 'Safaricom')
-    @bank_settle_account_eft = HashWithIndifferentAccess.new(type: 'merchant_bank_account', account_name: 'account_name', bank_ref: '2', bank_branch_ref: '633aa26c-7b7c-4091-ae28-96c0687cf886', account_number: 'account_number', settlement_method: "EFT")
-    @bank_settle_account_rts = HashWithIndifferentAccess.new(type: 'merchant_bank_account', account_name: 'account_name', bank_ref: '2', bank_branch_ref: '633aa26c-7b7c-4091-ae28-96c0687cf886', account_number: 'account_number', settlement_method: "RTS")
+    @bank_settle_account_eft = HashWithIndifferentAccess.new(type: 'merchant_bank_account', account_name: 'account_name', bank_branch_ref: '633aa26c-7b7c-4091-ae28-96c0687cf886', account_number: 'account_number', settlement_method: "EFT")
+    @bank_settle_account_rts = HashWithIndifferentAccess.new(type: 'merchant_bank_account', account_name: 'account_name', bank_branch_ref: '633aa26c-7b7c-4091-ae28-96c0687cf886', account_number: 'account_number', settlement_method: "RTS")
   end
 
   context "Mobile Wallet settlement account" do
