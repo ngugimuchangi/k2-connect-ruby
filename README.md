@@ -86,7 +86,7 @@ Code example;
 require 'k2-connect-ruby'
 k2_token = K2AccessToken.new('your_client_id', 'your_client_secret').token_request
 k2subscriber = K2Subscribe.new(k2_token)
-k2subscriber.webhook_subscribe(ENV["K2_SECRET_KEY"], your_input)
+k2subscriber.webhook_subscribe(your_input, webhook_secret)
 ```
  
  
