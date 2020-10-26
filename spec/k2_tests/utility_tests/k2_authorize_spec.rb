@@ -1,5 +1,5 @@
 RSpec.describe K2Authenticator do
-  context '#authenticate' do
+  describe '#authenticate' do
     let(:the_body) { HashWithIndifferentAccess.new(the_body: 'the_body') }
     it 'should raise an error if any of the parameters are empty' do
       expect { K2Authenticator.authenticate('', '', '') }.to raise_error ArgumentError

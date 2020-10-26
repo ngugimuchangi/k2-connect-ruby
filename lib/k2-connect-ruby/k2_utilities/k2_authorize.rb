@@ -9,7 +9,6 @@ module K2Authenticator
     digest = OpenSSL::Digest.new('sha256')
     hmac = OpenSSL::HMAC.hexdigest(digest, api_secret_key, body.to_json)
     raise ArgumentError, "Invalid Details Given!\n Ensure that your the Arguments Given are correct, namely:\n\t- The Response Body\n\t- Secret Key\n\t- Signature" unless ActiveSupport::SecurityUtils.secure_compare(hmac, signature)
-
     true
   end
 end

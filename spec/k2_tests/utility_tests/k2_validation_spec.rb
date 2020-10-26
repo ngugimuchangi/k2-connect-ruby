@@ -3,7 +3,7 @@ RSpec.describe K2Validation do
   let(:the_input) { { the_input: 'the_input', ze_input: 'ze_input' } }
   let(:array) { %w[the_input ze_input] }
 
-  context '#validate_input' do
+  describe '#validate_input' do
     it 'should raise an error if the_input parameters is empty' do
       expect { validate_input('', array) }.to raise_error ArgumentError
     end
@@ -25,7 +25,7 @@ RSpec.describe K2Validation do
     end
   end
 
-  context '#validate_hash' do
+  describe '#validate_hash' do
     let(:invalid_input) { { the_input: 'the_input', ze_input: '' } }
     let(:incorrect_input) { { the_input: 'the_input', za_input: 'ze_input' } }
     it 'should raise an error if the_input parameters are incorrect' do
@@ -41,21 +41,21 @@ RSpec.describe K2Validation do
     end
   end
 
-  context '#incorrect_keys' do
+  describe '#incorrect_keys' do
     let(:invalid_keys) { HashWithIndifferentAccess.new }
     it 'should check for any incorrect key formats' do
       expect { incorrect_keys(the_input, invalid_keys, array) }.not_to raise_error
     end
   end
 
-  context '#nil_values' do
+  describe '#nil_values' do
     let(:empty_keys) { HashWithIndifferentAccess.new }
     it 'should check for hash symbols with nil values' do
       expect { nil_values(the_input, empty_keys) }.not_to raise_error
     end
   end
 
-  context '#validate_phone' do
+  describe '#validate_phone' do
     it 'should raise an error if length of phone number is wrong' do
       expect { validate_phone('+2547162309021') }.to raise_error ArgumentError
       expect { validate_phone('07162309021') }.to raise_error ArgumentError
@@ -70,7 +70,7 @@ RSpec.describe K2Validation do
     end
   end
 
-  context '#validate_email' do
+  describe '#validate_email' do
     it 'should raise an error if email format is wrong' do
       expect { validate_email('email') }.to raise_error ArgumentError
     end
@@ -80,13 +80,13 @@ RSpec.describe K2Validation do
     end
   end
 
-  context '#convert_params' do
+  describe '#convert_params' do
     it 'correct email format' do
       expect { to_indifferent_access(davod: 'daudi') }.not_to raise_error
     end
   end
 
-  context '#validate_url' do
+  describe '#validate_url' do
     it 'error for wrong url format' do
       url = 'url'
       expect { validate_url(url) }.to raise_error ArgumentError

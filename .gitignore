@@ -66,3 +66,7 @@ tmp
 
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
+
+# yml files
+lib/k2-connect-ruby/k2_utilities/spec_modules/spec_config.rb
+lib/k2-connect-ruby/k2_utilities/spec_modules/test_config.yml
