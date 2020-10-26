@@ -7,10 +7,10 @@ class K2Pay < K2Entity
   # Adding PAY Recipients with either mobile_wallets or bank_accounts as destination of your payments.
   def add_recipient(params)
     params = params.with_indifferent_access
-    @exception_array += %w[first_name last_name phone_number email type]
+    @exception_array += %w[type]
     # In the case of mobile pay
     if params[:type].eql?('mobile_wallet')
-      params = validate_input(params, @exception_array += %w[network])
+      params = validate_input(params, @exception_array += %w[first_name last_name phone_number email network])
       k2_request_pay_recipient = {
         first_name: params[:first_name],
         last_name: params[:last_name],
@@ -20,17 +20,12 @@ class K2Pay < K2Entity
       }
       # In the case of bank pay
     elsif params[:type].eql?('bank_account')
-      params = validate_input(params, @exception_array += %w[account_name bank_ref bank_branch_ref account_number settlement_method])
+      params = validate_input(params, @exception_array += %w[account_name account_number bank_branch_ref settlement_method])
       k2_request_pay_recipient = {
-          first_name: "#{params[:first_name]} #{params[:last_name]}",
-          last_name: "#{params[:last_name]}",
           account_name: params[:account_name],
           account_number: params[:account_number],
-          bank_ref: params[:bank_ref],
           bank_branch_ref: params[:bank_branch_ref],
-          settlement_method: params[:settlement_method],
-          email: validate_email(params[:email]),
-          phone: validate_phone(params[:phone])
+          settlement_method: params[:settlement_method]
       }
     else
       raise ArgumentError, 'Undefined Payment Method.'
