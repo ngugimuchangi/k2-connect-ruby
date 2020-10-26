@@ -1,7 +1,7 @@
 include SpecConfig
 RSpec.describe K2Subscribe do
   before(:all) do
-    @access_token = K2AccessToken.new('KkcZEdj7qx7qfcFMyTWFaUXV7xZv8z8WIm72U06BiPI', 'mVoTlmrjsMw2mnfTXQrynz49ZcDX05Xp5wty-uNaZX8').request_token
+    @access_token = K2AccessToken.new('ReMYAYdLKcg--XNmKhzkLNTIbXPvOUPs3hyycUF8WmI', '4707e306330759f4b63716f0525f6634a4685b4b4bf75b3381f1244ee77eb3fa').request_token
     @k2subscriber = K2Subscribe.new(@access_token)
     @k2sub_not_exist = K2Subscribe.new(@access_token)
     @callback_url = SpecConfig.callback_url('webhook')
@@ -28,56 +28,76 @@ RSpec.describe K2Subscribe do
     let(:settlement){ webhook_structure('settlement_transfer_completed') }
     let(:bg_reversed){ webhook_structure('buygoods_transaction_reversed') }
 
-    it 'raises error if event type does not match' do
-      expect { @k2sub_not_exist.webhook_subscribe(wrong_event, 'wrong_event') }.to raise_error ArgumentError
-      expect(WebMock).not_to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
+    context 'invalid event type' do
+      context 'event type does not exist' do
+        it 'raises error if event type does not match' do
+          expect { @k2sub_not_exist.webhook_subscribe(wrong_event, 'wrong_event') }.to raise_error ArgumentError
+          expect(WebMock).not_to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
+        end
+      end
+
+      context 'event type is empty' do
+        it 'raises error if event type is empty' do
+          expect { @k2subscriber.webhook_subscribe(empty_event, 'empty_event') }.to raise_error K2EmptyParams
+          expect(WebMock).not_to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
+        end
+      end
     end
 
-    it 'raises error if event type is empty' do
-      expect { @k2subscriber.webhook_subscribe(empty_event, 'empty_event') }.to raise_error K2EmptyParams
-      expect(WebMock).not_to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
-    end
+    context 'valid event type' do
+      context 'with buy goods received event type' do
+        it 'should send webhook subscription' do
+          subscription_stub_request('buygoods_transaction_received', @callback_url)
 
-    it 'should send webhook subscription for buy goods received' do
-      subscription_stub_request('buygoods_transaction_received', @callback_url)
+          expect { @k2subscriber.webhook_subscribe(bg, 'ruby_sdk_webhook_secret') }.not_to raise_error
+          expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
+        end
+      end
 
-      expect { @k2subscriber.webhook_subscribe(bg, 'webhook_secret') }.not_to raise_error
-      expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
-    end
+      context 'with buy goods reversed event type' do
+        it 'should send webhook subscription' do
+          subscription_stub_request('buygoods_transaction_reversed', @callback_url)
 
-    it 'should send webhook subscription for buy goods reversed' do
-      subscription_stub_request('buygoods_transaction_reversed', @callback_url)
+          expect { @k2subscriber.webhook_subscribe(bg_reversed, 'ruby_sdk_webhook_secret') }.not_to raise_error
+          expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
+        end
+      end
 
-      expect { @k2subscriber.webhook_subscribe(bg_reversed, 'webhook_secret') }.not_to raise_error
-      expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
-    end
+      context 'with customer created event type' do
+        it 'should send webhook subscription' do
+          subscription_stub_request('customer_created', @callback_url)
 
-    it 'should send webhook subscription for customer created' do
-      subscription_stub_request('customer_created', @callback_url)
+          expect { @k2subscriber.webhook_subscribe(customer_created, 'ruby_sdk_webhook_secret') }.not_to raise_error
+          expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
+        end
+      end
 
-      expect { @k2subscriber.webhook_subscribe(customer_created, 'webhook_secret') }.not_to raise_error
-      expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
-    end
+      context 'with external till to till (b2b) event type' do
+        it 'should send webhook subscription' do
+          subscription_stub_request('b2b_transaction_received', @callback_url)
 
-    it 'should send webhook subscription for settlement' do
-      subscription_stub_request('settlement_transfer_completed', @callback_url)
+          expect { @k2subscriber.webhook_subscribe(b2b, 'ruby_sdk_webhook_secret') }.not_to raise_error
+          expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
+        end
+      end
 
-      expect { @k2subscriber.webhook_subscribe(settlement, 'webhook_secret') }.not_to raise_error
-      expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
-    end
+      context 'with settlement transfer event type' do
+        it 'should send webhook subscription for settlement' do
+          subscription_stub_request('settlement_transfer_completed', @callback_url)
 
-    it 'should send webhook subscription for external till to till (b2b)' do
-      subscription_stub_request('b2b_transaction_received', @callback_url)
+          expect { @k2subscriber.webhook_subscribe(settlement, 'ruby_sdk_webhook_secret') }.not_to raise_error
+          expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
+        end
+      end
 
-      expect { @k2subscriber.webhook_subscribe(b2b, 'webhook_secret') }.not_to raise_error
-      expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
-    end
+      context 'with merchant to merchant transaction event type' do
+        it 'should send webhook subscription' do
+          subscription_stub_request('m2m_transaction_received', @callback_url)
 
-    it 'should send webhook subscription for merchant to merchant transaction' do
-      subscription_stub_request('m2m_transaction_received', @callback_url)
-
-      expect { @k2subscriber.webhook_subscribe(m2m, 'webhook_secret') }.not_to raise_error
-      expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
+          expect { @k2subscriber.webhook_subscribe(m2m, 'ruby_sdk_webhook_secret') }.not_to raise_error
+          expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
+        end
+      end
     end
   end
 

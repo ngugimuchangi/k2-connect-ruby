@@ -8,7 +8,7 @@ class K2Stk < K2Entity
     k2_request_subscriber = {
       first_name: params[:first_name],
       last_name: params[:last_name],
-      phone: validate_phone(params[:phone]),
+      phone_number: validate_phone(params[:phone_number]),
       email: validate_email(params[:email])
     }
     k2_request_amount = {

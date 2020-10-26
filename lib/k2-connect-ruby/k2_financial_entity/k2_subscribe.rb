@@ -25,8 +25,6 @@ class K2Subscribe
     }
     subscribe_hash = make_hash(K2Config.path_url('webhook_subscriptions'), 'post', @access_token,'Subscription', k2_request_body)
     @location_url =  K2Connect.make_request(subscribe_hash)
-
-
   end
 
   # Query Recent Webhook
