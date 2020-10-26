@@ -217,6 +217,7 @@ Add pre-approved settlement accounts, to which one can transfer funds to. Can be
 - account_number `REQUIRED`
 - bank_ref `REQUIRED`
 - bank_branch_ref `REQUIRED`
+- settlement_method `REQUIRED`
 
 ```ruby
 k2_settlement = K2Settlement.new(your_access_token)
