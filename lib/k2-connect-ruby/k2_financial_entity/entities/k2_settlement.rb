@@ -20,7 +20,6 @@ class K2Settlement < K2Entity
       params = validate_input(params, @exception_array += %w[account_name bank_ref bank_branch_ref account_number currency value, settlement_method])
       settlement_body = {
           account_name: params[:account_name],
-          bank_ref: params[:bank_ref],
           bank_branch_ref: params[:bank_branch_ref],
           account_number: params[:account_number],
           settlement_method: params[:settlement_method]
