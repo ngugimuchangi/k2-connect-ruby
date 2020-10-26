@@ -2,14 +2,14 @@ include K2Validation
 RSpec.describe K2Stk do
   before(:all) do
     # K2Stk Object
-    @k2stk = K2Stk.new(K2AccessToken.new('KkcZEdj7qx7qfcFMyTWFaUXV7xZv8z8WIm72U06BiPI', 'mVoTlmrjsMw2mnfTXQrynz49ZcDX05Xp5wty-uNaZX8').request_token)
+    @k2stk = K2Stk.new(K2AccessToken.new('ReMYAYdLKcg--XNmKhzkLNTIbXPvOUPs3hyycUF8WmI', '4707e306330759f4b63716f0525f6634a4685b4b4bf75b3381f1244ee77eb3fa').request_token)
 
     @mpesa_payments = {
         payment_channel: 'M-PESA',
         till_identifier: 444_555,
         first_name: 'first_name',
         last_name: 'last_name',
-        phone: '0716230902',
+        phone_number: '0716230902',
         email: 'email@emailc.om',
         currency: 'currency',
         value: 2000,
