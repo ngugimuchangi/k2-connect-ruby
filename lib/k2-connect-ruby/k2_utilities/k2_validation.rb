@@ -41,6 +41,7 @@ module K2Validation
   def incorrect_keys(the_input, invalid_hash = [], the_array)
     the_input.each_key do |key|
       validate_network(the_input[:network]) if key.eql?("network")
+      validate_settlement_method(the_input[:settlement_method]) if key.eql?("settlement_method")
       invalid_hash << key unless the_array.include?(key.to_s)
     end
     raise K2IncorrectParams, invalid_hash if invalid_hash.present?
@@ -80,6 +81,10 @@ module K2Validation
     raise ArgumentError, "Invalid Network Operator." unless K2Config.network_operators.include?(network.to_s.upcase)
   end
 
+  def validate_settlement_method(settlement_method)
+    raise ArgumentError, "Wrong Settlement Method" unless settlement_method.eql?("EFT") || settlement_method.eql?("RTS")
+  end
+
   # Converts Hash Objects to HashWithIndifferentAccess Objects
   def to_indifferent_access(params)
     params.with_indifferent_access
@@ -87,7 +92,6 @@ module K2Validation
 
   def validate_url(url)
     raise ArgumentError, 'Invalid URL Format.' unless url =~ /\A#{URI.regexp(%w[https http])}\z/
-    #raise ArgumentError, 'Invalid URL Format.' unless url =~ /\A#{URI.regexp(%w[https])}\z/
     url
   end
 end

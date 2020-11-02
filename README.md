@@ -150,20 +150,16 @@ Add a PAY Recipient, with the following arguments:
 - type: 'mobile_wallet' `REQUIRED`
 - first_name `REQUIRED`
 - last_name `REQUIRED`
-- phone `REQUIRED`
+- phone_number `REQUIRED`
 - email `REQUIRED`
 - network `REQUIRED`
 
 **Bank** PAY Recipient
 - type: 'bank_account' `REQUIRED`
-- first_name `REQUIRED`
-- last_name `REQUIRED`
-- phone `REQUIRED`
-- email `REQUIRED`
 - account_name `REQUIRED`
 - account_number `REQUIRED`
-- bank_id `REQUIRED`
-- bank_branch_id `REQUIRED`
+- bank_branch_ref `REQUIRED`
+- settlement_method: 'EFT' or 'RTS' `REQUIRED`
 
   
     k2_pay.add_recipients(your_input)
@@ -178,21 +174,31 @@ Creating an Outgoing Payment to a third party.
 
     k2_pay.create_payment(your_input)
     
-The following arguments should be passed:
+The following arguments should be passed within a hash:
 
+- destination_reference `REQUIRED`
+- destination_type `REQUIRED`
 - currency `REQUIRED`
 - value `REQUIRED`
+- callback_url `REQUIRED`
 
 A Successful Response is returned with the URL of the Payment resource in the HTTP Location Header.
 
-#### Query PAYment Request Status
+#### Query PAY Request Status
 
-To Query the status of the Add Recipient or Outgoing Payment request::
+To Query the status of the Add Recipient or Outgoing Payment request:
 
     // add recipient
     k2_pay.query_resource(k2_pay.recipients_location_url)
     // create outgoing payment 
     k2_pay.query_resource(k2_pay.payments_location_url)
+
+To Query the most recent status of either the Add Recipient or Outgoing Payment request:
+
+    // add recipient
+    k2_pay.query_status('recipients')
+    // create outgoing payment 
+    k2_pay.query_status('payments')
 
 As a result a JSON payload will be returned, accessible with the k2_response_body variable.
  
@@ -200,9 +206,9 @@ Code example;
     
 ```ruby
 k2_pay = K2Pay.new(your_access_token)
-k2_pay.add_recipient(your_input)
+k2_pay.add_recipient(your_recipient_input)
 k2_pay.query_resource(k2_pay.recipients_location_url)
-k2_pay.create_payment(your_input)
+k2_pay.create_payment(your_payment_input)
 k2_pay.query_resource(k2_pay.payments_location_url)
 ```
 
