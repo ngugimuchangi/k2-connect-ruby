@@ -2,15 +2,8 @@
 module K2Config
   puts("Hey")
   puts("Does it exist: #{File.exist?(File.join('lib', 'k2-connect-ruby', 'k2_utilities', 'config', 'k2_config.yml'))}")
-  puts("Does it exist: #{File.symlink?(File.join('lib', 'k2-connect-ruby', 'k2_utilities', 'config', 'k2_config.yml'))}")
   puts("There")
   @config = YAML.load_file(File.join('lib', 'k2-connect-ruby', 'k2_utilities', 'config', 'k2_config.yml')).with_indifferent_access
-
-  # def yml_file_location(user_file_location)
-  #   file_location = File.join('lib', 'k2-connect-ruby', 'k2_utilities', 'config', 'k2_config.yml') || user_file_location
-  #   @config = YAML.load_file(file_location).with_indifferent_access
-  # end
-  #
 
   class << self
     # Set the Host Url

@@ -1,6 +1,7 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
 version: v1
 base_url: http://127.0.0.1:3000/
-endpoints:
+endpoints: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
   oauth_token: oauth/token
   webhook_subscriptions: webhook_subscriptions
   pay_recipient: pay_recipients
@@ -10,4 +11,4 @@ endpoints:
   settlement_bank_account: merchant_bank_accounts
   transfers: settlement_transfers
 network_operators:
-  - SAFARICOM
+- SAFARICOM
