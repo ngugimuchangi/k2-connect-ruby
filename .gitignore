@@ -68,5 +68,5 @@ tmp
 .rvmrc
 
 # yml files
-lib/k2-connect-ruby/k2_utilities/config/k2_config.yml
+#lib/k2-connect-ruby/k2_utilities/config/k2_config.yml
 lib/k2-connect-ruby/k2_utilities/spec_modules/test_config.yml
