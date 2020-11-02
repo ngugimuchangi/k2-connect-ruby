@@ -2,7 +2,7 @@
 module K2Config
   puts("Hey")
   puts("Does it exist: #{File.exist?(File.join('/home/david_kariuki/Kopokopo/Projects/k2-connect-ruby/lib/k2-connect-ruby/k2_utilities/config/k2_config.yml'))}")
-  puts("Does it exist: #{File.exist?(File.join('lib/k2-connect-ruby/k2_utilities/config/k2_config.yml'))}")
+  puts("Does it exist: #{File.exist?(File.join(Rails.root, 'lib', 'k2-connect-ruby', 'k2_utilities', 'config', 'k2_config.yml'))}")
   puts("There")
   @config = YAML.load_file(File.join('lib', 'k2-connect-ruby', 'k2_utilities', 'config', 'k2_config.yml')).with_indifferent_access
 
