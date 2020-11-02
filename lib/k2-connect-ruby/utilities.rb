@@ -7,7 +7,7 @@ require 'k2-connect-ruby/k2_utilities/k2_process_result'
 require 'k2-connect-ruby/k2_utilities/k2_process_webhook'
 
 # For Stub Requests
-require 'k2-connect-ruby/k2_utilities/spec_modules/spec_config'
+# require 'k2-connect-ruby/k2_utilities/spec_modules/spec_config'
 
 module K2Utilities
   def make_hash(path_url, request, access_token, class_type, body)

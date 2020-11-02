@@ -7,7 +7,7 @@ require 'active_support/dependencies/autoload'
 require 'active_support/core_ext'
 
 # Utilities
-# require 'k2-connect-ruby/utilities'
+require 'k2-connect-ruby/utilities'
 
 # Services
 require 'k2-connect-ruby/k2_services/payload_process'

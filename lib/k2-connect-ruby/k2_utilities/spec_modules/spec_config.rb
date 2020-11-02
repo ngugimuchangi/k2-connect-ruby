@@ -1,5 +1,5 @@
 module SpecConfig
-  @specs = YAML.load_file(File.join('lib', 'k2-connect-ruby', 'k2_utilities', 'spec_modules')).with_indifferent_access
+  @specs = YAML.load_file(File.join('lib', 'k2-connect-ruby', 'k2_utilities', 'spec_modules', 'test_config.yml')).with_indifferent_access
 
   def subscription_stub_request(event_type, url)
     request_body = { event_type: event_type, url: url, secret: 'webhook_secret' }
