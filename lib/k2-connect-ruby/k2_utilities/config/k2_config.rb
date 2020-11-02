@@ -1,7 +1,6 @@
 # TODO: try to see if you can implement Environment variables
 module K2Config
-  # @config = YAML.load_file(File.join('lib', 'k2-connect-ruby', 'k2_utilities', 'config', 'k2_config.yml')).with_indifferent_access
-  @config = File.open("lib/k2-connect-ruby/k2_utilities/config/k2_config.yml", 'r').with_indifferent_access
+  @config = YAML.load_file(File.join('lib', 'k2-connect-ruby', 'k2_utilities', 'config', 'k2_config.yml')).with_indifferent_access
 
   # def yml_file_location(user_file_location)
   #   file_location = File.join('lib', 'k2-connect-ruby', 'k2_utilities', 'config', 'k2_config.yml') || user_file_location
