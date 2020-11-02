@@ -1,10 +1,10 @@
-require 'k2-connect-ruby/k2_utilities/k2_url_parse'
-require 'k2-connect-ruby/k2_utilities/k2_authorize'
-require 'k2-connect-ruby/k2_utilities/k2_connection'
-require 'k2-connect-ruby/k2_utilities/k2_validation'
-require 'k2-connect-ruby/k2_utilities/config/k2_config'
-require 'k2-connect-ruby/k2_utilities/k2_process_result'
-require 'k2-connect-ruby/k2_utilities/k2_process_webhook'
+# require 'k2-connect-ruby/k2_utilities/k2_url_parse'
+# require 'k2-connect-ruby/k2_utilities/k2_authorize'
+# require 'k2-connect-ruby/k2_utilities/k2_connection'
+# require 'k2-connect-ruby/k2_utilities/k2_validation'
+# require 'k2-connect-ruby/k2_utilities/config/k2_config'
+# require 'k2-connect-ruby/k2_utilities/k2_process_result'
+# require 'k2-connect-ruby/k2_utilities/k2_process_webhook'
 
 # For Stub Requests
 # require 'k2-connect-ruby/k2_utilities/spec_modules/spec_config'
