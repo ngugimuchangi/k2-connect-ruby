@@ -1,7 +1,8 @@
 # TODO: try to see if you can implement Environment variables
 module K2Config
   puts("Hey")
-  File.exist?(File.join('lib', 'k2-connect-ruby', 'k2_utilities', 'config', 'k2_config.yml'))
+  puts("Does it exist: #{File.exist?(File.join('lib', 'k2-connect-ruby', 'k2_utilities', 'config', 'k2_config.yml'))}")
+  puts("Does it exist: #{File.symlink?(File.join('lib', 'k2-connect-ruby', 'k2_utilities', 'config', 'k2_config.yml'))}")
   puts("There")
   @config = YAML.load_file(File.join('lib', 'k2-connect-ruby', 'k2_utilities', 'config', 'k2_config.yml')).with_indifferent_access
 
