@@ -42,7 +42,7 @@ end
 class Buygoods < K2CommonEvents
   attr_reader :system,
               :till_number,
-              :sender_msisdn,
+              :sender_phone_number,
               :sender_first_name,
               :sender_last_name
 
@@ -50,7 +50,7 @@ class Buygoods < K2CommonEvents
     super
     @system = payload.dig('event', 'resource', 'system')
     @till_number = payload.dig('event', 'resource', 'till_number')
-    @sender_msisdn = payload.dig('event', 'resource', 'sender_msisdn')
+    @sender_phone_number = payload.dig('event', 'resource', 'sender_phone_number')
     @sender_first_name = payload.dig('event', 'resource', 'sender_first_name')
     @sender_last_name = payload.dig('event', 'resource', 'sender_last_name')
   end
