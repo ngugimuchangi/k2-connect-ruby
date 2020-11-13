@@ -1,8 +1,8 @@
 # Processes Results
 module K2ProcessResult
-  def self.process(payload)
+  def self.process(payload, secret_key, signature)
     raise ArgumentError, 'Empty/Nil Request Body Argument!' if payload.blank?
-    K2ProcessResult.check_type(payload)
+    self.check_type(payload) if K2Authenticator.authenticate(payload, secret_key, signature)
   end
 
   # Check the Event Type.
