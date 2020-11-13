@@ -11,15 +11,12 @@ class K2Subscribe
   end
 
   # Implemented a Case condition that minimises repetition
-  def webhook_subscribe(params, webhook_secret = @webhook_secret)
-    @webhook_secret = webhook_secret unless webhook_secret.blank?
-    raise ArgumentError, 'Nil or Empty Webhook Specified!' if webhook_secret.blank?
+  def webhook_subscribe(params)
     params = validate_input(params, %w[event_type scope scope_reference url])
     validate_webhook(params[:event_type])
     k2_request_body = {
         event_type: params[:event_type],
         url: params[:url],
-        secret: @webhook_secret,
         scope: params[:scope],
         scope_reference: params[:scope_reference]
     }
