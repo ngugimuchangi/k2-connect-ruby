@@ -1,10 +1,10 @@
 # RSpec.describe "Results" do
 #   let(:the_body) { {the_body: "the_body"} }
-#   describe WebhookTransaction do
+#   describe K2Webhook do
 #
 #     context "#components" do
 #       it 'should split body into components' do
-#         expect{ WebhookTransaction.new.components the_body }.not_to raise_error
+#         expect{ K2Webhook.new.components the_body }.not_to raise_error
 #       end
 #     end
 #   end

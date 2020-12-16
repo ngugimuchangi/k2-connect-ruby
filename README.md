@@ -1,12 +1,12 @@
 # DISCLAIMER!!
 
-The following library has not yet been finalised to production, and as such, neither consumable or usable as a gem/ruby library.
+The following library has yet to be finalised to production, and as such, neither consumable or usable as a gem/ruby library.
 
 # K2ConnectRuby For Rails
 
 Ruby SDK for connection to the Kopo Kopo API.
 This documentation gives you the specifications for connecting your systems to the Kopo Kopo Application.
-Primarily you can connect to the Kopo Kopo system to perform the following:
+Primarily, the library provides functionality to do the following:
 
  - Receive Webhook notifications.
  - Receive payments from your users/customers.
@@ -18,6 +18,23 @@ Please note, all requests MUST be made over HTTPS.
 Any non-secure requests are met with a redirect (HTTP 302) to the HTTPS equivalent URI.
 All calls made without authentication will also fail.
 
+## LINKS
+
+ - [Installation](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#installation)
+ - [Usage](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#installation)
+    - [Authorization](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#authorization)
+    - [Webhook Subscription](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#webhook-subscription)
+    - [STK Push](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#stk-push)
+    - [PAY](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#pay)
+    - [Transfers](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#transfers)
+    - [Parsing the JSON Payload](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#parsing-the-json-payload)
+ - [Development](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#development)
+ - [Author](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#author)
+ - [Contributing](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#contributing)
+ - [License](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#license)
+ - [Changelog](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#changelog)
+ - [Code of Conduct](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#code-of-conduct)
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -28,341 +45,439 @@ And then execute:
 
     $ bundle install
 
-Or install it yourself as:
+Or install it yourself:
 
     $ gem install k2-connect-ruby
 
 ## Usage
 
-Initially, you add the require line:
+Add the require line to use the gem:
 
     require 'k2-connect-ruby'
 
-### Authentication
+### Authorization
 
-In order to request for application authorization we need to execute the client credentials flow, this is done so by having your application server make a HTTPS request to the Kopo Kopo authorization server, through the K2Subscribe class.
+Ensure you first Register your application with the [Kopo Kopo Sandbox](To be added later when launched).
+Once an application is registered you will obtain your `client_id` and `client_secret` (aka client credentials), which will be used to identify your application when calling the Kopo Kopo API.
 
-Create an Object of the K2Subscription class, passing an event-type parameter, used to differentiate which Webhook Subscription you are identifying, together with the webhook secret.
+For more Information, visit our [API docs]().
 
- - For Buygoods Transaction Received
+In order to request for application authorization and receive an access token, we need to execute the client credentials flow, this is done so by having your application server make a HTTPS request to the Kopo Kopo authorization server, through the K2AccessToken class.
 
+```ruby
+k2_token = K2AccessToken.new('your_client_id', 'your_client_secret').token_request
+```
 
-    buygoods_received = K2ConnectRuby::K2Subscribe.new('buygoods_transaction_received', webhook_secret)
+### Webhook Subscription
 
+##### Remember to store highly sensitive information like the client credentials, in a config file, while indicating in your .gitignore file.
 
-- For Buygoods Transaction Reversed
-
-
-    buygoods_reversed = K2ConnectRuby::K2Subscribe.new('buygoods_transaction_reversed', webhook_secret)
-
-
- - For Customer Created
-
-
-    customer_create = K2ConnectRuby::K2Subscribe.new('customer_created', webhook_secret)
-
-
- - For Settlement Transfer Completed
-
-
-    settlement_transfer = K2ConnectRuby::K2Subscribe.new('settlement_transfer_completed', webhook_secret)
-
-
-Next is to request for the token, done through the recently created K2Subscribe Object. From here you will pass in your client_id and client_secret details.
-
-    buygoods_received.token_request('CLIENT_ID', 'CLIENT_SECRET')
+Next, we formally create the webhook subscription by calling on the webhook_subscribe method.
+Ensure the following arguments are passed: 
+ - client secret `REQUIRED`
+ - event type `REQUIRED`
+ - url `REQUIRED`
+ - scope `REQUIRED`
+ - scope reference `REQUIRED`
  
- The Access Token that is returned is stored within the Object, accessible under the local variable 'access_token' of the Object.
- 
-    your_access_token = buygoods_received.access_token
- 
- ##### Remember to store highly sensitive information or core details like the client_id, client_secret, access_token and such, in a config file, while ensuring to indicate them in your .gitignore file, to avoid publicly uploading them to Github.
-
-Next, we formally create the webhook subscription by calling on the following method:
-
-    buygoods_reversed.webhook_subscribe
- 
- The event-type parameter specified during creating the K2Subscription Object will be used to specify what event type we intend to use.
+Code example;
+    
+```ruby
+require 'k2-connect-ruby'
+k2_token = K2AccessToken.new('your_client_id', 'your_client_secret').token_request
+k2subscriber = K2Subscribe.new(k2_token)
+k2subscriber.webhook_subscribe(your_input, webhook_secret)
+```
  
  
  ### STK-Push
  
+ #### Receive Payments
+ 
  To receive payments from M-PESA users via STK Push we first create a K2Stk Object, passing the access_token that was created prior.
  
-    k2_stk = K2ConnectRuby::K2Stk.new(your_access_token)
+    k2_stk = K2Stk.new(your_access_token)
   
- - Afterwards we send a POST request for receiving Payments by calling the following method and passing the params value received from the POST Form Request:
-  
+ Afterwards we send a POST request for receiving Payments by calling the following method and passing the params value received from the POST Form Request: 
 
-    k2_stk.receive_mpesa_payments(params)
+    k2_stk.receive_mpesa_payments(your_input)
     
-    
-One can also pass the following Hash Object instead of the Rails Form params:
-
-    {first_name: "your_first_name", last_name: "your_last_name", phone: "your_phone_number", email: "your_email", currency: "your_currency", value: "your_value"}
+Ensure the following arguments are passed:
+ - payment_channel `REQUIRED`
+ - till_identifier `REQUIRED` 
+ - first_name `REQUIRED`
+ - last_name `REQUIRED`
+ - phone_number `REQUIRED`
+ - email `REQUIRED`
+ - currency `REQUIRED`
+ - value `REQUIRED`
+ - callback_url `REQUIRED`
 
 A Successful Response will be received containing the URL of the Payment Location.
 
- - To Query the STK Payment Request Status pass the reference number or id to the following method as shown:
+#### Query Request Status
 
+ To Query the STK Payment Request Status pass the Payment location URL response that is returned:
 
-    k2_stk.query_status(params)
-    
-    
-One can also pass the following Hash Object instead of params:
+    k2_stk.query_resource(k2_stk.location_url)
 
-    {id: "your_id"}
+ To Query the most recent STK Request Status is as follows:
 
+    k2_stk.query_status
 
 As a result a JSON payload will be returned, accessible with the k2_response_body variable.
+ 
+Code example;
+    
+```ruby
+k2_stk = K2Stk.new(your_access_token)
+k2_stk.receive_mpesa_payments(your_input)
+k2_stk.query_resource(k2_stk.location_url)
+```
 
 ### PAY
 
 First Create the K2Pay Object passing the access token
 
 
-    k2_pay = K2ConnectRuby::K2Pay.new(access_token)
+    k2_pay = K2Pay.new(access_token)
 
+#### Add PAY Recipients
 
- - To Add PAY Recipients, a request is sent by calling:
+Add a PAY Recipient, with the following arguments:
+
+**Mobile** PAY Recipient
+- type: 'mobile_wallet' `REQUIRED`
+- first_name `REQUIRED`
+- last_name `REQUIRED`
+- phone_number `REQUIRED`
+- email `REQUIRED`
+- network `REQUIRED`
+
+**Bank** PAY Recipient
+- type: 'bank_account' `REQUIRED`
+- account_name `REQUIRED`
+- account_number `REQUIRED`
+- bank_branch_ref `REQUIRED`
+- settlement_method: 'EFT' or 'RTS' `REQUIRED`
+
   
-
-    k2_pay.pay_recipients(params)
+    k2_pay.add_recipients(your_input)
     
+The type value can either be `mobile_wallet` or `bank_account`
 
-One can also pass the following Hash Object instead of params:
+A Successful Response is returned with the URL of the recipient resource.
 
-    {first_name: "your_first_name", last_name: "your_last_name", phone: "your_phone_number", email: "your_email", currency: "your_currency", value: "your_value", network: "network", pay_type: "mobile_wallet", account_name: "account_name", bank_id: "bank_id", bank_branch_id: "bank_branch_id", account_number: "account_number"}
+#### Create Outgoing Payment
+
+Creating an Outgoing Payment to a third party.
+
+    k2_pay.create_payment(your_input)
     
-The pay_type value can either be `mobile_wallet` or `bank_account`
+The following arguments should be passed within a hash:
 
-The Params are passed as the argument containing all the form data sent. A Successful Response is returned with the URL of the recipient resource in the HTTP Location Header.
+- destination_reference `REQUIRED`
+- destination_type `REQUIRED`
+- currency `REQUIRED`
+- value `REQUIRED`
+- callback_url `REQUIRED`
 
- - To Create Outgoing PAYment to a third party.
+A Successful Response is returned with the URL of the Payment resource in the HTTP Location Header.
 
+#### Query PAY Request Status
 
-    k2_pay.create_payment(params)
-    
-    
-Or can also pass the following Hash Object instead of params:
+To Query the status of the Add Recipient or Outgoing Payment request:
 
-    {currency: "currency", value: "value", }
+    // add recipient
+    k2_pay.query_resource(k2_pay.recipients_location_url)
+    // create outgoing payment 
+    k2_pay.query_resource(k2_pay.payments_location_url)
 
-The Params are passed as the argument containing all the form data sent. A Successful Response is returned with the URL of the Payment resource in the HTTP Location Header.
+To Query the most recent status of either the Add Recipient or Outgoing Payment request:
 
- - To Query the PAYment Request Status pass the reference number or payment_id to the following method as shown:
-
-
-    k2_pay.query_status(params)
-    
-    
-Or can also pass the following Hash Object instead of params:
-
-    {id: "your_id"}
+    // add recipient
+    k2_pay.query_status('recipients')
+    // create outgoing payment 
+    k2_pay.query_status('payments')
 
 As a result a JSON payload will be returned, accessible with the k2_response_body variable.
+ 
+Code example;
+    
+```ruby
+k2_pay = K2Pay.new(your_access_token)
+k2_pay.add_recipient(your_recipient_input)
+k2_pay.query_resource(k2_pay.recipients_location_url)
+k2_pay.create_payment(your_payment_input)
+k2_pay.query_resource(k2_pay.payments_location_url)
+```
+
+### Settlement Accounts
+
+Add pre-approved settlement accounts, to which one can transfer funds to. Can be either a bank or mobile wallet account,
+ with the following details:
+
+**Mobile** Settlement Account
+- type: 'merchant_wallet' `REQUIRED`
+- first_name `REQUIRED`
+- last_name `REQUIRED`
+- phone_number `REQUIRED`
+- network: 'Safaricom' `REQUIRED`
+
+**Bank** Settlement Account
+- type: 'merchant_bank_account' `REQUIRED`
+- account_name `REQUIRED`
+- account_number `REQUIRED`
+- bank_branch_ref `REQUIRED`
+- settlement_method `REQUIRED`
+
+```ruby
+k2_settlement = K2Settlement.new(your_access_token)
+# Add a mobile merchant wallet
+k2_settlement.add_settlement_account(merchant_wallet)
+# Add a merchant bank account
+k2_settlement.add_settlement_account(merchant_bank_account)
+```
 
 ### Transfers
 
-This will Enable one to transfer funds to your pre-approved settlement accounts.
+This will Enable one to transfer funds to your settlement accounts.
 
 First Create the K2Transfer Object
 
-    k2_transfers = K2ConnectRuby::K2Transfer.new(access_token)
+    k2_transfers = K2Transfer.new(access_token)
 
- - Create a Verified Settlement Account through the following method:
-  
-  
-    k2_transfers.settlement_account(params)
-    
-    
-One can also pass the following Hash Object instead of params:
+#### Create Transfer Request
 
-    {account_name: "account_name", bank_ref: "bank_ref", bank_branch_ref: "bank_branch_ref", account_number: "account_number"}
-
-The Params are passed as the argument having all the form data. A Successful Response is returned with the URL of the merchant bank account in the HTTP Location Header.
-
- - To Create Transfer Request, one can either have it `blind`, meaning that it has no specified destination with the default/specified settlement account being selected, 
+One can either have it `blind`, meaning that it has no specified destination with the default/specified settlement account being selected, 
 or one can have a `targeted` transfer with a specified settlement account in mind. Either can be done through:
 
- - For a **Blind** Transfer:
-
+##### Blind Transfer
 
      k2_transfers.transfer_funds(nil, params)
 
-
 With `nil` representing that there are no specified destinations.
 
-- For a **Target** Transfer:
+##### Target Transfer
 
+     k2_transfers.transfer_funds(params)
+      
+The Following Details should be passed for either **Blind** or **Targeted** Transfer:
 
-     k2_transfers.transfer_funds(params[:target], params)
-     
-     
-Or can also pass the following Hash Object instead of params for either **Blind** or **Targeted** Transfer:
+**Blind** Transfer
+- currency `REQUIRED`
+- value `REQUIRED`
+- callback_url `REQUIRED`
 
-    {currency: "currency", value: "value", }
+**Targeted** Transfer
+- destination_reference `REQUIRED`
+- destination_type: `merchant_wallet` or `merchant_bank_account` `REQUIRED`
+- currency `REQUIRED`
+- value `REQUIRED`
+- callback_url `REQUIRED`
 
 The Params are passed as the argument containing all the form data sent. A Successful Response is returned with the URL of the Transfer in the HTTP Location Header.
 
- - To Query the status of the prior initiated Transfer Request pass the reference number or payment_id to the following method as shown:
+Sample code example:
 
+```ruby
+# TODO Confirm for Blind Transfer
+k2_transfer = K2Transfer.new(your_access_token)
+# Blind or Targeted Transfer
+k2_transfer.transfer_funds(your_input)
+```
 
-     k2_transfers.query_status(params)
-     
-     
-Or can also pass the following Hash Object instead of params:
+#### Query Prior Transfer
 
-    {id: "your_id"}
+To Query the status of the prior initiated Transfer Request pass the location_url response as shown:
+
+     k2_transfers.query_resource(k2_transfers.location_url)  
+
+To Query the most recent initiated Transfer Request:
+
+     k2_transfers.query_status  
 
 A HTTP Response will be returned in a JSON Payload, accessible with the k2_response_body variable.
 
 ### Parsing the JSON Payload
 
 The K2Client class will be use to parse the Payload received from Kopo Kopo, and to further consume the webhooks and split the responses into components, the K2Authenticator and
-K2SplitRequest Classes will be used.
+K2ProcessResult Classes will be used.
 
- - First Create an Object of the K2Client class to Parse the response, passing the client_secret_key received from Kopo Kopo:
+###### K2Client Object
 
+First Create an Object of the K2Client class to Parse the response, passing the client_secret_key received from Kopo Kopo:
 
-     k2_parse = K2ConnectRuby::K2Client.new('K2_SECRET_KEY'])
+     k2_parse = K2Client.new(client_secret)
 
-
-##### Remember to have kept it safe in a config file, it is highly recommended so as to keep it safe. Also add that specific config file destination in your .gitignore.
-
- - Next, parse the request:
-
+###### Parse the request
 
      k2_parse.parse_request(request)
 
+###### Create an Object 
 
- - Authenticating the Response to ensure it came from Kopo Kopo:
-
-
-     K2Authenticator.authenticate(k2_parse.hash_body, k2_parse.api_secret_key, k2_parse.k2_signature)
-
-
- - Create a Hash Object to receive the hash components resulting from processing the parsed request results:
-
+Create an Object to receive the components resulting from processing the parsed request results which will be returned by the following method:
 
      k2_components = K2ProcessResult.process(k2_parse.hash_body)
      
-     
- Below is a list of key symbols accessible for each of the Results retrieved after processing it into a Hash Object.
+Code example:
+
+```ruby
+k2_parse = K2Client.new(client_secret)
+k2_parse.parse_request(request)
+k2_components = K2ProcessResult.process(k2_parse.hash_body)
+```
+         
+ Below is a list of key symbols accessible for each of the Results retrieved after processing it into an Object.
  
 1. Buy Goods Transaction Received:
-    - id
-    - resource_id
-    - topic
-    - created_at
-    - event
-    - type
-    - resource
-    - reference
-    - origination_time
-    - msisdn
-    - amount
-    - currency
-    - till_number
-    - system
-    - resource_status
-    - first_name
-    - middle_name
-    - last_name
-    - links
-    - self
-    - link_resource
+    - `id`
+    - `resource_id`
+    - `topic`
+    - `created_at`
+    - `event_type`
+    - `reference`
+    - `origination_time`
+    - `sender_msisdn`
+    - `amount`
+    - `currency`
+    - `till_number`
+    - `system`
+    - `resource_status`
+    - `sender_first_name`
+    - `sender_last_name`
+    - `links_self`
+    - `links_resource`
     
-2. Buy Goods Transaction Reversed. Has the same key symbols as Buy Goods Transaction Received, plus:
-    - reversal_time 
+2. Buy Goods Transaction Reversed. Has the same key symbols as Buy Goods Transaction Received. 
     
 3. Settlement Transfer:
-    - id
-    - resource_id
-    - topic
-    - created_at
-    - event
-    - type
-    - resource
-    - reference
-    - origination_time
-    - resource_status
-    - transfer_time
-    - transfer_type
-    - amount
-    - currency
-    - status
-    - destination
-    - destination_type
-    - msisdn
-    - destination_mm_system
-    - links
-    - self
-    - link_resource
+    - `id`
+    - `resource_id`
+    - `topic`
+    - `created_at`
+    - `type`
+    - `reference`
+    - `origination_time`
+    - `transfer_time`
+    - `transfer_type`
+    - `amount`
+    - `currency`
+    - `resource_status`
+    - `destination`
+    - `destination_type`
+    - `msisdn`
+    - `destination_mm_system`
+    - `links_self`
+    - `links_resource`
 
 4. Customer Created:
-    - id
-    - resource_id
-    - topic
-    - created_at
-    - event
-    - type
-    - resource
-    - first_name
-    - middle_name
-    - last_name
-    - msisdn
-    - links
-    - self
-    - link_resource
+    - `id`
+    - `resource_id`
+    - `topic`
+    - `created_at`
+    - `type`
+    - `first_name`
+    - `middle_name`
+    - `last_name`
+    - `msisdn`
+    - `self`
+    - `resource`
     
-5. Process STK Push Payment Request Result
-    - id
-    - resource_id
-    - topic
-    - created_at
-    - status
-    - event
-    - type
-    - resource
-    - reference
-    - origination_time
-    - msisdn
-    - amount
-    - currency
-    - till_number
-    - system
-    - resource_status
-    - first_name
-    - middle_name
-    - last_name
-    - errors
-    - metadata
-    - customer_id
-    - metadata_reference
-    - notes
-    - self
-    - payment_request
-    - link_resource
+5. B2b Transaction Transaction (External Till to Till):
+    - `id`
+    - `resource_id`
+    - `topic`
+    - `created_at`
+    - `type`
+    - `reference`
+    - `origination_time`
+    - `amount`
+    - `currency`
+    - `till_number`
+    - `system`
+    - `status`
+    - `self`
+    - `resource`
+    - `sending_till`
 
-6. Process PAY Result
-    - id
-    - reference
-    - origination_time
-    - destination
-    - amount
-    - currency
-    - value
-    - metadata
-    - customer_id
-    - notes
-    - links
-    - self
+6. Merchant to Merchant Transaction:
+    - `id`
+    - `resource_id`
+    - `topic`
+    - `created_at`
+    - `type`
+    - `reference`
+    - `origination_time`
+    - `amount`
+    - `currency`
+    - `resource_status`
+    - `self`
+    - `resource`
+    - `sending_merchant`
+    
+7. Process STK Push Payment Request Result
+    - `id`
+    - `type`
+    - `initiation_time`
+    - `status`
+    - `event_type`
+    - `transaction_reference`
+    - `origination_time`
+    - `msisdn`
+    - `amount`
+    - `currency`
+    - `till_number`
+    - `system`
+    - `sender_first_name`
+    - `sender_last_name`
+    - `errors`
+    - `metadata`
+    - `links_self`
+    - `callback_url`
 
+8. Process PAY Result
+    - `id`
+    - `type`
+    - `initiation_time`
+    - `status`
+    - `transaction_reference`
+    - `origination_time`
+    - `destination`
+    - `currency`
+    - `value`: refers to the amount
+    - `metadata`
+    - `links_self`
+    - `callback_url`
+    
+If you want to convert the Object into a Hash or Array, the following methods can be used.
+- Hash:
+   
+   
+        k2_hash_components = K2ProcessResult.return_obj_hash(k2_components)
+    
+    
+- Array:
+   
+    
+        k2_array_components = K2ProcessResult.return_obj_array(k2_components)
+
+
+Sample Web Application examples written in Rails and Sinatra frameworks that utilize this library are available in the example_app folder or in the following GitHub hyperlinks:
+
+ - [Rails example application](https://github.com/DavidKar1uk1/kt_tips_rails)
+
+ - [Sinatra example application](https://github.com/DavidKar1uk1/kt_tips)
+ 
+ ##### Take Note; the Library is optimized for Rails frameworks version 5.
 
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+
+## Author
+
+**Name**:   [David Kariuki Mwangi](https://github.com/DavidJonKariz)
 
 ## Contributing
 
@@ -370,7 +485,11 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/kopoko
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+The gem is available as open source under the terms of the [MIT License].
+
+## Changelog
+
+
 
 ## Code of Conduct
 
