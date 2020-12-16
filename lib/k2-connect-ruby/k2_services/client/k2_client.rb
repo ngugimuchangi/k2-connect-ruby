@@ -20,11 +20,5 @@ class K2Client
     hash_header = Yajl::Parser.parse(the_request.env.select { |k, _| k =~ /^HTTP_/ }.to_json)
     # The K2 Signature
     @k2_signature = hash_header['HTTP_X_KOPOKOPO_SIGNATURE']
-    # Authenticating the signature
-    # K2Authenticator.authenticate(@hash_body, @api_secret_key, @k2_signature)
-    # if the_request.scheme.eql?("https")
-    # else
-    #   raise K2InsecureRequest.new
-    # end
   end
 end

@@ -192,32 +192,75 @@ RSpec.describe K2ProcessWebhook do
       expect { K2ProcessWebhook.process('', '', '') }.to raise_error ArgumentError
     end
 
-    it 'Buy Goods Received' do
-      expect { K2ProcessWebhook.process(@bg_received, 'k2_secret_key', '5309d227f9efd2ca209a4fd270af13fa53921436cc89237db157d97b8b00b35c') }.not_to raise_error
+    context 'Buy Goods Received' do
+      it 'processes successfully' do
+        expect { K2ProcessWebhook.process(@bg_received, 'k2_secret_key', '5309d227f9efd2ca209a4fd270af13fa53921436cc89237db157d97b8b00b35c') }.not_to raise_error
+      end
+
+      it 'processes successfully' do
+        expect(K2ProcessWebhook.process(@bg_received, 'k2_secret_key', '5309d227f9efd2ca209a4fd270af13fa53921436cc89237db157d97b8b00b35c')).instance_of?(BuygoodsTransactionReceived)
+      end
     end
 
-    it 'B2b Transaction' do
-      expect { K2ProcessWebhook.process(@b2b, 'k2_secret_key', '5ac7acd456366762956a2d9a648a23d00e38a76efb3f60ad3d5748e88efc6ae2') }.not_to raise_error
+    context 'B2b Transaction' do
+      it 'processes successfully' do
+        expect { K2ProcessWebhook.process(@b2b, 'k2_secret_key', '5ac7acd456366762956a2d9a648a23d00e38a76efb3f60ad3d5748e88efc6ae2') }.not_to raise_error
+      end
+
+      it 'processes successfully' do
+        expect { K2ProcessWebhook.process(@bg_received, 'k2_secret_key', '5309d227f9efd2ca209a4fd270af13fa53921436cc89237db157d97b8b00b35c') }.not_to raise_error
+        expect(K2ProcessWebhook.process(@b2b, 'k2_secret_key', '5ac7acd456366762956a2d9a648a23d00e38a76efb3f60ad3d5748e88efc6ae2')).instance_of?(B2b)
+      end
     end
 
-    it 'Merchant to Merchant Transaction' do
-      expect { K2ProcessWebhook.process(@m2m, 'k2_secret_key', '47457808bee8ee9639a87cb0ac394dfb34e4f96bf205df6e7757eadcaf0e1f8b') }.not_to raise_error
+    context 'Merchant to Merchant Transaction' do
+      it 'processes successfully' do
+        expect { K2ProcessWebhook.process(@m2m, 'k2_secret_key', '47457808bee8ee9639a87cb0ac394dfb34e4f96bf205df6e7757eadcaf0e1f8b') }.not_to raise_error
+      end
+
+      it 'processes successfully' do
+        expect(K2ProcessWebhook.process(@m2m, 'k2_secret_key', '47457808bee8ee9639a87cb0ac394dfb34e4f96bf205df6e7757eadcaf0e1f8b')).instance_of?(MerchantToMerchant)
+      end
     end
 
-    it 'Buy Goods Reversed' do
-      expect { K2ProcessWebhook.process(@bg_reversal, 'k2_secret_key', '2968acb00a91f807751c75e264396b194b6b1c90f0751fd1d24195eafb5e904c') }.not_to raise_error
+    context 'Buy Goods Reversed' do
+      it 'processes successfully' do
+        expect { K2ProcessWebhook.process(@bg_reversal, 'k2_secret_key', '2968acb00a91f807751c75e264396b194b6b1c90f0751fd1d24195eafb5e904c') }.not_to raise_error
+      end
+
+      it 'processes successfully' do
+        expect(K2ProcessWebhook.process(@bg_reversal, 'k2_secret_key', '2968acb00a91f807751c75e264396b194b6b1c90f0751fd1d24195eafb5e904c')).instance_of?(BuygoodsTransactionReversed)
+      end
     end
 
-    it 'Settlement Transfer Completed merchant_bank_account' do
-      expect { K2ProcessWebhook.process(@settlement_bank_account, 'k2_secret_key', '4a6c0c989c072bd16b199378147dea96ecec77c0b5f787bfb6943e30a6ed2df5') }.not_to raise_error
+    context 'Settlement Transfer Completed merchant_bank_account' do
+      it 'processes successfully' do
+        expect { K2ProcessWebhook.process(@settlement_bank_account, 'k2_secret_key', '4a6c0c989c072bd16b199378147dea96ecec77c0b5f787bfb6943e30a6ed2df5') }.not_to raise_error
+      end
+
+      it 'processes successfully' do
+        expect(K2ProcessWebhook.process(@settlement_bank_account, 'k2_secret_key', '4a6c0c989c072bd16b199378147dea96ecec77c0b5f787bfb6943e30a6ed2df5')).instance_of?(SettlementWebhook)
+      end
     end
 
-    it 'Settlement Transfer Completed merchant_wallet' do
-      expect { K2ProcessWebhook.process(@settlement_merchant_wallet, 'k2_secret_key', 'e7e9b3d8cfda6027832616c4181ef1ac55a1a6bf1d3744d5618c67e4ee234e4b') }.not_to raise_error
+    context 'Settlement Transfer Completed merchant_wallet' do
+      it 'processes successfully' do
+        expect { K2ProcessWebhook.process(@settlement_merchant_wallet, 'k2_secret_key', 'e7e9b3d8cfda6027832616c4181ef1ac55a1a6bf1d3744d5618c67e4ee234e4b') }.not_to raise_error
+      end
+
+      it 'processes successfully' do
+        expect(K2ProcessWebhook.process(@settlement_merchant_wallet, 'k2_secret_key', 'e7e9b3d8cfda6027832616c4181ef1ac55a1a6bf1d3744d5618c67e4ee234e4b')).instance_of?(SettlementWebhook)
+      end
     end
 
-    it 'Customer Created' do
-      expect { K2ProcessWebhook.process(@customer, 'k2_secret_key', '923d34cfd06a3d1af68dce4ef46fe66d44bb6e27b097e2e73db950dd2819f78e') }.not_to raise_error
+    context 'Customer Created' do
+      it 'processes successfully' do
+        expect { K2ProcessWebhook.process(@customer, 'k2_secret_key', '923d34cfd06a3d1af68dce4ef46fe66d44bb6e27b097e2e73db950dd2819f78e') }.not_to raise_error
+      end
+
+      it 'processes successfully' do
+        expect(K2ProcessWebhook.process(@customer, 'k2_secret_key', '923d34cfd06a3d1af68dce4ef46fe66d44bb6e27b097e2e73db950dd2819f78e')).instance_of?(CustomerCreated)
+      end
     end
   end
 

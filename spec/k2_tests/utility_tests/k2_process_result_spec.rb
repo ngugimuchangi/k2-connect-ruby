@@ -103,22 +103,37 @@ RSpec.describe K2ProcessResult do
 
   describe '#process' do
     it 'should raise an error if argument is empty' do
-      expect { K2ProcessResult.process('') }.to raise_error ArgumentError, 'Empty/Nil Request Body Argument!'
+      expect { K2ProcessResult.process('', '', '') }.to raise_error ArgumentError, 'Empty/Nil Request Body Argument!'
     end
 
-    it 'Process Stk Result' do
-      expect { K2ProcessResult.process(@stk) }.not_to raise_error
-      expect(K2ProcessResult.process(@stk)).not_to be nil
+    context 'Process Stk Result' do
+      it 'processes successfully' do
+        expect { K2ProcessResult.process(@stk, 'api_secret_key', '74641480421af7e1caa4480934dc05268c40bfa4ad2a917253f67d2e7744d1f6') }.not_to raise_error
+      end
+
+      it 'returns an STK Object' do
+        expect(K2ProcessResult.process(@stk, 'api_secret_key', '74641480421af7e1caa4480934dc05268c40bfa4ad2a917253f67d2e7744d1f6')).instance_of?(K2Stk)
+      end
     end
 
-    it 'Process PAY Result' do
-      expect { K2ProcessResult.process(@pay) }.not_to raise_error
-      expect(K2ProcessResult.process(@pay)).not_to be nil
+    context 'Process Pay Result' do
+      it 'processes successfully' do
+        expect { K2ProcessResult.process(@pay, 'api_secret_key', 'b0940b2cb64f410449a99528ec25f2510845cea3a56db55beddd650373a276d9') }.not_to raise_error
+      end
+
+      it 'returns an PAY Object' do
+        expect(K2ProcessResult.process(@pay, 'api_secret_key', 'b0940b2cb64f410449a99528ec25f2510845cea3a56db55beddd650373a276d9')).instance_of?(K2Pay)
+      end
     end
 
-    it 'Process Transfer Result' do
-      expect { K2ProcessResult.process(@transfer) }.not_to raise_error
-      expect(K2ProcessResult.process(@transfer)).not_to be nil
+    context 'Process Transfer Result' do
+      it 'processes successfully' do
+        expect { K2ProcessResult.process(@transfer, 'api_secret_key', '39bfcdeb45ca3f13d0d8350a22e08fbab172139d938be8ef3e0c7fc0925a2006') }.not_to raise_error
+      end
+
+      it 'returns an Transfer Object' do
+        expect(K2ProcessResult.process(@transfer, 'api_secret_key', '39bfcdeb45ca3f13d0d8350a22e08fbab172139d938be8ef3e0c7fc0925a2006')).instance_of?(K2Transfer)
+      end
     end
   end
 
