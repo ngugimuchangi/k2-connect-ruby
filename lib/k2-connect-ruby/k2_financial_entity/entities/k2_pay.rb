@@ -1,41 +1,58 @@
 # For PAY/ Send Money to others
+# TODO: Add K2Config configuration for the callback URL
+# TODO: metadata vs meta_data
 class K2Pay < K2Entity
+  attr_reader :recipients_location_url, :payments_location_url
 
   # Adding PAY Recipients with either mobile_wallets or bank_accounts as destination of your payments.
-  def pay_recipients(params)
-    # Validation
-    params = validate_input(params, @exception_array += %w[first_name last_name phone email network pay_type currency value account_name bank_id bank_branch_id account_number])
-    # In the case of mobile pay
-    if params['pay_type'].eql?('mobile_wallet')
+  def add_recipient(params)
+    params = params.with_indifferent_access
+    @exception_array += %w[type]
+    # In the case of mobile pay recipient
+    if params[:type].eql?('mobile_wallet')
+      params = validate_input(params, @exception_array += %w[first_name last_name phone_number email network])
       k2_request_pay_recipient = {
-        firstName: params['first_name'],
-        lastName: params['last_name'],
-        phone: validate_phone(params['phone']),
-        email: validate_email(params['email']),
-        network: params['network']
+        first_name: params[:first_name],
+        last_name: params[:last_name],
+        phone_number: validate_phone(params[:phone_number]),
+        email: validate_email(params[:email]),
+        network: params[:network]
       }
-    elsif params['pay_type'].eql?('bank_account')
-      # In the case of bank pay
+      # In the case of bank pay recipient
+    elsif params[:type].eql?('bank_account')
+      params = validate_input(params, @exception_array += %w[account_name account_number bank_branch_ref settlement_method])
       k2_request_pay_recipient = {
-        name: "#{params['first_name']} #{params['last_name']}",
-        account_name: params['account_name'],
-        bank_id: params['bank_id'],
-        bank_branch_id: params['bank_branch_id'],
-        account_number: params['account_number'],
-        email: validate_email(params['email']),
-        phone: validate_phone(params['phone'])
+          account_name: params[:account_name],
+          account_number: params[:account_number],
+          bank_branch_ref: params[:bank_branch_ref],
+          settlement_method: params[:settlement_method]
+      }
+      # In the case of till pay recipient
+    elsif params[:type].eql?('till')
+      params = validate_input(params, @exception_array += %w[till_name till_number])
+      k2_request_pay_recipient = {
+        till_name: params[:till_name],
+        till_number: params[:till_number]
+      }
+      # In the case of bank pay recipient
+    elsif params[:type].eql?('kopo_kopo_merchant')
+      params = validate_input(params, @exception_array += %w[alias_name till_number])
+      k2_request_pay_recipient = {
+        alias_name: params[:alias_name],
+        till_number: params[:till_number]
       }
     else
       raise ArgumentError, 'Undefined Payment Method.'
     end
     recipients_body = {
-      type: params['pay_type'],
+      type: params[:type],
+      #type: params['pay_type'],
       pay_recipient: k2_request_pay_recipient
     }
-    pay_recipient_hash = K2Pay.make_hash('pay_recipients', 'POST', @access_token, 'PAY', recipients_body)
+    pay_recipient_hash = make_hash(K2Config.path_url('pay_recipient'), 'post', @access_token, 'PAY', recipients_body)
     @threads << Thread.new do
       sleep 0.25
-      @location_url = K2Connect.to_connect(pay_recipient_hash)
+      @recipients_location_url = K2Connect.make_request(pay_recipient_hash)
     end
     @threads.each(&:join)
   end
@@ -43,32 +60,42 @@ class K2Pay < K2Entity
   # Create an outgoing Payment to a third party.
   def create_payment(params)
     # Validation
-    params = validate_input(params, @exception_array += %w[currency value])
+    params = validate_input(params, @exception_array += %w[destination_reference destination_type currency value callback_url metadata])
     # The Request Body Parameters
     k2_request_pay_amount = {
-      currency: params['currency'],
-      value: params['value']
+      currency: params[:currency],
+      value: params[:value]
     }
-    k2_request_pay_metadata = {
-      customerId: 8_675_309,
-      notes: 'Salary payment for May 2018'
+    k2_request_pay_metadata = params[:metadata]
+    k2_request_links = {
+        callback_url: params[:callback_url]
     }
     create_payment_body = {
-      destination: 'c7f300c0-f1ef-4151-9bbe-005005aa3747',
+      destination_reference: params[:destination_reference],
+      destination_type: params[:destination_type],
       amount: k2_request_pay_amount,
-      metadata: k2_request_pay_metadata,
-      callback_url: 'https://your-call-bak.yourapplication.com/payment_result'
+      meta_data: k2_request_pay_metadata,
+      _links: k2_request_links
     }
-    create_payment_hash = K2Pay.make_hash('payments', 'POST', @access_token, 'PAY', create_payment_body)
+    create_payment_hash = make_hash(K2Config.path_url('payments'), 'post', @access_token, 'PAY', create_payment_body)
     @threads << Thread.new do
       sleep 0.25
-      @location_url = K2Connect.to_connect(create_payment_hash)
+      @payments_location_url = K2Connect.make_request(create_payment_hash)
     end
     @threads.each(&:join)
   end
 
   # Query/Check the status of a previously initiated PAY Payment request
-  def query_status(path_url, class_type = 'PAY')
-    super
+  def query_status(method_type)
+    if method_type.eql?('recipients')
+      super('PAY', @recipients_location_url)
+    elsif method_type.eql?('payments')
+      super('PAY', @payments_location_url)
+    end
+  end
+
+  # Query Location URL
+  def query_resource(url)
+    super('PAY', url)
   end
 end
