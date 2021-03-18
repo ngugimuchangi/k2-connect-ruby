@@ -129,16 +129,26 @@ RSpec.describe K2Subscribe do
   describe '#query_webhook' do
     it 'should query recent webhook subscription' do
       SpecConfig.custom_stub_request('get', @k2subscriber.location_url, '', 200)
-      expect { expect(@k2subscriber.query_webhook).not_to eq(nil) }.not_to raise_error
+      expect { @k2subscriber.query_webhook }.not_to raise_error
       expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2subscriber.location_url)))
+    end
+
+    it 'returns a response body' do
+      @k2subscriber.query_webhook
+      expect(@k2subscriber.k2_response_body).not_to eq(nil)
     end
   end
 
   describe '#query_resource_url' do
     it 'should query recent webhook subscription' do
       SpecConfig.custom_stub_request('get', @k2subscriber.location_url, '', 200)
-      expect { expect(@k2subscriber.query_resource_url(@k2subscriber.location_url)).not_to eq(nil) }.not_to raise_error
+      expect { @k2subscriber.query_resource_url(@k2subscriber.location_url) }.not_to raise_error
       expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2subscriber.location_url)))
+    end
+
+    it 'returns a response body' do
+      @k2subscriber.query_resource_url(@k2subscriber.location_url)
+      expect(@k2subscriber.k2_response_body).not_to eq(nil)
     end
   end
 end
