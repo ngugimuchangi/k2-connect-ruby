@@ -14,7 +14,7 @@ RSpec.describe K2ProcessResult do
                             {
                                 transaction_reference:"1580705411",
                                 origination_time:"2020-02-03T07:50:11.732+03:00",
-                                sender_msisdn:"+254716230902",
+                                sender_msisdn:"+254796230902",
                                 amount:"20000.0",
                                 currency:"KES",
                                 till_identifier:"444555",
