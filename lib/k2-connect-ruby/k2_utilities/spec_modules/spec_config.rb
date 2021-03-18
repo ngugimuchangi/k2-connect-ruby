@@ -1,14 +1,11 @@
 module SpecConfig
-  @specs = YAML.load_file(File.join('lib', 'k2-connect-ruby', 'k2_utilities', 'spec_modules', 'test_config.yml')).with_indifferent_access
+  # These are the event types that can have a till scope
+  TILL_SCOPE_EVENT_TYPES = %[buygoods_transaction_received b2b_transaction_received buygoods_transaction_reversed]
 
-  # def yml_file_location(user_file_location)
-  #   file_location = File.join('lib', 'k2-connect-ruby', 'k2_utilities', 'spec_modules', 'test_config.yml') || user_file_location
-  #   @specs = YAML.load_file(file_location).with_indifferent_access
-  # end
+  @specs = YAML.load_file(File.join('lib', 'k2-connect-ruby', 'k2_utilities', 'spec_modules', 'test_config.yml')).with_indifferent_access
 
   def subscription_stub_request(event_type, url)
     request_body = { event_type: event_type, url: url, secret: 'webhook_secret' }
-    # pay_recipients stub method
     SpecConfig.custom_stub_request('post', K2Config.path_url('webhook_subscriptions'), request_body, 200)
   end
 
@@ -16,9 +13,20 @@ module SpecConfig
     {
         event_type: event_type,
         url: @callback_url,
+    }.merge(determine_scope_details(event_type))
+  end
+
+  def determine_scope_details(event_type)
+    if event_type.in?(TILL_SCOPE_EVENT_TYPES)
+      {
         scope: 'till',
-        scope_reference: '112233'
-    }
+        scope_reference: '112233',
+      }
+    else
+      {
+        scope: 'company',
+      }
+    end
   end
 
   class << self

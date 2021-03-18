@@ -33,14 +33,7 @@ class K2Subscribe
   # Query Specific Webhook URL
   def query_resource_url(url)
     query_webhook(url)
-    # query_hash = make_hash(url, 'get', @access_token, 'Subscription', nil)
-    # K2Connect.make_request(query_hash)
   end
-
-  # Method for Validating the input itself
-  # def validate_input(id, secret)
-  #   raise ArgumentError, 'Empty Client Credentials' if id.blank? || secret.blank?
-  # end
 
   def validate_webhook(event_type)
     case event_type
