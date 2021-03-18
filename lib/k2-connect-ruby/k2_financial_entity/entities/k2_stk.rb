@@ -3,16 +3,17 @@ class K2Stk < K2Entity
   # Receive payments from M-PESA users.
   def receive_mpesa_payments(params)
     # Validation
-    params = validate_input(params, @exception_array += %w[payment_channel till_identifier first_name last_name phone email currency value metadata callback_url])
+    params = validate_input(params, @exception_array += %w[payment_channel till_number first_name last_name phone_number email currency value metadata callback_url])
     # The Request Body Parameters
     k2_request_subscriber = {
       first_name: params[:first_name],
+      middle_name: params[:middle_name],
       last_name: params[:last_name],
       phone_number: validate_phone(params[:phone_number]),
       email: validate_email(params[:email])
     }
     k2_request_amount = {
-      currency: params[:currency],
+      currency: 'KES',
       value: params[:value]
     }
     k2_request_metadata = params[:metadata]
@@ -21,7 +22,7 @@ class K2Stk < K2Entity
     }
     receive_body = {
       payment_channel: params[:payment_channel],
-      till_identifier: params[:till_identifier],
+      till_number: validate_till_number_prefix(params[:till_number]),
       subscriber: k2_request_subscriber,
       amount: k2_request_amount,
       meta_data: k2_request_metadata,

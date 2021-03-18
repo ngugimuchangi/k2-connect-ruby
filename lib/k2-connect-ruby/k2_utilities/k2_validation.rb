@@ -1,6 +1,9 @@
 # Module for Validating Input
 # TODO: Correct validation of url so that it only accepts https
 module K2Validation
+  ALL_EVENT_TYPES = %[buygoods_transaction_received b2b_transaction_received buygoods_transaction_reversed customer_created settlement_transfer_completed m2m_transaction_received]
+  TILL_SCOPE_EVENT_TYPES = %[buygoods_transaction_received b2b_transaction_received buygoods_transaction_reversed]
+
   # Validating Method
   def validate_input(the_input, the_array)
     if the_input.blank?
@@ -93,5 +96,29 @@ module K2Validation
   def validate_url(url)
     raise ArgumentError, 'Invalid URL Format.' unless url =~ /\A#{URI.regexp(%w[https http])}\z/
     url
+  end
+
+  def validate_till_number_prefix(till_number)
+    raise ArgumentError, "Invalid Till Number format." unless till_number[0, 1].eql?('K')
+    till_number
+  end
+
+  def validate_webhook(params)
+    raise ArgumentError, 'Subscription Service does not Exist!' unless params[:event_type].in?(ALL_EVENT_TYPES)
+    determine_scope_details(params)
+  end
+
+  def validate_webhook_input(params)
+    if params[:event_type].in?(TILL_SCOPE_EVENT_TYPES)
+      validate_input(params, %w[event_type scope scope_reference url])
+    else
+      validate_input(params.except(:scope_reference), %w[event_type scope url])
+    end
+  end
+
+  def determine_scope_details(params)
+    if params[:scope].eql?('till')
+      raise ArgumentError, "Invalid scope till for the event type" unless params[:event_type].in?(TILL_SCOPE_EVENT_TYPES)
+    end
   end
 end
