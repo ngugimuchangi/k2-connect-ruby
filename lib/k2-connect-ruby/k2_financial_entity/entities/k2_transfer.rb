@@ -16,26 +16,6 @@ class K2Transfer < K2Entity
             value: params[:value]
         }
     }
-    # k2_request_transfer = if destination.blank?
-    #                   # Blind Transfer
-    #                   {
-    #                     amount: {
-    #                       currency: params[:currency],
-    #                       value: params[:value]
-    #                     },
-    #                     destination_reference: nil,
-    #                     destination_type: nil
-    #                   }
-    #                 else
-    #                   # Targeted Transfer
-    #                   {
-    #                     amount: {
-    #                       currency: params[:currency],
-    #                       value: params[:value]
-    #                     },
-    #                     destination: destination
-    #                   }
-    #                       end
     metadata = params[:metadata]
     transfer_body = k2_request_transfer.merge(
         {
