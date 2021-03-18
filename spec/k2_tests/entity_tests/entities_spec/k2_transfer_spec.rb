@@ -15,31 +15,59 @@ RSpec.describe K2Transfer do
 
   describe '#transfer_funds' do
     context "blind transfer" do
-      it 'should create a blind transfer request for a merchant_bank_account' do
-        SpecConfig.custom_stub_request('post', K2Config.path_url('transfers'), @transfer_params, 200)
-        expect { @k2transfer.transfer_funds(@blind_bank_transfer_params) }.not_to raise_error
-        expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('transfers')))
+      context 'merchant bank account' do
+        it 'should create a blind transfer request for a merchant_bank_account' do
+          SpecConfig.custom_stub_request('post', K2Config.path_url('transfers'), @transfer_params, 200)
+          expect { @k2transfer.transfer_funds(@blind_bank_transfer_params) }.not_to raise_error
+          expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('transfers')))
+        end
+
+        it 'returns a location_url' do
+          @k2transfer.transfer_funds(@blind_bank_transfer_params)
+          expect(@k2transfer.location_url).not_to eq(nil)
+        end
       end
 
-      it 'should create a blind transfer request for a merchant_wallet' do
-        SpecConfig.custom_stub_request('post', K2Config.path_url('transfers'), @transfer_params, 200)
-        expect { @k2transfer.transfer_funds(@blind_mobile_transfer_params) }.not_to raise_error
-        expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('transfers')))
+      context 'merchant wallet' do
+        it 'should create a blind transfer request for a merchant_wallet' do
+          SpecConfig.custom_stub_request('post', K2Config.path_url('transfers'), @transfer_params, 200)
+          expect { @k2transfer.transfer_funds(@blind_mobile_transfer_params) }.not_to raise_error
+          expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('transfers')))
+        end
+
+        it 'returns a location_url' do
+          @k2transfer.transfer_funds(@blind_mobile_transfer_params)
+          expect(@k2transfer.location_url).not_to eq(nil)
+        end
       end
     end
 
 
     context "targeted transfer" do
-      it 'should create a transfer request to a merchant_bank_account' do
-        SpecConfig.custom_stub_request('post', K2Config.path_url('transfers'), @bank_transfer_params, 200)
-        expect { @k2transfer.transfer_funds(@bank_transfer_params) }.not_to raise_error
-        expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('transfers')))
+      context 'merchant bank account' do
+        it 'should create a transfer request to a merchant_bank_account' do
+          SpecConfig.custom_stub_request('post', K2Config.path_url('transfers'), @bank_transfer_params, 200)
+          expect { @k2transfer.transfer_funds(@bank_transfer_params) }.not_to raise_error
+          expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('transfers')))
+        end
+
+        it 'returns a location_url' do
+          @k2transfer.transfer_funds(@bank_transfer_params)
+          expect(@k2transfer.location_url).not_to eq(nil)
+        end
       end
 
-      it 'should create a transfer request to a merchant_wallet' do
-        SpecConfig.custom_stub_request('post', K2Config.path_url('transfers'), @mobile_transfer_params, 200)
-        expect { @k2transfer.transfer_funds(@mobile_transfer_params) }.not_to raise_error
-        expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('transfers')))
+      context 'merchant wallet' do
+        it 'should create a transfer request to a merchant_wallet' do
+          SpecConfig.custom_stub_request('post', K2Config.path_url('transfers'), @mobile_transfer_params, 200)
+          expect { @k2transfer.transfer_funds(@mobile_transfer_params) }.not_to raise_error
+          expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('transfers')))
+        end
+
+        it 'returns a location_url' do
+          @k2transfer.transfer_funds(@mobile_transfer_params)
+          expect(@k2transfer.location_url).not_to eq(nil)
+        end
       end
     end
   end
