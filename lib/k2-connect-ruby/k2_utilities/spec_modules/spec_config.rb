@@ -1,5 +1,4 @@
 module SpecConfig
-  # These are the event types that can have a till scope
   TILL_SCOPE_EVENT_TYPES = %[buygoods_transaction_received b2b_transaction_received buygoods_transaction_reversed]
 
   @specs = YAML.load_file(File.join('lib', 'k2-connect-ruby', 'k2_utilities', 'spec_modules', 'test_config.yml')).with_indifferent_access
@@ -9,24 +8,13 @@ module SpecConfig
     SpecConfig.custom_stub_request('post', K2Config.path_url('webhook_subscriptions'), request_body, 200)
   end
 
-  def webhook_structure(event_type)
+  def webhook_structure(event_type, scope, scope_reference = nil)
     {
         event_type: event_type,
         url: @callback_url,
-    }.merge(determine_scope_details(event_type))
-  end
-
-  def determine_scope_details(event_type)
-    if event_type.in?(TILL_SCOPE_EVENT_TYPES)
-      {
-        scope: 'till',
-        scope_reference: '112233',
-      }
-    else
-      {
-        scope: 'company',
-      }
-    end
+        scope: scope,
+        scope_reference: scope_reference,
+    }
   end
 
   class << self

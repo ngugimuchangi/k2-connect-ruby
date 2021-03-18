@@ -4,6 +4,9 @@ class K2Subscribe
   attr_reader :location_url
   attr_accessor :access_token, :webhook_secret
 
+  ALL_EVENT_TYPES = %[buygoods_transaction_received b2b_transaction_received buygoods_transaction_reversed customer_created settlement_transfer_completed m2m_transaction_received]
+  TILL_SCOPE_EVENT_TYPES = %[buygoods_transaction_received b2b_transaction_received buygoods_transaction_reversed]
+
   # Initialize with the event_type
   def initialize(access_token)
     raise ArgumentError, 'Nil or Empty Access Token Given!' if access_token.blank?
@@ -12,8 +15,8 @@ class K2Subscribe
 
   # Implemented a Case condition that minimises repetition
   def webhook_subscribe(params)
-    params = validate_input(params, %w[event_type scope scope_reference url])
-    validate_webhook(params[:event_type])
+    params = validate_webhook_input(params)
+    validate_webhook(params)
     k2_request_body = {
         event_type: params[:event_type],
         url: params[:url],
@@ -35,28 +38,26 @@ class K2Subscribe
     query_webhook(url)
   end
 
-  def validate_webhook(event_type)
-    case event_type
-      # Buygoods Received
-    when 'buygoods_transaction_received'
-      return
-      # Buygoods Reversed
-    when 'buygoods_transaction_reversed'
-      return
-      # Customer Created.
-    when 'customer_created'
-      return
-      # Settlement Transfer Completed
-    when 'settlement_transfer_completed'
-      return
-      # External Till to Till Transfer Completed
-    when 'b2b_transaction_received'
-      return
-      # Merchant to Merchant Transaction
-    when 'm2m_transaction_received'
-      return
+  private
+
+  def validate_webhook(params)
+    raise ArgumentError, 'Subscription Service does not Exist!' unless params[:event_type].in?(ALL_EVENT_TYPES)
+
+    determine_scope_details(params)
+  end
+
+  def validate_webhook_input(params)
+    if params[:event_type].in?(TILL_SCOPE_EVENT_TYPES)
+      validate_input(params, %w[event_type scope scope_reference url])
     else
-      raise ArgumentError, 'Subscription Service does not Exist!'
+      validate_input(params.except(:scope_reference), %w[event_type scope url])
     end
   end
-end
+
+  def determine_scope_details(params)
+    if params[:scope].eql?('till')
+      raise ArgumentError, "Invalid scope till for the event type" unless params[:event_type].in?(TILL_SCOPE_EVENT_TYPES)
+    end
+  end
+
+  end
