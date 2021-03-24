@@ -57,16 +57,16 @@ RSpec.describe K2Validation do
 
   describe '#validate_phone' do
     it 'should raise an error if length of phone number is wrong' do
-      expect { validate_phone('+2547162309021') }.to raise_error ArgumentError
-      expect { validate_phone('07162309021') }.to raise_error ArgumentError
+      expect { validate_phone('+2547962309021') }.to raise_error ArgumentError
+      expect { validate_phone('07962309021') }.to raise_error ArgumentError
     end
 
     it 'should validate phone number with country code' do
-      expect { validate_phone('+254716230902') }.not_to raise_error
+      expect { validate_phone('+254796230902') }.not_to raise_error
     end
 
     it 'should validate phone number without country code' do
-      expect { validate_phone('0716230902') }.not_to raise_error
+      expect { validate_phone('0796230902') }.not_to raise_error
     end
   end
 
