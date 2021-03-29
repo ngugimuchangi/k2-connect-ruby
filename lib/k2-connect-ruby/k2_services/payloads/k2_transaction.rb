@@ -1,6 +1,5 @@
 class K2Transaction
-  attr_reader :data,
-              :id,
+  attr_reader :id,
               :type,
               :metadata,
               :links_self,
@@ -9,7 +8,7 @@ class K2Transaction
   def initialize(payload)
     @id = payload.dig('data', 'id')
     @type = payload.dig('data', 'type')
-    @metadata = payload.dig('data', 'attributes', 'meta_data')
+    @metadata = payload.dig('data', 'attributes', 'metadata')
     @links_self = payload.dig('data', 'attributes', '_links', 'self')
     @callback_url = payload.dig('data', 'attributes', '_links', 'callback_url')
   end
@@ -22,12 +21,13 @@ class CommonPayment < K2Transaction
   def initialize(payload)
     super
     @status = payload.dig('data', 'attributes', 'status')
-    @initiation_time = payload.dig('data', 'attributes', 'initiation_time') unless @type.eql?('settlement_transfer')
+    @initiation_time = payload.dig('data', 'attributes', 'initiation_time') if @type.eql?('incoming_payment')
   end
 end
 
 class OutgoingTransaction < CommonPayment
-  attr_reader :transfer_batches,
+  attr_reader :created_at,
+              :transfer_batches,
               :disbursements,
               :batch_status,
               :batch_origination_time,
@@ -36,6 +36,7 @@ class OutgoingTransaction < CommonPayment
 
   def initialize(payload)
     super
+    @created_at = payload.dig('data', 'attributes', 'created_at')
     unless @type.eql?('settlement_transfer')
       @currency = payload.dig('data', 'attributes', 'amount', 'currency')
       @value = payload.dig('data', 'attributes', 'amount', 'value')
