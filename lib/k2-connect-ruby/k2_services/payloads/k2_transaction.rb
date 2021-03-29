@@ -15,6 +15,8 @@ class K2Transaction
 end
 
 class CommonPayment < K2Transaction
+  include ActiveModel::Validations
+
   attr_reader :status,
               :initiation_time
 
