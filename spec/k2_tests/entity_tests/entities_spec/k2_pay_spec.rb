@@ -25,8 +25,12 @@ RSpec.describe K2Pay do
         it 'should send an add mobile wallet pay recipient request' do
           SpecConfig.custom_stub_request('post', K2Config.path_url('pay_recipient'), @mobile_pay_request_body, 201)
           @k2pay.add_recipient(@mobile_pay_request_body)
-          expect(@k2pay.recipients_location_url).not_to eq(nil)
           expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('pay_recipient')))
+        end
+
+        it 'returns a location_url' do
+          @k2pay.add_recipient(@mobile_pay_request_body)
+          expect(@k2pay.recipients_location_url).not_to eq(nil)
         end
       end
 
@@ -44,8 +48,12 @@ RSpec.describe K2Pay do
           it 'should send an add bank account pay recipient request' do
             SpecConfig.custom_stub_request('post', K2Config.path_url('pay_recipient'), @bank_pay_request_body_eft, 201)
             @k2pay.add_recipient(@bank_pay_request_body_eft)
-            expect(@k2pay.recipients_location_url).not_to eq(nil)
             expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('pay_recipient')))
+          end
+
+          it 'returns a location_url' do
+            @k2pay.add_recipient(@bank_pay_request_body_eft)
+            expect(@k2pay.recipients_location_url).not_to eq(nil)
           end
         end
 
@@ -53,8 +61,12 @@ RSpec.describe K2Pay do
           it 'should send an add bank account pay recipient request' do
             SpecConfig.custom_stub_request('post', K2Config.path_url('pay_recipient'), @bank_pay_request_body_rts, 201)
             @k2pay.add_recipient(@bank_pay_request_body_rts)
-            expect(@k2pay.recipients_location_url).not_to eq(nil)
             expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('pay_recipient')))
+          end
+
+          it 'returns a location_url' do
+            @k2pay.add_recipient(@bank_pay_request_body_rts)
+            expect(@k2pay.recipients_location_url).not_to eq(nil)
           end
         end
       end
@@ -74,8 +86,12 @@ RSpec.describe K2Pay do
         it 'should send an add till pay recipient request' do
           SpecConfig.custom_stub_request('post', K2Config.path_url('pay_recipient'), @till_pay_request_body, 201)
           @k2pay.add_recipient(@till_pay_request_body)
-          expect(@k2pay.recipients_location_url).not_to eq(nil)
           expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('pay_recipient')))
+        end
+
+        it 'returns a location_url' do
+          @k2pay.add_recipient(@till_pay_request_body)
+          expect(@k2pay.recipients_location_url).not_to eq(nil)
         end
       end
     end
@@ -85,8 +101,12 @@ RSpec.describe K2Pay do
         it 'should send an add kopo_kopo_merchant pay recipient request' do
           SpecConfig.custom_stub_request('post', K2Config.path_url('pay_recipient'), @k2_merchant_pay_request_body, 201)
           @k2pay.add_recipient(@k2_merchant_pay_request_body)
-          expect(@k2pay.recipients_location_url).not_to eq(nil)
           expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('pay_recipient')))
+        end
+
+        it 'returns a location_url' do
+          @k2pay.add_recipient(@k2_merchant_pay_request_body)
+          expect(@k2pay.recipients_location_url).not_to eq(nil)
         end
       end
     end
@@ -101,7 +121,6 @@ RSpec.describe K2Pay do
       end
 
       it 'should create a payment location_url' do
-        SpecConfig.custom_stub_request('post', K2Config.path_url('payments'), @mobile_wallet_payment, 201)
         @k2pay.create_payment(@mobile_wallet_payment)
         expect(@k2pay.payments_location_url).not_to eq(nil)
       end
@@ -111,12 +130,10 @@ RSpec.describe K2Pay do
       it 'should create outgoing payment request' do
         SpecConfig.custom_stub_request('post', K2Config.path_url('payments'), @bank_account_payment, 201)
         @k2pay.create_payment(@bank_account_payment)
-        expect(@k2pay.payments_location_url).not_to eq(nil)
         expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('payments')))
       end
 
       it 'should create a payment location_url' do
-        SpecConfig.custom_stub_request('post', K2Config.path_url('payments'), @bank_account_payment, 201)
         @k2pay.create_payment(@bank_account_payment)
         expect(@k2pay.payments_location_url).not_to eq(nil)
       end
@@ -126,12 +143,10 @@ RSpec.describe K2Pay do
       it 'should create outgoing payment request' do
         SpecConfig.custom_stub_request('post', K2Config.path_url('payments'), @till_payment, 201)
         @k2pay.create_payment(@till_payment)
-        expect(@k2pay.payments_location_url).not_to eq(nil)
         expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('payments')))
       end
 
       it 'should create a payment location_url' do
-        SpecConfig.custom_stub_request('post', K2Config.path_url('payments'), @till_payment, 201)
         @k2pay.create_payment(@till_payment)
         expect(@k2pay.payments_location_url).not_to eq(nil)
       end
@@ -141,12 +156,10 @@ RSpec.describe K2Pay do
       it 'should create outgoing payment request' do
         SpecConfig.custom_stub_request('post', K2Config.path_url('payments'), @k2_merchant_payment, 201)
         @k2pay.create_payment(@k2_merchant_payment)
-        expect(@k2pay.payments_location_url).not_to eq(nil)
         expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('payments')))
       end
 
       it 'should create a payment location_url' do
-        SpecConfig.custom_stub_request('post', K2Config.path_url('payments'), @k2_merchant_payment, 201)
         @k2pay.create_payment(@k2_merchant_payment)
         expect(@k2pay.payments_location_url).not_to eq(nil)
       end
@@ -154,34 +167,56 @@ RSpec.describe K2Pay do
   end
 
   describe '#query_status' do
-    it 'should query adding pay recipients' do
-      SpecConfig.custom_stub_request('get', @k2pay.recipients_location_url, '', 200)
-      expect { @k2pay.query_status('recipients') }.not_to raise_error
-      expect(@k2pay.k2_response_body).not_to eq(nil)
-      expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2pay.recipients_location_url)))
+    context 'for adding pay recipients' do
+      it 'should query adding pay recipients' do
+        SpecConfig.custom_stub_request('get', @k2pay.recipients_location_url, '', 200)
+        expect { @k2pay.query_status('recipients') }.not_to raise_error
+        expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2pay.recipients_location_url)))
+      end
+
+      it 'returns a response body' do
+        @k2pay.query_status('recipients')
+        expect(@k2pay.k2_response_body).not_to eq(nil)
+      end
     end
 
-    it 'should query creating payment request status' do
-      SpecConfig.custom_stub_request('get', @k2pay.payments_location_url, @create_request_body, 200)
-      expect { @k2pay.query_status('payments') }.not_to raise_error
-      expect(@k2pay.k2_response_body).not_to eq(nil)
-      expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2pay.payments_location_url)))
+    context 'for creating payments' do
+      it 'should query creating payment request status' do
+        SpecConfig.custom_stub_request('get', @k2pay.payments_location_url, @create_request_body, 200)
+        expect { @k2pay.query_status('payments') }.not_to raise_error
+        expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2pay.payments_location_url)))
+      end
+
+      it 'returns a response body' do
+        @k2pay.query_status('payments')
+        expect(@k2pay.k2_response_body).not_to eq(nil)
+      end
     end
   end
 
   describe '#query_resource' do
-    it 'should query adding pay recipients' do
-      SpecConfig.custom_stub_request('get', @k2pay.recipients_location_url, '', 200)
-      expect { @k2pay.query_resource(@k2pay.recipients_location_url) }.not_to raise_error
-      expect(@k2pay.k2_response_body).not_to eq(nil)
-      expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2pay.recipients_location_url)))
+    context 'for adding pay recipients' do
+      it 'should query adding pay recipients' do
+        SpecConfig.custom_stub_request('get', @k2pay.recipients_location_url, '', 200)
+        expect { @k2pay.query_resource(@k2pay.recipients_location_url) }.not_to raise_error
+        expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2pay.recipients_location_url)))
+      end
+
+      it 'returns a response body' do
+        @k2pay.query_resource(@k2pay.recipients_location_url)
+        expect(@k2pay.k2_response_body).not_to eq(nil)
+      end
     end
 
     it 'should query creating payment request status' do
       SpecConfig.custom_stub_request('get', @k2pay.payments_location_url, @create_request_body, 200)
       expect { @k2pay.query_resource(@k2pay.payments_location_url) }.not_to raise_error
-      expect(@k2pay.k2_response_body).not_to eq(nil)
       expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2pay.payments_location_url)))
+    end
+
+    it 'returns a response body' do
+      @k2pay.query_resource(@k2pay.payments_location_url)
+      expect(@k2pay.k2_response_body).not_to eq(nil)
     end
   end
 end
