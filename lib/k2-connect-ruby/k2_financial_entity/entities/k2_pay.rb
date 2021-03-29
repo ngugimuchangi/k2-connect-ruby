@@ -1,6 +1,5 @@
 # For PAY/ Send Money to others
 # TODO: Add K2Config configuration for the callback URL
-# TODO: metadata vs meta_data
 class K2Pay < K2Entity
   attr_reader :recipients_location_url, :payments_location_url
 
