@@ -2,12 +2,13 @@ include K2Validation
 RSpec.describe K2Pay do
   before(:all) do
     # K2Pay object
-    @k2pay = K2Pay.new(K2AccessToken.new('ReMYAYdLKcg--XNmKhzkLNTIbXPvOUPs3hyycUF8WmI', '4707e306330759f4b63716f0525f6634a4685b4b4bf75b3381f1244ee77eb3fa').request_token)
+    @access_token = K2AccessToken.new('_9fXMGROLmSegBhofF6z-qDKHH5L6FsbMn2MgG24Xnk', 'nom1cCNLeFkVc4qafcBu2bGqGWTKv9WgS8YvZR3yaq8').request_token
+    @k2pay = K2Pay.new(@access_token)
 
-    @mobile_wallet_payment = {  destination_reference: "3344-effefnkka-132", destination_type: "mobile_wallet", currency: "KES", value: 20000, callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }
-    @bank_account_payment = {  destination_reference: "3344-effefnkka-132", destination_type: "bank_account", currency: "KES", value: 20000, callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }
-    @till_payment = {  destination_reference: "3344-effefnkka-132", destination_type: "till", currency: "KES", value: 20000, callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }
-    @k2_merchant_payment = {  destination_reference: "3344-effefnkka-132", destination_type: "kopo_kopo_merchant", currency: "KES", value: 20000, callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }
+    @mobile_wallet_payment = {  destination_reference: "9764ef5f-fcd6-42c1-bbff-de280becc64b", destination_type: "mobile_wallet", currency: "KES", value: 20000, callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }
+    @bank_account_payment = {  destination_reference: "c533cb60-8501-440d-8150-7eaaff84616a", destination_type: "bank_account", currency: "KES", value: 20000, callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }
+    @till_payment = {  destination_reference: "7d08c521-f44a-40c1-87cf-eb8eaa014152", destination_type: "till", currency: "KES", value: 20000, callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }
+    @k2_merchant_payment = {  destination_reference: "041b7541-05eb-4ecc-aeea-e1ab5a54f9a1", destination_type: "kopo_kopo_merchant", currency: "KES", value: 20000, callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }
     @mobile_pay_request_body = { type: "mobile_wallet", first_name: "John", last_name: "Doe", email: "johndoe@nomail.net", phone_number: "+254796230902", network: "Safaricom" }
     @bank_pay_request_body_eft = { type: "bank_account", account_name: "David Kariuki", account_number: 566566, bank_branch_ref: "633aa26c-7b7c-4091-ae28-96c0687cf886", settlement_method: 'EFT' }
     @bank_pay_request_body_rts = { type: "bank_account", account_name: "David Kariuki", account_number: 566566, bank_branch_ref: "633aa26c-7b7c-4091-ae28-96c0687cf886", settlement_method: 'RTS' }
