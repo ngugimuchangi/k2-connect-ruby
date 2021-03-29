@@ -37,4 +37,10 @@ class IncomingPayments < CommonPayment
     @errors = payload.dig('data', 'attributes', 'event', 'errors')
   end
 
+  private
+
+  def valid_payment_type
+    raise ArgumentError, "Wrong Payment Type" unless @type.eql?("incoming_payment")
+  end
+
 end

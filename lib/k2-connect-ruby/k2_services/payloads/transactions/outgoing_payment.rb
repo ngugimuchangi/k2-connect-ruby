@@ -4,8 +4,12 @@ class OutgoingPayment < OutgoingTransaction
 
   def initialize(payload)
     super
-    @transaction_reference = payload.dig('data', 'attributes', 'transaction_reference')
-    @destination = payload.dig('data', 'attributes', 'destination')
+  end
+
+  private
+
+  def valid_payment_type
+    raise ArgumentError, "Wrong Payment Type" unless @type.eql?("payment")
   end
 
 end

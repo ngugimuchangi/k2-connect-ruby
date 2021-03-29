@@ -18,29 +18,29 @@ class CommonPayment < K2Transaction
   attr_reader :status,
               :initiation_time
 
+  validate :valid_payment_type
+
   def initialize(payload)
     super
     @status = payload.dig('data', 'attributes', 'status')
     @initiation_time = payload.dig('data', 'attributes', 'initiation_time') if @type.eql?('incoming_payment')
   end
+
+  private
+
+  def valid_payment_type; end
 end
 
 class OutgoingTransaction < CommonPayment
   attr_reader :created_at,
               :transfer_batches,
-              :disbursements,
-              :batch_status,
-              :batch_origination_time,
-              :batch_currency,
-              :batch_value
+              :total_value
 
   def initialize(payload)
     super
     @created_at = payload.dig('data', 'attributes', 'created_at')
-    unless @type.eql?('settlement_transfer')
-      @currency = payload.dig('data', 'attributes', 'amount', 'currency')
-      @value = payload.dig('data', 'attributes', 'amount', 'value')
-      @origination_time = payload.dig('data', 'attributes', 'origination_time')
-    end
+    @currency = payload.dig('data', 'attributes', 'amount', 'currency')
+    @total_value = payload.dig('data', 'attributes', 'amount', 'value')
+    @transfer_batches = payload.dig('data', 'attributes', 'transfer_batches')
   end
 end
