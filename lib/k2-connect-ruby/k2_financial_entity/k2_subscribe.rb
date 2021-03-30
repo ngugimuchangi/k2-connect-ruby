@@ -13,8 +13,11 @@ class K2Subscribe
 
   # Implemented a Case condition that minimises repetition
   def webhook_subscribe(params)
+    puts("Hello")
     params = validate_webhook_input(params)
+    puts("Hello x2")
     validate_webhook(params)
+    puts("Hello x3")
     k2_request_body = {
         event_type: params[:event_type],
         url: params[:url],
