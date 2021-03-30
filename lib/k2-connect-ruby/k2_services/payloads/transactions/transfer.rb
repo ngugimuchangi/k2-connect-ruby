@@ -2,6 +2,11 @@ class Transfer < OutgoingTransaction
 
   def initialize(payload)
     super
-    @transfer_batches = payload.dig('data', 'attributes', 'transfer_batches')
+  end
+
+  private
+
+  def valid_payment_type
+    raise ArgumentError, "Wrong Payment Type" unless @type.eql?("settlement_transfer")
   end
 end
