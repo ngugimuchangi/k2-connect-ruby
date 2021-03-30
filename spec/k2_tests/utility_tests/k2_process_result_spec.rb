@@ -1,258 +1,129 @@
 RSpec.describe K2ProcessResult do
   before(:context) do
-    @stk = HashWithIndifferentAccess.new(data: {
-        id:"678ea9f2-0958-4c57-beed-1417394fce45",
-        type:"incoming_payment",
-        attributes:
-            {
-                initiation_time:"2020-02-03T07:50:11.417+03:00",
-                status:"Received",
-                event:
-                    {
-                        type:"Buygoods Transaction",
-                        resource:
-                            {
-                                transaction_reference:"1580705411",
-                                origination_time:"2020-02-03T07:50:11.732+03:00",
-                                sender_msisdn:"+254796230902",
-                                amount:"20000.0",
-                                currency:"KES",
-                                till_identifier:"444555",
-                                system:"Lipa Na MPESA",
-                                status:"Received",
-                                sender_first_name:"David",
-                                sender_last_name:"Mwangi"
-
-                            },
-                        errors:[]
-                    },
-                meta_data:
-                    {
-                        notes:"Payment for invoice 12345",
-                        reference:"123456",
-                        customer_id:"123456789"
-                    },
-                _links:
-                    {
-                        callback_url:"https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3",
-                        self:"http://localhost:3000/api/v1/payments/678ea9f2-0958-4c57-beed-1417394fce45"
-                    }
-            }
-    })
-
-    @pay = HashWithIndifferentAccess.new(data: {
-        id:"59f350e0-7695-422f-9f52-c25b9cb05180",
-        type:"payment",
-        attributes:
-            {
-                transaction_reference:"1580706111",
-                destination:"c7f300c0-f1ef-4151-9bbe-005005aa3747",
-                status:"Sent",
-                origination_time:"2020-02-03T08:01:51.481+03:00",
-                initiation_time:"2020-02-03T08:01:51.433+03:00",
-                amount:
-                    {
-                        currency:"KES",
-                        value:"20000.0"
-
-                    },
-                meta_data:
-                    {
-                        notes:"Salary payment for May 2018",
-                        customerId:"8675309",
-                        something_else:"Something else"
-
-                    },
-                _links:
-                    {
-                        callback_url:"https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3",
-                        self:"http://localhost:3000/api/v1/payments/59f350e0-7695-422f-9f52-c25b9cb05180"
-                    }
-            }
-    })
-
-    @mobile_wallet_transfer = HashWithIndifferentAccess.new(data: {
-        id:"7db9f7f7-4ef8-4df9-a6a9-d62db042fcc1",
-        type:"settlement_transfer",
-        attributes:
-        {
-              status: "Transferred",
-              transfer_batches: [
-                {
-                  status: "Transferred",
-                  created_at: "2020-10-22T12:57:38.272+03:00",
-                  amount: {
-                    currency: "KES",
-                    value: "100"
-                  },
-                  disbursments: [
-                    {
-                      status: "Transfered",
-                      origination_time: "2020-10-22T12:57:38.272+03:00",
-                      amount: {
-                        currency: "KES",
-                        value: "50"
-                      },
-                      transaction_reference: "OJES8655DF",
-                      destination: {
-                        type: "Mobile Wallet",
-                        resource: {
-                          reference: "3755d-4417-4531-b456-9ae7e7c74c",
-                          first_name: "Jane",
-                          last_name: "Doe",
-                          network: "Safaricom",
-                          phone_number: "0999999999"
-                        }
-                      }
-                    },
-                    {
-                      status: "Transfered",
-                      origination_time: "2020-10-22T12:57:38.272+03:00",
-                      amount: {
-                        currency: "KES",
-                        value: "50"
-                      },
-                      transaction_reference: "OJFYT669DF",
-                      destination: {
-                        type: "Mobile Wallet",
-                        resource: {
-                          reference: "3755d-4417-4531-b456-9ae7e7c74c",
-                          first_name: "John",
-                          last_name: "Doe",
-                          network: "Safaricom",
-                          phone_number: "0899999999"
-                        }
-                      }
-                    }
-                  ]
-                },
-                {
-                  status: "Transferred",
-                  created_at: "2020-10-22T12:57:38.272+03:00",
-                  amount: {
-                    currency: "KES",
-                    value: "400000"
-                  },
-                  disbursments: [
-                    {
-                      status: "Transfered",
-                      origination_time: "2020-10-22T12:57:38.272+03:00",
-                      amount: {
-                        currency: "KES",
-                        value: "40000"
-                      },
-                      transaction_reference: "OJRHFI765GH",
-                      destination: {
-                        type: "Mobile Wallet",
-                        resource: {
-                          reference: "3755d-4417-4531-b456-9ae7e7c74c",
-                          first_name: "Joan",
-                          last_name: "Doe",
-                          network: "Safaricom",
-                          phone_number: "0999999999"
-                        }
-                      }
-                    }
-                  ]
-                }
-              ],
-              _links: {
-                callback_url: "https://your-call-bak.yourapplication.com/payment_result",
-                self: "https://sandbox.kopokopo.com/api/v1/settlement_transfers/48674c51-2546-4844-adc8-d1a267fcbc58"
-              }
-            }
-    })
-
-    @bank_account_transfer = HashWithIndifferentAccess.new(data: {
-      id:"7db9f7f7-4ef8-4df9-a6a9-d62db042fcc1",
-      type:"settlement_transfer",
-      attributes:
-        {
-          status: "Transferred",
-          transfer_batches: [
-            {
-              status: "Transferred",
-              created_at: "2020-10-22T12:57:38.272+03:00",
-              amount: {
-                currency: "KES",
-                value: "100"
-              },
-              disbursments: [
-                {
-                  status: "Transfered",
-                  origination_time: "2020-10-22T12:57:38.272+03:00",
-                  amount: {
-                    currency: "KES",
-                    value: "50"
-                  },
-                  transaction_reference: "OJES8655DF",
-                  destination: {
-                    type: "Bank Account",
-                    resource: {
-                      reference: "3755d-4417-4531-b456-9ae7e7c74c",
-                      first_name: "Jane",
-                      last_name: "Doe",
-                      network: "Safaricom",
-                      phone_number: "0999999999"
-                    }
-                  }
-                },
-                {
-                  status: "Transfered",
-                  origination_time: "2020-10-22T12:57:38.272+03:00",
-                  amount: {
-                    currency: "KES",
-                    value: "50"
-                  },
-                  transaction_reference: "OJFYT669DF",
-                  destination: {
-                    type: "Bank Account",
-                    resource: {
-                      reference: "3755d-4417-4531-b456-9ae7e7c74c",
-                      first_name: "John",
-                      last_name: "Doe",
-                      network: "Safaricom",
-                      phone_number: "0899999999"
-                    }
-                  }
-                }
-              ]
-            },
-            {
-              status: "Transferred",
-              created_at: "2020-10-22T12:57:38.272+03:00",
-              amount: {
-                currency: "KES",
-                value: "400000"
-              },
-              disbursments: [
-                {
-                  status: "Transfered",
-                  origination_time: "2020-10-22T12:57:38.272+03:00",
-                  amount: {
-                    currency: "KES",
-                    value: "40000"
-                  },
-                  transaction_reference: "OJRHFI765GH",
-                  destination: {
-                    type: "Bank Account",
-                    resource: {
-                      reference: "3755d-4417-4531-b456-9ae7e7c74c",
-                      first_name: "Joan",
-                      last_name: "Doe",
-                      network: "Safaricom",
-                      phone_number: "0999999999"
-                    }
-                  }
-                }
-              ]
-            }
-          ],
-          _links: {
-            callback_url: "https://your-call-bak.yourapplication.com/payment_result",
-            self: "https://sandbox.kopokopo.com/api/v1/settlement_transfers/48674c51-2546-4844-adc8-d1a267fcbc58"
-          }
+    @stk = HashWithIndifferentAccess.new("data": {
+      "id": "a652f86f-f2aa-4d70-baa2-ccfe4b78f4fc",
+      "type": "incoming_payment",
+      "attributes": {
+        "initiation_time": "2020-10-19T09:24:48.622+03:00",
+        "status": "Success",
+        "event": {
+          "type": "Incoming Payment Request",
+          "resource": {
+            "id": "52f86f-f2aa-4d70-baa2-ccfe4b78f4fc",
+            "reference": "OJJ1MPU40Z",
+            "origination_time": "2020-10-19T09:24:54+03:00",
+            "sender_phone_number": "+254999999999",
+            "amount": "100.0",
+            "currency": "KES",
+            "till_number": "K514459",
+            "system": "Lipa Na M-PESA",
+            "status": "Received",
+            "sender_first_name": "Joe",
+            "sender_middle_name": nil,
+            "sender_last_name": "Buyer"
+          },
+          "errors": nil
+        },
+        "metadata": {
+          "customer_id": "123456789",
+          "reference": "123456",
+          "notes": "Payment for invoice 12345"
+        },
+        "_links": {
+          "callback_url": "https://webhook.site/675d4ef4-0629-481f-83cd-d101f55e4bc8",
+          "self": "http://sandbox.kopokopo.com/api/v1/incoming_payments/a652f86f-f2aa-4d70-baa2-ccfe4b78f4fc"
         }
+      }
+    })
+
+    @pay = HashWithIndifferentAccess.new("data": {
+      "id": "c6fda139-2480-4a93-95ed-f72c66b92364",
+      "type": "payment",
+      "attributes": {
+        "status": "Processed",
+        "created_at": "2021-01-28T10:00:17.827+03:00",
+        "amount": {
+          "currency": "KES",
+          "value": 780
+        },
+        "transfer_batches": [
+          {
+            "status": "Transferred",
+            "disbursements": [
+              {
+                "amount": "780.0",
+                "status": "Transferred",
+                "destination_type": "Mobile Wallet",
+                "origination_time": "2020-11-13T08:32:03.000+03:00",
+                "destination_reference": "0fcb2f42-9372-4a6c-8c2f-3fd977c548e8",
+                "transaction_reference": "LBA10034460"
+              }
+            ]
+          }
+        ],
+        "metadata": {
+          "notes": "Salary payment for May 2018",
+          "customerId": "8675309",
+          "something_else": "Something else"
+        },
+        "_links": {
+          "callback_url": "https://webhook.site/3856ff77-93eb-4130-80cd-e62dc0db5c1a",
+          "self": "https://sandbox.kopokopo.com/api/v1/payments/c6fda139-2480-4a93-95ed-f72c66b92364"
+        }
+      }
+    })
+
+    @mobile_wallet_transfer = HashWithIndifferentAccess.new("data": {
+      "id": "01aece24-e596-4f5c-9ace-9eb1a0939dda",
+      "type": "settlement_transfer",
+      "attributes": {
+        "status": "Processed",
+        "created_at": "2021-01-27T10:57:09.838+03:00",
+        "amount": {
+          "currency": "KES",
+          "value": nil
+        },
+        "transfer_batches": [
+          {
+            "status": "Transferred",
+            "disbursements": [
+              {
+                "amount": "19900.0",
+                "status": "Transferred",
+                "destination_type": "Mobile Wallet",
+                "origination_time": "2021-01-06T12:42:36.000+03:00",
+                "destination_reference": "17067bf7-648e-424c-af0f-8c541a1b4ec3",
+                "transaction_reference": "LDLJANAPH26"
+              }
+            ]
+          },
+          {
+            "status": "Transferred",
+            "disbursements": [
+              {
+                "amount": "24452.0",
+                "status": "Transferred",
+                "destination_type": "Bank Account",
+                "origination_time": "2021-01-27T10:57:58.623+03:00",
+                "destination_reference": "34a273d1-fedc-4610-8ab6-a1ba4828f317",
+                "transaction_reference": nil
+              },
+              {
+                "amount": "25000.0",
+                "status": "Transferred",
+                "destination_type": "Bank Account",
+                "origination_time": "2021-01-27T10:57:58.627+03:00",
+                "destination_reference": "34a273d1-fedc-4610-8ab6-a1ba4828f317",
+                "transaction_reference": nil
+              }
+            ]
+          }
+        ],
+        "_links": {
+          "callback_url": "https://webhook.site/3856ff77-93eb-4130-80cd-e62dc0db5c1a",
+          "self": "https://sandbox.kopokopo.com/api/v1/settlement_transfers/01aece24-e596-4f5c-9ace-9eb1a0939dda"
+        }
+      }
     })
   end
 
@@ -263,43 +134,31 @@ RSpec.describe K2ProcessResult do
 
     context 'Process Stk Result' do
       it 'processes successfully' do
-        expect { K2ProcessResult.process(@stk, 'api_secret_key', '74641480421af7e1caa4480934dc05268c40bfa4ad2a917253f67d2e7744d1f6') }.not_to raise_error
+        expect { K2ProcessResult.process(@stk, 'api_secret_key', 'd627df47431db2814673efdcb3e76a6c96a4ed12b18f36716b4ca3f9f983b480') }.not_to raise_error
       end
 
       it 'returns an STK Object' do
-        expect(K2ProcessResult.process(@stk, 'api_secret_key', '74641480421af7e1caa4480934dc05268c40bfa4ad2a917253f67d2e7744d1f6')).instance_of?(K2Stk)
+        expect(K2ProcessResult.process(@stk, 'api_secret_key', 'd627df47431db2814673efdcb3e76a6c96a4ed12b18f36716b4ca3f9f983b480')).instance_of?(K2Stk)
       end
     end
 
     context 'Process Pay Result' do
       it 'processes successfully' do
-        expect { K2ProcessResult.process(@pay, 'api_secret_key', 'b0940b2cb64f410449a99528ec25f2510845cea3a56db55beddd650373a276d9') }.not_to raise_error
+        expect { K2ProcessResult.process(@pay, 'api_secret_key', '466452be2841cd52b8f5ee309e12b975f18047fd633704ed6b0c33d7fa506512') }.not_to raise_error
       end
 
       it 'returns an PAY Object' do
-        expect(K2ProcessResult.process(@pay, 'api_secret_key', 'b0940b2cb64f410449a99528ec25f2510845cea3a56db55beddd650373a276d9')).instance_of?(K2Pay)
+        expect(K2ProcessResult.process(@pay, 'api_secret_key', '466452be2841cd52b8f5ee309e12b975f18047fd633704ed6b0c33d7fa506512')).instance_of?(K2Pay)
       end
     end
 
     context 'Process Transfer Result' do
-      context 'Mobile wallet destination type' do
-        it 'processes successfully' do
-          expect { K2ProcessResult.process(@mobile_wallet_transfer, 'api_secret_key', '8de83483f48eb033fb13b26178e6c56e54dd41cc0fa1b45d01bad3b96e6b1b46') }.not_to raise_error
-        end
-
-        it 'returns an Transfer Object' do
-          expect(K2ProcessResult.process(@mobile_wallet_transfer, 'api_secret_key', '8de83483f48eb033fb13b26178e6c56e54dd41cc0fa1b45d01bad3b96e6b1b46')).instance_of?(K2Transfer)
-        end
+      it 'processes successfully' do
+        expect { K2ProcessResult.process(@mobile_wallet_transfer, 'api_secret_key', '54b24a51d61d16e143759fb96c7e043887fa5f4923e377e144defc914b438393') }.not_to raise_error
       end
 
-      context 'Bank account destination type' do
-        it 'processes successfully' do
-          expect { K2ProcessResult.process(@bank_account_transfer, 'api_secret_key', '8de83483f48eb033fb13b26178e6c56e54dd41cc0fa1b45d01bad3b96e6b1b46') }.not_to raise_error
-        end
-
-        it 'returns an Transfer Object' do
-          expect(K2ProcessResult.process(@bank_account_transfer, 'api_secret_key', '8de83483f48eb033fb13b26178e6c56e54dd41cc0fa1b45d01bad3b96e6b1b46')).instance_of?(K2Transfer)
-        end
+      it 'returns an Transfer Object' do
+        expect(K2ProcessResult.process(@mobile_wallet_transfer, 'api_secret_key', '54b24a51d61d16e143759fb96c7e043887fa5f4923e377e144defc914b438393')).instance_of?(K2Transfer)
       end
     end
   end
