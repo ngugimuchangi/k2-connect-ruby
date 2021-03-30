@@ -1,6 +1,5 @@
 class K2Transaction
-  attr_reader :data,
-              :id,
+  attr_reader :id,
               :type,
               :metadata,
               :links_self,
@@ -9,37 +8,41 @@ class K2Transaction
   def initialize(payload)
     @id = payload.dig('data', 'id')
     @type = payload.dig('data', 'type')
-    @metadata = payload.dig('data', 'attributes', 'meta_data')
+    @metadata = payload.dig('data', 'attributes', 'metadata')
     @links_self = payload.dig('data', 'attributes', '_links', 'self')
     @callback_url = payload.dig('data', 'attributes', '_links', 'callback_url')
   end
 end
 
 class CommonPayment < K2Transaction
+  include ActiveModel::Validations
+
   attr_reader :status,
               :initiation_time
+
+  validate :valid_payment_type
 
   def initialize(payload)
     super
     @status = payload.dig('data', 'attributes', 'status')
-    @initiation_time = payload.dig('data', 'attributes', 'initiation_time') unless @type.eql?('settlement_transfer')
+    @initiation_time = payload.dig('data', 'attributes', 'initiation_time') if @type.eql?('incoming_payment')
   end
+
+  private
+
+  def valid_payment_type; end
 end
 
 class OutgoingTransaction < CommonPayment
-  attr_reader :transfer_batches,
-              :disbursements,
-              :batch_status,
-              :batch_origination_time,
-              :batch_currency,
-              :batch_value
+  attr_reader :created_at,
+              :transfer_batches,
+              :total_value
 
   def initialize(payload)
     super
-    unless @type.eql?('settlement_transfer')
-      @currency = payload.dig('data', 'attributes', 'amount', 'currency')
-      @value = payload.dig('data', 'attributes', 'amount', 'value')
-      @origination_time = payload.dig('data', 'attributes', 'origination_time')
-    end
+    @created_at = payload.dig('data', 'attributes', 'created_at')
+    @currency = payload.dig('data', 'attributes', 'amount', 'currency')
+    @total_value = payload.dig('data', 'attributes', 'amount', 'value')
+    @transfer_batches = payload.dig('data', 'attributes', 'transfer_batches')
   end
 end
