@@ -23,19 +23,35 @@ RSpec.describe K2Stk do
   end
 
   describe '#receive_mpesa_payments' do
-    it 'validates input correctly' do
-      expect { validate_input(@mpesa_payments, %w[payment_channel till_number first_name last_name phone_number email currency value metadata callback_url]) }.not_to raise_error
+    context "with valid details" do
+      it 'validates input correctly' do
+        expect { validate_input(@mpesa_payments, %w[payment_channel till_number first_name last_name phone_number email currency value metadata callback_url]) }.not_to raise_error
+      end
+
+      it 'sends an incoming payment request' do
+        SpecConfig.custom_stub_request('post', K2Config.path_url('incoming_payments'), @mpesa_payments, 200)
+        @k2stk.receive_mpesa_payments(@mpesa_payments)
+        expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('incoming_payments')))
+      end
+
+      it 'returns a location_url' do
+        @k2stk.receive_mpesa_payments(@mpesa_payments)
+        expect(@k2stk.location_url).not_to eq(nil)
+      end
     end
 
-    it 'sends an incoming payment request' do
-      SpecConfig.custom_stub_request('post', K2Config.path_url('incoming_payments'), @mpesa_payments, 200)
-      @k2stk.receive_mpesa_payments(@mpesa_payments)
-      expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('incoming_payments')))
-    end
+    context "with invalid details" do
+      context "no phone number given" do
+        it 'raises an error' do
+          expect { @k2stk.receive_mpesa_payments(@mpesa_payments.except(:phone_number)) }.to raise_error ArgumentError
+        end
+      end
 
-    it 'returns a location_url' do
-      @k2stk.receive_mpesa_payments(@mpesa_payments)
-      expect(@k2stk.location_url).not_to eq(nil)
+      context "no till number given" do
+        it 'raises an error' do
+          expect { @k2stk.receive_mpesa_payments(@mpesa_payments.except(:till_number)) }.to raise_error ArgumentError
+        end
+      end
     end
   end
 

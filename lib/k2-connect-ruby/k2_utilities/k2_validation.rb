@@ -60,6 +60,7 @@ module K2Validation
 
   # Validate Phone Number
   def validate_phone(phone)
+    raise ArgumentError, "No Phone Number given." if phone.blank?
     # Kenyan Phone Numbers
     unless phone.blank?
       if phone[-(number = phone.to_i.to_s.size).to_i, 3].eql?(254.to_s)
@@ -99,6 +100,7 @@ module K2Validation
   end
 
   def validate_till_number_prefix(till_number)
+    raise ArgumentError, "No Till Number given." if till_number.blank?
     raise ArgumentError, "Invalid Till Number format." unless till_number[0, 1].eql?('K')
     till_number
   end
