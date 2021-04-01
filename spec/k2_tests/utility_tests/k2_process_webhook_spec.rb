@@ -202,7 +202,6 @@ RSpec.describe K2ProcessWebhook do
       it 'has no nil values' do
         test = K2ProcessWebhook.process(@m2m, 'k2_secret_key', '81f1baf4211f27f580887f9cbdd4ce0f6cdde9b29a8d9ae9ccf4a77f41d48f05')
         result = nil_values(test.as_json)
-        puts("Object: #{test.as_json.keys}")
         expect(result).to be(nil)
       end
     end

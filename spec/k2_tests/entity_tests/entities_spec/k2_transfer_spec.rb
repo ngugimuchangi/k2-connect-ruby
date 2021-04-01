@@ -10,7 +10,7 @@ RSpec.describe K2Transfer do
 
     # targeted transfer
     @mobile_transfer_params = HashWithIndifferentAccess.new(destination_reference: 'eba238ae-e03f-46f6-aed5-db357fb00f9c', destination_type: 'merchant_wallet', currency: 'currency', value: 'value', callback_url: 'https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3', metadata: { something: "Nice", extra: "Comments" })
-    @bank_transfer_params = HashWithIndifferentAccess.new(destination_reference: '87bbfdcf-fb59-4d8e-b039-b85b97015a7e', destination_type: 'merchant_bank_account', currency: 'currency', value: 'value', callback_url: 'https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3', metadata: { something: "Nice", extra: "Comments" })
+    @bank_transfer_params = HashWithIndifferentAccess.new(destination_reference: '1579ea6c-7585-4112-93c1-e97ccca317ec', destination_type: 'merchant_bank_account', currency: 'currency', value: 'value', callback_url: 'https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3', metadata: { something: "Nice", extra: "Comments" })
   end
 
   describe '#transfer_funds' do
@@ -41,7 +41,6 @@ RSpec.describe K2Transfer do
         end
       end
     end
-
 
     context "targeted transfer" do
       context 'merchant bank account' do
