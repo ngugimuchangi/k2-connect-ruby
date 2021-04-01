@@ -1,7 +1,3 @@
-# DISCLAIMER!!
-
-The following library has yet to be finalised to production, and as such, neither consumable or usable as a gem/ruby library.
-
 # K2ConnectRuby For Rails
 
 Ruby SDK for connection to the Kopo Kopo API.
@@ -65,7 +61,7 @@ For more Information, visit our [API docs]().
 In order to request for application authorization and receive an access token, we need to execute the client credentials flow, this is done so by having your application server make a HTTPS request to the Kopo Kopo authorization server, through the K2AccessToken class.
 
 ```ruby
-k2_token = K2AccessToken.new('your_client_id', 'your_client_secret').token_request
+k2_token = K2AccessToken.new('your_client_id', 'your_client_secret').request_token
 ```
 
 ### Webhook Subscription
@@ -74,19 +70,25 @@ k2_token = K2AccessToken.new('your_client_id', 'your_client_secret').token_reque
 
 Next, we formally create the webhook subscription by calling on the webhook_subscribe method.
 Ensure the following arguments are passed: 
- - client secret `REQUIRED`
  - event type `REQUIRED`
  - url `REQUIRED`
- - scope `REQUIRED`
- - scope reference `REQUIRED`
+ - scope `REQUIRED`: is `till` if event_type is a buygoods_transaction_received, buygoods_transaction_reversed or b2b_transaction_received, and `company` if not
+ - scope reference: is `REQUIRED` if scope is till
  
 Code example;
     
 ```ruby
 require 'k2-connect-ruby'
-k2_token = K2AccessToken.new('your_client_id', 'your_client_secret').token_request
+k2_token = K2AccessToken.new('your_client_id', 'your_client_secret').request_token
 k2subscriber = K2Subscribe.new(k2_token)
-k2subscriber.webhook_subscribe(your_input, webhook_secret)
+
+your_request = {
+        event_type: 'buygoods_transaction_received',
+        url: callback_url,
+        scope: 'till',
+        scope_reference: '112233'
+}
+k2subscriber.webhook_subscribe(your_request)
 ```
  
  
@@ -104,12 +106,12 @@ k2subscriber.webhook_subscribe(your_input, webhook_secret)
     
 Ensure the following arguments are passed:
  - payment_channel `REQUIRED`
- - till_identifier `REQUIRED` 
- - first_name `REQUIRED`
- - last_name `REQUIRED`
+ - till_number `REQUIRED`: from the Online Payments Account created with Kopo Kopo Inc Web App
+ - first_name 
+ - last_name 
  - phone_number `REQUIRED`
- - email `REQUIRED`
- - currency `REQUIRED`
+ - email
+ - currency: default is `KES`
  - value `REQUIRED`
  - callback_url `REQUIRED`
 
@@ -131,7 +133,19 @@ Code example;
     
 ```ruby
 k2_stk = K2Stk.new(your_access_token)
-k2_stk.receive_mpesa_payments(your_input)
+
+your_request = {
+        payment_channel: 'M-PESA',
+        till_number: 'K112233',
+        first_name: stk_params[:first_name],
+        last_name: stk_params[:last_name],
+        phone_number: stk_params[:phone],
+        email: stk_params[:email],
+        currency: stk_params[:currency],
+        value: stk_params[:value],
+        callback_url: callback_url
+}
+k2_stk.receive_mpesa_payments(your_request)
 k2_stk.query_resource(k2_stk.location_url)
 ```
 
@@ -178,7 +192,7 @@ The following arguments should be passed within a hash:
 
 - destination_reference `REQUIRED`
 - destination_type `REQUIRED`
-- currency `REQUIRED`
+- currency default is `KES`
 - value `REQUIRED`
 - callback_url `REQUIRED`
 
@@ -229,7 +243,7 @@ Add pre-approved settlement accounts, to which one can transfer funds to. Can be
 - account_name `REQUIRED`
 - account_number `REQUIRED`
 - bank_branch_ref `REQUIRED`
-- settlement_method `REQUIRED`
+- settlement_method: 'EFT' or 'RTS' `REQUIRED`
 
 ```ruby
 k2_settlement = K2Settlement.new(your_access_token)
@@ -264,15 +278,15 @@ With `nil` representing that there are no specified destinations.
       
 The Following Details should be passed for either **Blind** or **Targeted** Transfer:
 
-**Blind** Transfer
-- currency `REQUIRED`
+**Blind** Transfer to your default settlement account
+- currency default is `KES`
 - value `REQUIRED`
 - callback_url `REQUIRED`
 
 **Targeted** Transfer
 - destination_reference `REQUIRED`
 - destination_type: `merchant_wallet` or `merchant_bank_account` `REQUIRED`
-- currency `REQUIRED`
+- currency default is `KES`
 - value `REQUIRED`
 - callback_url `REQUIRED`
 
@@ -281,7 +295,6 @@ The Params are passed as the argument containing all the form data sent. A Succe
 Sample code example:
 
 ```ruby
-# TODO Confirm for Blind Transfer
 k2_transfer = K2Transfer.new(your_access_token)
 # Blind or Targeted Transfer
 k2_transfer.transfer_funds(your_input)
@@ -338,67 +351,88 @@ k2_components = K2ProcessResult.process(k2_parse.hash_body)
     - `event_type`
     - `reference`
     - `origination_time`
-    - `sender_msisdn`
+    - `sender_phone_number`
     - `amount`
     - `currency`
     - `till_number`
     - `system`
-    - `resource_status`
+    - `status`
     - `sender_first_name`
     - `sender_last_name`
     - `links_self`
     - `links_resource`
     
-2. Buy Goods Transaction Reversed. Has the same key symbols as Buy Goods Transaction Received. 
+2. Buy Goods Transaction Reversed:
+    - `id`
+    - `resource_id`
+    - `topic`
+    - `created_at`
+    - `event_type`
+    - `reference`
+    - `origination_time`
+    - `sender_phone_number`
+    - `amount`
+    - `currency`
+    - `till_number`
+    - `system`
+    - `status`
+    - `sender_first_name`
+    - `sender_last_name`
+    - `links_self`
+    - `links_resource` 
     
 3. Settlement Transfer:
     - `id`
     - `resource_id`
     - `topic`
     - `created_at`
-    - `type`
-    - `reference`
+    - `event_type`
     - `origination_time`
-    - `transfer_time`
-    - `transfer_type`
     - `amount`
     - `currency`
     - `resource_status`
-    - `destination`
-    - `destination_type`
-    - `msisdn`
-    - `destination_mm_system`
     - `links_self`
     - `links_resource`
+    - `destination_reference`
+    - `destination_type`
+      **Bank Account** Destination Type
+    - `destination_account_name`
+    - `destination_account_number`
+    - `destination_bank_branch_ref`
+    - `destination_settlement_method`
+      **Merchant Wallet** Destination Type
+    - `destination_first_name`
+    - `destination_last_name`
+    - `destination_phone_number`
+    - `destination_network`
 
 4. Customer Created:
     - `id`
     - `resource_id`
     - `topic`
     - `created_at`
-    - `type`
-    - `first_name`
-    - `middle_name`
-    - `last_name`
-    - `msisdn`
-    - `self`
-    - `resource`
+    - `event_type`
+    - `resource_first_name`
+    - `resource_middle_name`
+    - `resource_last_name`
+    - `resource_phone_number`
+    - `links_self`
+    - `links_resource`
     
 5. B2b Transaction Transaction (External Till to Till):
     - `id`
     - `resource_id`
     - `topic`
     - `created_at`
-    - `type`
+    - `event_type`
     - `reference`
     - `origination_time`
     - `amount`
     - `currency`
     - `till_number`
-    - `system`
     - `status`
-    - `self`
-    - `resource`
+    - `links_self`
+    - `links_resource`
     - `sending_till`
 
 6. Merchant to Merchant Transaction:
@@ -406,15 +440,15 @@ k2_components = K2ProcessResult.process(k2_parse.hash_body)
     - `resource_id`
     - `topic`
     - `created_at`
-    - `type`
+    - `event_type`
     - `reference`
     - `origination_time`
     - `amount`
     - `currency`
-    - `resource_status`
-    - `self`
-    - `resource`
-    - `sending_merchant`
+    - `status`
+    - `links_self`
+    - `links_resource`
+    - `resource_sending_merchant`
     
 7. Process STK Push Payment Request Result
     - `id`
@@ -422,14 +456,17 @@ k2_components = K2ProcessResult.process(k2_parse.hash_body)
     - `initiation_time`
     - `status`
     - `event_type`
+    - `resource_id`
+    - `resource_status`
     - `transaction_reference`
     - `origination_time`
-    - `msisdn`
+    - `sender_phone_number`
     - `amount`
     - `currency`
     - `till_number`
     - `system`
     - `sender_first_name`
+    - `sender_middle_name`
     - `sender_last_name`
     - `errors`
     - `metadata`
@@ -439,16 +476,25 @@ k2_components = K2ProcessResult.process(k2_parse.hash_body)
 8. Process PAY Result
     - `id`
     - `type`
-    - `initiation_time`
+    - `created_at`
     - `status`
-    - `transaction_reference`
-    - `origination_time`
-    - `destination`
+    - `transfer_batch`
     - `currency`
-    - `value`: refers to the amount
+    - `value`
     - `metadata`
     - `links_self`
     - `callback_url`
+
+9. Process Settlement Transfer Result
+   - `id`
+   - `type`
+   - `created_at`
+   - `status`
+   - `transfer_batch`
+   - `currency`
+   - `value`
+   - `links_self`
+   - `callback_url`
     
 If you want to convert the Object into a Hash or Array, the following methods can be used.
 - Hash:
