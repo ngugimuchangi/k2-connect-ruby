@@ -1,7 +1,8 @@
 include SpecConfig, K2Validation
 RSpec.describe K2Settlement do
   before(:all) do
-    @k2settlement = K2Settlement.new(K2AccessToken.new('ReMYAYdLKcg--XNmKhzkLNTIbXPvOUPs3hyycUF8WmI', '4707e306330759f4b63716f0525f6634a4685b4b4bf75b3381f1244ee77eb3fa').request_token)
+    @access_token = K2AccessToken.new('_9fXMGROLmSegBhofF6z-qDKHH5L6FsbMn2MgG24Xnk', 'nom1cCNLeFkVc4qafcBu2bGqGWTKv9WgS8YvZR3yaq8').request_token
+    @k2settlement = K2Settlement.new(@access_token)
 
     @mobile_settle_account = HashWithIndifferentAccess.new(type: 'merchant_wallet', first_name: 'first_name', last_name: 'last_name', phone_number: '254796230902', network: 'Safaricom')
     @bank_settle_account_eft = HashWithIndifferentAccess.new(type: 'merchant_bank_account', account_name: 'account_name', bank_branch_ref: '633aa26c-7b7c-4091-ae28-96c0687cf886', account_number: 'account_number', settlement_method: "EFT")
