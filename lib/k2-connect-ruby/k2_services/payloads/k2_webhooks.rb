@@ -14,7 +14,7 @@ class Webhook
     @created_at = payload.dig('created_at')
     # Event
     @event_type = payload.dig('event', 'type')
-    @resource_id = payload.dig('event', 'resource', 'id')
+    @resource_id = payload.dig('event', 'resource', 'id') unless @event_type.eql?('Customer Created')
     # Links
     @links_self = payload.dig('_links', 'self')
     @links_resource = payload.dig('_links', 'resource')
@@ -22,6 +22,8 @@ class Webhook
 end
 
 class K2CommonEvents < Webhook
+  REFERENCE_EXCEPTIONS = ["Merchant to Merchant Transaction", "Settlement Transfer"]
+
   attr_reader :reference,
   :origination_time,
   :amount,
@@ -30,7 +32,7 @@ class K2CommonEvents < Webhook
 
   def initialize(payload)
     super
-    @reference = payload.dig('event', 'resource', 'reference')
+    @reference = payload.dig('event', 'resource', 'reference') unless REFERENCE_EXCEPTIONS.include?(@event_type)
     @origination_time = payload.dig('event', 'resource', 'origination_time')
     @amount = payload.dig('event', 'resource', 'amount')
     @currency = payload.dig('event', 'resource', 'currency')
