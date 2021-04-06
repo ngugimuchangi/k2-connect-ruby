@@ -3,15 +3,17 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'k2-connect-ruby/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'k2-connect-ruby'
-  spec.version       = K2ConnectRuby::VERSION
-  spec.authors       = ['DavidKar1uk1']
-  spec.email         = ['David.mwangi@kopokopo.com']
+  spec.name                  = 'k2-connect-ruby'
+  spec.version               = K2ConnectRuby::VERSION
+  spec.authors               = ['DavidKar1uk1']
+  spec.email                 = ['David.mwangi@kopokopo.com']
 
-  spec.summary       = 'Ruby SDK for connection to the Kopo Kopo API.'
-  spec.description   = 'Ruby SDK for connection to the Kopo Kopo API, with webhook handling and JSON request parsing with the Ruby on Rails framework.'
-  spec.homepage      = 'https://github.com/kopokopo/k2-connect-ruby.git'
-  spec.license       = 'MIT'
+  spec.summary               = 'Ruby SDK for the Kopo Kopo K2 Connect API.'
+  spec.description           = 'Ruby SDK for the Kopo Kopo K2 Connect API, with webhook subscriptions, STK Push, Pay and Settlement Transfer capabilities. Allows decomposition and break down of results and webhooks returned from the K2 Connect APIx``.'
+  spec.homepage              = 'https://github.com/kopokopo/k2-connect-ruby.git'
+  spec.license               = 'MIT'
+  spec.required_ruby_version = '~> 2.6.5'
+
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
