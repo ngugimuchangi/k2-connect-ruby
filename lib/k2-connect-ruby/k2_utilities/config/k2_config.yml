@@ -3,6 +3,9 @@ version: v1
 base_url: http://127.0.0.1:3000/
 endpoints: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
   oauth_token: oauth/token
+  revoke_token: oauth/revoke
+  introspect_token: oauth/introspect
+  token_info: oauth/token/info
   webhook_subscriptions: webhook_subscriptions
   pay_recipient: pay_recipients
   payments: payments

@@ -22,7 +22,7 @@ module K2Config
     end
 
     def path_endpoint(key)
-      unless key.eql?('oauth_token')
+      unless key.include?('token')
         return "api/#{version}/#{@config[:endpoints][:"#{key}"]}"
       end
       @config[:endpoints][:"#{key}"]
