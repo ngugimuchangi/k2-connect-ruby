@@ -36,16 +36,16 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
 
-  spec.add_dependency 'activesupport'
-  spec.add_dependency 'activemodel'
+  spec.add_dependency 'activesupport', '~> 6.1.3.1'
+  spec.add_dependency 'activemodel', '~> 6.1.3.1'
   spec.add_development_dependency 'bundler', '~> 2.0'
-  spec.add_development_dependency "guard"
-  spec.add_development_dependency "guard-rspec"
-  spec.add_dependency 'rest-client'
-  spec.add_development_dependency 'rake', '~> 13.0'
-  spec.add_development_dependency 'rspec', '>= 3.9.0'
-  spec.add_development_dependency "rspec-nc"
-  spec.add_development_dependency 'vcr'
-  spec.add_development_dependency 'webmock'
-  spec.add_dependency 'yajl-ruby'
+  spec.add_development_dependency "guard", '~> 2.16.2'
+  spec.add_development_dependency "guard-rspec", '~> 4.7.3'
+  spec.add_dependency 'rest-client', '~> 2.1.0'
+  spec.add_development_dependency 'rake', '~> 13.0.3'
+  spec.add_development_dependency 'rspec', '~> 3.10.0'
+  spec.add_development_dependency "rspec-nc", '~> 0.3.0'
+  spec.add_development_dependency 'vcr', '~> 6.0.0'
+  spec.add_development_dependency 'webmock', '~> 3.12.2'
+  spec.add_dependency 'yajl-ruby', '~> 1.4.1'
 end
