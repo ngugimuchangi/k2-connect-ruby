@@ -4,7 +4,7 @@ class K2Subscribe
   attr_reader :location_url, :k2_response_body
   attr_accessor :access_token, :webhook_secret
 
-  # Initialize with the event_type
+  # Initialize with access token
   def initialize(access_token)
     raise ArgumentError, 'Nil or Empty Access Token Given!' if access_token.blank?
     @threads = []

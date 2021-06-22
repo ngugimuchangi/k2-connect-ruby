@@ -13,5 +13,6 @@ endpoints: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
   settlement_mobile_wallet: merchant_wallets
   settlement_bank_account: merchant_bank_accounts
   transfers: settlement_transfers
+  poll: polling
 network_operators:
 - SAFARICOM
