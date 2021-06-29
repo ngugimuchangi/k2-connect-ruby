@@ -1,9 +1,9 @@
 include SpecConfig
-RSpec.describe K2Subscribe do
+RSpec.describe K2Notification do
   before(:all) do
-    @access_token = K2AccessToken.new('_9fXMGROLmSegBhofF6z-qDKHH5L6FsbMn2MgG24Xnk', 'nom1cCNLeFkVc4qafcBu2bGqGWTKv9WgS8YvZR3yaq8').request_token
+    @access_token = K2AccessToken.new('kgXhGc8qHkdEEY_VBkNJVsWOOntDiM1pRJ7rNnUS7ig', '6aYOW-pzUSgh78qctIgGsJgDPK6fGTB7XAzY4FhK73g').request_token
     @k2_notification = K2Notification.new(@access_token)
-    @sms_notification_payload = HashWithIndifferentAccess.new(webhook_event_reference: 'ruby_sdk_webhook_event_reference', message: 'Hello there', callback_url: 'https://webhook.site/48d6113c-8967-4bf4-ab56-dcf470e0b005')
+    @sms_notification_payload = HashWithIndifferentAccess.new(webhook_event_reference: 'd68a7a0e-cabe-4d6f-a116-8f8e3c58c81f', message: 'Bankai', callback_url: 'https://webhook.site/48d6113c-8967-4bf4-ab56-dcf470e0b005')
   end
 
   describe '#initialize' do
@@ -17,10 +17,12 @@ RSpec.describe K2Subscribe do
   end
 
   describe '#send_sms_transaction_notification' do
+    let(:bg){ webhook_structure('buygoods_transaction_received', 'till', 112233) }
+
     it 'should send an sms transaction notification request' do
       SpecConfig.custom_stub_request('post', K2Config.path_url('transaction_sms_notifications'), @sms_notification_payload, 201)
       expect { @k2_notification.send_sms_transaction_notification(@sms_notification_payload) }.not_to raise_error
-      expect(WebMock).to have_requested(:post, K2Config.path_url('webhook_subscriptions'))
+      expect(WebMock).to have_requested(:post, K2Config.path_url('transaction_sms_notifications'))
     end
 
     it 'returns a location_url' do
@@ -30,20 +32,20 @@ RSpec.describe K2Subscribe do
   end
 
   describe '#query_resource' do
-    it 'should query recent webhook subscription' do
+    it 'should query recent sms transaction notification request' do
       SpecConfig.custom_stub_request('get', @k2_notification.location_url, '', 200)
-      expect { @k2_notification.query_webhook }.not_to raise_error
+      expect { @k2_notification.query_resource }.not_to raise_error
       expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2_notification.location_url)))
     end
 
     it 'returns a response body' do
-      @k2_notification.query_webhook
+      @k2_notification.query_resource
       expect(@k2_notification.k2_response_body).not_to eq(nil)
     end
   end
 
   describe '#query_resource_url' do
-    it 'should query recent webhook subscription' do
+    it 'should query specific resource_url' do
       SpecConfig.custom_stub_request('get', @k2_notification.location_url, '', 200)
       expect { @k2_notification.query_resource_url(@k2_notification.location_url) }.not_to raise_error
       expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2_notification.location_url)))

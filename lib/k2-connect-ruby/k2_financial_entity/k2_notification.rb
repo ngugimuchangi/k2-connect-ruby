@@ -12,10 +12,13 @@ class K2Notification
 
   # Sends transaction notifications via SMS
   def send_sms_transaction_notification(params)
+    k2_request_links = {
+      callback_url: params[:callback_url]
+    }
     k2_request_body = {
       webhook_event_reference: params[:webhook_event_reference],
       message: params[:message],
-      callback_url: params[:callback_url],
+      _links: k2_request_links,
     }
     subscribe_hash = make_hash(K2Config.path_url('transaction_sms_notifications'), 'post', @access_token,'Notification', k2_request_body)
     @location_url =  K2Connect.make_request(subscribe_hash)
@@ -33,6 +36,6 @@ class K2Notification
 
   # Query Specific Webhook URL
   def query_resource_url(url)
-    query_webhook(url)
+    query_resource(url)
   end
 end
