@@ -25,6 +25,3 @@ require 'k2_tests/entity_tests/entities_spec/k2_pay_spec'
 require 'k2_tests/entity_tests/entities_spec/k2_stk_spec'
 require 'k2_tests/entity_tests/entities_spec/k2_transfer_spec'
 require 'k2_tests/entity_tests/entities_spec/k2_settlement_spec'
-
-# For Stub Requests
-require 'k2-connect-ruby/k2_utilities/spec_modules/spec_config'
