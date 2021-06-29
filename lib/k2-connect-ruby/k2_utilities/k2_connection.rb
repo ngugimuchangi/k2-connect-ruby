@@ -11,8 +11,11 @@ module K2Connect
     end
 
     # Set up Headers
-    headers = { 'Content-Type': 'application/json', Accept: 'application/vnd.kopokopo.v1.hal+json', Authorization: "Bearer #{access_token}" }
-    if path_url.include?('oauth/token')
+    headers = { 'Content-Type': 'application/json', Accept: 'application/json', Authorization: "Bearer #{access_token}" }
+    # For access token request
+    if path_url.include?('oauth/token/info')
+      headers = { 'Content-Type': 'application/json', Accept: 'application/json', Authorization: "Bearer #{access_token}" }
+    elsif path_url.include?('oauth/')
       headers = { 'Content-Type': 'application/json' }
     end
 
