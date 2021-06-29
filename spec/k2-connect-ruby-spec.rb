@@ -19,6 +19,7 @@ require 'k2_tests/service_tests/results_spec/k2_common_events_spec'
 # Entity
 require 'k2_tests/entity_tests/k2_token_spec'
 require 'k2_tests/entity_tests/k2_entity_spec'
+require 'k2_tests/entity_tests/k2_polling_spec'
 require 'k2_tests/entity_tests/k2_subscribe_spec'
 require 'k2_tests/entity_tests/k2_notification_spec'
 require 'k2_tests/entity_tests/entities_spec/k2_pay_spec'
