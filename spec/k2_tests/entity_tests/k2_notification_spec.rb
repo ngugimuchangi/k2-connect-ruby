@@ -1,9 +1,9 @@
 include SpecConfig
 RSpec.describe K2Notification do
   before(:all) do
-    @access_token = K2AccessToken.new('kgXhGc8qHkdEEY_VBkNJVsWOOntDiM1pRJ7rNnUS7ig', '6aYOW-pzUSgh78qctIgGsJgDPK6fGTB7XAzY4FhK73g').request_token
+    @access_token = K2AccessToken.new('T1RyrPntqO4PJ35RLv6IVfPKRyg6gVoMvXEwEBin9Cw', 'Ywk_J18RySqLOmhhhVm8fhh4FzJTUzVcZJ03ckNpZK8').request_token
     @k2_notification = K2Notification.new(@access_token)
-    @sms_notification_payload = HashWithIndifferentAccess.new(webhook_event_reference: 'd68a7a0e-cabe-4d6f-a116-8f8e3c58c81f', message: 'Bankai', callback_url: 'https://webhook.site/48d6113c-8967-4bf4-ab56-dcf470e0b005')
+    @sms_notification_payload = HashWithIndifferentAccess.new(webhook_event_reference: 'c271535c-687f-4a40-a589-8b66b894792e', message: 'Bankai', callback_url: 'https://webhook.site/48d6113c-8967-4bf4-ab56-dcf470e0b005')
   end
 
   describe '#initialize' do
