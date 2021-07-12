@@ -1,7 +1,7 @@
 include SpecConfig, K2Validation
 RSpec.describe K2Settlement do
   before(:all) do
-    @access_token = K2AccessToken.new('_9fXMGROLmSegBhofF6z-qDKHH5L6FsbMn2MgG24Xnk', 'nom1cCNLeFkVc4qafcBu2bGqGWTKv9WgS8YvZR3yaq8').request_token
+    @access_token = K2AccessToken.new('T1RyrPntqO4PJ35RLv6IVfPKRyg6gVoMvXEwEBin9Cw', 'Ywk_J18RySqLOmhhhVm8fhh4FzJTUzVcZJ03ckNpZK8').request_token
     @k2_polling = K2Settlement.new(@access_token)
 
     @mobile_settle_account = HashWithIndifferentAccess.new(type: 'merchant_wallet', first_name: 'first_name', last_name: 'last_name', phone_number: '254796230902', network: 'Safaricom')

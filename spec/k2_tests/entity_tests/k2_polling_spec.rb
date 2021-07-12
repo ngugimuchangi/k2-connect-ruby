@@ -1,11 +1,11 @@
 include SpecConfig, K2Validation
 RSpec.describe K2Polling do
   before(:all) do
-    @access_token = K2AccessToken.new('_9fXMGROLmSegBhofF6z-qDKHH5L6FsbMn2MgG24Xnk', 'nom1cCNLeFkVc4qafcBu2bGqGWTKv9WgS8YvZR3yaq8').request_token
+    @access_token = K2AccessToken.new('T1RyrPntqO4PJ35RLv6IVfPKRyg6gVoMvXEwEBin9Cw', 'Ywk_J18RySqLOmhhhVm8fhh4FzJTUzVcZJ03ckNpZK8').request_token
     @k2_polling = K2Polling.new(@access_token)
 
-    @till_polling_payload = HashWithIndifferentAccess.new(scope: 'till', scope_reference: 112233, from_time: Time.now - 7200, to_time: Time.now, callback_url: 'https://webhook.site/48d6113c-8967-4bf4-ab56-dcf470e0b005')
-    @company_polling_payload = HashWithIndifferentAccess.new(scope: 'company', scope_reference: '', from_time: Time.now - 7200, to_time: Time.now, callback_url: 'https://webhook.site/48d6113c-8967-4bf4-ab56-dcf470e0b005')
+    @till_polling_payload = HashWithIndifferentAccess.new(scope: 'till', scope_reference: 112233, from_time: Time.now - 14400, to_time: Time.now, callback_url: 'https://webhook.site/48d6113c-8967-4bf4-ab56-dcf470e0b005')
+    @company_polling_payload = HashWithIndifferentAccess.new(scope: 'company', scope_reference: '', from_time: Time.now - 14400, to_time: Time.now, callback_url: 'https://webhook.site/48d6113c-8967-4bf4-ab56-dcf470e0b005')
   end
 
   context "Till scope" do
@@ -25,7 +25,7 @@ RSpec.describe K2Polling do
     describe "#query_resource" do
       it 'should query creating verified settlement account status' do
         SpecConfig.custom_stub_request('get', @k2_polling.location_url, '', 200)
-        expect { @k2_polling.query_status }.not_to raise_error
+        expect { @k2_polling.query_resource }.not_to raise_error
         expect(@k2_polling.k2_response_body).not_to eq(nil)
         expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2_polling.location_url)))
       end
@@ -34,7 +34,7 @@ RSpec.describe K2Polling do
     describe "#query_resource_url" do
       it 'should query creating verified settlement account status' do
         SpecConfig.custom_stub_request('get', @k2_polling.location_url, '', 200)
-        expect { @k2_polling.query_resource(@k2_polling.location_url) }.not_to raise_error
+        expect { @k2_polling.query_resource_url(@k2_polling.location_url) }.not_to raise_error
         expect(@k2_polling.k2_response_body).not_to eq(nil)
         expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2_polling.location_url)))
       end
@@ -58,7 +58,7 @@ RSpec.describe K2Polling do
     describe "#query_resource" do
       it 'should query creating verified settlement account status' do
         SpecConfig.custom_stub_request('get', @k2_polling.location_url, '', 200)
-        expect { @k2_polling.query_status }.not_to raise_error
+        expect { @k2_polling.query_resource }.not_to raise_error
         expect(@k2_polling.k2_response_body).not_to eq(nil)
         expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2_polling.location_url)))
       end
@@ -67,7 +67,7 @@ RSpec.describe K2Polling do
     describe "#query_resource_url" do
       it 'should query creating verified settlement account status' do
         SpecConfig.custom_stub_request('get', @k2_polling.location_url, '', 200)
-        expect { @k2_polling.query_resource(@k2_polling.location_url) }.not_to raise_error
+        expect { @k2_polling.query_resource_url(@k2_polling.location_url) }.not_to raise_error
         expect(@k2_polling.k2_response_body).not_to eq(nil)
         expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2_polling.location_url)))
       end

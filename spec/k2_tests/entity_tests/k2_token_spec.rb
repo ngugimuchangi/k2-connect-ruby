@@ -1,7 +1,7 @@
 RSpec.describe K2AccessToken do
   before(:all) do
-    @client_id = '_9fXMGROLmSegBhofF6z-qDKHH5L6FsbMn2MgG24Xnk'
-    @client_secret = 'nom1cCNLeFkVc4qafcBu2bGqGWTKv9WgS8YvZR3yaq8'
+    @client_id = 'T1RyrPntqO4PJ35RLv6IVfPKRyg6gVoMvXEwEBin9Cw'
+    @client_secret = 'Ywk_J18RySqLOmhhhVm8fhh4FzJTUzVcZJ03ckNpZK8'
     @token_request_body = { client_id: @client_id, client_secret: @client_secret, grant_type: 'client_credentials' }
   end
 

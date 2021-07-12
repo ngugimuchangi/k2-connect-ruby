@@ -25,7 +25,7 @@ module K2Connect
     response_body = Yajl::Parser.parse(k2_response.body)
     response_headers = Yajl::Parser.parse(k2_response.headers.to_json)
     response_code = k2_response.code.to_s
-    raise K2ConnectionError.new(response_code) && k2_request.shutdown unless response_code[0].eql?(2.to_s)
+    raise K2ConnectionError.new(response_code) unless response_code[0].eql?(2.to_s)
 
     unless request_type.eql?('get')
       # Returns the access token for authorization
