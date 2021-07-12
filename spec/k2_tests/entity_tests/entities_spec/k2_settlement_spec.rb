@@ -2,7 +2,7 @@ include SpecConfig, K2Validation
 RSpec.describe K2Settlement do
   before(:all) do
     @access_token = K2AccessToken.new('_9fXMGROLmSegBhofF6z-qDKHH5L6FsbMn2MgG24Xnk', 'nom1cCNLeFkVc4qafcBu2bGqGWTKv9WgS8YvZR3yaq8').request_token
-    @k2settlement = K2Settlement.new(@access_token)
+    @k2_polling = K2Settlement.new(@access_token)
 
     @mobile_settle_account = HashWithIndifferentAccess.new(type: 'merchant_wallet', first_name: 'first_name', last_name: 'last_name', phone_number: '254796230902', network: 'Safaricom')
     @bank_settle_account_eft = HashWithIndifferentAccess.new(type: 'merchant_bank_account', account_name: 'account_name', bank_branch_ref: '633aa26c-7b7c-4091-ae28-96c0687cf886', account_number: 'account_number', settlement_method: "EFT")
@@ -13,26 +13,26 @@ RSpec.describe K2Settlement do
     describe "#add_settlement_account" do
       it 'should create verified mobile wallet settlement account' do
         SpecConfig.custom_stub_request('post', K2Config.path_url('settlement_mobile_wallet'), @mobile_settle_account, 200)
-        expect { @k2settlement.add_settlement_account(@mobile_settle_account) }.not_to raise_error
+        expect { @k2_polling.add_settlement_account(@mobile_settle_account) }.not_to raise_error
         expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('settlement_mobile_wallet')))
       end
     end
 
     describe "#query_status" do
       it 'should query creating verified settlement account status' do
-        SpecConfig.custom_stub_request('get', @k2settlement.location_url, '', 200)
-        expect { @k2settlement.query_status }.not_to raise_error
-        expect(@k2settlement.k2_response_body).not_to eq(nil)
-        expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2settlement.location_url)))
+        SpecConfig.custom_stub_request('get', @k2_polling.location_url, '', 200)
+        expect { @k2_polling.query_status }.not_to raise_error
+        expect(@k2_polling.k2_response_body).not_to eq(nil)
+        expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2_polling.location_url)))
       end
     end
 
     describe "#query_resource" do
       it 'should query creating verified settlement account status' do
-        SpecConfig.custom_stub_request('get', @k2settlement.location_url, '', 200)
-        expect { @k2settlement.query_resource(@k2settlement.location_url) }.not_to raise_error
-        expect(@k2settlement.k2_response_body).not_to eq(nil)
-        expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2settlement.location_url)))
+        SpecConfig.custom_stub_request('get', @k2_polling.location_url, '', 200)
+        expect { @k2_polling.query_resource(@k2_polling.location_url) }.not_to raise_error
+        expect(@k2_polling.k2_response_body).not_to eq(nil)
+        expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2_polling.location_url)))
       end
     end
   end
@@ -42,7 +42,7 @@ RSpec.describe K2Settlement do
       context "EFT settlement_method" do
         it 'should create verified bank settlement account' do
           SpecConfig.custom_stub_request('post', K2Config.path_url('settlement_bank_account'), @bank_settle_account_eft, 200)
-          expect { @k2settlement.add_settlement_account(@bank_settle_account_eft) }.not_to raise_error
+          expect { @k2_polling.add_settlement_account(@bank_settle_account_eft) }.not_to raise_error
           expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('settlement_bank_account')))
         end
       end
@@ -50,7 +50,7 @@ RSpec.describe K2Settlement do
       context "RTS settlement_method" do
         it 'should create verified bank settlement account' do
           SpecConfig.custom_stub_request('post', K2Config.path_url('settlement_bank_account'), @bank_settle_account_rts, 200)
-          expect { @k2settlement.add_settlement_account(@bank_settle_account_rts) }.not_to raise_error
+          expect { @k2_polling.add_settlement_account(@bank_settle_account_rts) }.not_to raise_error
           expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('settlement_bank_account')))
         end
       end
@@ -58,19 +58,19 @@ RSpec.describe K2Settlement do
 
     describe "#query_status" do
       it 'should query transfer status' do
-        SpecConfig.custom_stub_request('get', @k2settlement.location_url, '', 200)
-        expect { @k2settlement.query_status }.not_to raise_error
-        expect(@k2settlement.k2_response_body).not_to eq(nil)
-        expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2settlement.location_url)))
+        SpecConfig.custom_stub_request('get', @k2_polling.location_url, '', 200)
+        expect { @k2_polling.query_status }.not_to raise_error
+        expect(@k2_polling.k2_response_body).not_to eq(nil)
+        expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2_polling.location_url)))
       end
     end
 
     describe "#query_resource" do
       it 'should query transfer status' do
-        SpecConfig.custom_stub_request('get', @k2settlement.location_url, '', 200)
-        expect { @k2settlement.query_resource(@k2settlement.location_url) }.not_to raise_error
-        expect(@k2settlement.k2_response_body).not_to eq(nil)
-        expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2settlement.location_url)))
+        SpecConfig.custom_stub_request('get', @k2_polling.location_url, '', 200)
+        expect { @k2_polling.query_resource(@k2_polling.location_url) }.not_to raise_error
+        expect(@k2_polling.k2_response_body).not_to eq(nil)
+        expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2_polling.location_url)))
       end
     end
   end
