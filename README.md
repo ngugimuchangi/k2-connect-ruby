@@ -18,22 +18,22 @@ All calls made without authentication will also fail.
 
 ## LINKS
 
- - [Installation](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#installation)
- - [Usage](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#installation)
-    - [Authorization](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#authorization)
-    - [Webhook Subscription](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#webhook-subscription)
-    - [SMS Notifications](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#sms-notifications)
-    - [STK Push](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#stk-push)
-    - [PAY](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#pay)
-    - [Transfers](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#transfers)
-    - [Polling](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#polling)
-    - [Parsing the JSON Payload](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#parsing-the-json-payload)
- - [Development](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#development)
- - [Author](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#author)
- - [Contributing](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#contributing)
- - [License](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#license)
- - [Changelog](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#changelog)
- - [Code of Conduct](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#code-of-conduct)
+ - [Installation](#installation)
+ - [Usage](#installation)
+    - [Authorization](#authorization)
+    - [Webhook Subscription](#webhook-subscription)
+    - [SMS Notifications](#sms-notifications)
+    - [STK Push](#stk-push)
+    - [PAY](#pay)
+    - [Transfers](#transfers)
+    - [Polling](#polling)
+    - [Parsing the JSON Payload](#parsing-the-json-payload)
+ - [Development](#development)
+ - [Author](#author)
+ - [Contributing](#contributing)
+ - [License](#license)
+ - [Changelog](#changelog)
+ - [Code of Conduct](#code-of-conduct)
 
 ## Installation
 
