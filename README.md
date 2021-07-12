@@ -1,5 +1,7 @@
 # K2ConnectRuby For Rails
 
+[![Latest Stable Version](https://img.shields.io/rubygems.org/gems/k2-connect-ruby)
+
 Ruby SDK for connection to the Kopo Kopo API.
 This documentation gives you the specifications for connecting your systems to the Kopo Kopo Application.
 Primarily, the library provides functionality to do the following:
@@ -20,9 +22,11 @@ All calls made without authentication will also fail.
  - [Usage](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#installation)
     - [Authorization](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#authorization)
     - [Webhook Subscription](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#webhook-subscription)
+    - [SMS Notifications](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#sms-notifications)
     - [STK Push](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#stk-push)
     - [PAY](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#pay)
     - [Transfers](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#transfers)
+    - [Polling](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#polling)
     - [Parsing the JSON Payload](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#parsing-the-json-payload)
  - [Development](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#development)
  - [Author](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#author)
@@ -90,9 +94,32 @@ your_request = {
 }
 k2subscriber.webhook_subscribe(your_request)
 ```
+
+### SMS Notifications
+
+To create an SMS notification request by calling on the send_sms_transaction_notification method.
+Ensure the following arguments are passed:
+- webhook_event_reference `REQUIRED`
+- message `REQUIRED`
+- callback_url `REQUIRED`
+
+Code example;
+
+```ruby
+require 'k2-connect-ruby'
+k2_token = K2AccessToken.new('your_client_id', 'your_client_secret').request_token
+k2_notification = K2Notification.new(k2_token)
+
+request_payload = {
+        webhook_event_reference: 'c271535c-687f-4a40-a589-8b66b894792e',
+        message: 'message',
+        callback_url: 'callback_url'
+}
+k2_notification.send_sms_transaction_notification(request_payload)
+```
+
  
- 
- ### STK-Push
+### STK-Push
  
  #### Receive Payments
  
@@ -290,7 +317,7 @@ The Following Details should be passed for either **Blind** or **Targeted** Tran
 - value `REQUIRED`
 - callback_url `REQUIRED`
 
-The Params are passed as the argument containing all the form data sent. A Successful Response is returned with the URL of the Transfer in the HTTP Location Header.
+The Params are passed as the argument containing all the form data sent. A Successful Response is returned with the URL of the transfer request in the HTTP Location Header.
 
 Sample code example:
 
@@ -309,6 +336,46 @@ To Query the status of the prior initiated Transfer Request pass the location_ur
 To Query the most recent initiated Transfer Request:
 
      k2_transfers.query_status  
+
+A HTTP Response will be returned in a JSON Payload, accessible with the k2_response_body variable.
+
+### Polling
+
+Tallows you to poll transactions received on the Kopo Kopo system within a certain time range, and either a company or a specific till.
+
+First Create the K2Notification Object
+
+    k2_notification = K2Notification.new(access_token)
+
+#### Send SMS Notification
+
+The Following Details should be passed for creating the notification:
+
+- fromTime `REQUIRED`
+- toTime `REQUIRED`
+- scope `REQUIRED`
+- scopeReference `REQUIRED`
+- callback_url `REQUIRED`
+
+The Params are passed as the argument containing all the form data sent. A Successful Response is returned with the URL of the request in the HTTP Location Header.
+
+Sample code example:
+
+```ruby
+k2_notification = K2Notification.new(your_access_token)
+# Blind or Targeted Transfer
+k2_notification.send_sms_transaction_notification(request_payload)
+```
+
+#### Query Request
+
+To Query the status of the prior initiated Notification Request pass the location_url response as shown:
+
+     k2_notification.query_resource_url(k2_notification.location_url)  
+
+To Query the most recent initiated Transfer Request:
+
+     k2_notification.query_resource  
 
 A HTTP Response will be returned in a JSON Payload, accessible with the k2_response_body variable.
 
