@@ -11,8 +11,11 @@ module K2Connect
     end
 
     # Set up Headers
-    headers = { 'Content-Type': 'application/json', Accept: 'application/vnd.kopokopo.v1.hal+json', Authorization: "Bearer #{access_token}" }
-    if path_url.include?('oauth/token')
+    headers = { 'Content-Type': 'application/json', Accept: 'application/json', Authorization: "Bearer #{access_token}" }
+    # For access token request
+    if path_url.include?('oauth/token/info')
+      headers = { 'Content-Type': 'application/json', Accept: 'application/json', Authorization: "Bearer #{access_token}" }
+    elsif path_url.include?('oauth/')
       headers = { 'Content-Type': 'application/json' }
     end
 
@@ -22,7 +25,7 @@ module K2Connect
     response_body = Yajl::Parser.parse(k2_response.body)
     response_headers = Yajl::Parser.parse(k2_response.headers.to_json)
     response_code = k2_response.code.to_s
-    raise K2ConnectionError.new(response_code) && k2_request.shutdown unless response_code[0].eql?(2.to_s)
+    raise K2ConnectionError.new(response_code) unless response_code[0].eql?(2.to_s)
 
     unless request_type.eql?('get')
       # Returns the access token for authorization

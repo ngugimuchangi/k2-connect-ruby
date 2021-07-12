@@ -1,7 +1,7 @@
 RSpec.describe K2AccessToken do
   before(:all) do
-    @client_id = '_9fXMGROLmSegBhofF6z-qDKHH5L6FsbMn2MgG24Xnk'
-    @client_secret = 'nom1cCNLeFkVc4qafcBu2bGqGWTKv9WgS8YvZR3yaq8'
+    @client_id = 'T1RyrPntqO4PJ35RLv6IVfPKRyg6gVoMvXEwEBin9Cw'
+    @client_secret = 'Ywk_J18RySqLOmhhhVm8fhh4FzJTUzVcZJ03ckNpZK8'
     @token_request_body = { client_id: @client_id, client_secret: @client_secret, grant_type: 'client_credentials' }
   end
 
@@ -21,6 +21,33 @@ RSpec.describe K2AccessToken do
       SpecConfig.custom_stub_request('post', K2Config.path_url('oauth_token'), @token_request_body, 200)
       expect { k2token.request_token }.not_to raise_error
       expect(k2token.access_token).not_to eq(nil)
+    end
+  end
+
+  context "Other access token actions" do
+    let(:k2token) { K2AccessToken.new(@client_id, @client_secret) }
+    let(:access_token) { k2token.request_token }
+    let(:misc_token_params) { { client_id: @client_id, client_secret: @client_secret, token: access_token } }
+
+    describe '#revoke_token' do
+      it 'should return an access token' do
+        SpecConfig.custom_stub_request('post', K2Config.path_url('revoke_token'), misc_token_params, 200)
+        expect { k2token.revoke_token(access_token) }.not_to raise_error
+      end
+    end
+
+    describe '#introspect_token' do
+      it 'should return an access token' do
+        SpecConfig.custom_stub_request('post', K2Config.path_url('introspect_token'), misc_token_params, 200)
+        expect { k2token.introspect_token(access_token) }.not_to raise_error
+      end
+    end
+
+    describe '#token_info' do
+      it 'should return an access token' do
+        SpecConfig.custom_stub_request('get', K2Config.path_url('token_info'), '', 200)
+        expect { k2token.token_info(access_token) }.not_to raise_error
+      end
     end
   end
 end

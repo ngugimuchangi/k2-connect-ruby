@@ -25,7 +25,7 @@ module SpecConfig
     def custom_stub_request(request_type, path_url, request_body, response_code)
       request_body = request_body.to_s
       request_uri = path_url
-      request_headers = { Authorization: "Bearer access_token", Accept: "application/vnd.kopokopo.v1.hal+json" }
+      request_headers = { Authorization: "Bearer access_token", Accept: "application/json" }
 
       if request_type.eql?('post')
         request_headers['Content-Type'] = 'application/json'
