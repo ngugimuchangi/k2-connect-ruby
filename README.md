@@ -1,6 +1,6 @@
 # K2ConnectRuby For Rails
 
-[![Latest Stable Version](https://img.shields.io/rubygems/v/kopokopo/k2-connect-ruby)](https://rubygems.org/gems/k2-connect-ruby)
+[![Gem](https://img.shields.io/gem/v/k2-connect-ruby?style=for-the-badge)](https://rubygems.org/gems/k2-connect-ruby)
 
 Ruby SDK for connection to the Kopo Kopo API.
 This documentation gives you the specifications for connecting your systems to the Kopo Kopo Application.
