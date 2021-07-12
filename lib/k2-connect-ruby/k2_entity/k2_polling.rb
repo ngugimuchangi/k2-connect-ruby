@@ -19,7 +19,7 @@ class K2Polling
       to_time: params[:to_time],
       _links: { callback_url: params[:callback_url] }
     }
-    poll_hash = make_hash(K2Config.path_url('polling'), 'post', @access_token,'Polling', k2_request_body)
+    poll_hash = make_hash(K2Config.path_url('poll'), 'post', @access_token,'Polling', k2_request_body)
     @location_url =  K2Connect.make_request(poll_hash)
   end
 

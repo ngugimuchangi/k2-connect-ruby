@@ -1,8 +1,7 @@
 include K2Validation
 RSpec.describe K2Pay do
   before(:all) do
-    # K2Pay object
-    @access_token = K2AccessToken.new('_9fXMGROLmSegBhofF6z-qDKHH5L6FsbMn2MgG24Xnk', 'nom1cCNLeFkVc4qafcBu2bGqGWTKv9WgS8YvZR3yaq8').request_token
+    @access_token = K2AccessToken.new('T1RyrPntqO4PJ35RLv6IVfPKRyg6gVoMvXEwEBin9Cw', 'Ywk_J18RySqLOmhhhVm8fhh4FzJTUzVcZJ03ckNpZK8').request_token
     @k2pay = K2Pay.new(@access_token)
 
     @mobile_wallet_payment = {  destination_reference: "9764ef5f-fcd6-42c1-bbff-de280becc64b", destination_type: "mobile_wallet", currency: "KES", value: 20000, callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }

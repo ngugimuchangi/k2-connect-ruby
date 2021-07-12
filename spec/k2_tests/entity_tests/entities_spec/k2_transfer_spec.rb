@@ -2,15 +2,15 @@
 RSpec.describe K2Transfer do
   include SpecConfig, K2Validation
   before(:all) do
-    @access_token = K2AccessToken.new('_9fXMGROLmSegBhofF6z-qDKHH5L6FsbMn2MgG24Xnk', 'nom1cCNLeFkVc4qafcBu2bGqGWTKv9WgS8YvZR3yaq8').request_token
+    @access_token = K2AccessToken.new('T1RyrPntqO4PJ35RLv6IVfPKRyg6gVoMvXEwEBin9Cw', 'Ywk_J18RySqLOmhhhVm8fhh4FzJTUzVcZJ03ckNpZK8').request_token
     @k2transfer = K2Transfer.new(@access_token)
     # blind transfer
     @blind_mobile_transfer_params = HashWithIndifferentAccess.new(destination_reference: '', destination_type: '', currency: 'currency', value: 'value', callback_url: 'https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3', metadata: { something: "Nice", extra: "Comments" })
     @blind_bank_transfer_params = HashWithIndifferentAccess.new(destination_reference: '', destination_type: '', currency: 'currency', value: 'value', callback_url: 'https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3', metadata: { something: "Nice", extra: "Comments" })
 
     # targeted transfer
-    @mobile_transfer_params = HashWithIndifferentAccess.new(destination_reference: 'eba238ae-e03f-46f6-aed5-db357fb00f9c', destination_type: 'merchant_wallet', currency: 'currency', value: 'value', callback_url: 'https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3', metadata: { something: "Nice", extra: "Comments" })
-    @bank_transfer_params = HashWithIndifferentAccess.new(destination_reference: '1579ea6c-7585-4112-93c1-e97ccca317ec', destination_type: 'merchant_bank_account', currency: 'currency', value: 'value', callback_url: 'https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3', metadata: { something: "Nice", extra: "Comments" })
+    @mobile_transfer_params = HashWithIndifferentAccess.new(destination_reference: 'f624237a-d566-45a9-ab24-3650dac96553', destination_type: 'merchant_wallet', currency: 'currency', value: 'value', callback_url: 'https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3', metadata: { something: "Nice", extra: "Comments" })
+    @bank_transfer_params = HashWithIndifferentAccess.new(destination_reference: 'ce5358da-72ec-4d11-b076-41ce5e794221', destination_type: 'merchant_bank_account', currency: 'currency', value: 'value', callback_url: 'https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3', metadata: { something: "Nice", extra: "Comments" })
   end
 
   describe '#transfer_funds' do

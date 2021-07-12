@@ -14,8 +14,8 @@ require 'k2-connect-ruby/utilities'
 require 'k2-connect-ruby/k2_services/payload_process'
 
 # Entity
-require 'k2-connect-ruby/k2_financial_entity/k2_entity'
-require 'k2-connect-ruby/k2_financial_entity/entity'
+require 'k2-connect-ruby/k2_entity/k2_entity'
+require 'k2-connect-ruby/k2_entity/entity'
 
 # ActiveSupport
 require 'active_support/core_ext/hash/indifferent_access'

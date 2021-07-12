@@ -1,6 +1,6 @@
 --- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
 version: v1
-base_url: http://127.0.0.1:3000/
+base_url: https://sandbox.kopokopo.com/
 endpoints: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
   oauth_token: oauth/token
   revoke_token: oauth/revoke
