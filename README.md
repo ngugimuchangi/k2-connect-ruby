@@ -232,6 +232,9 @@ The following arguments should be passed within a hash:
 - destination_type `REQUIRED`
 - currency default is `KES`
 - value `REQUIRED`
+- description `REQUIRED`
+- category
+- tags
 - callback_url `REQUIRED`
 
 A Successful Response is returned with the URL of the Payment resource in the HTTP Location Header.
@@ -260,7 +263,25 @@ Code example;
 k2_pay = K2Pay.new(your_access_token)
 k2_pay.add_recipient(your_recipient_input)
 k2_pay.query_resource(k2_pay.recipients_location_url)
-k2_pay.create_payment(your_payment_input)
+
+your_request = {
+        destination_type: "mobile_wallet",
+        destination_reference: "example_reference",
+        amount: {
+                "currency": "KES",
+                "value": "500"
+        },
+        description: "k2-connect",
+        category: "general",
+        tags: ["tag_1", "tag_2"],
+        metadata: {
+                "something": "",
+                "something_else": "Something else"
+        },
+        _links: { "callback_url": "https://example.site/example" }
+}
+
+k2_pay.create_payment(your_request)
 k2_pay.query_resource(k2_pay.payments_location_url)
 ```
 

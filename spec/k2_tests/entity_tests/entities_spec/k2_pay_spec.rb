@@ -1,13 +1,14 @@
 include K2Validation
 RSpec.describe K2Pay do
   before(:all) do
-    @access_token = K2AccessToken.new('T1RyrPntqO4PJ35RLv6IVfPKRyg6gVoMvXEwEBin9Cw', 'Ywk_J18RySqLOmhhhVm8fhh4FzJTUzVcZJ03ckNpZK8').request_token
+    @access_token = K2AccessToken.new('qDeh9J2HibyXJYQsT8RYbh_HCdAy-438jBINt4rfyhw', 'NvC6pSJFqWOaC-VuaEIFooyoHdlBh54GluRb2RGhm1M').request_token
     @k2pay = K2Pay.new(@access_token)
 
-    @mobile_wallet_payment = {  destination_reference: "9764ef5f-fcd6-42c1-bbff-de280becc64b", destination_type: "mobile_wallet", currency: "KES", value: 20000, callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }
-    @bank_account_payment = {  destination_reference: "c533cb60-8501-440d-8150-7eaaff84616a", destination_type: "bank_account", currency: "KES", value: 20000, callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }
-    @till_payment = {  destination_reference: "7d08c521-f44a-40c1-87cf-eb8eaa014152", destination_type: "till", currency: "KES", value: 20000, callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }
-    @paybill_payment = {  destination_reference: "a59950cc-d171-457b-9671-9915b0787f49", destination_type: "paybill", currency: "KES", value: 20000, callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }
+    @mobile_wallet_payment = { destination_reference: "9764ef5f-fcd6-42c1-bbff-de280becc64b", destination_type: "mobile_wallet", currency: "KES", value: 20000, description: "k2-connect", category: "general", tags: %w[tag_1 tag_2], callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }
+    @bank_account_payment = {  destination_reference: "c533cb60-8501-440d-8150-7eaaff84616a", destination_type: "bank_account", currency: "KES", value: 20000, description: "k2-connect", category: "general", tags: %w[tag_1 tag_2], callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }
+    @paybill_payment = {  destination_reference: "a59950cc-d171-457b-9671-9915b0787f49", destination_type: "paybill", currency: "KES", value: 20000, description: "k2-connect", category: "general", tags: %w[tag_1 tag_2], callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }
+    @till_payment = {  destination_reference: "7d08c521-f44a-40c1-87cf-eb8eaa014152", destination_type: "till", currency: "KES", value: 20000, description: "k2-connect", category: "general", tags: %w[tag_1 tag_2], callback_url: "https://webhook.site/437a5819-1a9d-4e96-b403-a6f898e5bed3", metadata: { customerId: '8_675_309', notes: 'Salary payment for May 2018' } }
+
     @mobile_pay_request_body = { type: "mobile_wallet", first_name: "John", last_name: "Doe", email: "johndoe@nomail.net", phone_number: "+254796230902", network: "Safaricom" }
     @bank_pay_request_body_eft = { type: "bank_account", account_name: "David Kariuki", account_number: 566566, bank_branch_ref: "633aa26c-7b7c-4091-ae28-96c0687cf886", settlement_method: 'EFT' }
     @bank_pay_request_body_rts = { type: "bank_account", account_name: "David Kariuki", account_number: 566566, bank_branch_ref: "633aa26c-7b7c-4091-ae28-96c0687cf886", settlement_method: 'RTS' }
@@ -95,16 +96,16 @@ RSpec.describe K2Pay do
       end
     end
 
-    context "Adding a K2 Merchant PAY Recipient" do
+    context "Adding a Paybill PAY Recipient" do
       context "Correct recipient details" do
-        it 'should send an add kopo_kopo_merchant pay recipient request' do
-          SpecConfig.custom_stub_request('post', K2Config.path_url('pay_recipient'), @k2_merchant_pay_request_body, 201)
-          @k2pay.add_recipient(@k2_merchant_pay_request_body)
+        it 'should send an add paybill pay recipient request' do
+          SpecConfig.custom_stub_request('post', K2Config.path_url('pay_recipient'), @paybill_pay_request_body, 201)
+          @k2pay.add_recipient(@paybill_pay_request_body)
           expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('pay_recipient')))
         end
 
         it 'returns a location_url' do
-          @k2pay.add_recipient(@k2_merchant_pay_request_body)
+          @k2pay.add_recipient(@paybill_pay_request_body)
           expect(@k2pay.recipients_location_url).not_to eq(nil)
         end
       end
@@ -151,15 +152,15 @@ RSpec.describe K2Pay do
       end
     end
 
-    context 'kopo_kopo_merchant destination_type' do
+    context 'paybill destination_type' do
       it 'should create outgoing payment request' do
-        SpecConfig.custom_stub_request('post', K2Config.path_url('payments'), @k2_merchant_payment, 201)
-        @k2pay.create_payment(@k2_merchant_payment)
+        SpecConfig.custom_stub_request('post', K2Config.path_url('payments'), @paybill_payment, 201)
+        @k2pay.create_payment(@paybill_payment)
         expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('payments')))
       end
 
       it 'should create a payment location_url' do
-        @k2pay.create_payment(@k2_merchant_payment)
+        @k2pay.create_payment(@paybill_payment)
         expect(@k2pay.payments_location_url).not_to eq(nil)
       end
     end
