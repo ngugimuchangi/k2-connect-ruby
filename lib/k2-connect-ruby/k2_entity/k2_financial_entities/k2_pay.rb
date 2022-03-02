@@ -34,11 +34,12 @@ class K2Pay < K2Entity
         till_number: params[:till_number]
       }
       # In the case of bank pay recipient
-    elsif params[:type].eql?('kopo_kopo_merchant')
+    elsif params[:type].eql?('paybill')
       params = validate_input(params, @exception_array += %w[alias_name till_number])
       k2_request_pay_recipient = {
-        alias_name: params[:alias_name],
-        till_number: params[:till_number]
+        paybill_name: params[:paybill_name],
+        paybill_number: params[:paybill_number],
+        paybill_account_number: params[:paybill_account_number]
       }
     else
       raise ArgumentError, 'Undefined Payment Method.'

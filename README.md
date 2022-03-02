@@ -202,6 +202,17 @@ Add a PAY Recipient, with the following arguments:
 - bank_branch_ref `REQUIRED`
 - settlement_method: 'EFT' or 'RTS' `REQUIRED`
 
+**Paybill** PAY Recipient
+- type: 'paybill' `REQUIRED`
+- paybill_name `REQUIRED`
+- paybill_number `REQUIRED`
+- paybill_account_number `REQUIRED`
+
+**Till** PAY Recipient
+- type: 'till' `REQUIRED`
+- till_name `REQUIRED`
+- till_number `REQUIRED`
+
   
     k2_pay.add_recipients(your_input)
     
@@ -341,7 +352,7 @@ A HTTP Response will be returned in a JSON Payload, accessible with the k2_respo
 
 ### Polling
 
-Tallows you to poll transactions received on the Kopo Kopo system within a certain time range, and either a company or a specific till.
+Allows you to poll transactions received on the Kopo Kopo system within a certain time range, and either a company or a specific till.
 
 First Create the K2Notification Object
 
@@ -501,21 +512,6 @@ k2_components = K2ProcessResult.process(k2_parse.hash_body)
     - `links_self`
     - `links_resource`
     - `sending_till`
-
-6. Merchant to Merchant Transaction:
-    - `id`
-    - `resource_id`
-    - `topic`
-    - `created_at`
-    - `event_type`
-    - `reference`
-    - `origination_time`
-    - `amount`
-    - `currency`
-    - `status`
-    - `links_self`
-    - `links_resource`
-    - `resource_sending_merchant`
     
 7. Process STK Push Payment Request Result
     - `id`
