@@ -7,8 +7,7 @@ RSpec.describe K2Config do
     end
 
     it 'should set the url' do
-      expect { K2Config.set_base_url('http://test.com/') }.not_to raise_error
-      K2Config.set_base_url('http://127.0.0.1:3000/')
+      expect { K2Config.set_base_url('https://sandbox.kopokopo.com/') }.not_to raise_error
     end
   end
 

@@ -34,11 +34,12 @@ class K2Pay < K2Entity
         till_number: params[:till_number]
       }
       # In the case of bank pay recipient
-    elsif params[:type].eql?('kopo_kopo_merchant')
-      params = validate_input(params, @exception_array += %w[alias_name till_number])
+    elsif params[:type].eql?('paybill')
+      params = validate_input(params, @exception_array += %w[paybill_name paybill_number paybill_account_number])
       k2_request_pay_recipient = {
-        alias_name: params[:alias_name],
-        till_number: params[:till_number]
+        paybill_name: params[:paybill_name],
+        paybill_number: params[:paybill_number],
+        paybill_account_number: params[:paybill_account_number]
       }
     else
       raise ArgumentError, 'Undefined Payment Method.'
@@ -59,7 +60,7 @@ class K2Pay < K2Entity
   # Create an outgoing Payment to a third party.
   def create_payment(params)
     # Validation
-    params = validate_input(params, @exception_array += %w[destination_reference destination_type currency value callback_url metadata])
+    params = validate_input(params, @exception_array += %w[destination_reference destination_type description category tags currency value callback_url metadata])
     # The Request Body Parameters
     k2_request_pay_amount = {
       currency: params[:currency],
@@ -72,6 +73,9 @@ class K2Pay < K2Entity
     create_payment_body = {
       destination_reference: params[:destination_reference],
       destination_type: params[:destination_type],
+      description: params[:description],
+      category: params[:category],
+      tags: params[:tags],
       amount: k2_request_pay_amount,
       meta_data: k2_request_pay_metadata,
       _links: k2_request_links

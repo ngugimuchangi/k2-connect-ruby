@@ -1,5 +1,7 @@
 # K2ConnectRuby For Rails
 
+[![Gem](https://img.shields.io/gem/v/k2-connect-ruby?style=for-the-badge)](https://rubygems.org/gems/k2-connect-ruby)
+
 Ruby SDK for connection to the Kopo Kopo API.
 This documentation gives you the specifications for connecting your systems to the Kopo Kopo Application.
 Primarily, the library provides functionality to do the following:
@@ -16,20 +18,22 @@ All calls made without authentication will also fail.
 
 ## LINKS
 
- - [Installation](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#installation)
- - [Usage](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#installation)
-    - [Authorization](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#authorization)
-    - [Webhook Subscription](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#webhook-subscription)
-    - [STK Push](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#stk-push)
-    - [PAY](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#pay)
-    - [Transfers](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#transfers)
-    - [Parsing the JSON Payload](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#parsing-the-json-payload)
- - [Development](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#development)
- - [Author](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#author)
- - [Contributing](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#contributing)
- - [License](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#license)
- - [Changelog](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#changelog)
- - [Code of Conduct](https://github.com/DavidKar1uk1/k2-connect-ruby/tree/development#code-of-conduct)
+ - [Installation](#installation)
+ - [Usage](#installation)
+    - [Authorization](#authorization)
+    - [Webhook Subscription](#webhook-subscription)
+    - [SMS Notifications](#sms-notifications)
+    - [STK Push](#stk-push)
+    - [PAY](#pay)
+    - [Transfers](#transfers)
+    - [Polling](#polling)
+    - [Parsing the JSON Payload](#parsing-the-json-payload)
+ - [Development](#development)
+ - [Author](#author)
+ - [Contributing](#contributing)
+ - [License](#license)
+ - [Changelog](#changelog)
+ - [Code of Conduct](#code-of-conduct)
 
 ## Installation
 
@@ -90,9 +94,32 @@ your_request = {
 }
 k2subscriber.webhook_subscribe(your_request)
 ```
+
+### SMS Notifications
+
+To create an SMS notification request by calling on the send_sms_transaction_notification method.
+Ensure the following arguments are passed:
+- webhook_event_reference `REQUIRED`
+- message `REQUIRED`
+- callback_url `REQUIRED`
+
+Code example;
+
+```ruby
+require 'k2-connect-ruby'
+k2_token = K2AccessToken.new('your_client_id', 'your_client_secret').request_token
+k2_notification = K2Notification.new(k2_token)
+
+request_payload = {
+        webhook_event_reference: 'c271535c-687f-4a40-a589-8b66b894792e',
+        message: 'message',
+        callback_url: 'callback_url'
+}
+k2_notification.send_sms_transaction_notification(request_payload)
+```
+
  
- 
- ### STK-Push
+### STK-Push
  
  #### Receive Payments
  
@@ -175,6 +202,17 @@ Add a PAY Recipient, with the following arguments:
 - bank_branch_ref `REQUIRED`
 - settlement_method: 'EFT' or 'RTS' `REQUIRED`
 
+**Paybill** PAY Recipient
+- type: 'paybill' `REQUIRED`
+- paybill_name `REQUIRED`
+- paybill_number `REQUIRED`
+- paybill_account_number `REQUIRED`
+
+**Till** PAY Recipient
+- type: 'till' `REQUIRED`
+- till_name `REQUIRED`
+- till_number `REQUIRED`
+
   
     k2_pay.add_recipients(your_input)
     
@@ -194,6 +232,9 @@ The following arguments should be passed within a hash:
 - destination_type `REQUIRED`
 - currency default is `KES`
 - value `REQUIRED`
+- description `REQUIRED`
+- category
+- tags
 - callback_url `REQUIRED`
 
 A Successful Response is returned with the URL of the Payment resource in the HTTP Location Header.
@@ -222,7 +263,25 @@ Code example;
 k2_pay = K2Pay.new(your_access_token)
 k2_pay.add_recipient(your_recipient_input)
 k2_pay.query_resource(k2_pay.recipients_location_url)
-k2_pay.create_payment(your_payment_input)
+
+your_request = {
+        destination_type: "mobile_wallet",
+        destination_reference: "example_reference",
+        amount: {
+                "currency": "KES",
+                "value": "500"
+        },
+        description: "k2-connect",
+        category: "general",
+        tags: ["tag_1", "tag_2"],
+        metadata: {
+                "something": "",
+                "something_else": "Something else"
+        },
+        _links: { "callback_url": "https://example.site/example" }
+}
+
+k2_pay.create_payment(your_request)
 k2_pay.query_resource(k2_pay.payments_location_url)
 ```
 
@@ -290,7 +349,7 @@ The Following Details should be passed for either **Blind** or **Targeted** Tran
 - value `REQUIRED`
 - callback_url `REQUIRED`
 
-The Params are passed as the argument containing all the form data sent. A Successful Response is returned with the URL of the Transfer in the HTTP Location Header.
+The Params are passed as the argument containing all the form data sent. A Successful Response is returned with the URL of the transfer request in the HTTP Location Header.
 
 Sample code example:
 
@@ -309,6 +368,46 @@ To Query the status of the prior initiated Transfer Request pass the location_ur
 To Query the most recent initiated Transfer Request:
 
      k2_transfers.query_status  
+
+A HTTP Response will be returned in a JSON Payload, accessible with the k2_response_body variable.
+
+### Polling
+
+Allows you to poll transactions received on the Kopo Kopo system within a certain time range, and either a company or a specific till.
+
+First Create the K2Notification Object
+
+    k2_notification = K2Notification.new(access_token)
+
+#### Send SMS Notification
+
+The Following Details should be passed for creating the notification:
+
+- fromTime `REQUIRED`
+- toTime `REQUIRED`
+- scope `REQUIRED`
+- scopeReference `REQUIRED`
+- callback_url `REQUIRED`
+
+The Params are passed as the argument containing all the form data sent. A Successful Response is returned with the URL of the request in the HTTP Location Header.
+
+Sample code example:
+
+```ruby
+k2_notification = K2Notification.new(your_access_token)
+# Blind or Targeted Transfer
+k2_notification.send_sms_transaction_notification(request_payload)
+```
+
+#### Query Request
+
+To Query the status of the prior initiated Notification Request pass the location_url response as shown:
+
+     k2_notification.query_resource_url(k2_notification.location_url)  
+
+To Query the most recent initiated Transfer Request:
+
+     k2_notification.query_resource  
 
 A HTTP Response will be returned in a JSON Payload, accessible with the k2_response_body variable.
 
@@ -434,21 +533,6 @@ k2_components = K2ProcessResult.process(k2_parse.hash_body)
     - `links_self`
     - `links_resource`
     - `sending_till`
-
-6. Merchant to Merchant Transaction:
-    - `id`
-    - `resource_id`
-    - `topic`
-    - `created_at`
-    - `event_type`
-    - `reference`
-    - `origination_time`
-    - `amount`
-    - `currency`
-    - `status`
-    - `links_self`
-    - `links_resource`
-    - `resource_sending_merchant`
     
 7. Process STK Push Payment Request Result
     - `id`
