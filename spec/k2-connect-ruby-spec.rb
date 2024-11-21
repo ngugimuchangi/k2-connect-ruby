@@ -12,7 +12,7 @@ require 'k2_tests/utility_tests/k2_validation_spec'
 
 # Services
 require 'k2_tests/service_tests/k2_results_spec'
-require 'k2_tests/service_tests/results_spec/webhook_spec'
+require 'k2_tests/service_tests/results_spec/k2_webhooks_spec'
 require 'k2_tests/service_tests/client_spec/k2_client_spec'
 require 'k2_tests/service_tests/results_spec/k2_common_events_spec'
 

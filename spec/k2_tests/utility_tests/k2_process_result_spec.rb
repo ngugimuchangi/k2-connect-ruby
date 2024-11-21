@@ -1,4 +1,5 @@
-RSpec.describe K2ProcessResult do
+RSpec.describe K2ConnectRuby::K2Utilities::K2ProcessResult do
+  let(:k2_process_result) { K2ConnectRuby::K2Utilities::K2ProcessResult }
   before(:context) do
     @stk = HashWithIndifferentAccess.new("data": {
       "id": "a652f86f-f2aa-4d70-baa2-ccfe4b78f4fc",
@@ -129,49 +130,49 @@ RSpec.describe K2ProcessResult do
 
   describe '#process' do
     it 'should raise an error if argument is empty' do
-      expect { K2ProcessResult.process('', '', '') }.to raise_error ArgumentError, 'Empty/Nil Request Body Argument!'
+      expect { k2_process_result.process('', '', '') }.to raise_error ArgumentError, 'Empty/Nil Request Body Argument!'
     end
 
     context 'Process Stk Result' do
       it 'processes successfully' do
-        expect { K2ProcessResult.process(@stk, 'api_secret_key', 'd627df47431db2814673efdcb3e76a6c96a4ed12b18f36716b4ca3f9f983b480') }.not_to raise_error
+        expect { k2_process_result.process(@stk, 'api_secret_key', 'd627df47431db2814673efdcb3e76a6c96a4ed12b18f36716b4ca3f9f983b480') }.not_to(raise_error)
       end
 
       it 'returns an STK Object' do
-        expect(K2ProcessResult.process(@stk, 'api_secret_key', 'd627df47431db2814673efdcb3e76a6c96a4ed12b18f36716b4ca3f9f983b480')).instance_of?(K2Stk)
+        expect(k2_process_result.process(@stk, 'api_secret_key', 'd627df47431db2814673efdcb3e76a6c96a4ed12b18f36716b4ca3f9f983b480')).instance_of?(K2ConnectRuby::K2Entity::K2Stk)
       end
     end
 
     context 'Process Pay Result' do
       it 'processes successfully' do
-        expect { K2ProcessResult.process(@pay, 'api_secret_key', '466452be2841cd52b8f5ee309e12b975f18047fd633704ed6b0c33d7fa506512') }.not_to raise_error
+        expect { k2_process_result.process(@pay, 'api_secret_key', '466452be2841cd52b8f5ee309e12b975f18047fd633704ed6b0c33d7fa506512') }.not_to(raise_error)
       end
 
       it 'returns an PAY Object' do
-        expect(K2ProcessResult.process(@pay, 'api_secret_key', '466452be2841cd52b8f5ee309e12b975f18047fd633704ed6b0c33d7fa506512')).instance_of?(K2Pay)
+        expect(k2_process_result.process(@pay, 'api_secret_key', '466452be2841cd52b8f5ee309e12b975f18047fd633704ed6b0c33d7fa506512')).instance_of?(K2ConnectRuby::K2Entity::K2Pay)
       end
     end
 
     context 'Process Transfer Result' do
       it 'processes successfully' do
-        expect { K2ProcessResult.process(@mobile_wallet_transfer, 'api_secret_key', '54b24a51d61d16e143759fb96c7e043887fa5f4923e377e144defc914b438393') }.not_to raise_error
+        expect { k2_process_result.process(@mobile_wallet_transfer, 'api_secret_key', '54b24a51d61d16e143759fb96c7e043887fa5f4923e377e144defc914b438393') }.not_to(raise_error)
       end
 
       it 'returns an Transfer Object' do
-        expect(K2ProcessResult.process(@mobile_wallet_transfer, 'api_secret_key', '54b24a51d61d16e143759fb96c7e043887fa5f4923e377e144defc914b438393')).instance_of?(K2Transfer)
+        expect(k2_process_result.process(@mobile_wallet_transfer, 'api_secret_key', '54b24a51d61d16e143759fb96c7e043887fa5f4923e377e144defc914b438393')).instance_of?(K2ConnectRuby::K2Entity::K2Transfer)
       end
     end
   end
 
   describe '#check_type' do
     it 'should raise an error if event_type is not specified' do
-      expect { K2ProcessResult.check_type({the_body: {event: nil} } ) }.to raise_error ArgumentError
+      expect { k2_process_result.check_type({the_body: {event: nil} } ) }.to raise_error ArgumentError
     end
   end
 
   describe '#return_hash' do
     it 'returns a hash object' do
-      expect(K2ProcessResult.return_obj_hash(OutgoingPayment.new(@pay))).to be_instance_of(HashWithIndifferentAccess)
+      expect(k2_process_result.return_obj_hash(K2ConnectRuby::K2Services::Payloads::Transactions::OutgoingPayment.new(@pay))).to be_instance_of(HashWithIndifferentAccess)
     end
   end
 end

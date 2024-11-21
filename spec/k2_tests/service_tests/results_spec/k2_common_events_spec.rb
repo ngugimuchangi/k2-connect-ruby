@@ -4,7 +4,7 @@
 #     let(:k2payment) { K2Payment.new }
 #     context "#components" do
 #       it 'should split body into components' do
-#         expect{ k2payment.components the_body }.not_to raise_error
+#         expect{ k2payment.components the_body }.not_to(raise_error)
 #       end
 #     end
 #   end
@@ -13,7 +13,7 @@
 #     let(:k2process_stk) { K2ProcessStk.new }
 #     context "#components" do
 #       it 'should split body into components' do
-#         expect{ k2process_stk.components the_body }.not_to raise_error
+#         expect{ k2process_stk.components the_body }.not_to(raise_error)
 #       end
 #     end
 #   end
@@ -22,7 +22,7 @@
 #     let(:k2process_pay) { K2Payment.new }
 #     context "#components" do
 #       it 'should split body into components' do
-#         expect{ k2process_pay.components the_body }.not_to raise_error
+#         expect{ k2process_pay.components the_body }.not_to(raise_error)
 #       end
 #     end
 #   end
