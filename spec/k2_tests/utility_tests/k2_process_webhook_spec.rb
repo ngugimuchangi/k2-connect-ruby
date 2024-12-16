@@ -1,6 +1,8 @@
-include K2Validation
+include K2ConnectRuby::K2Utilities::K2Validation
 
-RSpec.describe K2ProcessWebhook do
+RSpec.describe K2ConnectRuby::K2Utilities::K2ProcessWebhook do
+  let(:k2_process_webhook) { K2ConnectRuby::K2Utilities::K2ProcessWebhook }
+
   before(:context) do
     @bg_received = HashWithIndifferentAccess.new("topic": "buygoods_transaction_received",
                                                  "id": "2133dbfb-24b9-40fc-ae57-2d7559785760",
@@ -47,26 +49,6 @@ RSpec.describe K2ProcessWebhook do
                                          "_links": {
                                            "self": "https://sandbox.kopokopo.com/webhook_events/bcfb7175-bc7f-46e8-9727-eb46e6f88ef1",
                                            "resource": "https://sandbox.kopokopo.com/financial_transaction/fbygwu7175-bc7f-46e8-9727-f88edyy"
-                                         })
-
-
-    @m2m = HashWithIndifferentAccess.new("topic": "m2m_transaction_received",
-                                         "id": "5fbbcfc3-5b06-485e-929c-066741f4b14d",
-                                         "created_at": "2020-10-29T08:37:31+03:00",
-                                         "event": {
-                                           "type": "Merchant to Merchant Transaction",
-                                           "resource": {
-                                             "id": "893ebbcfc3-e8993-485e-929c-066741f47847",
-                                             "amount": "456",
-                                             "status": "Received",
-                                             "currency": "KES",
-                                             "origination_time": "2020-10-29T08:37:31+03:00",
-                                             "sending_merchant": "Jane Flowers"
-                                           }
-                                         },
-                                         "_links": {
-                                           "self": "https://sandbox.kopokopo.com/webhook_events/5fbbcfc3-5b06-485e-929c-066741f4b14d",
-                                           "resource": "https://sandbox.kopokopo.com/payment_batches/893ebbcfc3-e8993-485e-929c-066741f47847"
                                          })
 
     @bg_reversal = HashWithIndifferentAccess.new("topic": "buygoods_transaction_reversed",
@@ -155,20 +137,20 @@ RSpec.describe K2ProcessWebhook do
   end
   describe '#process' do
     it 'should raise an error if argument is empty' do
-      expect { K2ProcessWebhook.process('', '', '') }.to raise_error ArgumentError
+      expect { k2_process_webhook.process('', '', '') }.to raise_error ArgumentError
     end
 
     context 'Buy Goods Received' do
       it 'processes successfully' do
-        expect { K2ProcessWebhook.process(@bg_received, 'k2_secret_key', 'bb962d85ed87a90e1a6f722dc77f60a44768c84d8c771b75d5ac5f40634d0943') }.not_to raise_error
+        expect { k2_process_webhook.process(@bg_received, 'k2_secret_key', 'bb962d85ed87a90e1a6f722dc77f60a44768c84d8c771b75d5ac5f40634d0943') }.not_to(raise_error)
       end
 
       it 'processes successfully' do
-        expect(K2ProcessWebhook.process(@bg_received, 'k2_secret_key', 'bb962d85ed87a90e1a6f722dc77f60a44768c84d8c771b75d5ac5f40634d0943')).instance_of?(BuygoodsTransactionReceived)
+        expect(k2_process_webhook.process(@bg_received, 'k2_secret_key', 'bb962d85ed87a90e1a6f722dc77f60a44768c84d8c771b75d5ac5f40634d0943')).instance_of?(K2ConnectRuby::K2Services::Payloads::Webhooks::BuygoodsTransactionReceived)
       end
 
       it 'has no nil values' do
-        test = K2ProcessWebhook.process(@bg_received, 'k2_secret_key', 'bb962d85ed87a90e1a6f722dc77f60a44768c84d8c771b75d5ac5f40634d0943')
+        test = k2_process_webhook.process(@bg_received, 'k2_secret_key', 'bb962d85ed87a90e1a6f722dc77f60a44768c84d8c771b75d5ac5f40634d0943')
         result = nil_values(test.as_json)
         expect(result).to be(nil)
       end
@@ -176,31 +158,15 @@ RSpec.describe K2ProcessWebhook do
 
     context 'B2b Transaction' do
       it 'processes successfully' do
-        expect { K2ProcessWebhook.process(@b2b, 'k2_secret_key', '66c7221667d3733bdb9f156ac0e2a4f25df102af7213dfda4e3d249f9aaefbc5') }.not_to raise_error
+        expect { k2_process_webhook.process(@b2b, 'k2_secret_key', '66c7221667d3733bdb9f156ac0e2a4f25df102af7213dfda4e3d249f9aaefbc5') }.not_to(raise_error)
       end
 
       it 'processes successfully' do
-        expect(K2ProcessWebhook.process(@b2b, 'k2_secret_key', '66c7221667d3733bdb9f156ac0e2a4f25df102af7213dfda4e3d249f9aaefbc5')).instance_of?(B2b)
+        expect(k2_process_webhook.process(@b2b, 'k2_secret_key', '66c7221667d3733bdb9f156ac0e2a4f25df102af7213dfda4e3d249f9aaefbc5')).instance_of?(K2ConnectRuby::K2Services::Payloads::Webhooks::B2bTransactionReceived)
       end
 
       it 'has no nil values' do
-        test = K2ProcessWebhook.process(@b2b, 'k2_secret_key', '66c7221667d3733bdb9f156ac0e2a4f25df102af7213dfda4e3d249f9aaefbc5')
-        result = nil_values(test.as_json)
-        expect(result).to be(nil)
-      end
-    end
-
-    context 'Merchant to Merchant Transaction' do
-      it 'processes successfully' do
-        expect { K2ProcessWebhook.process(@m2m, 'k2_secret_key', '81f1baf4211f27f580887f9cbdd4ce0f6cdde9b29a8d9ae9ccf4a77f41d48f05') }.not_to raise_error
-      end
-
-      it 'processes successfully' do
-        expect(K2ProcessWebhook.process(@m2m, 'k2_secret_key', '81f1baf4211f27f580887f9cbdd4ce0f6cdde9b29a8d9ae9ccf4a77f41d48f05')).instance_of?(MerchantToMerchant)
-      end
-
-      it 'has no nil values' do
-        test = K2ProcessWebhook.process(@m2m, 'k2_secret_key', '81f1baf4211f27f580887f9cbdd4ce0f6cdde9b29a8d9ae9ccf4a77f41d48f05')
+        test = k2_process_webhook.process(@b2b, 'k2_secret_key', '66c7221667d3733bdb9f156ac0e2a4f25df102af7213dfda4e3d249f9aaefbc5')
         result = nil_values(test.as_json)
         expect(result).to be(nil)
       end
@@ -208,15 +174,15 @@ RSpec.describe K2ProcessWebhook do
 
     context 'Buy Goods Reversed' do
       it 'processes successfully' do
-        expect { K2ProcessWebhook.process(@bg_reversal, 'k2_secret_key', 'b0d4e69ab1d7d0efc1132947266ba0a677c270b99c78018149ff2c7ffe58fc95') }.not_to raise_error
+        expect { k2_process_webhook.process(@bg_reversal, 'k2_secret_key', 'b0d4e69ab1d7d0efc1132947266ba0a677c270b99c78018149ff2c7ffe58fc95') }.not_to(raise_error)
       end
 
       it 'processes successfully' do
-        expect(K2ProcessWebhook.process(@bg_reversal, 'k2_secret_key', 'b0d4e69ab1d7d0efc1132947266ba0a677c270b99c78018149ff2c7ffe58fc95')).instance_of?(BuygoodsTransactionReversed)
+        expect(k2_process_webhook.process(@bg_reversal, 'k2_secret_key', 'b0d4e69ab1d7d0efc1132947266ba0a677c270b99c78018149ff2c7ffe58fc95')).instance_of?(K2ConnectRuby::K2Services::Payloads::Webhooks::BuygoodsTransactionReversed)
       end
 
       it 'has no nil values' do
-        test = K2ProcessWebhook.process(@bg_reversal, 'k2_secret_key', 'b0d4e69ab1d7d0efc1132947266ba0a677c270b99c78018149ff2c7ffe58fc95')
+        test = k2_process_webhook.process(@bg_reversal, 'k2_secret_key', 'b0d4e69ab1d7d0efc1132947266ba0a677c270b99c78018149ff2c7ffe58fc95')
         result = nil_values(test.as_json)
         expect(result).to be(nil)
       end
@@ -224,15 +190,15 @@ RSpec.describe K2ProcessWebhook do
 
     context 'Settlement Transfer Completed merchant_bank_account' do
       it 'processes successfully' do
-        expect { K2ProcessWebhook.process(@settlement_bank_account, 'k2_secret_key', '794fc3795e29776d037ed159f496db21ef35c034d9515e38b59ffd2a2d6445a6') }.not_to raise_error
+        expect { k2_process_webhook.process(@settlement_bank_account, 'k2_secret_key', '794fc3795e29776d037ed159f496db21ef35c034d9515e38b59ffd2a2d6445a6') }.not_to(raise_error)
       end
 
       it 'processes successfully' do
-        expect(K2ProcessWebhook.process(@settlement_bank_account, 'k2_secret_key', '794fc3795e29776d037ed159f496db21ef35c034d9515e38b59ffd2a2d6445a6')).instance_of?(SettlementWebhook)
+        expect(k2_process_webhook.process(@settlement_bank_account, 'k2_secret_key', '794fc3795e29776d037ed159f496db21ef35c034d9515e38b59ffd2a2d6445a6')).instance_of?(K2ConnectRuby::K2Services::Payloads::Webhooks::SettlementWebhook)
       end
 
       it 'has no nil values' do
-        test = K2ProcessWebhook.process(@settlement_bank_account, 'k2_secret_key', '794fc3795e29776d037ed159f496db21ef35c034d9515e38b59ffd2a2d6445a6')
+        test = k2_process_webhook.process(@settlement_bank_account, 'k2_secret_key', '794fc3795e29776d037ed159f496db21ef35c034d9515e38b59ffd2a2d6445a6')
         result = nil_values(test.as_json)
         expect(result).to be(nil)
       end
@@ -240,15 +206,15 @@ RSpec.describe K2ProcessWebhook do
 
     context 'Customer Created' do
       it 'processes successfully' do
-        expect { K2ProcessWebhook.process(@customer, 'k2_secret_key', '6016cbf773c4cf8885439ea1d509e0d5acbf887d1645bbe22942f2f8fdc744d1') }.not_to raise_error
+        expect { k2_process_webhook.process(@customer, 'k2_secret_key', '6016cbf773c4cf8885439ea1d509e0d5acbf887d1645bbe22942f2f8fdc744d1') }.not_to(raise_error)
       end
 
       it 'processes successfully' do
-        expect(K2ProcessWebhook.process(@customer, 'k2_secret_key', '6016cbf773c4cf8885439ea1d509e0d5acbf887d1645bbe22942f2f8fdc744d1')).instance_of?(CustomerCreated)
+        expect(k2_process_webhook.process(@customer, 'k2_secret_key', '6016cbf773c4cf8885439ea1d509e0d5acbf887d1645bbe22942f2f8fdc744d1')).instance_of?(K2ConnectRuby::K2Services::Payloads::Webhooks::CustomerCreated)
       end
 
       it 'has no nil values' do
-        test = K2ProcessWebhook.process(@customer, 'k2_secret_key', '6016cbf773c4cf8885439ea1d509e0d5acbf887d1645bbe22942f2f8fdc744d1')
+        test = k2_process_webhook.process(@customer, 'k2_secret_key', '6016cbf773c4cf8885439ea1d509e0d5acbf887d1645bbe22942f2f8fdc744d1')
         result = nil_values(test.as_json)
         expect(result).to be(nil)
       end
@@ -257,13 +223,13 @@ RSpec.describe K2ProcessWebhook do
 
   describe '#check_topic' do
     it 'should raise an error if event_type is not specified' do
-      expect { K2ProcessWebhook.check_topic({the_body: {event: nil} } ) }.to raise_error ArgumentError
+      expect { k2_process_webhook.check_topic({the_body: {event: nil} } ) }.to raise_error ArgumentError
     end
   end
 
   describe '#return_hash' do
     it 'returns a hash object' do
-      expect(K2ProcessWebhook.return_obj_hash(BuygoodsTransactionReceived.new(@bg_received))).to be_instance_of(HashWithIndifferentAccess)
+      expect(k2_process_webhook.return_obj_hash(K2ConnectRuby::K2Services::Payloads::Webhooks::BuygoodsTransactionReceived.new(@bg_received))).to be_instance_of(HashWithIndifferentAccess)
     end
   end
 end

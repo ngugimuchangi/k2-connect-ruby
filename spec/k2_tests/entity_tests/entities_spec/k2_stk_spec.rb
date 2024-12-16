@@ -1,9 +1,15 @@
-include K2Validation
-RSpec.describe K2Stk do
-  before(:all) do
-    @access_token = K2AccessToken.new('T1RyrPntqO4PJ35RLv6IVfPKRyg6gVoMvXEwEBin9Cw', 'Ywk_J18RySqLOmhhhVm8fhh4FzJTUzVcZJ03ckNpZK8').request_token
-    @k2stk = K2Stk.new(@access_token)
+require 'faker'
 
+include K2ConnectRuby::K2Utilities::K2Validation
+RSpec.describe K2ConnectRuby::K2Entity::K2Stk do
+  before(:each) do
+    stub_request(:post, 'https://sandbox.kopokopo.com/oauth/token').to_return(body: { access_token: "access_token" }.to_json, status: 200)
+    @access_token = K2ConnectRuby::K2Entity::K2Token.new('client_id', 'client_secret').request_token
+    @k2_stk = K2ConnectRuby::K2Entity::K2Stk.new(@access_token)
+    stub_request(:post, /sandbox.kopokopo.com/).to_return(status: 201, body: {data: "some_data"}.to_json, headers: { location: Faker::Internet.url })
+  end
+
+  before(:all) do
     @mpesa_payments = {
         payment_channel: 'M-PESA',
         till_number: 'K112233',
@@ -24,32 +30,27 @@ RSpec.describe K2Stk do
 
   describe '#receive_mpesa_payments' do
     context "with valid details" do
-      it 'validates input correctly' do
-        expect { validate_input(@mpesa_payments, %w[payment_channel till_number first_name last_name phone_number email currency value metadata callback_url]) }.not_to raise_error
-      end
-
       it 'sends an incoming payment request' do
-        SpecConfig.custom_stub_request('post', K2Config.path_url('incoming_payments'), @mpesa_payments, 200)
-        @k2stk.receive_mpesa_payments(@mpesa_payments)
-        expect(WebMock).to have_requested(:post, URI.parse(K2Config.path_url('incoming_payments')))
+        @k2_stk.receive_mpesa_payments(@mpesa_payments)
+        expect(WebMock).to have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('incoming_payments')))
       end
 
       it 'returns a location_url' do
-        @k2stk.receive_mpesa_payments(@mpesa_payments)
-        expect(@k2stk.location_url).not_to eq(nil)
+        @k2_stk.receive_mpesa_payments(@mpesa_payments)
+        expect(@k2_stk.location_url).not_to(eq(nil))
       end
     end
 
     context "with invalid details" do
       context "no phone number given" do
         it 'raises an error' do
-          expect { @k2stk.receive_mpesa_payments(@mpesa_payments.except(:phone_number)) }.to raise_error ArgumentError
+          expect { @k2_stk.receive_mpesa_payments(@mpesa_payments.except(:phone_number)) }.to raise_error ArgumentError
         end
       end
 
       context "no till number given" do
         it 'raises an error' do
-          expect { @k2stk.receive_mpesa_payments(@mpesa_payments.except(:till_number)) }.to raise_error ArgumentError
+          expect { @k2_stk.receive_mpesa_payments(@mpesa_payments.except(:till_number)) }.to raise_error ArgumentError
         end
       end
     end
@@ -57,27 +58,37 @@ RSpec.describe K2Stk do
 
   describe '#query_status' do
     it 'queries a recent payment request status' do
-      SpecConfig.custom_stub_request('get', K2Config.path_url('incoming_payments'), '', 200)
-      expect { @k2stk.query_status }.not_to raise_error
-      expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2stk.location_url)))
+      @k2_stk.receive_mpesa_payments(@mpesa_payments)
+      stub_request(:get, @k2_stk.location_url).to_return(status: 200, body: {data: "some_data"}.to_json)
+      aggregate_failures do
+        expect { @k2_stk.query_status }.not_to(raise_error)
+        expect(WebMock).to have_requested(:get, K2ConnectRuby::K2Utilities::K2UrlParse.remove_localhost(URI.parse(@k2_stk.location_url)))
+      end
     end
 
     it 'returns a response body' do
-      @k2stk.query_status
-      expect(@k2stk.k2_response_body).not_to eq(nil)
+      @k2_stk.receive_mpesa_payments(@mpesa_payments)
+      stub_request(:get, @k2_stk.location_url).to_return(status: 200, body: {data: "some_data"}.to_json)
+      @k2_stk.query_status
+      expect(@k2_stk.k2_response_body).not_to(eq(nil))
     end
   end
 
   describe '#query_resource' do
     it 'queries a specified payment request status' do
-      SpecConfig.custom_stub_request('get', K2Config.path_url('incoming_payments'), '', 200)
-      expect { @k2stk.query_resource(@k2stk.location_url) }.not_to raise_error
-      expect(WebMock).to have_requested(:get, K2UrlParse.remove_localhost(URI.parse(@k2stk.location_url)))
+      @k2_stk.receive_mpesa_payments(@mpesa_payments)
+      stub_request(:get, @k2_stk.location_url).to_return(status: 200, body: {data: "some_data"}.to_json)
+      aggregate_failures do
+        expect { @k2_stk.query_resource(@k2_stk.location_url) }.not_to(raise_error)
+        expect(WebMock).to have_requested(:get, K2ConnectRuby::K2Utilities::K2UrlParse.remove_localhost(URI.parse(@k2_stk.location_url)))
+      end
     end
 
     it 'returns a response body' do
-      @k2stk.query_resource(@k2stk.location_url)
-      expect(@k2stk.k2_response_body).not_to eq(nil)
+      @k2_stk.receive_mpesa_payments(@mpesa_payments)
+      stub_request(:get, @k2_stk.location_url).to_return(status: 200, body: {data: "some_data"}.to_json)
+      @k2_stk.query_resource(@k2_stk.location_url)
+      expect(@k2_stk.k2_response_body).not_to(eq(nil))
     end
   end
 end

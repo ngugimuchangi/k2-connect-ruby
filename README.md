@@ -25,6 +25,7 @@ All calls made without authentication will also fail.
     - [SMS Notifications](#sms-notifications)
     - [STK Push](#stk-push)
     - [PAY](#pay)
+    - [Settlemennt accounts](#settlement-accounts)
     - [Transfers](#transfers)
     - [Polling](#polling)
     - [Parsing the JSON Payload](#parsing-the-json-payload)
@@ -55,9 +56,21 @@ Add the require line to use the gem:
 
     require 'k2-connect-ruby'
 
+To set the base_url:
+
+```ruby
+K2ConnectRuby::K2Utilities::Config::K2Config.set_base_url("https://sandbox.kopokopo.com/")
+```
+
+To set the api version:
+
+```ruby
+K2ConnectRuby::K2Utilities::Config::K2Config.set_version(1)
+```
+
 ### Authorization
 
-Ensure you first Register your application with the [Kopo Kopo Sandbox](To be added later when launched).
+Ensure you first Register your application with the [Kopo Kopo Sandbox](https://sandbox.kopokopo.com).
 Once an application is registered you will obtain your `client_id` and `client_secret` (aka client credentials), which will be used to identify your application when calling the Kopo Kopo API.
 
 For more Information, visit our [API docs]().
@@ -65,7 +78,7 @@ For more Information, visit our [API docs]().
 In order to request for application authorization and receive an access token, we need to execute the client credentials flow, this is done so by having your application server make a HTTPS request to the Kopo Kopo authorization server, through the K2AccessToken class.
 
 ```ruby
-k2_token = K2AccessToken.new('your_client_id', 'your_client_secret').request_token
+k2_token = K2ConnectRuby::K2Entity::K2Token.new('your_client_id', 'your_client_secret').request_token
 ```
 
 ### Webhook Subscription
@@ -80,17 +93,16 @@ Ensure the following arguments are passed:
  - scope reference: is `REQUIRED` if scope is till
  
 Code example;
-    
+
 ```ruby
 require 'k2-connect-ruby'
-k2_token = K2AccessToken.new('your_client_id', 'your_client_secret').request_token
-k2subscriber = K2Subscribe.new(k2_token)
-
+k2_token = K2ConnectRuby::K2Entity::K2Token.new('your_client_id', 'your_client_secret').request_token
+k2subscriber = K2ConnectRuby::K2Entity::K2Subscribe.new(k2_token)
 your_request = {
-        event_type: 'buygoods_transaction_received',
-        url: callback_url,
-        scope: 'till',
-        scope_reference: '112233'
+  event_type: 'buygoods_transaction_received',
+  url: callback_url,
+  scope: 'till',
+  scope_reference: '112233'
 }
 k2subscriber.webhook_subscribe(your_request)
 ```
@@ -107,13 +119,12 @@ Code example;
 
 ```ruby
 require 'k2-connect-ruby'
-k2_token = K2AccessToken.new('your_client_id', 'your_client_secret').request_token
-k2_notification = K2Notification.new(k2_token)
-
+k2_token = K2ConnectRuby::K2Entity::K2Token.new('your_client_id', 'your_client_secret').request_token
+k2_notification = K2ConnectRuby::K2Entity::K2Notification.new(k2_token)
 request_payload = {
-        webhook_event_reference: 'c271535c-687f-4a40-a589-8b66b894792e',
-        message: 'message',
-        callback_url: 'callback_url'
+  webhook_event_reference: 'c271535c-687f-4a40-a589-8b66b894792e',
+  message: 'message',
+  callback_url: 'callback_url'
 }
 k2_notification.send_sms_transaction_notification(request_payload)
 ```
@@ -125,7 +136,7 @@ k2_notification.send_sms_transaction_notification(request_payload)
  
  To receive payments from M-PESA users via STK Push we first create a K2Stk Object, passing the access_token that was created prior.
  
-    k2_stk = K2Stk.new(your_access_token)
+    k2_stk = K2ConnectRuby::K2Entity::K2Stk.new(your_access_token)
   
  Afterwards we send a POST request for receiving Payments by calling the following method and passing the params value received from the POST Form Request: 
 
@@ -159,7 +170,7 @@ As a result a JSON payload will be returned, accessible with the k2_response_bod
 Code example;
     
 ```ruby
-k2_stk = K2Stk.new(your_access_token)
+k2_stk = K2ConnectRuby::K2Entity::K2Stk.new(your_access_token)
 
 your_request = {
         payment_channel: 'M-PESA',
@@ -181,7 +192,7 @@ k2_stk.query_resource(k2_stk.location_url)
 First Create the K2Pay Object passing the access token
 
 
-    k2_pay = K2Pay.new(access_token)
+    k2_pay = K2ConnectRuby::K2Entity::K2Pay.new(access_token)
 
 #### Add PAY Recipients
 
@@ -213,8 +224,9 @@ Add a PAY Recipient, with the following arguments:
 - till_name `REQUIRED`
 - till_number `REQUIRED`
 
-  
-    k2_pay.add_recipients(your_input)
+```ruby
+k2_pay.add_recipients(your_input)
+```
     
 The type value can either be `mobile_wallet` or `bank_account`
 
@@ -260,7 +272,7 @@ As a result a JSON payload will be returned, accessible with the k2_response_bod
 Code example;
     
 ```ruby
-k2_pay = K2Pay.new(your_access_token)
+k2_pay = K2ConnectRuby::K2Entity::K2Pay.new(your_access_token)
 k2_pay.add_recipient(your_recipient_input)
 k2_pay.query_resource(k2_pay.recipients_location_url)
 
@@ -305,7 +317,7 @@ Add pre-approved settlement accounts, to which one can transfer funds to. Can be
 - settlement_method: 'EFT' or 'RTS' `REQUIRED`
 
 ```ruby
-k2_settlement = K2Settlement.new(your_access_token)
+k2_settlement = K2ConnectRuby::K2Entity::K2Settlement.new(your_access_token)
 # Add a mobile merchant wallet
 k2_settlement.add_settlement_account(merchant_wallet)
 # Add a merchant bank account
@@ -318,7 +330,7 @@ This will Enable one to transfer funds to your settlement accounts.
 
 First Create the K2Transfer Object
 
-    k2_transfers = K2Transfer.new(access_token)
+    k2_transfers =  K2ConnectRuby::K2Entity::K2Transfer.new(access_token)
 
 #### Create Transfer Request
 
@@ -327,7 +339,7 @@ or one can have a `targeted` transfer with a specified settlement account in min
 
 ##### Blind Transfer
 
-     k2_transfers.transfer_funds(nil, params)
+     k2_transfers.transfer_funds(params)
 
 With `nil` representing that there are no specified destinations.
 
@@ -354,7 +366,7 @@ The Params are passed as the argument containing all the form data sent. A Succe
 Sample code example:
 
 ```ruby
-k2_transfer = K2Transfer.new(your_access_token)
+k2_transfer =  K2ConnectRuby::K2Entity::K2Transfer.new(your_access_token)
 # Blind or Targeted Transfer
 k2_transfer.transfer_funds(your_input)
 ```
@@ -373,30 +385,35 @@ A HTTP Response will be returned in a JSON Payload, accessible with the k2_respo
 
 ### Polling
 
-Allows you to poll transactions received on the Kopo Kopo system within a certain time range, and either a company or a specific till.
+Allows you to poll transactions received on the Kopo Kopo system within a certain time range, and either for a company or a specific till.
 
-First Create the K2Notification Object
+First Create the K2Polling Object
 
-    k2_notification = K2Notification.new(access_token)
+    k2_polling = K2ConnectRuby::K2Entity::K2Polling.new(access_token)
 
-#### Send SMS Notification
+The following details should be passed:
 
-The Following Details should be passed for creating the notification:
-
-- fromTime `REQUIRED`
-- toTime `REQUIRED`
 - scope `REQUIRED`
-- scopeReference `REQUIRED`
+- scope_reference
+- from_time `REQUIRED`
+- to_time `REQUIRED`
 - callback_url `REQUIRED`
-
-The Params are passed as the argument containing all the form data sent. A Successful Response is returned with the URL of the request in the HTTP Location Header.
 
 Sample code example:
 
 ```ruby
-k2_notification = K2Notification.new(your_access_token)
-# Blind or Targeted Transfer
-k2_notification.send_sms_transaction_notification(request_payload)
+your_input =
+        {
+                scope: "company",
+                scope_reference: "",
+                from_time: "2021-04-12T08:50:22+03:00",
+                to_time: "2021-04-19T08:50:22+03:00",
+                callback_url: 'https://call_back_to_your_app.your_application.com'
+        }
+
+k2_polling = K2ConnectRuby::K2Entity::K2Polling.new("your_access_token")
+k2_polling.poll(your_input)
+k2_polling.location_url # => "https://sandbox.kopokopo.com/api/v1/polling/247b1bd8-f5a0-4b71-a898-f62f67b8ae1c"
 ```
 
 #### Query Request
@@ -420,7 +437,7 @@ K2ProcessResult Classes will be used.
 
 First Create an Object of the K2Client class to Parse the response, passing the client_secret_key received from Kopo Kopo:
 
-     k2_parse = K2Client.new(client_secret)
+     k2_parse = K2ConnectRuby::K2Services::K2Client.new(client_secret)
 
 ###### Parse the request
 
@@ -430,14 +447,18 @@ First Create an Object of the K2Client class to Parse the response, passing the 
 
 Create an Object to receive the components resulting from processing the parsed request results which will be returned by the following method:
 
-     k2_components = K2ProcessResult.process(k2_parse.hash_body)
+     k2_components = K2ConnectRuby::K2Utilities::K2ProcessResult.process(k2_parse.hash_body, API_KEY, k2_parse.k2_signature)
+
+or the parsed webhook results which will be returned by the following method:
+
+     k2_components = K2ConnectRuby::K2Utilities::K2ProcessWebhook.process(k2_parse.hash_body, API_KEY, k2_parse.k2_signature)
      
 Code example:
 
 ```ruby
-k2_parse = K2Client.new(client_secret)
+k2_parse = K2ConnectRuby::K2Services::K2Client.new(API_KEY)
 k2_parse.parse_request(request)
-k2_components = K2ProcessResult.process(k2_parse.hash_body)
+k2_components = K2ConnectRuby::K2Utilities::K2ProcessResult.process(k2_parse.hash_body, API_KEY, k2_parse.k2_signature)
 ```
          
  Below is a list of key symbols accessible for each of the Results retrieved after processing it into an Object.
@@ -534,7 +555,7 @@ k2_components = K2ProcessResult.process(k2_parse.hash_body)
     - `links_resource`
     - `sending_till`
     
-7. Process STK Push Payment Request Result
+6. Process STK Push Payment Request Result
     - `id`
     - `type`
     - `initiation_time`
@@ -557,7 +578,7 @@ k2_components = K2ProcessResult.process(k2_parse.hash_body)
     - `links_self`
     - `callback_url`
 
-8. Process PAY Result
+7. Process PAY Result
     - `id`
     - `type`
     - `created_at`
@@ -569,7 +590,7 @@ k2_components = K2ProcessResult.process(k2_parse.hash_body)
     - `links_self`
     - `callback_url`
 
-9. Process Settlement Transfer Result
+8. Process Settlement Transfer Result
    - `id`
    - `type`
    - `created_at`
@@ -584,13 +605,13 @@ If you want to convert the Object into a Hash or Array, the following methods ca
 - Hash:
    
    
-        k2_hash_components = K2ProcessResult.return_obj_hash(k2_components)
+        k2_hash_components = K2ConnectRuby::K2Utilities::K2ProcessResult.return_obj_hash(k2_components)
     
     
 - Array:
    
     
-        k2_array_components = K2ProcessResult.return_obj_array(k2_components)
+        k2_array_components = K2ConnectRuby::K2Utilities::K2ProcessResult.return_obj_array(k2_components)
 
 
 Sample Web Application examples written in Rails and Sinatra frameworks that utilize this library are available in the example_app folder or in the following GitHub hyperlinks:
